@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "es2020",
+
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "allowJs": true, // Allow js libs
+
+      "sourceMap": true,
+
+      "outDir": "js"
+    }
+  }

@@ -1,0 +1,8 @@
+{
+    // Hide derived JS files from search, etc.
+    // https://code.visualstudio.com/docs/typescript/typescript-compiling#_hiding-derived-javascript-files
+    "files.exclude": {
+        "**/*.js": { "when": "$(basename).ts" },
+        "**/**.js": { "when": "$(basename).tsx" }
+    }
+}
