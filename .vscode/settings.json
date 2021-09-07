@@ -4,5 +4,6 @@
     "files.exclude": {
         "**/*.js": { "when": "$(basename).ts" },
         "**/**.js": { "when": "$(basename).tsx" }
-    }
+    },
+    "terminal.integrated.shellArgs.windows": ["-ExecutionPolicy", "Bypass"]
 }

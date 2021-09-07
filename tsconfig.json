@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
       "target": "es5",
-      "module": "es2020",
-
+      "module": "CommonJS",
+      "esModuleInterop": true,
       "noImplicitAny": true,
       "strictNullChecks": true,
       "allowJs": true, // Allow js libs

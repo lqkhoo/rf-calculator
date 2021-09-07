@@ -1,0 +1,86 @@
+/*
+@import '../node_modules/bootstrap/scss/functions.scss';
+@import '../node_modules/bootstrap/scss/variables.scss';
+
+// Set Bootstrap responsive layout to 1200px minimum.
+// https://stackoverflow.com/a/53858353
+$grid-breakpoints: (
+    xs: 0,
+    sm: 1px,
+    md: 2px,
+    lg: 3px,
+    xl: 1200px
+);
+
+$container-max-widths: (
+    xs: 1200px,
+    sm: 1201px,
+    md: 1202px,
+    lg: 1203px,
+    xl: 100%
+);
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+.container {
+    overflow-x: auto;
+    min-width: 1200px;
+}
+*/
+
+
+
+$backgroundcolor: #EEEEEE;
+$floatTableBoxShadowColor: #CDCDCD;
+
+body {
+    background: $backgroundcolor;
+}
+
+h4.title {
+    display: block;
+    width: 100%;
+}
+
+#character-tabs {
+    width: 100%;
+}
+
+.stats-table {
+    // table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    thead {
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+    }
+
+    td, th {
+        font-size: 0.7rem;
+        text-align: center;
+        padding: 0;
+        min-width: 25px;
+        width: 25px;
+        // border-bottom: 1px solid inherit;
+    }
+
+    // Can't use position:fixed with border-collapse, so fake it with box-shadow.
+    tr > th {
+        border-width: 0;
+        box-shadow: inset 1px 0px 1px $floatTableBoxShadowColor;
+    }
+    tr > th:last-child {
+        box-shadow: inset 1px 0px 1px $floatTableBoxShadowColor, inset -1px -0px 1px $floatTableBoxShadowColor;
+    }
+    tr {
+        box-shadow: 0 1px 1px $floatTableBoxShadowColor;
+    }
+    tr:first-child {
+        box-shadow: 0 1px 1px $floatTableBoxShadowColor, 0 -1px 1px $floatTableBoxShadowColor;
+    }
+
+
+}
+

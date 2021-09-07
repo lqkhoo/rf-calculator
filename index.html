@@ -1,10 +1,130 @@
-<!DOCTYPE xhtml>
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/>
+        <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+        <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
+        <link rel="stylesheet" href="css/rf5planner.css"/>
+        <!-- <script type="text/javascript" src="js/lib/requirejs-2.3.6-min.js"></script> -->
+        <script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-ui-1.11.0.min.js"></script>
+        <script type="text/javascript" src="js/lib/knockout-jqueryui.js"></script>
+        <!--
+        <script type="text/javascript" src="js/lib/knockout-autocomplete.js"></script>
+        -->
+        
+
     </head>
     <body>
-        <h1>foo</h1>
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <h4 class="title">Rune Factory 5 Gear Planner</h4>
+                <!-- Binding context window.RF5Planner -->
+                <ul id="character-tabs" class="nav nav-tabs" data-bind="foreach: CharacterList" role="tablist" >
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-' + $index() }, text: $index()" data-bs-toggle="tab" role="tab"></button>
+                    </li>
+                    <!-- ko if: ($index() === ($parent.CharacterList().length-1)) -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bind="click: $root.AddCharacter.bind($root)">+Add</button>
+                    </li>
+                    <!-- /ko -->
+                </ul>
+            </div>
+        </nav>
+
+        <main class="container">
+            
+            <!-- Binding context indow.RF5Planner -->
+            <div id="character-tab-pages" class="tab-content container" data-bind="foreach: CharacterList">
+
+                <div class="tab-pane fade" data-bind="attr: { id: 'character-' + $index() }" role="tab-panel">
+
+                    <table class="table table-bordered stats-table">
+                        <thead>
+                            <tr>
+                                <th rowspan="3"></th>
+                                <th colspan="20">OFFENSE</th>
+                                <th colspan="21">DEFENSE</th>
+                            </tr>
+                            <tr>
+                                <th colspan="7">STAT</th>
+                                <th colspan="13">STATUS</th>
+                                <th colspan="8">ELE</th>
+                                <th colspan="13">STATUS</th>
+                            </tr>
+                            <tr>
+                                <th>ATK</th>
+                                <th>DEF</th>
+                                <th>MAT</th>
+                                <th>MDF</th>
+                                <th>STR</th>
+                                <th>INT</th>
+                                <th>VIT</th>
+                                <th>DIZ</th>
+                                <th>CRT</th>
+                                <th>KNO</th>
+                                <th>DUR</th>
+                                <th>STN</th>
+                                <th>PSN</th>
+                                <th>SEA</th>
+                                <th>PAR</th>
+                                <th>SLP</th>
+                                <th>FTG</th>
+                                <th>SCK</th>
+                                <th>FNT</th>
+                                <th>DRN</th>
+                                <th>FIR</th>
+                                <th>WTR</th>
+                                <th>EAR</th>
+                                <th>WND</th>
+                                <th>LGT</th>
+                                <th>DRK</th>
+                                <th>LOV</th>
+                                <th>NUL</th>
+                                <th>DIZ</th>
+                                <th>CRT</th>
+                                <th>KNO</th>
+                                <th>DUR</th>
+                                <th>STN</th>
+                                <th>PSN</th>
+                                <th>SEA</th>
+                                <th>PAR</th>
+                                <th>SLP</th>
+                                <th>FTG</th>
+                                <th>SCK</th>
+                                <th>FNT</th>
+                                <th>DRN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input id="test" type="text" data-bind="autocomplete: { source: SearchStrings }"></td>
+                                <script>
+                                </script>
+                                <td data-bind="text: SearchStrings"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- weap -->
+                    <!-- shield-->
+                    <!-- head -->
+                    <!-- armor-->
+                    <!-- boot -->
+                    <!-- acce -->
+
+                </div>
+            </div>
+        </main>
+
+        <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.js"></script>
+        <!--
+        <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.min.js"></script>
+        <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.min.js.map"></script>
+        -->
     </body>
 </xhtml>

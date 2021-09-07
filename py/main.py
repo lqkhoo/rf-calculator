@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import List
 import csv
 from dataclasses import dataclass
+import json
 from pprint import pprint
 
 
@@ -10,6 +11,15 @@ class RF5Category(object):
     item_id: int
     name_en: str = ''
     name_jp: str = ''
+    image_uri: str = ''
+
+
+@dataclass
+class RF5Character(object):
+    item_id: int # It can be confusing but keep it standardized.
+    name_en: str = ''
+    name_jp: str = ''
+    #TODO: chibi icon, image1/2
 
 
 @dataclass
@@ -18,6 +28,7 @@ class RF5Item(object):
     item_id: int
     name_en: str = ''
     name_jp: str = ''
+    image_uri: str = ''
 
     rarity: int = 0
     level: int = 10 # Default to max
@@ -86,23 +97,13 @@ class RF5Item(object):
 class TsvReader(object):
 
     @staticmethod
-    def read_itemids() -> set[int]:
-        item_ids: set = set()
-        with open('../tsv/set_itemid.tsv') as f:
+    def read_set_tsv(filepath: str) -> set[int]:
+        ids: set = set()
+        with open(filepath) as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                item_ids.add(int(row[0]))
-        return item_ids
-
-
-    @staticmethod
-    def read_categoryids() -> set[int]:
-        category_ids: set = set()
-        with open('../tsv/set_categoryid.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                category_ids.add(int(row[0]))
-        return category_ids
+                ids.add(int(row[0]))
+        return ids
 
 
     @staticmethod
@@ -161,8 +162,61 @@ class TsvReader(object):
 
         for id in item_ids:
             assert(id in items)
-        
+
         return items
+
+
+    @staticmethod
+    def read_character_names(item_ids: set[int], characters: dict[int, RF5Character]):
+
+        with open('../tsv/map_characterid_to_english_name.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                (id, name_en) = TsvReader.parse_name_tsv_row(row)
+                if id not in characters.keys():
+                    characters[id] = RF5Character(item_id=id)
+                item = characters[id]
+                item.name_en = name_en
+        
+        with open('../tsv/map_characterid_to_japanese_name_shiftjis.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                (id, name_jp) = TsvReader.parse_name_tsv_row(row)
+                if id not in characters.keys():
+                    raise KeyError(id) # This should not happen.
+                item = characters[id]
+                item.name_jp = name_jp
+
+        for id in item_ids:
+            assert(id in characters)
+
+        return characters
+
+
+    @staticmethod
+    def read_category_images(category_ids: set[int], categories: dict[int, RF5Category]):
+        
+        with open('../tsv/map_categoryid_to_image.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                (id, image_uri) = TsvReader.parse_name_tsv_row(row)
+                if id not in categories.keys():
+                    raise KeyError(id) # This should not happen.
+                category = categories[id]
+                category.image_uri = image_uri
+
+    @staticmethod
+    def read_item_images(item_ids: set[int], items: dict[int, RF5Item]):
+        
+        with open('../tsv/map_itemid_to_image.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                (id, image_uri) = TsvReader.parse_name_tsv_row(row)
+                if id not in items.keys():
+                    raise KeyError(id) # This should not happen.
+                item = items[id]
+                item.image_uri = image_uri
+
 
 
     @staticmethod
@@ -267,15 +321,62 @@ class TsvReader(object):
 
 if __name__ == '__main__':
     
-    item_ids:     set[int] = TsvReader.read_itemids()
-    category_ids: set[int] = TsvReader.read_categoryids()
+    category_ids:           set[int] = TsvReader.read_set_tsv('../tsv/set_categoryid.tsv')
+    item_ids:               set[int] = TsvReader.read_set_tsv('../tsv/set_itemid.tsv')
+    character_ids:          set[int] = TsvReader.read_set_tsv('../tsv/set_characterid.tsv')
+
+    is_eq_2hsword:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_2hsword.tsv')
+    is_eq_accessory:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_accessory.tsv')
+    is_eq_armor:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_armor.tsv')
+    is_eq_axe:              set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_axe.tsv')
+    is_eq_dualblades:       set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_dualblades.tsv')
+    is_eq_farm_axe:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_axe.tsv')
+    is_eq_farm_fishingpole: set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_fishingpole.tsv')
+    is_eq_farm_hammer:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_hammer.tsv')
+    is_eq_farm_hoe:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_hoe.tsv')
+    is_eq_farm_sickle:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_sickle.tsv')
+    is_eq_farm_waterpot:    set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_waterpot.tsv')
+    is_eq_fists:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_fists.tsv')
+    is_eq_hammer:           set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_hammer.tsv')
+    is_eq_headgear:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_headgear.tsv')
+    is_eq_shield:           set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_shield.tsv')
+    is_eq_shoes:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_shoes.tsv')
+    is_eq_spear:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_spear.tsv')
+    is_eq_staff:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_staff.tsv')
+    is_eq_sword:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_sword.tsv')
+    is_mat_2foldsteel:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_2foldsteel.tsv')
+    is_mat_10foldsteel:     set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_10foldsteel.tsv')
+    is_mat_clawsandfangs:   set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_clawsandfangs.tsv')
+    is_mat_clothsandskins:  set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_clothsandskins.tsv')
+    is_mat_core:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_core.tsv')
+    is_mat_crystals:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_crystals.tsv')
+    is_mat_feathers:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_feathers.tsv')
+    is_mat_furs:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_furs.tsv')
+    is_mat_jewels:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_jewels.tsv')
+    is_mat_lightore:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_lightore.tsv')
+    is_mat_liquids:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_liquids.tsv')
+    is_mat_minerals:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_minerals.tsv')
+    is_mat_objectx:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_objectx.tsv')
+    is_mat_powdersandspores: set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_powdersandspores.tsv')
+    is_mat_scales:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_scales.tsv')
+    is_mat_shards:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_shards.tsv')
+    is_mat_shellsandbones:  set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_shellsandbones.tsv')
+    is_mat_sticksandstems:  set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_sticksandstems.tsv')
+    is_mat_stones:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_stones.tsv')
+    is_mat_strings:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_strings.tsv')
 
     categories:   dict[int, RF5Category] = {}
     items:        dict[int, RF5Item] = {}
+    characters:   dict[int, RF5Character] = {}
+
 
     # Names
     TsvReader.read_category_names(category_ids, categories)
     TsvReader.read_item_names(item_ids, items)
+    TsvReader.read_character_names(character_ids, characters)
+
+    TsvReader.read_category_images(category_ids, categories)
+    TsvReader.read_item_images(item_ids, items)
 
     # Raw stats
     TsvReader.read_item_stats('../tsv/map_itemid_to_baseitem_stats_data.tsv', items)
@@ -287,4 +388,72 @@ if __name__ == '__main__':
     TsvReader.read_item_crystal_element(items)
     TsvReader.read_item_magic(items)
 
-    
+
+    def write_json(f, var_name: str, json: str):
+        f.write('"' + var_name + '": ')
+        f.write(json)
+        f.write(',\n')
+
+    def json_dump_object(obj: object) -> str:
+        return json.dumps(obj, default=lambda o: o.__dict__, sort_keys=True, indent=2)
+
+    with open('../ts/data.ts', 'w+') as f:
+        f.write('// File generated by Python script.\n')
+        f.write('const DATA = {\n')
+        write_json(f, 'item_ids', json.dumps(sorted(list(item_ids))))
+        write_json(f, 'category_ids', json.dumps(sorted(list(category_ids))))
+        write_json(f, 'character_ids', json.dumps(sorted(list(character_ids))))
+        write_json(f, 'is_eq_2hsword', json.dumps(sorted(list(is_eq_2hsword))))
+        write_json(f, 'is_eq_accessory', json.dumps(sorted(list(is_eq_accessory))))
+        write_json(f, 'is_eq_armor', json.dumps(sorted(list(is_eq_armor))))
+        write_json(f, 'is_eq_axe', json.dumps(sorted(list(is_eq_axe))))
+        write_json(f, 'is_eq_dualblades', json.dumps(sorted(list(is_eq_dualblades))))
+        write_json(f, 'is_eq_farm_axe', json.dumps(sorted(list(is_eq_farm_axe))))
+        write_json(f, 'is_eq_farm_fishingpole', json.dumps(sorted(list(is_eq_farm_fishingpole))))
+        write_json(f, 'is_eq_farm_hammer', json.dumps(sorted(list(is_eq_farm_hammer))))
+        write_json(f, 'is_eq_farm_hoe', json.dumps(sorted(list(is_eq_farm_hoe))))
+        write_json(f, 'is_eq_farm_sickle', json.dumps(sorted(list(is_eq_farm_sickle))))
+        write_json(f, 'is_eq_farm_waterpot', json.dumps(sorted(list(is_eq_farm_waterpot))))
+        write_json(f, 'is_eq_fists', json.dumps(sorted(list(is_eq_fists))))
+        write_json(f, 'is_eq_hammer', json.dumps(sorted(list(is_eq_hammer))))
+        write_json(f, 'is_eq_headgear', json.dumps(sorted(list(is_eq_headgear))))
+        write_json(f, 'is_eq_shield', json.dumps(sorted(list(is_eq_shield))))
+        write_json(f, 'is_eq_shoes', json.dumps(sorted(list(is_eq_shoes))))
+        write_json(f, 'is_eq_spear', json.dumps(sorted(list(is_eq_spear))))
+        write_json(f, 'is_eq_staff', json.dumps(sorted(list(is_eq_staff))))
+        write_json(f, 'is_eq_sword', json.dumps(sorted(list(is_eq_sword))))
+        write_json(f, 'is_mat_2foldsteel', json.dumps(sorted(list(is_mat_2foldsteel))))
+        write_json(f, 'is_mat_10foldsteel', json.dumps(sorted(list(is_mat_10foldsteel))))
+        write_json(f, 'is_mat_clawsandfangs', json.dumps(sorted(list(is_mat_clawsandfangs))))
+        write_json(f, 'is_mat_clothsandskins', json.dumps(sorted(list(is_mat_clothsandskins))))
+        write_json(f, 'is_mat_core', json.dumps(sorted(list(is_mat_core))))
+        write_json(f, 'is_mat_crystals', json.dumps(sorted(list(is_mat_crystals))))
+        write_json(f, 'is_mat_feathers', json.dumps(sorted(list(is_mat_feathers))))
+        write_json(f, 'is_mat_furs', json.dumps(sorted(list(is_mat_furs))))
+        write_json(f, 'is_mat_jewels', json.dumps(sorted(list(is_mat_jewels))))
+        write_json(f, 'is_mat_lightore', json.dumps(sorted(list(is_mat_lightore))))
+        write_json(f, 'is_mat_liquids', json.dumps(sorted(list(is_mat_liquids))))
+        write_json(f, 'is_mat_minerals', json.dumps(sorted(list(is_mat_minerals))))
+        write_json(f, 'is_mat_objectx', json.dumps(sorted(list(is_mat_objectx))))
+        write_json(f, 'is_mat_powdersandspores', json.dumps(sorted(list(is_mat_powdersandspores))))
+        write_json(f, 'is_mat_scales', json.dumps(sorted(list(is_mat_scales))))
+        write_json(f, 'is_mat_shards', json.dumps(sorted(list(is_mat_shards))))
+        write_json(f, 'is_mat_shellsandbones', json.dumps(sorted(list(is_mat_shellsandbones))))
+        write_json(f, 'is_mat_sticksandstems', json.dumps(sorted(list(is_mat_sticksandstems))))
+        write_json(f, 'is_mat_stones', json.dumps(sorted(list(is_mat_stones))))
+        write_json(f, 'is_mat_strings', json.dumps(sorted(list(is_mat_strings))))
+
+        write_json(f, 'categories', json_dump_object(categories))
+        write_json(f, 'items', json_dump_object(items))
+        write_json(f, 'characters', json_dump_object(characters))
+
+
+        # write_json(f, 'categories', json.dumps(list(categories.values())))
+        # write_json(f, 'items', json.dumps(list(items.values())))
+
+
+        f.write('};\n')
+        f.write('export = DATA;')
+
+
+

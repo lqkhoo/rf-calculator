@@ -1,17 +1,18 @@
 # Building
+1. Ensure that you have npm ([Node Package Manager](https://www.npmjs.com/)) installed. You can get it through their website or via Node.js development tools from [Visual Studio](https://visualstudio.microsoft.com/).
+2. Git clone this repo to your local directory. Navigate to it, and run `npm install` to install all dependencies, including tsc and sass (the Typescript transpiler and Sass compiler).
+3. This project uses browserify to construct a single js file for insertion into the browser. This is because the Typescript is written as modules, and module imports do not work offline without a webserver running on localhost, as browsers do not allow CORS with local files.
+4. If you are using [Visual Studio Code](https://code.visualstudio.com/), the build process has been set up via tasks.json, so just hit shift+ctrl+B to build. Otherwise, with your working directory pointed at the root of your local repo, run the following commamnds one by one in your shell:
+```
+browserify ts/App.ts -p [ tsify --noImplicitAny ] > js/main.js
+sass css/rf5planner.scss css/rf5planner.css
+```
+5. You will have to do this every time you want the changes in Typescript or Sass to be reflected in js/css. The first build command is from [tsify](https://github.com/TypeStrong/tsify).
+6. Then just navigate your browser to index.html, or hit F5 from Visual Studio Code.
+7. Python 3.4+ is required to run the script that transforms tsv data into DATA.ts.
 
-1. Ensure that you have the Typescript transpiler (tsc) installed. If it is, the following should not error in bash/cmd/PowerShell: `tsc --version`
-    * Otherwise you can install it via npm i.e. [Node Package manager](https://www.npmjs.com/), via the command `npm install -g typescript`.
-    * If you don't have npm, get it from their website, or if you already have [Microsoft Visual Studio](https://visualstudio.microsoft.com/), installing the Node.js development tools would also install npm.
+# Credits
+Art assets are from Blazagon's data dump.
 
-2. Then nagivate to your workspace directory i.e. your local clone of this repo that contains tsconfig.json.
-    * Run the command `tsc`.
-    * Alternatively, if you are using [Visual Studio Code](https://code.visualstudio.com/), just hit F5.
-
-3. Python 3.4+ is required to run the scripts that parse the tsv data into json.
-
-
-
-
-
-# Edge cases
+# Disclaimer
+All art assets are originals from the game, and are thus copyrighted material owned by the publisher. They have been included in this project under fair use. It goes without saying that the MIT license for this repository only extends as far as the source code, not to those assets.
