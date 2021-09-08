@@ -25,7 +25,9 @@
                 <!-- Binding context window.RF5Planner -->
                 <ul id="character-tabs" class="nav nav-tabs" data-bind="foreach: { data: CharacterList, as: 'RF5Character' }" role="tablist" >
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-' + $index() }, text: $index()" data-bs-toggle="tab" role="tab"></button>
+                        <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-' + $index() }" data-bs-toggle="tab" role="tab">
+                            <img class="icon" data-bind="attr: { src: Context().image_uri }"/>
+                        </button>
                     </li>
                     <!-- ko if: ($index() === ($parent.CharacterList().length-1)) -->
                     <li class="nav-item" role="presentation">
@@ -46,7 +48,7 @@
                     <table class="table table-bordered stats-table">
                         <thead>
                             <tr>
-                                <th rowspan="3"></th>
+                                <th rowspan="3"><div class="dummy-header"></div></th>
                                 <th colspan="20">OFFENSE</th>
                                 <th colspan="21">DEFENSE</th>
                             </tr>
@@ -64,30 +66,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td data-bind="template: { name: 'TEMPLATE-character-icon-group', data: RF5Character }"></td>
-                            </tr>
-                            <tr>
-                                <td>General's set bonus</td>
-                            </tr>
-                            <tr>
-                                <td>Clover bonus</td>
-                            </tr>
-                            <tr>
-                                <td>Happy ring bonus</td>
-                            </tr>
-                            <tr>
-                                <td>Rare can bonus</td>
-                            </tr>
+                            <!-- ko template: { name: 'TEMPLATE-character', data: RF5Character } --><!-- /ko -->
+                            
+                            <!-- ko template: { name: 'TEMPLATE-weapon-group', data: RF5Character }--><!-- /ko -->
+                            
+                            <!-- ko template: { name: 'TEMPLATE-shield', foreach: Shields() } --><!-- /ko -->
+                            <!-- ko template: { name: 'TEMPLATE-headgear', foreach: Headgears() } --><!-- /ko -->
+                            <!-- ko template: { name: 'TEMPLATE-armor', foreach: Armors() } --><!-- /ko -->
+                            <!-- ko template: { name: 'TEMPLATE-boots', foreach: Boots() } --><!-- /ko -->
+                            <!-- ko template: { name: 'TEMPLATE-accessory', foreach: Accessories() } --><!-- /ko -->
+
                         </tbody>
                     </table>
-
-                    <!-- weap -->
-                    <!-- shield-->
-                    <!-- head -->
-                    <!-- armor-->
-                    <!-- boot -->
-                    <!-- acce -->
 
                 </div>
             </div>
@@ -100,20 +90,118 @@
         -->
         
     </body>
-    <script type="text/html" id="TEMPLATE-character-icon-group">
-        <table class="icon-group">
-            <tbody>
-                <tr>
-                    <td rowspan="2" class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
-                    <td data-bind="text: Context().name_jp"></td>
-                    <td rowspan="2" class="icon-td">
-                        <input id="test" type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler.bind(RF5Character) }">
-                    </td>
-                </tr>
-                <tr>
-                    <td data-bind="text: Context().name_en" ></td>
-                </tr>
-            </tbody>
-        </table>
+
+    <script type="text/html" id="TEMPLATE-character">
+        <tr>
+            <td data-bind="template: { name: 'TEMPLATE-character-icon-group', data: RF5Character }"></td>
+        </tr>
+        <tr>
+            <td>General's set bonus</td>
+        </tr>
+        <tr>
+            <td>Clover bonus</td>
+        </tr>
+        <tr>
+            <td>Happy ring bonus</td>
+        </tr>
+        <tr>
+            <td>Rare can bonus</td>
+        </tr>
     </script>
+
+
+    <script type="text/html" id="TEMPLATE-character-icon-group">
+        <label class="icon-group character">
+            <table class="icon-group">
+                <tbody>
+                    <tr>
+                        <td rowspan="2" class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
+                        <td data-bind="text: Context().name_jp"></td>
+                        <td rowspan="2" class="icon-td">
+                            <input id="test" type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler.bind(RF5Character) }">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-bind="text: Context().name_en" ></td>
+                    </tr>
+                </tbody>
+            </table>
+        </label>
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-weapon-group">
+        <tr>
+            <td style="background-color: #dddddd;">
+                <button class="group-header btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+$index()+'-weapon' }">Weapons</button>
+            </td>
+            <td colspan="41" style="background-color: #dddddd;">foobar</td>
+        </tr>
+        <!-- Can't do foreach + as RF5Weapon in a virtual element from some reason -->
+        <!-- ko template: { name: 'TEMPLATE-weapon', foreach: Weapons() } --><!-- /ko -->
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-weapon">
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$index() +'-weapon'">
+            <td data-bind="template: { name: 'TEMPLATE-weapon-icon-group' }"></td>
+        </tr>
+        <tr data-bind="class: 'char-'+ $parentContext.$index() +'-weapon-'+ $index() ">
+            <td>test foo bar</td>
+        </tr>
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-weapon-icon-group">
+        <div class="icon-group weapon">
+            <input type="radio" data-bind="attr: { value: $index(), name: 'char-'+ $parentContext.$index() +'-weapon' }, clickBubble: false">
+            <button class="btn icon-group">
+                <table class="icon-group collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ $parentContext.$index() +'-weapon-' + $index() }">
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" class="icon-td"><img data-bind="attr: { src: BaseItem().Context().image_uri }"/></td>
+                            <td data-bind="text: BaseItem().Context().name_jp"></td>
+                            <td rowspan="2" class="icon-td"></td>
+                        </tr>
+                        <tr>
+                            <td data-bind="text: BaseItem().Context().name_en"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </button>
+        </div>
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-shield">
+        <tr>
+            <td>shield</td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-headgear">
+        <tr>
+            <td>headgear</td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-armor">
+        <tr>
+            <td>armor</td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-boots">
+        <tr>
+            <td>boots</td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-accessory">
+        <tr>
+            <td>accessory</td>
+        </tr>
+    </script>
+
+
 </xhtml>

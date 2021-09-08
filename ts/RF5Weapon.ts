@@ -11,5 +11,7 @@ class RF5Weapon extends RF5Item {
         super(character);
     }
 
+    
+
 }
 export = RF5Weapon;

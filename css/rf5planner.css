@@ -27,8 +27,26 @@ $container-max-widths: (
     min-width: 1200px;
 }
 */
+.btn {
+  padding: 0;
+  border-radius: 0;
+  border: 0;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.25);
+}
+
+.btn:active {
+  box-shadow: inset 0 0 3px #000000;
+}
+
+.btn:focus:active {
+  box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.25), inset 0 0 5px #000000;
+}
+
 body {
-  background: #EEEEEE;
+  background: #eeeeee;
 }
 
 h4.title {
@@ -38,6 +56,10 @@ h4.title {
 
 #character-tabs {
   width: 100%;
+}
+
+.dummy-header {
+  width: 200px;
 }
 
 .stats-table {
@@ -76,11 +98,46 @@ ul.ui-autocomplete {
   overflow-x: hidden;
 }
 
+img.icon {
+  width: 40px;
+  height: 40px;
+}
+
+label.icon-group {
+  cursor: pointer;
+  width: 100%;
+  border-bottom: 1px solid #aaaaaa;
+}
+
+div.icon-group {
+  position: relative;
+  border-bottom: 1px solid #aaaaaa;
+}
+
+button.icon-group {
+  padding: 0;
+}
+
+.icon-group input[type=radio] {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+}
+
+.icon-group.weapon {
+  border-left: 5px solid #dd4e4e;
+}
+
+div > table.icon-group, label > table.icon-group {
+  width: 100%;
+  border: 0;
+}
+
 table.icon-group {
   width: 200px;
   height: 40px;
+  display: table;
   table-layout: fixed;
-  border: 1px solid #aaaaaa;
 }
 table.icon-group tr, table.icon-group td, table.icon-group th {
   border: none;
@@ -101,6 +158,20 @@ table.icon-group td.icon-td {
 table.icon-group input {
   width: 40px;
   margin-left: -5px;
+}
+
+.group-header {
+  font-size: 14px;
+  text-align: left;
+  width: 100%;
+}
+
+.group-header::before {
+  content: url("../bootstrap-icons/chevron-down.svg");
+}
+
+.group-header.collapsed::before {
+  content: url("../bootstrap-icons/chevron-right.svg");
 }
 
 /*

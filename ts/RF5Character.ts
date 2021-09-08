@@ -47,6 +47,10 @@ class RF5Character extends RF5StatVector {
         this.AddBoots.call(this);
         this.AddShield.call(this);
         this.AddWeapon.call(this);
+
+        this.AddWeapon.call(this);
+        this.AddWeapon.call(this);
+        this.AddWeapon.call(this);
     }
 
     protected ConstructSearchStrings(): void {
@@ -97,19 +101,12 @@ class RF5Character extends RF5StatVector {
         this.Context(ctx);
     }
 
-    // Handlers
-    public OnCharacterSelect(event: any, ui: any): void {
-        console.log(this);
-        console.log(event);
-        console.log(ui);
-    }
-
     // Expects this as instance of RF5Character
     public AutoCompleteSelectHandler(event: any, ui: any): boolean {
         let self = this;
         let id: string = ui.item.value;
         self.ChangeId(id);
-        console.log(event.target);
+        // console.log(event.target);
         event.target.value = id;
         
         return false; // prevent jQueryUI from setting the field.

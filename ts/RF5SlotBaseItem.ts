@@ -1,8 +1,8 @@
 import RF5StatVector = require('./RF5StatVector');
 class RF5SlotBaseItem extends RF5StatVector {
     
-    constructor(obj: any | undefined) {
-        super(obj);
+    constructor(ctx: any | undefined) {
+        super(ctx);
     }
 
 }

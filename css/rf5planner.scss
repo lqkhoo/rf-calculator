@@ -29,9 +29,32 @@ $container-max-widths: (
 */
 
 
+// Bootstrap tweaks
+.btn {
+    padding: 0;
+    border-radius: 0;
+    border: 0;
+}
+.btn:focus {
+    box-shadow: 0 0 0 0.1rem rgb(13 110 253 / 25%)
+}
+/*
+.btn:active {
+    box-shadow: inset 0 0 3px #000000;
+}
+.btn:focus:active {
+    box-shadow: 0 0 0 0.1rem rgb(13 110 253 / 25%), inset 0 0 5px #000000;
+}
+*/
 
-$backgroundcolor: #EEEEEE;
+// $backgroundcolor: #f9f6d2;
+$backgroundcolor: #eeeeee;
 $floatTableBoxShadowColor: #CDCDCD;
+
+$icon-group-width: 200px;
+$icon-size: 40px;
+$icon-group-font-size: 14px;
+$border-indent-1: 5px;
 
 body {
     background: $backgroundcolor;
@@ -44,6 +67,10 @@ h4.title {
 
 #character-tabs {
     width: 100%;
+}
+
+.dummy-header {
+    width: $icon-group-width;
 }
 
 .stats-table {
@@ -84,9 +111,8 @@ h4.title {
 }
 
 
-$icon-group-width: 200px;
-$icon-size: 40px;
-$icon-group-font-size: 14px;
+
+$color-weapon: #dd4e4e;
 
 ul.ui-autocomplete {
     max-height: 500px;
@@ -94,13 +120,50 @@ ul.ui-autocomplete {
     overflow-x: hidden;
 }
 
+img.icon {
+    width: $icon-size;
+    height: $icon-size;
+}
+
+label.icon-group {
+    cursor: pointer;
+    width: 100%;
+    // border: 1px solid #aaaaaa;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+div.icon-group {
+    position: relative;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+button.icon-group {
+    padding: 0;
+}
+
+.icon-group input[type="radio"] {
+    position: absolute;
+    right: 10px;
+    top: 35%;
+}
+
+.icon-group.weapon {
+    border-left: 5px solid $color-weapon;
+}
+
+div > table.icon-group, label > table.icon-group {
+    width: 100%;
+    border: 0;
+}
+
 table.icon-group {
 
     width: $icon-group-width;
     height: $icon-size;
     // margin-right: $icon-size;
+    display: table;
     table-layout: fixed;
-    border: 1px solid #aaaaaa;
+    // border: 1px solid #aaaaaa;
 
     tr, td, th {
         border: none;
@@ -123,18 +186,25 @@ table.icon-group {
     }
 
     input {
-        width: 40px;
+        width: $icon-size;
         margin-left: -5px;
     }
 }
 
-/*
-.icon-group-wrapper {
 
-    width: $icon-group-width;
+$header-font-size: 14px;
 
-    > .icon-group {
-        position: absolute;
-    }
+.group-header {
+    font-size: $header-font-size;
+    text-align: left;
+    width: 100%;
 }
-*/
+
+.group-header::before {
+    content: url('../bootstrap-icons/chevron-down.svg');
+}
+
+.group-header.collapsed::before {
+    content: url('../bootstrap-icons/chevron-right.svg');
+}
+
