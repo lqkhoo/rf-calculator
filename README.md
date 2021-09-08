@@ -4,7 +4,7 @@
 3. This project uses browserify to construct a single js file for insertion into the browser. This is because the Typescript is written as modules, and module imports do not work offline without a webserver running on localhost, as browsers do not allow CORS with local files.
 4. If you are using [Visual Studio Code](https://code.visualstudio.com/), the build process has been set up via tasks.json, so just hit shift+ctrl+B to build. Otherwise, with your working directory pointed at the root of your local repo, run the following commamnds one by one in your shell:
 ```
-browserify ts/App.ts -p [ tsify --noImplicitAny ] > js/main.js
+browserify ts/App.ts -p [ tsify --noImplicitAny ] > js/rf5planner.js
 sass css/rf5planner.scss css/rf5planner.css
 ```
 5. You will have to do this every time you want the changes in Typescript or Sass to be reflected in js/css. The first build command is from [tsify](https://github.com/TypeStrong/tsify).

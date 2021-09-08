@@ -1,7 +1,9 @@
 import ko = require('knockout');
 import RF5Character = require('./RF5Character');
+import Utils = require('./Utils');
 
 class RF5Planner {
+
     // Data
     readonly Item_ids:              object = {};
     readonly Category_ids:          object = {};
@@ -65,6 +67,9 @@ class RF5Planner {
     // readonly Lang: ko.Observable<"EN" | "JP">;
     readonly CharacterList: ko.ObservableArray<RF5Character>;
 
+    readonly Utils: Utils;
+
+
     protected ArrayToObject(obj: any, arr: number[]): void {
         for (const val of arr) {
             obj[val.toString()] = undefined;
@@ -72,6 +77,8 @@ class RF5Planner {
     }
 
     constructor(DATA: any) {
+
+        // Data
         this.ArrayToObject(this.Item_ids, DATA.item_ids);
         this.ArrayToObject(this.Category_ids, DATA.category_ids);
         this.ArrayToObject(this.Character_ids, DATA.character_ids);
@@ -118,7 +125,12 @@ class RF5Planner {
         this.Items = DATA.items;
         this.Characters = DATA.characters;
 
+        // UI
         this.CharacterList = ko.observableArray([]);
+
+        // Utils
+        this.Utils = new Utils();
+
 
         this.AddCharacter.call(this);
     }

@@ -38,7 +38,7 @@ class RF5Character {
         this.Shields     = ko.observableArray([]);
         this.Weapons     = ko.observableArray([]);
 
-        this.SearchStrings = [];
+        this.SearchStrings = ([]);
         this.ConstructSearchStrings.call(this);
 
         this.AddAccessory.call(this);
@@ -49,13 +49,18 @@ class RF5Character {
     }
 
     protected ConstructSearchStrings(): void {
-        let self: any = this;
+        let self = this;
         
         _.forOwn(self.Planner.Character_ids, function(value: any, key: any) {
             let item_id: string = key;
-            let name_en: string = self.Planner.Characters[item_id].name_en;
-            let name_jp: string = self.Planner.Characters[item_id].name_jp;
-            self.SearchStrings.push(item_id + ' - ' + name_jp + ' ' + name_en);
+            let name_en: string = (self.Planner.Characters as any)[item_id].name_en;
+            let name_jp: string = (self.Planner.Characters as any)[item_id].name_jp;
+            let html_fragment: string = self.Planner.Utils.ConstructAutocompleteListHtml(
+                item_id, name_en, name_jp, ""
+            );
+            self.SearchStrings.push(html_fragment);
+
+            // self.SearchStrings.push(item_id + ' - ' + name_jp + ' ' + name_en);
         });
         
        // self.SearchStrings.push("Foo");

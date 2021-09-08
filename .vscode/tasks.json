@@ -4,7 +4,7 @@
 		{
 			"label": "Browserify",
 			"type": "shell",
-			"command": "browserify ts/App.ts -p [ tsify --noImplicitAny ] > js/main.js",
+			"command": "browserify ts/App.ts -p [ tsify --noImplicitAny ] > js/rf5planner.js",
 			"problemMatcher": [],
 			"group": "build"
 		},
