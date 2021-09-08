@@ -1,6 +1,6 @@
 import ko = require('knockout');
 import RF5Character = require('./RF5Character');
-import Utils = require('./Utils');
+import Controller = require('./Controller');
 
 class RF5Planner {
 
@@ -51,23 +51,12 @@ class RF5Planner {
     readonly Items:                 object = {};
     readonly Characters:            object = {};
 
-    // UI
-
-    public FooTest: string[] = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
-    'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawai\uFEFF\u02BBi', 'Idaho', 'Illinois',
-    'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
-    'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
-    'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-    'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Puerto Rico',
-    'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-    'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin',
-    'Wyoming'];
-
-
+    // Model
     // readonly Lang: ko.Observable<"EN" | "JP">;
     readonly CharacterList: ko.ObservableArray<RF5Character>;
 
-    readonly Utils: Utils;
+    // Utils
+    readonly Controller: Controller;
 
 
     protected ArrayToObject(obj: any, arr: number[]): void {
@@ -125,11 +114,11 @@ class RF5Planner {
         this.Items = DATA.items;
         this.Characters = DATA.characters;
 
-        // UI
+        // Model
         this.CharacterList = ko.observableArray([]);
 
         // Utils
-        this.Utils = new Utils();
+        this.Controller = new Controller();
 
 
         this.AddCharacter.call(this);

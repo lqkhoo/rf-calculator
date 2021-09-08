@@ -8,8 +8,9 @@ import RF5Shield = require('./RF5Shield');
 import RF5Weapon = require('./RF5Weapon');
 import RF5Planner = require('./RF5Planner');
 import RF5StatVector = require('./RF5StatVector');
+import { basename } from 'path/posix';
 
-class RF5Character {
+class RF5Character extends RF5StatVector {
     
     readonly Planner:       RF5Planner;
 
@@ -22,14 +23,14 @@ class RF5Character {
     readonly Shields:       ko.ObservableArray<RF5Shield>;
     readonly Weapons:       ko.ObservableArray<RF5Weapon>;
 
-    readonly SearchStrings: string[];
+    readonly SearchStrings: any[];
 
 
     constructor(planner: RF5Planner) {
 
-        this.Planner     = planner;
+        super((planner.Characters as any)[0]); // Default character_id 0
 
-        this.Stats       = new RF5StatVector((this.Planner.Characters as any)[0]);
+        this.Planner     = planner;
 
         this.Accessories = ko.observableArray([]);
         this.Armors      = ko.observableArray([]);
@@ -55,10 +56,14 @@ class RF5Character {
             let item_id: string = key;
             let name_en: string = (self.Planner.Characters as any)[item_id].name_en;
             let name_jp: string = (self.Planner.Characters as any)[item_id].name_jp;
-            let html_fragment: string = self.Planner.Utils.ConstructAutocompleteListHtml(
-                item_id, name_en, name_jp, ""
+            let image_uri: string = (self.Planner.Characters as any)[item_id].image_uri;
+            let html_fragment: string = self.Planner.Controller.ConstructAutocompleteListHtml(
+                item_id, name_en, name_jp, image_uri
             );
-            self.SearchStrings.push(html_fragment);
+            self.SearchStrings.push({
+                'value': item_id,
+                'label': html_fragment
+            });
 
             // self.SearchStrings.push(item_id + ' - ' + name_jp + ' ' + name_en);
         });
@@ -87,12 +92,28 @@ class RF5Character {
         this.Weapons.push(new RF5Weapon(this));
     }
 
+    public ChangeId(id: string): void {
+        let ctx: any = (this.Planner.Characters as any)[id];
+        this.Context(ctx);
+    }
+
     // Handlers
     public OnCharacterSelect(event: any, ui: any): void {
         console.log(this);
         console.log(event);
         console.log(ui);
-    } 
+    }
+
+    // Expects this as instance of RF5Character
+    public AutoCompleteSelectHandler(event: any, ui: any): boolean {
+        let self = this;
+        let id: string = ui.item.value;
+        self.ChangeId(id);
+        console.log(event.target);
+        event.target.value = id;
+        
+        return false; // prevent jQueryUI from setting the field.
+    }
 
 }
 export = RF5Character;

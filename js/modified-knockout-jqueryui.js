@@ -1,4 +1,4 @@
-// Added 'html' option to autocomplete binding to interface with jqueryui-autocomplete-extension.
+// Added 'html' option (line 318) to autocomplete binding to interface with jqueryui-autocomplete-extension.
 
 /*! knockout-jqueryui - v2.2.3 - 10/07/2016
 * https://gvas.github.io/knockout-jqueryui/

@@ -16,7 +16,6 @@
         <script type="text/javascript" src="js/lib/knockout-autocomplete.js"></script>
         -->
         
-
     </head>
     <body>
 
@@ -24,7 +23,7 @@
             <div class="container">
                 <h4 class="title">Rune Factory 5 Gear Planner</h4>
                 <!-- Binding context window.RF5Planner -->
-                <ul id="character-tabs" class="nav nav-tabs" data-bind="foreach: CharacterList" role="tablist" >
+                <ul id="character-tabs" class="nav nav-tabs" data-bind="foreach: { data: CharacterList, as: 'RF5Character' }" role="tablist" >
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-' + $index() }, text: $index()" data-bs-toggle="tab" role="tab"></button>
                     </li>
@@ -40,7 +39,7 @@
         <main class="container">
             
             <!-- Binding context indow.RF5Planner -->
-            <div id="character-tab-pages" class="tab-content container" data-bind="foreach: CharacterList">
+            <div id="character-tab-pages" class="tab-content container" data-bind="foreach: { data: CharacterList, as: 'RF5Character' }">
 
                 <div class="tab-pane fade" data-bind="attr: { id: 'character-' + $index() }" role="tab-panel">
 
@@ -58,55 +57,27 @@
                                 <th colspan="13">STATUS</th>
                             </tr>
                             <tr>
-                                <th>ATK</th>
-                                <th>DEF</th>
-                                <th>MAT</th>
-                                <th>MDF</th>
-                                <th>STR</th>
-                                <th>INT</th>
-                                <th>VIT</th>
-                                <th>DIZ</th>
-                                <th>CRT</th>
-                                <th>KNO</th>
-                                <th>DUR</th>
-                                <th>STN</th>
-                                <th>PSN</th>
-                                <th>SEA</th>
-                                <th>PAR</th>
-                                <th>SLP</th>
-                                <th>FTG</th>
-                                <th>SCK</th>
-                                <th>FNT</th>
-                                <th>DRN</th>
-                                <th>FIR</th>
-                                <th>WTR</th>
-                                <th>EAR</th>
-                                <th>WND</th>
-                                <th>LGT</th>
-                                <th>DRK</th>
-                                <th>LOV</th>
-                                <th>NUL</th>
-                                <th>DIZ</th>
-                                <th>CRT</th>
-                                <th>KNO</th>
-                                <th>DUR</th>
-                                <th>STN</th>
-                                <th>PSN</th>
-                                <th>SEA</th>
-                                <th>PAR</th>
-                                <th>SLP</th>
-                                <th>FTG</th>
-                                <th>SCK</th>
-                                <th>FNT</th>
-                                <th>DRN</th>
+                                <th>ATK</th><th>DEF</th><th>MAT</th><th>MDF</th><th>STR</th><th>INT</th><th>VIT</th>
+                                <th>DIZ</th><th>CRT</th><th>KNO</th><th>DUR</th><th>STN</th><th>PSN</th><th>SEA</th><th>PAR</th><th>SLP</th><th>FTG</th><th>SCK</th><th>FNT</th><th>DRN</th>
+                                <th>FIR</th><th>WTR</th><th>EAR</th><th>WND</th><th>LGT</th><th>DRK</th><th>LOV</th><th>NUL</th>
+                                <th>DIZ</th><th>CRT</th><th>KNO</th><th>DUR</th><th>STN</th><th>PSN</th><th>SEA</th><th>PAR</th><th>SLP</th><th>FTG</th><th>SCK</th><th>FNT</th><th>DRN</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input id="test" type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0 }"></td>
-                                <script>
-                                </script>
-                                <td data-bind="text: SearchStrings"></td>
+                                <td data-bind="template: { name: 'TEMPLATE-character-icon-group', data: RF5Character }"></td>
+                            </tr>
+                            <tr>
+                                <td>General's set bonus</td>
+                            </tr>
+                            <tr>
+                                <td>Clover bonus</td>
+                            </tr>
+                            <tr>
+                                <td>Happy ring bonus</td>
+                            </tr>
+                            <tr>
+                                <td>Rare can bonus</td>
                             </tr>
                         </tbody>
                     </table>
@@ -127,5 +98,22 @@
         <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.min.js"></script>
         <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.min.js.map"></script>
         -->
+        
     </body>
+    <script type="text/html" id="TEMPLATE-character-icon-group">
+        <table class="icon-group">
+            <tbody>
+                <tr>
+                    <td rowspan="2" class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
+                    <td data-bind="text: Context().name_jp"></td>
+                    <td rowspan="2" class="icon-td">
+                        <input id="test" type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler.bind(RF5Character) }">
+                    </td>
+                </tr>
+                <tr>
+                    <td data-bind="text: Context().name_en" ></td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
 </xhtml>

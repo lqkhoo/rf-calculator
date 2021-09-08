@@ -56,17 +56,17 @@ h4.title {
   min-width: 25px;
   width: 25px;
 }
-.stats-table tr > th {
+.stats-table thead > tr > th {
   border-width: 0;
   box-shadow: inset 1px 0px 1px #CDCDCD;
 }
-.stats-table tr > th:last-child {
+.stats-table thead > tr > th:last-child {
   box-shadow: inset 1px 0px 1px #CDCDCD, inset -1px 0px 1px #CDCDCD;
 }
-.stats-table tr {
+.stats-table thead > tr {
   box-shadow: 0 1px 1px #CDCDCD;
 }
-.stats-table tr:first-child {
+.stats-table thead > tr:first-child {
   box-shadow: 0 1px 1px #CDCDCD, 0 -1px 1px #CDCDCD;
 }
 
@@ -75,5 +75,43 @@ ul.ui-autocomplete {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+table.icon-group {
+  width: 200px;
+  height: 40px;
+  table-layout: fixed;
+  border: 1px solid #aaaaaa;
+}
+table.icon-group tr, table.icon-group td, table.icon-group th {
+  border: none;
+}
+table.icon-group img {
+  width: 40px;
+  height: 40px;
+}
+table.icon-group td {
+  text-align: left;
+  padding-left: 5px;
+  font-size: 14px;
+}
+table.icon-group td.icon-td {
+  width: 20%;
+  padding: 5px 2px;
+}
+table.icon-group input {
+  width: 40px;
+  margin-left: -5px;
+}
+
+/*
+.icon-group-wrapper {
+
+    width: $icon-group-width;
+
+    > .icon-group {
+        position: absolute;
+    }
+}
+*/
 
 /*# sourceMappingURL=rf5planner.css.map */

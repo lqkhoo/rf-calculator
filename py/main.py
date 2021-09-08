@@ -8,7 +8,7 @@ from pprint import pprint
 
 @dataclass
 class RF5Category(object):
-    item_id: int
+    id: int
     name_en: str = ''
     name_jp: str = ''
     image_uri: str = ''
@@ -16,16 +16,17 @@ class RF5Category(object):
 
 @dataclass
 class RF5Character(object):
-    item_id: int # It can be confusing but keep it standardized.
+    id: int
     name_en: str = ''
     name_jp: str = ''
-    #TODO: chibi icon, image1/2
+    image_uri: str = ''
+    tachi_uri: str = ''
 
 
 @dataclass
 class RF5Item(object):
     """This is a 'row' in an item. Think of it as an upgrade ingredient."""
-    item_id: int
+    id: int
     name_en: str = ''
     name_jp: str = ''
     image_uri: str = ''
@@ -120,7 +121,7 @@ class TsvReader(object):
             for row in reader:
                 (id, name_en) = TsvReader.parse_name_tsv_row(row)
                 if id not in categories.keys():
-                    categories[id] = RF5Category(item_id=id)
+                    categories[id] = RF5Category(id=id)
                 category = categories[id]
                 category.name_en = name_en
         
@@ -147,7 +148,7 @@ class TsvReader(object):
             for row in reader:
                 (id, name_en) = TsvReader.parse_name_tsv_row(row)
                 if id not in items.keys():
-                    items[id] = RF5Item(item_id=id)
+                    items[id] = RF5Item(id=id)
                 item = items[id]
                 item.name_en = name_en
         
@@ -167,14 +168,14 @@ class TsvReader(object):
 
 
     @staticmethod
-    def read_character_names(item_ids: set[int], characters: dict[int, RF5Character]):
+    def read_character_names(character_ids: set[int], characters: dict[int, RF5Character]):
 
         with open('../tsv/map_characterid_to_english_name.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, name_en) = TsvReader.parse_name_tsv_row(row)
                 if id not in characters.keys():
-                    characters[id] = RF5Character(item_id=id)
+                    characters[id] = RF5Character(id=id)
                 item = characters[id]
                 item.name_en = name_en
         
@@ -187,7 +188,7 @@ class TsvReader(object):
                 item = characters[id]
                 item.name_jp = name_jp
 
-        for id in item_ids:
+        for id in character_ids:
             assert(id in characters)
 
         return characters
@@ -217,6 +218,18 @@ class TsvReader(object):
                 item = items[id]
                 item.image_uri = image_uri
 
+    @staticmethod
+    def read_character_images(character_ids: set[int], characters: dict[int, RF5Character]):
+        
+        with open('../tsv/map_characterid_to_image.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                (id, image_uri) = TsvReader.parse_name_tsv_row(row)
+                if id not in characters.keys():
+                    raise KeyError(id) # This should not happen.
+                character = characters[id]
+                character.image_uri = image_uri
+
 
 
     @staticmethod
@@ -225,8 +238,8 @@ class TsvReader(object):
         with open(filepath) as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                item_id: int = int(row[0])
-                item: RF5Item = items[item_id]
+                id: int = int(row[0])
+                item: RF5Item = items[id]
                 item.stat_ATK = int(row[1])
                 item.stat_DEF = int(row[2])
                 item.stat_MAT = int(row[3])
@@ -276,8 +289,8 @@ class TsvReader(object):
         with open('../tsv/map_itemid_to_rarity.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                item_id = int(row[0])
-                item = items[item_id]
+                id = int(row[0])
+                item = items[id]
                 item.rarity = int(row[1])
 
     @staticmethod
@@ -285,8 +298,8 @@ class TsvReader(object):
         with open('../tsv/map_itemid_to_rarity_stat_type.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                item_id = int(row[0])
-                item = items[item_id]
+                id = int(row[0])
+                item = items[id]
                 item.rarity_stat_type = row[1] # str
 
     @staticmethod
@@ -294,8 +307,8 @@ class TsvReader(object):
         with open('../tsv/map_itemid_to_weapon_element.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                item_id = int(row[0])
-                item = items[item_id]
+                id = int(row[0])
+                item = items[id]
                 item.element = row[1]
 
     @staticmethod
@@ -303,8 +316,8 @@ class TsvReader(object):
         with open('../tsv/map_itemid_to_crystal_element.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                item_id = int(row[0])
-                item = items[item_id]
+                id = int(row[0])
+                item = items[id]
                 item.element = row[1]
 
     @staticmethod
@@ -312,8 +325,8 @@ class TsvReader(object):
         with open('../tsv/map_itemid_to_magic.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
-                item_id = int(row[0])
-                item = items[item_id]
+                id = int(row[0])
+                item = items[id]
                 item.magic_charge1 = int(row[1])
                 item.magic_charge2 = int(row[2])
                 item.magic_charge3 = int(row[3])
@@ -377,6 +390,7 @@ if __name__ == '__main__':
 
     TsvReader.read_category_images(category_ids, categories)
     TsvReader.read_item_images(item_ids, items)
+    TsvReader.read_character_images(character_ids, characters)
 
     # Raw stats
     TsvReader.read_item_stats('../tsv/map_itemid_to_baseitem_stats_data.tsv', items)
