@@ -6,9 +6,10 @@
       "noImplicitAny": true,
       "strictNullChecks": true,
       "allowJs": true, // Allow js libs
-
       "sourceMap": true,
-
       "outDir": "js"
+    },
+    "paths": {
+      "*": ["types.d.ts"]
     }
   }

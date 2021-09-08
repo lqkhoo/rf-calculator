@@ -31,7 +31,7 @@
                     </li>
                     <!-- ko if: ($index() === ($parent.CharacterList().length-1)) -->
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bind="click: $root.AddCharacter.bind($root)">+Add</button>
+                        <button class="nav-link" data-bind="click: $root.AddCharacter">+Add</button>
                     </li>
                     <!-- /ko -->
                 </ul>
@@ -49,6 +49,7 @@
                         <thead>
                             <tr>
                                 <th rowspan="3"><div class="dummy-header"></div></th>
+                                <th rowspan="2" colspan="2"></th>
                                 <th colspan="20">OFFENSE</th>
                                 <th colspan="21">DEFENSE</th>
                             </tr>
@@ -59,6 +60,7 @@
                                 <th colspan="13">STATUS</th>
                             </tr>
                             <tr>
+                                <th>LVL</th><th>RAR</th>
                                 <th>ATK</th><th>DEF</th><th>MAT</th><th>MDF</th><th>STR</th><th>INT</th><th>VIT</th>
                                 <th>DIZ</th><th>CRT</th><th>KNO</th><th>DUR</th><th>STN</th><th>PSN</th><th>SEA</th><th>PAR</th><th>SLP</th><th>FTG</th><th>SCK</th><th>FNT</th><th>DRN</th>
                                 <th>FIR</th><th>WTR</th><th>EAR</th><th>WND</th><th>LGT</th><th>DRK</th><th>LOV</th><th>NUL</th>
@@ -118,7 +120,7 @@
                         <td rowspan="2" class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
                         <td data-bind="text: Context().name_jp"></td>
                         <td rowspan="2" class="icon-td">
-                            <input id="test" type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler.bind(RF5Character) }">
+                            <input id="test" type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
                         </td>
                     </tr>
                     <tr>
@@ -130,38 +132,40 @@
     </script>
 
 
-    <script type="text/html" id="TEMPLATE-weapon-group">
-        <tr>
-            <td style="background-color: #dddddd;">
-                <button class="group-header btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+$index()+'-weapon' }">Weapons</button>
-            </td>
-            <td colspan="41" style="background-color: #dddddd;">foobar</td>
-        </tr>
-        <!-- Can't do foreach + as RF5Weapon in a virtual element from some reason -->
-        <!-- ko template: { name: 'TEMPLATE-weapon', foreach: Weapons() } --><!-- /ko -->
-    </script>
-
-
-    <script type="text/html" id="TEMPLATE-weapon">
-        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$index() +'-weapon'">
-            <td data-bind="template: { name: 'TEMPLATE-weapon-icon-group' }"></td>
-        </tr>
-        <tr data-bind="class: 'char-'+ $parentContext.$index() +'-weapon-'+ $index() ">
-            <td>test foo bar</td>
+    <script type="text/html" id="TEMPLATE-baseitem-slot">
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$parentContext.$index() +'-'+ $data.UiClass +'-'+ $parentContext.$index()">
+            <td>baseitem slot</td>
         </tr>
     </script>
 
+    <script type="text/html" id="TEMPLATE-recipe-slot">
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$parentContext.$index() +'-'+ $data.UiClass +'-'+ $parentContext.$index()">
+            <td>recipe slot</td>
+        </tr>
+    </script>
 
-    <script type="text/html" id="TEMPLATE-weapon-icon-group">
-        <div class="icon-group weapon">
-            <input type="radio" data-bind="attr: { value: $index(), name: 'char-'+ $parentContext.$index() +'-weapon' }, clickBubble: false">
-            <button class="btn icon-group">
-                <table class="icon-group collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ $parentContext.$index() +'-weapon-' + $index() }">
+    <script type="text/html" id="TEMPLATE-arrange-slot">
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$parentContext.$index() +'-'+ $data.UiClass +'-'+ $parentContext.$index()">
+            <td>arrange slot</td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-upgrade-slot">
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$parentContext.$index() +'-'+ $data.UiClass +'-'+ $parentContext.$index()">
+            <td>upgrade slot</td>
+        </tr>
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-header-icon-group">
+        <div class="icon-group" data-bind="class: $data.UiClass">
+            <input type="radio" data-bind="attr: { value: $index(), name: 'char-'+ $parentContext.$index() +'-' + $data.UiClass }">
+            <button class="btn icon-group collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ $parentContext.$index() +'-'+ $data.UiClass +'-'+ $index() }, class: 'char-'+ $parentContext.$index() +'-'+ $data.UiClass +'-toggler'">
+                <table class="icon-group">
                     <tbody>
                         <tr>
                             <td rowspan="2" class="icon-td"><img data-bind="attr: { src: BaseItem().Context().image_uri }"/></td>
                             <td data-bind="text: BaseItem().Context().name_jp"></td>
-                            <td rowspan="2" class="icon-td"></td>
                         </tr>
                         <tr>
                             <td data-bind="text: BaseItem().Context().name_en"></td>
@@ -170,6 +174,35 @@
                 </table>
             </button>
         </div>
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-weapon-group">
+        <tr>
+            <td style="background-color: #dddddd;">
+                <button class="group-header btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+$index()+'-weapon' }, click: $root.OnWeaponGroupClickHandler.bind(event, $parentContext.$index())">Weapons</button>
+            </td>
+            <td colspan="41" style="background-color: #dddddd;">foobar</td>
+        </tr>
+        <!-- Can't do foreach + as RF5Weapon in a virtual element from some reason -->
+        <!-- ko template: { name: 'TEMPLATE-weapon', foreach: Weapons() } --><!-- /ko -->
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$index() +'-weapon-'+ $index()">
+            <td>+ Add weapon</td>
+        </tr>
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-weapon">
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$index() +'-weapon'">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
+        </tr>
+        <tr class="collapse" data-bind="class: 'char-'+ $parentContext.$index() +'-weapon-'+ $index()">
+            <td>weapon details</td>
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-baseitem-slot', data: BaseItem }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-recipe-slot', foreach: RecipeSlots } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-arrange-slot', foreach: ArrangeSlots } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-upgrade-slot', foreach: UpgradeSlots } --><!-- /ko -->
     </script>
 
 

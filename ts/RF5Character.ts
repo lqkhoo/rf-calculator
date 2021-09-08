@@ -40,20 +40,21 @@ class RF5Character extends RF5StatVector {
         this.Weapons     = ko.observableArray([]);
 
         this.SearchStrings = ([]);
-        this.ConstructSearchStrings.call(this);
+        this.ConstructSearchStrings();
 
-        this.AddAccessory.call(this);
-        this.AddArmor.call(this);
-        this.AddBoots.call(this);
-        this.AddShield.call(this);
-        this.AddWeapon.call(this);
+        this.AddAccessory();
+        this.AddArmor();
+        this.AddBoots();
+        this.AddShield();
+        this.AddWeapon();
 
-        this.AddWeapon.call(this);
-        this.AddWeapon.call(this);
-        this.AddWeapon.call(this);
+        // TODO remove
+        this.AddWeapon();
+        this.AddWeapon();
+        this.AddWeapon();
     }
 
-    protected ConstructSearchStrings(): void {
+    protected ConstructSearchStrings = (): void => {
         let self = this;
         
         _.forOwn(self.Planner.Character_ids, function(value: any, key: any) {
@@ -61,7 +62,7 @@ class RF5Character extends RF5StatVector {
             let name_en: string = (self.Planner.Characters as any)[item_id].name_en;
             let name_jp: string = (self.Planner.Characters as any)[item_id].name_jp;
             let image_uri: string = (self.Planner.Characters as any)[item_id].image_uri;
-            let html_fragment: string = self.Planner.Controller.ConstructAutocompleteListHtml(
+            let html_fragment: string = self.Planner.Utils.ConstructAutocompleteListHtml(
                 item_id, name_en, name_jp, image_uri
             );
             self.SearchStrings.push({
@@ -72,43 +73,36 @@ class RF5Character extends RF5StatVector {
             // self.SearchStrings.push(item_id + ' - ' + name_jp + ' ' + name_en);
         });
         
-       // self.SearchStrings.push("Foo");
-       // self.SearchStrings.push("Bar");
-       // self.SearchStrings.push("asdfjklsjdlncxuqwiuiop");
     }
 
-    public AddAccessory(): void {
+    public AddAccessory = (): void => {
         this.Accessories.push(new RF5Accessory(this));
     }
-    public AddArmor(): void {
+    public AddArmor = (): void => {
         this.Armors.push(new RF5Armor(this));
     }
-    public AddBoots(): void {
+    public AddBoots = (): void => {
         this.Boots.push(new RF5Boot(this));
     }
-    public AddHeadgear(): void {
+    public AddHeadgear = (): void => {
         this.Headgears.push(new RF5Headgear(this));
     }
-    public AddShield(): void {
+    public AddShield = (): void => {
         this.Shields.push(new RF5Shield(this));
     }
-    public AddWeapon(): void {
+    public AddWeapon = (): void => {
         this.Weapons.push(new RF5Weapon(this));
     }
 
-    public ChangeId(id: string): void {
+    public ChangeId = (id: string): void => {
         let ctx: any = (this.Planner.Characters as any)[id];
         this.Context(ctx);
     }
 
-    // Expects this as instance of RF5Character
-    public AutoCompleteSelectHandler(event: any, ui: any): boolean {
-        let self = this;
+    public AutoCompleteSelectHandler = (event: any, ui: any): boolean => {
         let id: string = ui.item.value;
-        self.ChangeId(id);
-        // console.log(event.target);
+        this.ChangeId(id);
         event.target.value = id;
-        
         return false; // prevent jQueryUI from setting the field.
     }
 

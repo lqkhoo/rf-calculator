@@ -1,6 +1,6 @@
 import ko = require('knockout');
 import RF5Character = require('./RF5Character');
-import Controller = require('./Controller');
+import Utils = require('./Utils');
 
 class RF5Planner {
 
@@ -56,7 +56,7 @@ class RF5Planner {
     readonly CharacterList: ko.ObservableArray<RF5Character>;
 
     // Utils
-    readonly Controller: Controller;
+    readonly Utils: Utils;
 
 
     protected ArrayToObject(obj: any, arr: number[]): void {
@@ -118,16 +118,52 @@ class RF5Planner {
         this.CharacterList = ko.observableArray([]);
 
         // Utils
-        this.Controller = new Controller();
+        this.Utils = new Utils();
 
 
         this.AddCharacter.call(this);
     }
 
-    public AddCharacter(): void {
+    public AddCharacter = (): void => {
         this.CharacterList.push(new RF5Character(this));
         console.log('add character');
     }
+
+
+    // Handlers
+
+    protected OnGroupClickHelper = (character_idx: string, ui_class: UiClass): boolean => {
+        var elems: NodeListOf<Element> = document.querySelectorAll('.char-'+ character_idx +'-'+ ui_class +'-toggler');
+        for (let i=0; i<elems.length; i++) {
+            const elem = elems[i];
+            if(! elem.classList.contains('collapsed')) {
+                (elem as HTMLElement).click();
+            }
+        }
+        return true;
+    }
+
+    // Collapses all sub-rows when weapon group is closed. No recursion necessary
+    // as there are only two layers.
+    public OnWeaponGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
+        return this.OnGroupClickHelper(character_idx, "weapon");
+    }
+    public OnShieldGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
+        return this.OnGroupClickHelper(character_idx, "shield");
+    }
+    public OnHeadgearGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
+        return this.OnGroupClickHelper(character_idx, "headgear");
+    }
+    public OnArmorGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
+        return this.OnGroupClickHelper(character_idx, "armor");
+    }
+    public OnBootsGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
+        return this.OnGroupClickHelper(character_idx, "boots");
+    }
+    public OnAccessoryGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
+        return this.OnGroupClickHelper(character_idx, "accessory");
+    }
+
 
 }
 export = RF5Planner;

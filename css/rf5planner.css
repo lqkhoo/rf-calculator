@@ -37,14 +37,14 @@ $container-max-widths: (
   box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.25);
 }
 
+/*
 .btn:active {
-  box-shadow: inset 0 0 3px #000000;
+    box-shadow: inset 0 0 3px #000000;
 }
-
 .btn:focus:active {
-  box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, 0.25), inset 0 0 5px #000000;
+    box-shadow: 0 0 0 0.1rem rgb(13 110 253 / 25%), inset 0 0 5px #000000;
 }
-
+*/
 body {
   background: #eeeeee;
 }
@@ -173,16 +173,5 @@ table.icon-group input {
 .group-header.collapsed::before {
   content: url("../bootstrap-icons/chevron-right.svg");
 }
-
-/*
-.icon-group-wrapper {
-
-    width: $icon-group-width;
-
-    > .icon-group {
-        position: absolute;
-    }
-}
-*/
 
 /*# sourceMappingURL=rf5planner.css.map */

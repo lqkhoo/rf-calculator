@@ -1,8 +1,8 @@
-import RF5StatVector = require('./RF5StatVector');
-class RF5SlotArrange extends RF5StatVector {
+import RF5Slot = require('./RF5Slot');
+class RF5SlotArrange extends RF5Slot {
 
-    constructor(ctx: any | undefined) {
-        super(ctx);
+    constructor(ctx: any | undefined, ui_class: UiClass) {
+        super(ctx, ui_class);
     }
 
 }
