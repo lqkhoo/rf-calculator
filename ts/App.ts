@@ -14,15 +14,8 @@ window.ko = ko; // having multiple ko instances will break things. Expose it thi
 window.addEventListener('DOMContentLoaded', function(event) {
     ko.applyBindings(window.RF5Planner, document.getElementById('character-tabs'));
     ko.applyBindings(window.RF5Planner, document.getElementById('character-tab-pages'));
+    window.RF5Planner.DisplayFirstCharacterSheet();
     console.log('Ready.');
 });
 
 
-/*
-$(document).ready(function() {
-    window.RF5Planner = new RF5Planner(DATA);
-    ko.applyBindings(window.RF5Planner, document.getElementById('character-tabs'));
-    ko.applyBindings(window.RF5Planner, document.getElementById('character-tab-pages'));
-    console.log('Ready.');
-});
-*/

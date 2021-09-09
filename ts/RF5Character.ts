@@ -8,10 +8,11 @@ import RF5Shield = require('./RF5Shield');
 import RF5Weapon = require('./RF5Weapon');
 import RF5Planner = require('./RF5Planner');
 import RF5StatVector = require('./RF5StatVector');
-import { basename } from 'path/posix';
 
 class RF5Character extends RF5StatVector {
     
+    static readonly DEFAULT_CHARACTER_ID: number = 0;
+
     readonly Planner:       RF5Planner;
 
     readonly Stats:         RF5StatVector;
@@ -26,9 +27,10 @@ class RF5Character extends RF5StatVector {
     readonly SearchStrings: any[];
 
 
-    constructor(planner: RF5Planner) {
+    constructor(planner: RF5Planner, character_id: number=RF5Character.DEFAULT_CHARACTER_ID) {
 
-        super((planner.Characters as any)[0]); // Default character_id 0
+        super((planner.Characters as any)[character_id]
+                || (planner.Characters as any)[RF5Character.DEFAULT_CHARACTER_ID]);
 
         this.Planner     = planner;
 
@@ -42,11 +44,12 @@ class RF5Character extends RF5StatVector {
         this.SearchStrings = ([]);
         this.ConstructSearchStrings();
 
-        this.AddAccessory();
-        this.AddArmor();
-        this.AddBoots();
-        this.AddShield();
         this.AddWeapon();
+        this.AddShield();
+        this.AddHeadgear();
+        this.AddArmor();
+        this.AddAccessory();
+        this.AddBoots();
 
         // TODO remove
         this.AddWeapon();
@@ -69,8 +72,6 @@ class RF5Character extends RF5StatVector {
                 'value': item_id,
                 'label': html_fragment
             });
-
-            // self.SearchStrings.push(item_id + ' - ' + name_jp + ' ' + name_en);
         });
         
     }
@@ -94,10 +95,12 @@ class RF5Character extends RF5StatVector {
         this.Weapons.push(new RF5Weapon(this));
     }
 
-    public ChangeId = (id: string): void => {
+    protected ChangeId = (id: string): void => {
         let ctx: any = (this.Planner.Characters as any)[id];
         this.Context(ctx);
     }
+
+    // Handlers
 
     public AutoCompleteSelectHandler = (event: any, ui: any): boolean => {
         let id: string = ui.item.value;

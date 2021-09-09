@@ -378,9 +378,16 @@ if __name__ == '__main__':
     is_mat_stones:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_stones.tsv')
     is_mat_strings:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_strings.tsv')
 
+    is_weapon:              set[int] = (is_eq_2hsword | is_eq_axe | is_eq_dualblades | is_eq_farm_axe
+                                        | is_eq_farm_fishingpole | is_eq_farm_hammer | is_eq_farm_hoe
+                                        | is_eq_farm_sickle | is_eq_farm_waterpot | is_eq_fists
+                                        | is_eq_hammer | is_eq_spear  | is_eq_staff | is_eq_sword)
+
     categories:   dict[int, RF5Category] = {}
     items:        dict[int, RF5Item] = {}
     characters:   dict[int, RF5Character] = {}
+
+
 
 
     # Names
@@ -456,6 +463,8 @@ if __name__ == '__main__':
         write_json(f, 'is_mat_sticksandstems', json.dumps(sorted(list(is_mat_sticksandstems))))
         write_json(f, 'is_mat_stones', json.dumps(sorted(list(is_mat_stones))))
         write_json(f, 'is_mat_strings', json.dumps(sorted(list(is_mat_strings))))
+
+        write_json(f, 'is_weapon', json.dumps(sorted(list(is_weapon))))
 
         write_json(f, 'categories', json_dump_object(categories))
         write_json(f, 'items', json_dump_object(items))

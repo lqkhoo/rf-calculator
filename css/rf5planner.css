@@ -58,6 +58,12 @@ h4.title {
   width: 100%;
 }
 
+#character-tabs li > button:last-child {
+  line-height: 50px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
 .dummy-header {
   width: 200px;
 }

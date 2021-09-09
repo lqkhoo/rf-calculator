@@ -31,7 +31,7 @@
                     </li>
                     <!-- ko if: ($index() === ($parent.CharacterList().length-1)) -->
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" data-bind="click: $root.AddCharacter">+Add</button>
+                        <button class="nav-link" data-bind="click: $root.AddCharacter">+</button>
                     </li>
                     <!-- /ko -->
                 </ul>
@@ -120,7 +120,7 @@
                         <td rowspan="2" class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
                         <td data-bind="text: Context().name_jp"></td>
                         <td rowspan="2" class="icon-td">
-                            <input id="test" type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
+                            <input type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
                         </td>
                     </tr>
                     <tr>
