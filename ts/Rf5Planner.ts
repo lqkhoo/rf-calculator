@@ -52,7 +52,8 @@ class RF5Planner {
     readonly Characters:            object = {};
 
     // Model
-    // readonly Lang: ko.Observable<"EN" | "JP">;
+    readonly IsEnglishSelected: ko.Observable<boolean> = ko.observable(true);
+    readonly IsJapaneseSelected: ko.Observable<boolean> = ko.observable(true);
     readonly CharacterList: ko.ObservableArray<RF5Character>;
 
     // Utils

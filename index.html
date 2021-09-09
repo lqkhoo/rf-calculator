@@ -21,7 +21,32 @@
 
         <nav class="navbar navbar-default">
             <div class="container">
-                <h4 class="title">Rune Factory 5 Gear Planner</h4>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2"><h4 class="title">Rune Factory 5 Gear Planner</h4></td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsEnglishSelected"/>
+                                        Show English
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsJapaneseSelected"/>
+                                        Show Japanese
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
                 <!-- Binding context window.RF5Planner -->
                 <ul id="character-tabs" class="nav nav-tabs" data-bind="foreach: { data: CharacterList }" role="tablist" >
                     <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
@@ -40,7 +65,7 @@
             </div>
         </nav>
 
-        <main id="main" class="container">
+        <main id="main" class="container" data-bind="css: { 'lang_en': IsEnglishSelected(), 'lang_jp': IsJapaneseSelected() }">
             
             <!-- Binding context indow.RF5Planner -->
             <div id="character-tab-pages" class="tab-content container" data-bind="foreach: { data: CharacterList }">
@@ -118,14 +143,14 @@
             <table class=>
                 <tbody>
                     <tr>
-                        <td rowspan="2" class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
-                        <td data-bind="text: Context().name_jp"></td>
-                        <td rowspan="2" class="icon-td">
+                        <td class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
+                        <td>
+                            <span class="lang en" data-bind="text: Context().name_jp"></span>
+                            <span class="lang jp" data-bind="text: Context().name_en"></span>
+                        </td>
+                        <td class="icon-td">
                             <input type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
                         </td>
-                    </tr>
-                    <tr>
-                        <td data-bind="text: Context().name_en" ></td>
                     </tr>
                 </tbody>
             </table>
@@ -145,9 +170,12 @@
             <table>
                 <tbody>
                     <tr>
-                        <td rowspan="2" data-bind="text: $data.slotType + slotIdx"></td>
-                        <td rowspan="2" class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.Context().image_uri }"/></td>
-                        <td data-bind="text: $data.RF5Slot.Context().name_jp + ' ' + $data.RF5Slot.Context().name_en"></td>
+                        <td data-bind="text: $data.slotType + slotIdx"></td>
+                        <td class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.Context().image_uri }"/></td>
+                        <td>
+                            <span class="lang jp" data-bind="text: $data.RF5Slot.Context().name_jp"></span>
+                            <span class="lang en" data-bind="text: $data.RF5Slot.Context().name_en"></span>
+                        </td>
                         <td><input type="text"/></td>
                     </tr>
                 </tbody>
@@ -158,16 +186,16 @@
 
     <script type="text/html" id="TEMPLATE-header-icon-group">
         <div class="icon-group" data-bind="class: $data.equipmentType">
-            <input type="radio" data-bind="attr: { value: $index(), name: 'char-'+ characterIdx +'-' + $data.equipmentType }">
+            <input type="radio" data-bind="attr: { name: 'char-'+ characterIdx +'-' + $data.equipmentType }">
             <button class="btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ $data.equipmentType +'-'+ $index() }, class: 'char-'+ characterIdx +'-'+ $data.equipmentType +'-toggler'">
                 <table>
                     <tbody>
                         <tr>
-                            <td rowspan="2" class="icon-td"><img class="icon" data-bind="attr: { src: $data.RF5Item.BaseItem().Context().image_uri }"/></td>
-                            <td data-bind="text: $data.RF5Item.BaseItem().Context().name_jp"></td>
-                        </tr>
-                        <tr>
-                            <td data-bind="text: $data.RF5Item.BaseItem().Context().name_en"></td>
+                            <td class="icon-td"><img class="icon" data-bind="attr: { src: $data.RF5Item.BaseItem().Context().image_uri }"/></td>
+                            <td>
+                                <span class="lang jp" data-bind="text: $data.RF5Item.BaseItem().Context().name_jp"></span>
+                                <span class="lang en" data-bind="text: $data.RF5Item.BaseItem().Context().name_en"></span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

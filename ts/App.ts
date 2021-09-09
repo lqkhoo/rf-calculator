@@ -12,8 +12,7 @@ declare var window: RF5Window;
 window.RF5Planner = new RF5Planner(DATA);
 window.ko = ko; // having multiple ko instances will break things. Expose it this way.
 window.addEventListener('DOMContentLoaded', function(event) {
-    ko.applyBindings(window.RF5Planner, document.getElementById('character-tabs'));
-    ko.applyBindings(window.RF5Planner, document.getElementById('character-tab-pages'));
+    ko.applyBindings(window.RF5Planner);
     window.RF5Planner.DisplayFirstCharacterSheet();
     console.log('Ready.');
 });
