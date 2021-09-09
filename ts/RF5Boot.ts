@@ -7,8 +7,9 @@ import RF5Character = require('./RF5Character');
     
 class RF5Boot extends RF5Item {
 
-    constructor(character: RF5Character) {
-        super(character, "boots");
+    constructor(character: RF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
+        super(character, "boots", item_id);
+
     }
 
 }

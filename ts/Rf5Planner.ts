@@ -129,10 +129,17 @@ class RF5Planner {
         console.log('add character');
     }
 
+    public DisplayFirstCharacterSheet = (): void => {
+        var elem: Element | null = document.querySelector('#character-tabs button');
+        if(elem !== null) {
+            (elem as HTMLElement).click();
+        }
+    }
+
 
     // Handlers
 
-    protected OnGroupClickHelper = (character_idx: string, ui_class: UiClass): boolean => {
+    protected OnGroupClickHelper = (character_idx: string, ui_class: UiClassType): boolean => {
         var elems: NodeListOf<Element> = document.querySelectorAll('.char-'+ character_idx +'-'+ ui_class +'-toggler');
         for (let i=0; i<elems.length; i++) {
             const elem = elems[i];

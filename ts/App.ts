@@ -17,5 +17,3 @@ window.addEventListener('DOMContentLoaded', function(event) {
     window.RF5Planner.DisplayFirstCharacterSheet();
     console.log('Ready.');
 });
-
-
