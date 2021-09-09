@@ -139,7 +139,7 @@ class RF5Planner {
 
     // Handlers
 
-    protected OnGroupClickHelper = (character_idx: string, ui_class: UiClassType): boolean => {
+    protected OnGroupClickHelper = (character_idx: string, ui_class: UiEquipmentType): boolean => {
         var elems: NodeListOf<Element> = document.querySelectorAll('.char-'+ character_idx +'-'+ ui_class +'-toggler');
         for (let i=0; i<elems.length; i++) {
             const elem = elems[i];

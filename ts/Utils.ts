@@ -7,32 +7,34 @@ class Utils {
 
     ConstructAutocompleteListHtml(id: string, name_en: string, name_jp: string, image_uri: string): string {
         const obj: any = {
-            table: {
-                '@class': 'icon-group',
-                tbody: {
-                    tr: [{
-                            td: [{
-                                    '@rowspan': '2',
-                                    '@class': 'icon-td',
-                                    img: {
-                                        '@src': image_uri
+            div: {
+                '@class': 'icon-group autoselect',
+                table: {
+                    tbody: {
+                        tr: [{
+                                td: [{
+                                        '@rowspan': '2',
+                                        '@class': 'icon-td',
+                                        img: {
+                                            '@src': image_uri
+                                        },
                                     },
-                                },
-                                {
-                                    '#text': name_jp
-                                },
-                                {
-                                    '@rowspan': '2',
-                                    '@class': 'icon-td',
-                                    '#text': id
-                                }]
-                        },
-                        {
-                            td: {
-                                '#text': name_en
+                                    {
+                                        '#text': name_jp
+                                    },
+                                    {
+                                        '@rowspan': '2',
+                                        '@class': 'icon-td',
+                                        '#text': id
+                                    }]
+                            },
+                            {
+                                td: {
+                                    '#text': name_en
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 export {};
 declare global {
-    type UiClassType = "weapon" | "shield" | "headgear" | "armor" | "boots" | "accessory";
+    type UiEquipmentType = "weapon" | "shield" | "headgear" | "armor" | "boots" | "accessory";
+    type UiSlotType = " " | "R" | "A" | "U";
 }
 

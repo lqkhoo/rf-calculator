@@ -51,9 +51,11 @@ $container-max-widths: (
 $backgroundcolor: #eeeeee;
 $floatTableBoxShadowColor: #CDCDCD;
 
-$icon-group-width: 200px;
+$icon-group-width: 240px;
 $icon-size: 40px;
+$icon-small-size: 24px;
 $icon-group-font-size: 14px;
+$icon-group-small-font-size: 10px;
 $border-indent-1: 5px;
 
 body {
@@ -126,15 +128,18 @@ ul.ui-autocomplete {
     overflow-x: hidden;
 }
 
-img.icon {
+.icon {
     width: $icon-size;
     height: $icon-size;
+}
+.icon.small {
+    width: $icon-small-size;
+    height: $icon-small-size;
 }
 
 label.icon-group {
     cursor: pointer;
     width: 100%;
-    // border: 1px solid #aaaaaa;
     border-bottom: 1px solid #aaaaaa;
 }
 
@@ -143,59 +148,95 @@ div.icon-group {
     border-bottom: 1px solid #aaaaaa;
 }
 
-button.icon-group {
-    padding: 0;
+.icon-group {
+
+    table {
+        width: 100%;
+        height: $icon-size;
+        display: table;
+        table-layout: fixed;
+    
+        tr, td, th {
+            border: none;
+        }
+        img {
+            width: $icon-size;
+            height: $icon-size;
+        }
+        td {
+            text-align: left;
+            padding-left: 5px;
+            font-size: $icon-group-font-size;
+        }
+        td.icon-td {
+            width: 20%;
+            padding: 5px 2px;
+        }
+    }
+
+    button {
+        padding: 0;
+    }
+
+    input[type="text"] {
+        width: 95%;
+    }
+
+    input[type="radio"] {
+        position: absolute;
+        right: 10px;
+        top: 35%;
+    }
+
 }
 
-.icon-group input[type="radio"] {
-    position: absolute;
-    right: 10px;
-    top: 35%;
+.icon-group.autoselect {
+    table {
+        width: $icon-group-width;
+
+        td {
+            font-size: 12px;
+        }
+    }
+
+    input[type="text"] {
+        width: $icon-size;
+        height: $icon-small-size;
+    }
+
 }
 
 .icon-group.weapon {
     border-left: 5px solid $color-weapon;
 }
 
-div > table.icon-group, label > table.icon-group {
-    width: 100%;
-    border: 0;
+.icon-group.small {
+
+    table {
+        height: $icon-small-size;
+        td {
+            font-size: $icon-group-small-font-size;
+            padding-top: 0;
+            padding-bottom: 0;
+            width: 5%;
+            padding: 0;
+        }
+        td:first-child {
+            width:5%;
+        }
+        td:nth-child(2) {
+            width: 12%;
+        }
+        td:nth-child(3) {
+            width: 76%;
+        }
+        td:last-child {
+            width: 17%;
+        }
+    }
+
 }
 
-table.icon-group {
-
-    width: $icon-group-width;
-    height: $icon-size;
-    // margin-right: $icon-size;
-    display: table;
-    table-layout: fixed;
-    // border: 1px solid #aaaaaa;
-
-    tr, td, th {
-        border: none;
-    }
-
-    img {
-        width: $icon-size;
-        height: $icon-size;
-    }
-
-    td {
-        text-align: left;
-        padding-left: 5px;
-        font-size: $icon-group-font-size;
-    }
-
-    td.icon-td {
-        width: 20%;
-        padding: 5px 2px;
-    }
-
-    input {
-        width: $icon-size;
-        margin-left: -5px;
-    }
-}
 
 
 $header-font-size: 14px;

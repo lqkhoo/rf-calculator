@@ -5,9 +5,9 @@ import RF5SlotUpgrade = require('./RF5SlotUpgrade');
 import RF5SlotBaseItem = require('./RF5SlotBaseItem');
 import RF5Character = require('./RF5Character');
 import RF5StatVector = require('./RF5StatVector');
-import IUiClass = require('./IUiClass');
+import IUiEquipment = require('./IUiEquipment');
 
-class RF5Item extends RF5StatVector implements IUiClass {
+class RF5Item extends RF5StatVector implements IUiEquipment {
 
     static readonly NSLOTS_RECIPE: number = 6;
     static readonly NSLOTS_ARRANGE: number = 3;
@@ -15,7 +15,7 @@ class RF5Item extends RF5StatVector implements IUiClass {
 
     static readonly DEFAULT_ITEM_ID: number = 0;
 
-    readonly UiClass: UiClassType;
+    readonly UiEquipmentType: UiEquipmentType;
 
     readonly Character: ko.Observable<RF5Character>;
 
@@ -24,13 +24,13 @@ class RF5Item extends RF5StatVector implements IUiClass {
     readonly ArrangeSlots: ko.ObservableArray<RF5SlotArrange>;
     readonly UpgradeSlots: ko.ObservableArray<RF5SlotUpgrade>;
 
-    constructor(character: RF5Character, ui_class: UiClassType, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
+    constructor(character: RF5Character, ui_class: UiEquipmentType, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
 
         super((character.Planner.Items as any)[item_id]
                 || (character.Planner.Items as any)[RF5Item.DEFAULT_ITEM_ID]);
 
         this.Character = ko.observable(character);
-        this.UiClass = ui_class;
+        this.UiEquipmentType = ui_class;
 
         this.BaseItem = ko.observable(new RF5SlotBaseItem(this, ui_class));
         this.RecipeSlots = ko.observableArray([]);
