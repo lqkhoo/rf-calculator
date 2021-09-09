@@ -27,6 +27,7 @@ class RF5Planner {
     readonly Is_eq_spear:           object = {};
     readonly Is_eq_staff:           object = {};
     readonly Is_eq_sword:           object = {};
+    readonly Is_eq_weapon:             object = {};
     readonly Is_mat_2foldsteel:     object = {};
     readonly Is_mat_10foldsteel:    object = {};
     readonly Is_mat_clawsandfangs:  object = {};
@@ -91,6 +92,7 @@ class RF5Planner {
         this.ArrayToObject(this.Is_eq_spear, DATA.is_eq_spear);
         this.ArrayToObject(this.Is_eq_staff, DATA.is_eq_staff);
         this.ArrayToObject(this.Is_eq_sword, DATA.is_eq_sword);
+        this.ArrayToObject(this.Is_eq_weapon, DATA.is_eq_weapon);
         this.ArrayToObject(this.Is_mat_2foldsteel, DATA.is_mat_2foldsteel);
         this.ArrayToObject(this.Is_mat_10foldsteel, DATA.is_mat_10foldsteel);
         this.ArrayToObject(this.Is_mat_clawsandfangs, DATA.is_mat_clawsandfangs);
@@ -140,7 +142,7 @@ class RF5Planner {
 
     // Handlers
 
-    protected OnGroupClickHelper = (character_idx: string, ui_class: UiEquipmentType): boolean => {
+    protected OnGroupClickHelper = (character_idx: string, ui_class: EquipmentType): boolean => {
         var elems: NodeListOf<Element> = document.querySelectorAll('.char-'+ character_idx +'-'+ ui_class +'-toggler');
         for (let i=0; i<elems.length; i++) {
             const elem = elems[i];

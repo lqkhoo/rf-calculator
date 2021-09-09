@@ -52,7 +52,7 @@
                     <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-'+ characterIdx }" data-bs-toggle="tab" role="tab">
-                                <img class="icon" data-bind="attr: { src: Context().image_uri }"/>
+                                <img class="icon" data-bind="attr: { src: image_uri }"/>
                             </button>
                         </li>
                         <!-- ko if: ($index() === ($parent.CharacterList().length-1)) -->
@@ -143,13 +143,13 @@
             <table class=>
                 <tbody>
                     <tr>
-                        <td class="icon-td"><img data-bind="attr: { src: Context().image_uri }"/></td>
+                        <td class="icon-td"><img data-bind="attr: { src: image_uri }"/></td>
                         <td>
-                            <span class="lang en" data-bind="text: Context().name_jp"></span>
-                            <span class="lang jp" data-bind="text: Context().name_en"></span>
+                            <span class="lang jp" data-bind="text: name_jp"></span>
+                            <span class="lang en" data-bind="text: name_en"></span>
                         </td>
                         <td class="icon-td">
-                            <input type="text" data-bind="autocomplete: { source: SearchStrings, html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
+                            <input type="text" data-bind="autocomplete: { source: GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
                         </td>
                     </tr>
                 </tbody>
@@ -171,12 +171,14 @@
                 <tbody>
                     <tr>
                         <td data-bind="text: $data.slotType + slotIdx"></td>
-                        <td class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.Context().image_uri }"/></td>
+                        <td class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.image_uri }"/></td>
                         <td>
-                            <span class="lang jp" data-bind="text: $data.RF5Slot.Context().name_jp"></span>
-                            <span class="lang en" data-bind="text: $data.RF5Slot.Context().name_en"></span>
+                            <span class="lang jp" data-bind="text: $data.RF5Slot.name_jp"></span>
+                            <span class="lang en" data-bind="text: $data.RF5Slot.name_en"></span>
                         </td>
-                        <td><input type="text"/></td>
+                        <td>
+                            <input type="text" data-bind="autocomplete: { source: $data.RF5Slot.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.AutoCompleteSelectHandler }">
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -191,10 +193,10 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td class="icon-td"><img class="icon" data-bind="attr: { src: $data.RF5Item.BaseItem().Context().image_uri }"/></td>
+                            <td class="icon-td"><img class="icon" data-bind="attr: { src: $data.RF5Item.BaseItem().image_uri }"/></td>
                             <td>
-                                <span class="lang jp" data-bind="text: $data.RF5Item.BaseItem().Context().name_jp"></span>
-                                <span class="lang en" data-bind="text: $data.RF5Item.BaseItem().Context().name_en"></span>
+                                <span class="lang jp" data-bind="text: $data.RF5Item.BaseItem().name_jp"></span>
+                                <span class="lang en" data-bind="text: $data.RF5Item.BaseItem().name_en"></span>
                             </td>
                         </tr>
                     </tbody>

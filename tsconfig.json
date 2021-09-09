@@ -4,6 +4,7 @@
       "module": "CommonJS",
       "esModuleInterop": true,
       "noImplicitAny": true,
+      "noImplicitOverride": true,
       "strictNullChecks": true,
       "allowJs": true, // Allow js libs
       "sourceMap": true,

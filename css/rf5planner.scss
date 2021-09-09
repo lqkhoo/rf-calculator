@@ -37,7 +37,7 @@ $floatTableBoxShadowColor: #CDCDCD;
 
 $icon-group-width: 200px;
 $icon-size: 40px;
-$icon-small-size: 24px;
+$icon-small-size: 30px;
 $icon-group-font-size: 14px;
 $icon-group-small-font-size: 11px;
 $border-indent-1: 5px;
@@ -237,13 +237,13 @@ div.icon-group {
             width:8%;
         }
         td:nth-child(2) {
-            width: 14%;
+            width: 16%;
         }
         td:nth-child(3) {
-            width: 62%;
+            width: 56%;
         }
         td:last-child {
-            width: 16%;
+            width: 20%;
         }
     }
 

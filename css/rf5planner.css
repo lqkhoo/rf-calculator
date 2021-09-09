@@ -114,8 +114,8 @@ ul.ui-autocomplete {
 }
 
 .icon.small {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
 }
 
 label.icon-group {
@@ -175,7 +175,7 @@ div.icon-group {
 }
 .icon-group.autoselect input[type=text] {
   width: 40px;
-  height: 24px;
+  height: 30px;
 }
 
 .icon-group.weapon {
@@ -183,7 +183,7 @@ div.icon-group {
 }
 
 .icon-group.small table {
-  height: 24px;
+  height: 30px;
 }
 .icon-group.small table td {
   font-size: 11px;
@@ -195,13 +195,13 @@ div.icon-group {
   width: 8%;
 }
 .icon-group.small table td:nth-child(2) {
-  width: 14%;
+  width: 16%;
 }
 .icon-group.small table td:nth-child(3) {
-  width: 62%;
+  width: 56%;
 }
 .icon-group.small table td:last-child {
-  width: 16%;
+  width: 20%;
 }
 
 .group-header {

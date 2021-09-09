@@ -1,4 +1,4 @@
 interface IUiEquipment {
-    readonly UiEquipmentType: UiEquipmentType;
+    readonly EquipmentType: EquipmentType;
 }
 export = IUiEquipment;

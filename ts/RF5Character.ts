@@ -24,8 +24,7 @@ class RF5Character extends RF5StatVector {
     readonly Shields:       ko.ObservableArray<RF5Shield>;
     readonly Weapons:       ko.ObservableArray<RF5Weapon>;
 
-    readonly SearchStrings: any[];
-
+    static readonly SearchStringsCache: any[] = [];
 
     constructor(planner: RF5Planner, character_id: number=RF5Character.DEFAULT_CHARACTER_ID) {
 
@@ -41,9 +40,6 @@ class RF5Character extends RF5StatVector {
         this.Shields     = ko.observableArray([]);
         this.Weapons     = ko.observableArray([]);
 
-        this.SearchStrings = ([]);
-        this.ConstructSearchStrings();
-
         this.AddWeapon();
         this.AddShield();
         this.AddHeadgear();
@@ -55,25 +51,6 @@ class RF5Character extends RF5StatVector {
         this.AddWeapon();
         this.AddWeapon();
         this.AddWeapon();
-    }
-
-    protected ConstructSearchStrings = (): void => {
-        let self = this;
-        
-        _.forOwn(self.Planner.Character_ids, function(value: any, key: any) {
-            let item_id: string = key;
-            let name_en: string = (self.Planner.Characters as any)[item_id].name_en;
-            let name_jp: string = (self.Planner.Characters as any)[item_id].name_jp;
-            let image_uri: string = (self.Planner.Characters as any)[item_id].image_uri;
-            let html_fragment: string = self.Planner.Utils.ConstructAutocompleteListHtml(
-                item_id, name_en, name_jp, image_uri
-            );
-            self.SearchStrings.push({
-                'value': item_id,
-                'label': html_fragment
-            });
-        });
-        
     }
 
     public AddAccessory = (): void => {
@@ -98,6 +75,31 @@ class RF5Character extends RF5StatVector {
     protected ChangeId = (id: string): void => {
         let ctx: any = (this.Planner.Characters as any)[id];
         this.Context(ctx);
+    }
+
+    protected CacheSearchStrings = (): void => {
+
+        let self = this;
+        _.forOwn(self.Planner.Character_ids, function(value: any, key: any) {
+            let item_id: string = key;
+            let name_en: string = (self.Planner.Characters as any)[item_id].name_en;
+            let name_jp: string = (self.Planner.Characters as any)[item_id].name_jp;
+            let image_uri: string = (self.Planner.Characters as any)[item_id].image_uri;
+            let html_fragment: string = self.Planner.Utils.ConstructAutocompleteListHtml(
+                item_id, name_en, name_jp, image_uri
+            );
+            RF5Character.SearchStringsCache.push({
+                'value': item_id,
+                'label': html_fragment
+            });
+        });  
+    }
+
+    public GetSearchStrings = (): any[] => {
+        if(RF5Character.SearchStringsCache.length === 0) {
+            this.CacheSearchStrings();
+        }
+        return RF5Character.SearchStringsCache;
     }
 
     // Handlers

@@ -357,6 +357,11 @@ if __name__ == '__main__':
     is_eq_spear:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_spear.tsv')
     is_eq_staff:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_staff.tsv')
     is_eq_sword:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_sword.tsv')
+    is_eq_weapon:           set[int] = (is_eq_2hsword | is_eq_axe | is_eq_dualblades | is_eq_farm_axe
+                                        | is_eq_farm_fishingpole | is_eq_farm_hammer | is_eq_farm_hoe
+                                        | is_eq_farm_sickle | is_eq_farm_waterpot | is_eq_fists
+                                        | is_eq_hammer | is_eq_spear  | is_eq_staff | is_eq_sword)
+
     is_mat_2foldsteel:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_2foldsteel.tsv')
     is_mat_10foldsteel:     set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_10foldsteel.tsv')
     is_mat_clawsandfangs:   set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_clawsandfangs.tsv')
@@ -378,10 +383,6 @@ if __name__ == '__main__':
     is_mat_stones:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_stones.tsv')
     is_mat_strings:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_strings.tsv')
 
-    is_weapon:              set[int] = (is_eq_2hsword | is_eq_axe | is_eq_dualblades | is_eq_farm_axe
-                                        | is_eq_farm_fishingpole | is_eq_farm_hammer | is_eq_farm_hoe
-                                        | is_eq_farm_sickle | is_eq_farm_waterpot | is_eq_fists
-                                        | is_eq_hammer | is_eq_spear  | is_eq_staff | is_eq_sword)
 
     categories:   dict[int, RF5Category] = {}
     items:        dict[int, RF5Item] = {}
@@ -443,6 +444,8 @@ if __name__ == '__main__':
         write_json(f, 'is_eq_spear', json.dumps(sorted(list(is_eq_spear))))
         write_json(f, 'is_eq_staff', json.dumps(sorted(list(is_eq_staff))))
         write_json(f, 'is_eq_sword', json.dumps(sorted(list(is_eq_sword))))
+        write_json(f, 'is_eq_weapon', json.dumps(sorted(list(is_eq_weapon))))
+
         write_json(f, 'is_mat_2foldsteel', json.dumps(sorted(list(is_mat_2foldsteel))))
         write_json(f, 'is_mat_10foldsteel', json.dumps(sorted(list(is_mat_10foldsteel))))
         write_json(f, 'is_mat_clawsandfangs', json.dumps(sorted(list(is_mat_clawsandfangs))))
@@ -464,7 +467,6 @@ if __name__ == '__main__':
         write_json(f, 'is_mat_stones', json.dumps(sorted(list(is_mat_stones))))
         write_json(f, 'is_mat_strings', json.dumps(sorted(list(is_mat_strings))))
 
-        write_json(f, 'is_weapon', json.dumps(sorted(list(is_weapon))))
 
         write_json(f, 'categories', json_dump_object(categories))
         write_json(f, 'items', json_dump_object(items))
