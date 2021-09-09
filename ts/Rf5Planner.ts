@@ -142,7 +142,7 @@ class RF5Planner {
 
     // Handlers
 
-    protected OnGroupClickHelper = (character_idx: string, ui_class: EquipmentType): boolean => {
+    public OnGroupHeaderClickHandler = (character_idx: string, ui_class: EquipmentType): boolean => {
         var elems: NodeListOf<Element> = document.querySelectorAll('.char-'+ character_idx +'-'+ ui_class +'-toggler');
         for (let i=0; i<elems.length; i++) {
             const elem = elems[i];
@@ -151,27 +151,6 @@ class RF5Planner {
             }
         }
         return true;
-    }
-
-    // Collapses all sub-rows when weapon group is closed. No recursion necessary
-    // as there are only two layers.
-    public OnWeaponGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
-        return this.OnGroupClickHelper(character_idx, "weapon");
-    }
-    public OnShieldGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
-        return this.OnGroupClickHelper(character_idx, "shield");
-    }
-    public OnHeadgearGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
-        return this.OnGroupClickHelper(character_idx, "headgear");
-    }
-    public OnArmorGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
-        return this.OnGroupClickHelper(character_idx, "armor");
-    }
-    public OnBootsGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
-        return this.OnGroupClickHelper(character_idx, "boots");
-    }
-    public OnAccessoryGroupClickHandler = (character_idx: string, event: any, ui: any): boolean => {
-        return this.OnGroupClickHelper(character_idx, "accessory");
     }
 
 

@@ -46,11 +46,6 @@ class RF5Character extends RF5StatVector {
         this.AddArmor();
         this.AddAccessory();
         this.AddBoots();
-
-        // TODO remove
-        this.AddWeapon();
-        this.AddWeapon();
-        this.AddWeapon();
     }
 
     public AddAccessory = (): void => {

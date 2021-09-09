@@ -96,13 +96,65 @@
                         <tbody>
                             <!-- ko template: { name: 'TEMPLATE-character', data: RF5Character } --><!-- /ko -->
                             
-                            <!-- ko template: { name: 'TEMPLATE-weapon-group', data: RF5Character }--><!-- /ko -->
-                            
-                            <!-- ko template: { name: 'TEMPLATE-shield', foreach: Shields() } --><!-- /ko -->
-                            <!-- ko template: { name: 'TEMPLATE-headgear', foreach: Headgears() } --><!-- /ko -->
-                            <!-- ko template: { name: 'TEMPLATE-armor', foreach: Armors() } --><!-- /ko -->
-                            <!-- ko template: { name: 'TEMPLATE-boots', foreach: Boots() } --><!-- /ko -->
-                            <!-- ko template: { name: 'TEMPLATE-accessory', foreach: Accessories() } --><!-- /ko -->
+                            <!-- ko let: { equipmentType: 'weapon' } -->
+                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Weapons', name_jp: '\u6b66\u5668' } } --><!-- /ko -->
+                                <!-- ko foreach: Weapons() -->
+                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
+                                        <!-- ko template: { name: 'TEMPLATE-weapon', data: RF5Item }--><!-- /ko -->
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
+                            <!-- /ko -->
+
+                            <!-- ko let: { equipmentType: 'shield' } -->
+                            <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Shields', name_jp: '\u76fe' } } --><!-- /ko -->
+                            <!-- ko foreach: Shields() -->
+                                <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
+                                    <!-- ko template: { name: 'TEMPLATE-shield', data: RF5Item }--><!-- /ko -->
+                                <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
+                            <!-- /ko -->
+
+                            <!-- ko let: { equipmentType: 'headgear' } -->
+                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Headgears', name_jp: '\u982d\u88c5\u5099' } } --><!-- /ko -->
+                                <!-- ko foreach: Headgears() -->
+                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
+                                        <!-- ko template: { name: 'TEMPLATE-headgear', data: RF5Item }--><!-- /ko -->
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
+                            <!-- /ko -->
+
+                            <!-- ko let: { equipmentType: 'armor' } -->
+                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Armor', name_jp: '\u4f53\u88c5\u5099' } } --><!-- /ko -->
+                                <!-- ko foreach: Armors() -->
+                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
+                                        <!-- ko template: { name: 'TEMPLATE-armor', data: RF5Item }--><!-- /ko -->
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
+                            <!-- /ko -->
+
+                            <!-- ko let: { equipmentType: 'boots' } -->
+                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Boots', name_jp: '\u8db3\u88c5\u5099' } } --><!-- /ko -->
+                                <!-- ko foreach: Boots() -->
+                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
+                                        <!-- ko template: { name: 'TEMPLATE-boots', data: RF5Item }--><!-- /ko -->
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
+                            <!-- /ko -->
+
+                            <!-- ko let: { equipmentType: 'accessory' } -->
+                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Accessories', name_jp: '\u30a2\u30af\u30bb\u30b5\u30ea\u30fc' } } --><!-- /ko -->
+                                <!-- ko foreach: Accessories() -->
+                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
+                                        <!-- ko template: { name: 'TEMPLATE-accessory', data: RF5Item }--><!-- /ko -->
+                                    <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
+                            <!-- /ko -->
 
                         </tbody>
                     </table>
@@ -121,7 +173,24 @@
 
     <script type="text/html" id="TEMPLATE-character">
         <tr>
-            <td data-bind="template: { name: 'TEMPLATE-character-icon-group', data: RF5Character }"></td>
+            <td>
+                <label class="icon-group character">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="icon-td"><img data-bind="attr: { src: image_uri }"/></td>
+                                <td>
+                                    <span class="lang jp" data-bind="text: name_jp"></span>
+                                    <span class="lang en" data-bind="text: name_en"></span>
+                                </td>
+                                <td class="icon-td">
+                                    <input type="text" data-bind="autocomplete: { source: GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </label>
+            </td>
         </tr>
         <tr>
             <td>General's set bonus</td>
@@ -138,58 +207,10 @@
     </script>
 
 
-    <script type="text/html" id="TEMPLATE-character-icon-group">
-        <label class="icon-group character">
-            <table class=>
-                <tbody>
-                    <tr>
-                        <td class="icon-td"><img data-bind="attr: { src: image_uri }"/></td>
-                        <td>
-                            <span class="lang jp" data-bind="text: name_jp"></span>
-                            <span class="lang en" data-bind="text: name_en"></span>
-                        </td>
-                        <td class="icon-td">
-                            <input type="text" data-bind="autocomplete: { source: GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </label>
-    </script>
-
-
-    <script type="text/html" id="TEMPLATE-slot">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
-            <td data-bind="template: { name: 'TEMPLATE-slot-icon-group' }"></td>
-        </tr>
-    </script>
-
-
-    <script type="text/html" id="TEMPLATE-slot-icon-group">
-        <label class="icon-group small" data-bind="class: $data.uiEquipmentType">
-            <table>
-                <tbody>
-                    <tr>
-                        <td data-bind="text: $data.slotType + slotIdx"></td>
-                        <td class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.image_uri }"/></td>
-                        <td>
-                            <span class="lang jp" data-bind="text: $data.RF5Slot.name_jp"></span>
-                            <span class="lang en" data-bind="text: $data.RF5Slot.name_en"></span>
-                        </td>
-                        <td>
-                            <input type="text" data-bind="autocomplete: { source: $data.RF5Slot.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.AutoCompleteSelectHandler }">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </label>
-    </script>
-
-
     <script type="text/html" id="TEMPLATE-header-icon-group">
-        <div class="icon-group" data-bind="class: $data.equipmentType">
-            <input type="radio" data-bind="attr: { name: 'char-'+ characterIdx +'-' + $data.equipmentType }">
-            <button class="btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ $data.equipmentType +'-'+ $index() }, class: 'char-'+ characterIdx +'-'+ $data.equipmentType +'-toggler'">
+        <div class="icon-group" data-bind="class: equipmentType">
+            <input type="radio" data-bind="attr: { name: 'char-'+ characterIdx +'-'+ equipmentType }">
+            <button class="btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx }, class: 'char-'+ characterIdx +'-'+ equipmentType +'-toggler'">
                 <table>
                     <tbody>
                         <tr>
@@ -206,82 +227,130 @@
     </script>
 
 
-    <script type="text/html" id="TEMPLATE-weapon-group">
+    <script type="text/html" id="TEMPLATE-group-header">
         <tr>
             <td style="background-color: #dddddd;">
-                <button class="group-header btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-weapon' }, click: $root.OnWeaponGroupClickHandler.bind(event, characterIdx)">Weapons</button>
+                <button class="group-header btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ equipmentType }, click: $root.OnGroupHeaderClickHandler.bind(event, characterIdx, equipmentType)">
+                    <span class="lang jp" data-bind="text: name_jp"></span>
+                    <span class="lang en" data-bind="text: name_en"></span>
+                </button>
             </td>
             <td colspan="41" style="background-color: #dddddd;">foobar</td>
         </tr>
-        <!-- ko foreach: Weapons() -->
-            <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
-                <!-- ko template: { name: 'TEMPLATE-weapon', data: RF5Item }--><!-- /ko -->
-            <!-- /ko -->
-        <!-- /ko -->  
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-weapon-'+ $index()">
-            <td>+ Add weapon</td>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-group-footer">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType">
+            <td>+</td>
         </tr>
     </script>
 
+
+
+    <!-- Mostly text-replace for 'weapon', 'shield', 'headgear', 'armor', 'boots', 'accessories' -->
 
     <script type="text/html" id="TEMPLATE-weapon">
         <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-weapon'">
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'weapon' } }"></td>
         </tr>
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-weapon-'+ equipmentIdx">
+        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'weapon' } }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-shield">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-shield'">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'shield' } }"></td>
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'shield' } }--><!-- /ko -->
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
+            <td>Has scale item</td>
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-headgear">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-headgear'">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'headgear' } }"></td>
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'headgear' } }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-armor">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-armor'">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'armor' } }"></td>
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'armor' } }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-boots">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-boots'">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'boots' } }"></td>
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'boots' } }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-accessory">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-accessory'">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'accessory' } }"></td>
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'accessory' } }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
+    </script>
+
+    
+    <script type="text/html" id="TEMPLATE-level-rarity-bonus">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
             <td>rarity bonus</td>
         </tr>
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-weapon-'+ equipmentIdx">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
             <td>level bonus</td>
         </tr>
-        <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: BaseItem(), equipmentType: 'weapon', slotType: 'B', slotIdx: ' ' } }--><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-equipment-slots">
+        <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: BaseItem(), slotType: 'B', slotIdx: ' ' } }--><!-- /ko -->
         <!-- ko foreach: { data: RecipeSlots } -->
             <!-- ko let: { slotIdx: $index() } -->
-                <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: $data, equipmentType: 'weapon', slotType: 'R' } } --><!-- /ko -->
+                <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: $data, slotType: 'R' } } --><!-- /ko -->
             <!-- /ko -->
         <!-- /ko -->
         <!-- ko foreach: { data: ArrangeSlots } -->
             <!-- ko let: { slotIdx: $index() } -->
-                <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: $data, equipmentType: 'weapon', slotType: 'A' } } --><!-- /ko -->
+                <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: $data, slotType: 'A' } } --><!-- /ko -->
             <!-- /ko -->
         <!-- /ko -->
         <!-- ko foreach: { data: UpgradeSlots } -->
             <!-- ko let: { slotIdx: $index() } -->
-                <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: $data, equipmentType: 'weapon', slotType: 'U' } } --><!-- /ko -->
+                <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: $data, slotType: 'U' } } --><!-- /ko -->
             <!-- /ko -->
         <!-- /ko -->
     </script>
 
-
-    <script type="text/html" id="TEMPLATE-shield">
-        <tr>
-            <td>shield</td>
+    <script type="text/html" id="TEMPLATE-slot">
+        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
+            <td>
+                <label class="icon-group small" data-bind="class: $data.uiEquipmentType">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td data-bind="text: $data.slotType + slotIdx"></td>
+                                <td class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.image_uri }"/></td>
+                                <td>
+                                    <span class="lang jp" data-bind="text: $data.RF5Slot.name_jp"></span>
+                                    <span class="lang en" data-bind="text: $data.RF5Slot.name_en"></span>
+                                </td>
+                                <td>
+                                    <input type="text" data-bind="autocomplete: { source: $data.RF5Slot.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.AutoCompleteSelectHandler }">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </label>
+            </td>
         </tr>
     </script>
-
-    <script type="text/html" id="TEMPLATE-headgear">
-        <tr>
-            <td>headgear</td>
-        </tr>
-    </script>
-
-    <script type="text/html" id="TEMPLATE-armor">
-        <tr>
-            <td>armor</td>
-        </tr>
-    </script>
-
-    <script type="text/html" id="TEMPLATE-boots">
-        <tr>
-            <td>boots</td>
-        </tr>
-    </script>
-
-    <script type="text/html" id="TEMPLATE-accessory">
-        <tr>
-            <td>accessory</td>
-        </tr>
-    </script>
-
 
 </xhtml>
