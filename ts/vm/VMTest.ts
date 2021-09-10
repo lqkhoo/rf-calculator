@@ -3,21 +3,27 @@ import _ = require('lodash');
 import VMRF5Slot = require('./VMRF5Slot');
 import RF5SlotRecipe = require('../model/RF5SlotRecipe');
 
-class VMRF5RecipeSlot extends VMRF5Slot {
+class VMTest extends VMRF5Slot {
 
     override readonly Model: RF5SlotRecipe;
-
-    // Reuse the the base class' cache. There's no conflict.
-    // static readonly SearchStringsCache: Record<string, any[]> = {};
+    override readonly IsRestricted: ko.Computed<boolean>;
+    override readonly IsLocked: ko.Computed<boolean>
 
     constructor(model: RF5SlotRecipe) {
-        super(model);
+        super(model)
         this.Model = model;
+
+        var self = this;
+        this.IsRestricted = ko.computed(function() {
+            return self.Model.Restriction() !== "0";
+        });
+        this.IsLocked = ko.computed(function() {
+            const itemIds: any = self.Model.Item().Character().Planner.Item_ids;
+            return self.IsRestricted() && itemIds.hasOwnProperty(self.Model.Restriction());
+        })
     }
 
-    /*
     protected override CacheSearchStrings = (cacheKey: string): void => {
-        console.log(cacheKey);
         let self = this;
         const planner = self.Model.Item().Character().Planner;
 
@@ -25,7 +31,8 @@ class VMRF5RecipeSlot extends VMRF5Slot {
         if(cacheKey === "0") {
             items = planner.Items; // All items
         } else if (cacheKey in planner.Items) {
-            items = { cacheKey: undefined };
+            items = {};
+            items[cacheKey] = undefined;
         } else { // Category
             items = {};
             var itemIds: number[] = (planner.Categories as any)[cacheKey].item_ids;
@@ -49,12 +56,8 @@ class VMRF5RecipeSlot extends VMRF5Slot {
             });
         });
     }
-    */
 
-    
     public override GetSearchStrings = (): any[] => {
-        console.log("call");
-        /*
         let key = this.Model.Restriction();
         if(VMRF5Slot.SearchStringsCache[key] === undefined) {
             VMRF5Slot.SearchStringsCache[key] = [];
@@ -63,11 +66,7 @@ class VMRF5RecipeSlot extends VMRF5Slot {
             this.CacheSearchStrings(key);
         }
         return VMRF5Slot.SearchStringsCache[key];
-        */
-       return [];
     }
-    
-    
 
 }
-export = VMRF5RecipeSlot;
+export = VMTest;

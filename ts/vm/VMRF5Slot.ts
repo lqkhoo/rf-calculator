@@ -44,7 +44,6 @@ class VMRF5Slot extends VMBaseViewModel {
     }
 
     public GetSearchStrings = (): any[] => {
-        console.log('base');
         let key: string = "0"; // Default. All items.
         if(VMRF5Slot.SearchStringsCache[key] === undefined) {
             VMRF5Slot.SearchStringsCache[key] = [];

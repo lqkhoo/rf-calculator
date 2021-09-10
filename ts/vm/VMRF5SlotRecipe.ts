@@ -1,6 +1,4 @@
 import ko = require('knockout');
-import VMBaseViewModel = require('./VMBaseViewModel');
-import RF5Slot = require('../model/RF5Slot');
 import RF5SlotRecipe = require('../model/RF5SlotRecipe');
 import VMRF5Slot = require('./VMRF5Slot');
 

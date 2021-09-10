@@ -340,7 +340,6 @@
                                     <span class="lang en" data-bind="text: $data.RF5Slot.name_en"></span>
                                 </td>
                                 <td>
-                                    <pre data-bind="text: console.log($data.RF5Slot.ViewModel)"></pre>
                                     <input type="text" data-bind="attr: { disabled: $data.RF5Slot.ViewModel.IsLocked() }, autocomplete: { source: $data.RF5Slot.ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.ViewModel.AutoCompleteSelectHandler }">
                                 </td>
                             </tr>
