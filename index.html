@@ -68,13 +68,13 @@
         <main id="main" class="container" data-bind="css: { 'lang_en': IsEnglishSelected(), 'lang_jp': IsJapaneseSelected() }">
             
             <!-- Binding context indow.RF5Planner -->
-            <div id="character-tab-pages" class="tab-content container" data-bind="foreach: { data: CharacterList }">
+            <div id="character-tab-pages" class="tab-content" data-bind="foreach: { data: CharacterList }">
                 <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
                 <div class="tab-pane fade" data-bind="attr: { id: 'character-' + $index() }" role="tab-panel">
                     <table class="table table-bordered stats-table">
                         <thead>
                             <tr>
-                                <th rowspan="3"><div class="dummy-header"></div></th>
+                                <th rowspan="3"><div class="dummy-header" data-bind="template: { name: 'TEMPLATE-character-icon-group' }"></div></th>
                                 <th rowspan="2" colspan="2"></th>
                                 <th colspan="20">OFFENSE</th>
                                 <th colspan="21">DEFENSE</th>
@@ -92,9 +92,10 @@
                                 <th>FIR</th><th>WTR</th><th>EAR</th><th>WND</th><th>LGT</th><th>DRK</th><th>LOV</th><th>NUL</th>
                                 <th>DIZ</th><th>CRT</th><th>KNO</th><th>DUR</th><th>STN</th><th>PSN</th><th>SEA</th><th>PAR</th><th>SLP</th><th>FTG</th><th>SCK</th><th>FNT</th><th>DRN</th>
                             </tr>
+                            <!-- ko template: { name: 'TEMPLATE-character-upper' } --><!-- /ko -->
                         </thead>
                         <tbody>
-                            <!-- ko template: { name: 'TEMPLATE-character', data: RF5Character } --><!-- /ko -->
+                            <!-- ko template: { name: 'TEMPLATE-character-lower', data: RF5Character } --><!-- /ko -->
                             
                             <!-- ko let: { equipmentType: 'weapon' } -->
                                 <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Weapons', name_jp: '\u6b66\u5668' } } --><!-- /ko -->
@@ -171,27 +172,33 @@
         
     </body>
 
-    <script type="text/html" id="TEMPLATE-character">
+    <script type="text/html" id="TEMPLATE-character-icon-group">
+        <label class="icon-group character">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="icon-td"><img data-bind="attr: { src: image_uri }"/></td>
+                        <td>
+                            <span class="lang jp" data-bind="text: name_jp"></span>
+                            <span class="lang en" data-bind="text: name_en"></span>
+                        </td>
+                        <td class="icon-td">
+                            <input type="text" data-bind="autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: ViewModel.AutoCompleteSelectHandler }">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </label>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-character-upper">
         <tr>
-            <td>
-                <label class="icon-group character">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td class="icon-td"><img data-bind="attr: { src: image_uri }"/></td>
-                                <td>
-                                    <span class="lang jp" data-bind="text: name_jp"></span>
-                                    <span class="lang en" data-bind="text: name_en"></span>
-                                </td>
-                                <td class="icon-td">
-                                    <input type="text" data-bind="autocomplete: { source: GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.AutoCompleteSelectHandler }">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </label>
-            </td>
+            <th>Total</th>
+            <th colspan="43"></th>
         </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-character-lower">
         <tr>
             <td>General's set bonus</td>
         </tr>
@@ -241,7 +248,7 @@
 
     <script type="text/html" id="TEMPLATE-group-footer">
         <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType">
-            <td>+</td>
+            <td><Button class="btn" data-bind="click: $root.OnAddItemClickHandler.bind(event, characterIdx, equipmentType)">+</Button></td>
         </tr>
     </script>
 

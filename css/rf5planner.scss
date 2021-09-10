@@ -1,4 +1,4 @@
-/*
+
 @import '../node_modules/bootstrap/scss/functions.scss';
 @import '../node_modules/bootstrap/scss/variables.scss';
 
@@ -9,15 +9,15 @@ $grid-breakpoints: (
     sm: 1px,
     md: 2px,
     lg: 3px,
-    xl: 1200px
+    xl: 1300px
 );
 
 $container-max-widths: (
-    xs: 1200px,
-    sm: 1201px,
-    md: 1202px,
-    lg: 1203px,
-    xl: 100%
+    xs: 1296px,
+    sm: 1297px,
+    md: 1298px,
+    lg: 1299px,
+    xl: 1300px
 );
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
@@ -26,7 +26,7 @@ $container-max-widths: (
     overflow-x: auto;
     min-width: 1200px;
 }
-*/
+
 
 
 
@@ -37,12 +37,17 @@ $floatTableBoxShadowColor: #CDCDCD;
 
 $icon-group-width: 200px;
 $icon-size: 40px;
-$icon-small-size: 30px;
+$icon-small-size: 27px;
 $icon-group-font-size: 14px;
 $icon-group-small-font-size: 11px;
 $border-indent-1: 5px;
 
-$color-weapon: #dd4e4e;
+$color-weapon: #ce3a3a;
+$color-shield: #f8b31f;
+$color-headgear: #6eb314;
+$color-armor: #236df5;
+$color-boots: #772dee;
+$color-accessory: #99378c;
 
 span.lang {
     display: none;
@@ -57,9 +62,15 @@ span.lang {
 }
 
 
-
+html, body {
+    height: 100%;
+}
 body {
     background: $backgroundcolor;
+}
+#main {
+    overflow-x: visible;
+    padding-bottom: 120px;
 }
 
 h4.title {
@@ -87,9 +98,13 @@ h4.title {
     padding: 0;
     border-radius: 0;
     border: 0;
+    width: 100%;
 }
 .btn:focus {
-    box-shadow: 0 0 0 0.1rem rgb(13 110 253 / 25%)
+    box-shadow: 0 0 0 0.1rem rgb(13 110 253 / 25%);
+}
+.btn:hover, label.icon-group:hover {
+    background: rgb(13 110 253 / 25%);
 }
 
 .stats-table {
@@ -101,6 +116,8 @@ h4.title {
         position: sticky;
         position: -webkit-sticky;
         top: 0;
+        background: #ffffff;
+        z-index: 99; // autocopmlete popup has z of 100 by default.
     }
 
     td, th {
@@ -115,16 +132,11 @@ h4.title {
     // Can't use position:fixed with border-collapse, so fake it with box-shadow.
     thead > tr > th {
         border-width: 0;
-        box-shadow: inset 1px 0px 1px $floatTableBoxShadowColor;
+        // box-shadow: inset 1px 0px 1px $floatTableBoxShadowColor;
+        box-shadow: inset 1px 0 0 #cccccc, inset 0 1px 0 #cccccc;
     }
     thead > tr > th:last-child {
-        box-shadow: inset 1px 0px 1px $floatTableBoxShadowColor, inset -1px -0px 1px $floatTableBoxShadowColor;
-    }
-    thead > tr {
-        box-shadow: 0 1px 1px $floatTableBoxShadowColor;
-    }
-    thead > tr:first-child {
-        box-shadow: 0 1px 1px $floatTableBoxShadowColor, 0 -1px 1px $floatTableBoxShadowColor;
+        box-shadow: inset 1px 0 0 #cccccc, inset 0 1px 0 #cccccc, inset -1px 0 0 #cccccc;
     }
 
 }
@@ -146,9 +158,14 @@ ul.ui-autocomplete {
 }
 
 label.icon-group {
+    display: block;
     cursor: pointer;
     width: 100%;
     border-bottom: 1px solid #aaaaaa;
+}
+.dummy-header > label.icon-group {
+    height: 100%;
+    border-bottom: none;
 }
 
 div.icon-group {
@@ -222,6 +239,23 @@ div.icon-group {
 .icon-group.weapon {
     border-left: 5px solid $color-weapon;
 }
+.icon-group.shield {
+    border-left: 5px solid $color-shield;
+}
+.icon-group.headgear {
+    border-left: 5px solid $color-headgear;
+}
+.icon-group.armor {
+    border-left: 5px solid $color-armor;
+}
+.icon-group.boots {
+    border-left: 5px solid $color-boots;
+}
+.icon-group.accessory {
+    border-left: 5px solid $color-accessory;
+}
+
+
 
 .icon-group.small {
 
@@ -261,6 +295,9 @@ $header-font-size: 14px;
 
 .group-header::before {
     content: url('../bootstrap-icons/chevron-down.svg');
+    position: relative;
+    left: 3px;
+    top: 2px;
 }
 
 .group-header.collapsed::before {

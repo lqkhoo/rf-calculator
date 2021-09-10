@@ -1,0 +1,11 @@
+import RF5Slot = require('./RF5Slot');
+import RF5Item = require('./RF5Item');
+import IUiSlot = require('./IUiSlot');
+class RF5SlotArrange extends RF5Slot {
+
+    constructor(item: RF5Item, equipment_type: EquipmentType, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
+        super(item, item_id, equipment_type, "A");
+    }
+
+}
+export = RF5SlotArrange;

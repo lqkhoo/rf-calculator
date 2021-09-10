@@ -1,5 +1,5 @@
 import ko = require('knockout');
-import RF5Character = require('./RF5Character');
+import RF5Character = require('./model/RF5Character');
 import Utils = require('./Utils');
 
 class RF5Planner {
@@ -27,7 +27,7 @@ class RF5Planner {
     readonly Is_eq_spear:           object = {};
     readonly Is_eq_staff:           object = {};
     readonly Is_eq_sword:           object = {};
-    readonly Is_eq_weapon:             object = {};
+    readonly Is_eq_weapon:          object = {};
     readonly Is_mat_2foldsteel:     object = {};
     readonly Is_mat_10foldsteel:    object = {};
     readonly Is_mat_clawsandfangs:  object = {};
@@ -142,13 +142,28 @@ class RF5Planner {
 
     // Handlers
 
-    public OnGroupHeaderClickHandler = (character_idx: string, ui_class: EquipmentType): boolean => {
+    public OnGroupHeaderClickHandler = (character_idx: string, ui_class: EquipmentType, event: any, ui: any): boolean => {
         var elems: NodeListOf<Element> = document.querySelectorAll('.char-'+ character_idx +'-'+ ui_class +'-toggler');
         for (let i=0; i<elems.length; i++) {
             const elem = elems[i];
             if(! elem.classList.contains('collapsed')) {
                 (elem as HTMLElement).click();
             }
+        }
+        return true;
+    }
+
+    public OnAddItemClickHandler = (character_idx: string, ui_class: EquipmentType): boolean => {
+        const character: RF5Character = this.CharacterList()[parseInt(character_idx)];
+        console.log(character_idx);
+        console.log(ui_class);
+        switch (ui_class) {
+            case "weapon": character.AddWeapon(); break;
+            case "shield": character.AddShield(); break;
+            case "headgear": character.AddHeadgear(); break;
+            case "armor": character.AddArmor(); break;
+            case "boots": character.AddBoots(); break;
+            case "accessory": character.AddAccessory(); break;
         }
         return true;
     }

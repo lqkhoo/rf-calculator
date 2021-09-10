@@ -1,5 +1,5 @@
 // var $ = require('jquery');
-import DATA = require('./data');
+import DATA = require('./model/data');
 import RF5Planner = require('./RF5Planner');
 import ko = require('knockout');
 
