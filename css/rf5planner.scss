@@ -37,7 +37,7 @@ $floatTableBoxShadowColor: #CDCDCD;
 
 $icon-group-width: 200px;
 $icon-size: 40px;
-$icon-small-size: 27px;
+$icon-small-size: 30px;
 $icon-group-font-size: 14px;
 $icon-group-small-font-size: 11px;
 $border-indent-1: 5px;
@@ -92,6 +92,9 @@ h4.title {
     width: $icon-group-width;
 }
 
+.displayNone {
+    display: none;
+}
 
 
 .btn {
@@ -188,6 +191,11 @@ div.icon-group {
             width: $icon-size;
             height: $icon-size;
         }
+        img.icon-lock {
+            width: 20px;
+            height: 20px;
+        }
+
         td {
             text-align: left;
             padding-left: 5px;
@@ -212,7 +220,7 @@ div.icon-group {
         width: 95%;
     }
 
-    input[type="radio"] {
+    input[type="radio"], input[type="checkbox"] {
         position: absolute;
         right: 10px;
         top: 35%;
@@ -268,7 +276,7 @@ div.icon-group {
             padding: 0;
         }
         td:first-child {
-            width:8%;
+            width: 8%;
         }
         td:nth-child(2) {
             width: 16%;

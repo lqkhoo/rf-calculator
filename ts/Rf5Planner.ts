@@ -54,6 +54,7 @@ class RF5Planner {
     readonly Categories:            object = {};
     readonly Items:                 object = {};
     readonly Characters:            object = {};
+    readonly Recipes:               object = {};
 
     // Model
     readonly IsEnglishSelected: ko.Observable<boolean> = ko.observable(true);
@@ -119,6 +120,7 @@ class RF5Planner {
         this.Categories = DATA.categories;
         this.Items = DATA.items;
         this.Characters = DATA.characters;
+        this.Recipes = DATA.recipes;
 
         // Model
         this.CharacterList = ko.observableArray([]);

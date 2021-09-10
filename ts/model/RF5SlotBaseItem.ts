@@ -1,7 +1,6 @@
 import _ = require('lodash');
 import RF5Slot = require('./RF5Slot');
 import RF5Item = require('./RF5Item');
-import RF5Planner = require('../RF5Planner');
 import VMRF5SlotBaseItem = require('../vm/VMRF5SlotBaseItem');
 class RF5SlotBaseItem extends RF5Slot {
 
@@ -11,6 +10,11 @@ class RF5SlotBaseItem extends RF5Slot {
         super(item, item_id, equipment_type, "B");
 
         this.ViewModel = new VMRF5SlotBaseItem(this);
+    }
+
+    public override ChangeId = (id: string): void => {
+        super.ChangeId(id);
+        this.Item().ApplyRecipeRestrictions(this);
     }
 
 }

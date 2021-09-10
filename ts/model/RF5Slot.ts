@@ -17,23 +17,23 @@ class RF5Slot extends RF5StatVector implements IModel, IEquipmentType, IUiSlot {
 
     readonly ViewModel: VMRF5Slot;
 
-    
-
     constructor(item: RF5Item, item_id: number, equipment_type: EquipmentType, ui_slot: UiSlotType) {
-
         super((item.Character().Planner.Items as any)[item_id]
                 || (item.Character().Planner.Items as any)[RF5Slot.DEFAULT_ITEM_ID]);
 
         this.EquipmentType = equipment_type;
         this.UiSlotType = ui_slot;
         this.Item = ko.observable(item);
-
         this.ViewModel = new VMRF5Slot(this);
     }
 
-    public ChangeId = (id: string): void => {
+    public ChangeIdScoper = (id: string): void => {
         let ctx: any = (this.Item().Character().Planner.Items as any)[id];
         this.Context(ctx);
+    }
+
+    public ChangeId(id: string): void {
+        return this.ChangeIdScoper(id);
     }
 
 }

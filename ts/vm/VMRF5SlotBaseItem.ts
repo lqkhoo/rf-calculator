@@ -1,17 +1,16 @@
-import ko = require('knockout');
 import _ = require('lodash');
-import VMBaseViewModel = require('./VMBaseViewModel');
-import RF5Item = require('../model/RF5Item');
-import RF5Slot = require('../model/RF5Slot');
 import RF5SlotBaseItem = require('../model/RF5SlotBaseItem');
 import VMRF5Slot = require('./VMRF5Slot');
 import RF5Planner = require('../RF5Planner');
+
 class VMRF5SlotBaseItem extends VMRF5Slot {
 
     static override readonly SearchStringsCache: Record<string, any[]> = {};
+    override readonly Model: RF5SlotBaseItem;
 
     constructor(model: RF5SlotBaseItem) {
         super(model);
+        this.Model = model;
     }
 
     protected override CacheSearchStrings = (_cacheKey: string): void => {

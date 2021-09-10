@@ -1,13 +1,14 @@
 import ko = require('knockout');
 import _ = require('lodash');
 import VMBaseViewModel = require('./VMBaseViewModel');
-import RF5Item = require('../model/RF5Item');
 import RF5Slot = require('../model/RF5Slot');
 
 class VMRF5Slot extends VMBaseViewModel {
 
     override readonly Model: RF5Slot;
     readonly IsCollapsed: ko.Observable<boolean>;
+    readonly IsRestricted: ko.Computed<boolean>;
+    readonly IsLocked: ko.Computed<boolean>
 
     static readonly SearchStringsCache: Record<string, any[]> = {};
 
@@ -18,6 +19,9 @@ class VMRF5Slot extends VMBaseViewModel {
         // const isCollapsed: boolean = this.Model.Item().ViewModel.IsCollapsed();
         const isCollapsed: boolean = true; // Always generate as collapsed
         this.IsCollapsed = ko.observable(isCollapsed);
+
+        this.IsRestricted = ko.computed(function() { return false; });
+        this.IsLocked = ko.computed(function() { return false; })
     }
 
     protected CacheSearchStrings = (cacheKey: string): void => {
@@ -40,7 +44,8 @@ class VMRF5Slot extends VMBaseViewModel {
     }
 
     public GetSearchStrings = (): any[] => {
-        let key: string = "items"; // Default. All items.
+        console.log('base');
+        let key: string = "0"; // Default. All items.
         if(VMRF5Slot.SearchStringsCache[key] === undefined) {
             VMRF5Slot.SearchStringsCache[key] = [];
         }

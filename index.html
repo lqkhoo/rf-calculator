@@ -205,7 +205,7 @@
     <!-- Context RF5Item -->
     <script type="text/html" id="TEMPLATE-header-icon-group">
         <div class="icon-group" data-bind="class: $data.EquipmentType">
-            <input type="radio" data-bind="click: Character().ViewModel.OnEquipmentRadioClickHandler.bind(event, equipmentType, $index()), attr: { name: 'char-'+ characterIdx + equipmentType } "/>
+            <input type="checkbox" data-bind="checked: IsActive(), click: Character().ViewModel.OnEquipmentRadioClickHandler.bind(event, equipmentType, $index()), attr: { name: 'char-'+ characterIdx + equipmentType } "/>
             <!--
                 <button class="btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx }, class: 'char-'+ characterIdx +'-'+ equipmentType +'-toggler'">
             -->
@@ -330,14 +330,18 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td data-bind="text: $data.slotType + slotIdx"></td>
+                                <td>
+                                    <span data-bind="text: $data.slotType + slotIdx, css: { displayNone: $data.RF5Slot.ViewModel.IsRestricted() }"></span>
+                                    <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! $data.RF5Slot.ViewModel.IsRestricted() }"/>
+                                </td>
                                 <td class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.image_uri }"/></td>
                                 <td>
                                     <span class="lang jp" data-bind="text: $data.RF5Slot.name_jp"></span>
                                     <span class="lang en" data-bind="text: $data.RF5Slot.name_en"></span>
                                 </td>
                                 <td>
-                                    <input type="text" data-bind="autocomplete: { source: $data.RF5Slot.ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.ViewModel.AutoCompleteSelectHandler }">
+                                    <pre data-bind="text: console.log($data.RF5Slot.ViewModel)"></pre>
+                                    <input type="text" data-bind="attr: { disabled: $data.RF5Slot.ViewModel.IsLocked() }, autocomplete: { source: $data.RF5Slot.ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.ViewModel.AutoCompleteSelectHandler }">
                                 </td>
                             </tr>
                         </tbody>

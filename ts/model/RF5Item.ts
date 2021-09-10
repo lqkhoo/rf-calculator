@@ -55,14 +55,21 @@ class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
         }
     }
 
+    public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
+        const baseitemId: string = baseItem.id();
+        const recipes: any = (this.Character().Planner.Recipes as any);
+        const n = this.RecipeSlots().length; // should be 6;
 
-
-
-    // Handlers
-    public SelectedAsActiveHandler = (event: any, ui: any): boolean => {
-        console.log(event);
-        console.log(ui);
-        return false;
+        let ids: number[];
+        if(recipes.hasOwnProperty(baseitemId)) {
+            ids = (this.Character().Planner.Recipes as any)[baseitemId];
+        } else {
+            ids = [];
+        }
+        for(var i=0; i<n; i++) {
+            var id = (i < ids.length) ? ids[i] : 0;
+            this.RecipeSlots()[i].ApplyRestriction(id.toString());
+        }
     }
 
 }

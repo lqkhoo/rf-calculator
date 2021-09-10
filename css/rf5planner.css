@@ -10167,6 +10167,10 @@ h4.title, .title.h4 {
   width: 200px;
 }
 
+.displayNone {
+  display: none;
+}
+
 .btn {
   padding: 0;
   border-radius: 0;
@@ -10220,8 +10224,8 @@ ul.ui-autocomplete {
 }
 
 .icon.small {
-  width: 27px;
-  height: 27px;
+  width: 30px;
+  height: 30px;
 }
 
 label.icon-group {
@@ -10254,6 +10258,10 @@ div.icon-group {
   width: 40px;
   height: 40px;
 }
+.icon-group table img.icon-lock {
+  width: 20px;
+  height: 20px;
+}
 .icon-group table td {
   text-align: left;
   padding-left: 5px;
@@ -10273,7 +10281,7 @@ div.icon-group {
 .icon-group input[type=text] {
   width: 95%;
 }
-.icon-group input[type=radio] {
+.icon-group input[type=radio], .icon-group input[type=checkbox] {
   position: absolute;
   right: 10px;
   top: 35%;
@@ -10287,7 +10295,7 @@ div.icon-group {
 }
 .icon-group.autoselect input[type=text] {
   width: 40px;
-  height: 27px;
+  height: 30px;
 }
 
 .icon-group.weapon {
@@ -10315,7 +10323,7 @@ div.icon-group {
 }
 
 .icon-group.small table {
-  height: 27px;
+  height: 30px;
 }
 .icon-group.small table td {
   font-size: 11px;
