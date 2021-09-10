@@ -3,13 +3,12 @@ import _ = require('lodash');
 import RF5Slot = require('./RF5Slot');
 import RF5Item = require('./RF5Item');
 import VMRF5SlotRecipe = require('../vm/VMRF5SlotRecipe');
-import VMTest = require('../vm/VMTest');
 class RF5SlotRecipe extends RF5Slot {
 
     readonly Restriction: ko.Observable<string>; // item or category id
 
     override readonly image_uri: ko.Computed<string>;
-    override readonly ViewModel: VMTest;
+    override readonly ViewModel: VMRF5SlotRecipe;
 
     constructor(item: RF5Item, equipment_type: EquipmentType, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
 
@@ -30,7 +29,7 @@ class RF5SlotRecipe extends RF5Slot {
             return image_uri;
         });
 
-        this.ViewModel = new VMTest(this);
+        this.ViewModel = new VMRF5SlotRecipe(this);
     }
 
 
