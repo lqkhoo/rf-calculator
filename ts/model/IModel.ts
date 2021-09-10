@@ -1,4 +1,4 @@
-import IViewModel = require('../viewmodel/IViewModel');
+import IViewModel = require('../vm/IViewModel');
 interface IModel {
     ViewModel: IViewModel;
 }

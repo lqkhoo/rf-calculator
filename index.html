@@ -100,9 +100,7 @@
                             <!-- ko let: { equipmentType: 'weapon' } -->
                                 <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Weapons', name_jp: '\u6b66\u5668' } } --><!-- /ko -->
                                 <!-- ko foreach: Weapons() -->
-                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
-                                        <!-- ko template: { name: 'TEMPLATE-weapon', data: RF5Item }--><!-- /ko -->
-                                    <!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-weapon' }--><!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
                             <!-- /ko -->
@@ -110,9 +108,7 @@
                             <!-- ko let: { equipmentType: 'shield' } -->
                             <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Shields', name_jp: '\u76fe' } } --><!-- /ko -->
                             <!-- ko foreach: Shields() -->
-                                <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
-                                    <!-- ko template: { name: 'TEMPLATE-shield', data: RF5Item }--><!-- /ko -->
-                                <!-- /ko -->
+                                <!-- ko template: { name: 'TEMPLATE-shield' }--><!-- /ko -->
                             <!-- /ko -->
                             <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
                             <!-- /ko -->
@@ -120,9 +116,7 @@
                             <!-- ko let: { equipmentType: 'headgear' } -->
                                 <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Headgears', name_jp: '\u982d\u88c5\u5099' } } --><!-- /ko -->
                                 <!-- ko foreach: Headgears() -->
-                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
-                                        <!-- ko template: { name: 'TEMPLATE-headgear', data: RF5Item }--><!-- /ko -->
-                                    <!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-headgear' }--><!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
                             <!-- /ko -->
@@ -130,9 +124,7 @@
                             <!-- ko let: { equipmentType: 'armor' } -->
                                 <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Armor', name_jp: '\u4f53\u88c5\u5099' } } --><!-- /ko -->
                                 <!-- ko foreach: Armors() -->
-                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
-                                        <!-- ko template: { name: 'TEMPLATE-armor', data: RF5Item }--><!-- /ko -->
-                                    <!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-armor' }--><!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
                             <!-- /ko -->
@@ -140,9 +132,7 @@
                             <!-- ko let: { equipmentType: 'boots' } -->
                                 <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Boots', name_jp: '\u8db3\u88c5\u5099' } } --><!-- /ko -->
                                 <!-- ko foreach: Boots() -->
-                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
-                                        <!-- ko template: { name: 'TEMPLATE-boots', data: RF5Item }--><!-- /ko -->
-                                    <!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-boots' }--><!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
                             <!-- /ko -->
@@ -150,9 +140,7 @@
                             <!-- ko let: { equipmentType: 'accessory' } -->
                                 <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Accessories', name_jp: '\u30a2\u30af\u30bb\u30b5\u30ea\u30fc' } } --><!-- /ko -->
                                 <!-- ko foreach: Accessories() -->
-                                    <!-- ko let: { equipmentIdx: $index(), RF5Item: $data } -->
-                                        <!-- ko template: { name: 'TEMPLATE-accessory', data: RF5Item }--><!-- /ko -->
-                                    <!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-accessory' }--><!-- /ko -->
                                 <!-- /ko -->
                                 <!-- ko template: { name: 'TEMPLATE-group-footer' } --><!-- /ko -->
                             <!-- /ko -->
@@ -183,7 +171,7 @@
                             <span class="lang en" data-bind="text: name_en"></span>
                         </td>
                         <td class="icon-td">
-                            <input type="text" data-bind="autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: ViewModel.AutoCompleteSelectHandler }">
+                            <input type="text" data-bind="autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.ViewModel.AutoCompleteSelectHandler }">
                         </td>
                     </tr>
                 </tbody>
@@ -214,17 +202,21 @@
     </script>
 
 
+    <!-- Context RF5Item -->
     <script type="text/html" id="TEMPLATE-header-icon-group">
-        <div class="icon-group" data-bind="class: equipmentType">
-            <input type="radio" data-bind="attr: { name: 'char-'+ characterIdx +'-'+ equipmentType }">
-            <button class="btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx }, class: 'char-'+ characterIdx +'-'+ equipmentType +'-toggler'">
+        <div class="icon-group" data-bind="class: $data.EquipmentType">
+            <input type="radio" data-bind="click: Character().ViewModel.OnEquipmentRadioClickHandler.bind(event, equipmentType, $index()), attr: { name: 'char-'+ characterIdx + equipmentType } "/>
+            <!--
+                <button class="btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx }, class: 'char-'+ characterIdx +'-'+ equipmentType +'-toggler'">
+            -->
+            <button class="btn" data-bind="css: { collapsed: $data.ViewModel.IsCollapsed() }, click: $data.ViewModel.OnGroupHeaderClickHandler.bind(event)">
                 <table>
                     <tbody>
                         <tr>
-                            <td class="icon-td"><img class="icon" data-bind="attr: { src: $data.RF5Item.BaseItem().image_uri }"/></td>
+                            <td class="icon-td"><img class="icon" data-bind="attr: { src: $data.BaseItem().image_uri }"/></td>
                             <td>
-                                <span class="lang jp" data-bind="text: $data.RF5Item.BaseItem().name_jp"></span>
-                                <span class="lang en" data-bind="text: $data.RF5Item.BaseItem().name_en"></span>
+                                <span class="lang jp" data-bind="text: $data.BaseItem().name_jp"></span>
+                                <span class="lang en" data-bind="text: $data.BaseItem().name_en"></span>
                             </td>
                         </tr>
                     </tbody>
@@ -234,10 +226,11 @@
     </script>
 
 
+    <!-- Context { model: RF5Character, name_en: str, name_jp: str } -->
     <script type="text/html" id="TEMPLATE-group-header">
         <tr>
             <td style="background-color: #dddddd;">
-                <button class="group-header btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ equipmentType }, click: $root.OnGroupHeaderClickHandler.bind(event, characterIdx, equipmentType)">
+                <button class="group-header btn" data-bind="css: { collapsed: model.ViewModel.IsItemGroupCollapsed[equipmentType]() }, click: model.ViewModel.OnGroupHeaderClickHandler.bind(event, equipmentType)">
                     <span class="lang jp" data-bind="text: name_jp"></span>
                     <span class="lang en" data-bind="text: name_en"></span>
                 </button>
@@ -246,9 +239,10 @@
         </tr>
     </script>
 
+    <!-- Context RF5Character -->
     <script type="text/html" id="TEMPLATE-group-footer">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType">
-            <td><Button class="btn" data-bind="click: $root.OnAddItemClickHandler.bind(event, characterIdx, equipmentType)">+</Button></td>
+        <tr class="collapse" data-bind="css: { show: ! $data.ViewModel.IsItemGroupCollapsed[equipmentType]() }">
+            <td><Button class="btn" data-bind="click: $data.ViewModel.OnAddItemClickHandler.bind(event, equipmentType)">+</Button></td>
         </tr>
     </script>
 
@@ -257,57 +251,48 @@
     <!-- Mostly text-replace for 'weapon', 'shield', 'headgear', 'armor', 'boots', 'accessories' -->
 
     <script type="text/html" id="TEMPLATE-weapon">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-weapon'">
-            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'weapon' } }"></td>
+        <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
         </tr>
-        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'weapon' } }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
     <script type="text/html" id="TEMPLATE-shield">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-shield'">
-            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'shield' } }"></td>
-        </tr>
-        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'shield' } }--><!-- /ko -->
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
-            <td>Has scale item</td>
+        <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
         </tr>
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
     <script type="text/html" id="TEMPLATE-headgear">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-headgear'">
-            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'headgear' } }"></td>
+        <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
         </tr>
-        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'headgear' } }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
     <script type="text/html" id="TEMPLATE-armor">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-armor'">
-            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'armor' } }"></td>
+        <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
         </tr>
-        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'armor' } }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
     <script type="text/html" id="TEMPLATE-boots">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-boots'">
-            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'boots' } }"></td>
+        <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
         </tr>
-        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'boots' } }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
     <script type="text/html" id="TEMPLATE-accessory">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-accessory'">
-            <td data-bind="template: { name: 'TEMPLATE-header-icon-group', data: { RF5Item: $data, equipmentType: 'accessory' } }"></td>
+        <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
+            <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
         </tr>
-        <!-- ko template: { name: 'TEMPLATE-level-rarity-bonus', data: { model: $data, equipmentType: 'accessory' } }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
-    
+    <!--
     <script type="text/html" id="TEMPLATE-level-rarity-bonus">
         <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
             <td>rarity bonus</td>
@@ -316,6 +301,7 @@
             <td>level bonus</td>
         </tr>
     </script>
+    -->
 
     <script type="text/html" id="TEMPLATE-equipment-slots">
         <!-- ko template: { name: 'TEMPLATE-slot', data: { RF5Slot: BaseItem(), slotType: 'B', slotIdx: ' ' } }--><!-- /ko -->
@@ -336,8 +322,9 @@
         <!-- /ko -->
     </script>
 
+    <!-- Context { RF5Slot: RF5Slot, slotType: str } -->
     <script type="text/html" id="TEMPLATE-slot">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
+        <tr class="collapse" data-bind="css: { show: !$data.RF5Slot.ViewModel.IsCollapsed() }">
             <td>
                 <label class="icon-group small" data-bind="class: $data.uiEquipmentType">
                     <table>
@@ -350,7 +337,7 @@
                                     <span class="lang en" data-bind="text: $data.RF5Slot.name_en"></span>
                                 </td>
                                 <td>
-                                    <input type="text" data-bind="autocomplete: { source: $data.RF5Slot.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.AutoCompleteSelectHandler }">
+                                    <input type="text" data-bind="autocomplete: { source: $data.RF5Slot.ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.ViewModel.AutoCompleteSelectHandler }">
                                 </td>
                             </tr>
                         </tbody>

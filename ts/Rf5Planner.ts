@@ -1,7 +1,10 @@
 import ko = require('knockout');
 import RF5Character = require('./model/RF5Character');
+import VMRF5Character = require('./vm/VMRF5Character');
 import Utils = require('./Utils');
 
+// We can treat this as the controller class. Most if not all event handlers should be
+// under this class.
 class RF5Planner {
 
     // Data
@@ -123,8 +126,7 @@ class RF5Planner {
         // Utils
         this.Utils = new Utils();
 
-
-        this.AddCharacter.call(this);
+        this.AddCharacter();
     }
 
     public AddCharacter = (): void => {
@@ -141,32 +143,6 @@ class RF5Planner {
 
 
     // Handlers
-
-    public OnGroupHeaderClickHandler = (character_idx: string, ui_class: EquipmentType, event: any, ui: any): boolean => {
-        var elems: NodeListOf<Element> = document.querySelectorAll('.char-'+ character_idx +'-'+ ui_class +'-toggler');
-        for (let i=0; i<elems.length; i++) {
-            const elem = elems[i];
-            if(! elem.classList.contains('collapsed')) {
-                (elem as HTMLElement).click();
-            }
-        }
-        return true;
-    }
-
-    public OnAddItemClickHandler = (character_idx: string, ui_class: EquipmentType): boolean => {
-        const character: RF5Character = this.CharacterList()[parseInt(character_idx)];
-        console.log(character_idx);
-        console.log(ui_class);
-        switch (ui_class) {
-            case "weapon": character.AddWeapon(); break;
-            case "shield": character.AddShield(); break;
-            case "headgear": character.AddHeadgear(); break;
-            case "armor": character.AddArmor(); break;
-            case "boots": character.AddBoots(); break;
-            case "accessory": character.AddAccessory(); break;
-        }
-        return true;
-    }
 
 
 }

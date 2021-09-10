@@ -6,8 +6,10 @@ import RF5SlotBaseItem = require('./RF5SlotBaseItem');
 import RF5Character = require('./RF5Character');
 import RF5StatVector = require('./RF5StatVector');
 import IEquipmentType = require('./IEquipmentType');
+import IModel = require('./IModel');
+import VMRF5ItemViewModel = require('../vm/VMRF5ItemViewModel');
 
-class RF5Item extends RF5StatVector implements IEquipmentType {
+class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
 
     static readonly NSLOTS_RECIPE: number = 6;
     static readonly NSLOTS_ARRANGE: number = 3;
@@ -15,6 +17,7 @@ class RF5Item extends RF5StatVector implements IEquipmentType {
     static readonly DEFAULT_ITEM_ID: number = 0;
 
     readonly EquipmentType: EquipmentType;
+    readonly IsActive: ko.Observable<boolean>;
 
     readonly Character: ko.Observable<RF5Character>;
 
@@ -23,13 +26,19 @@ class RF5Item extends RF5StatVector implements IEquipmentType {
     readonly ArrangeSlots: ko.ObservableArray<RF5SlotArrange>;
     readonly UpgradeSlots: ko.ObservableArray<RF5SlotUpgrade>;
 
-    constructor(character: RF5Character, equipment_type: EquipmentType, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
+    readonly ViewModel: VMRF5ItemViewModel;
+
+    constructor(character: RF5Character, equipment_type: EquipmentType,
+                    item_id: number=RF5Item.DEFAULT_ITEM_ID) {
 
         super((character.Planner.Items as any)[item_id]
                 || (character.Planner.Items as any)[RF5Item.DEFAULT_ITEM_ID]);
 
         this.Character = ko.observable(character);
         this.EquipmentType = equipment_type;
+        this.IsActive = ko.observable(false);
+
+        this.ViewModel = new VMRF5ItemViewModel(this); // Needs to be before slots
 
         this.BaseItem = ko.observable(new RF5SlotBaseItem(this, equipment_type));
         this.RecipeSlots = ko.observableArray([]);
@@ -45,6 +54,8 @@ class RF5Item extends RF5StatVector implements IEquipmentType {
             this.UpgradeSlots.push(new RF5SlotUpgrade(this, equipment_type));
         }
     }
+
+
 
 
     // Handlers
