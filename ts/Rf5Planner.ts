@@ -53,6 +53,7 @@ class RF5Planner {
     readonly Is_mat_strings:        object = {};
     readonly Categories:            object = {};
     readonly Items:                 object = {};
+    readonly BaseItems:             object = {};
     readonly Characters:            object = {};
     readonly Recipes:               object = {};
 
@@ -119,6 +120,7 @@ class RF5Planner {
         this.ArrayToObject(this.Is_mat_strings, DATA.is_mat_strings);
         this.Categories = DATA.categories;
         this.Items = DATA.items;
+        this.BaseItems = DATA.base_items;
         this.Characters = DATA.characters;
         this.Recipes = DATA.recipes;
 

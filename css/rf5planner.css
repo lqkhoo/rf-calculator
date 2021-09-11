@@ -10333,9 +10333,11 @@ div.icon-group {
 }
 .icon-group.small table td:first-child {
   width: 8%;
+  text-align: center;
 }
 .icon-group.small table td:nth-child(2) {
   width: 16%;
+  text-align: center;
 }
 .icon-group.small table td:nth-child(3) {
   width: 56%;

@@ -5,6 +5,7 @@ import VMRF5SlotBaseItem = require('../vm/VMRF5SlotBaseItem');
 class RF5SlotBaseItem extends RF5Slot {
 
     override readonly ViewModel: VMRF5SlotBaseItem;
+    // readonly ItemType: ko.Computed<EquipmentType | WeaponType>;
 
     constructor(item: RF5Item, equipment_type: EquipmentType, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
         super(item, item_id, equipment_type, "B");

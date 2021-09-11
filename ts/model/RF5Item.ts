@@ -72,5 +72,6 @@ class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
         }
     }
 
+
 }
 export = RF5Item;

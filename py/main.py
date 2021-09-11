@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Set
 import csv
 from dataclasses import dataclass
 import json
@@ -235,12 +235,16 @@ class TsvReader(object):
 
 
     @staticmethod
-    def read_item_stats(filepath: str, items: dict[int, RF5Item]):
+    def read_item_stats(filepath: str, items: dict[int, RF5Item]) -> Set[int]:
+
+        read_ids: Set[int] = set()
 
         with open(filepath) as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id: int = int(row[0])
+                read_ids.add(id)
+
                 item: RF5Item = items[id]
                 item.stat_ATK = int(row[1])
                 item.stat_DEF = int(row[2])
@@ -283,8 +287,7 @@ class TsvReader(object):
                 item.stat_def_DRN = float(row[39])
                 item.stat_chargespeed = float(row[40])
                 item.stat_attacklength = float(row[41])
-        
-        return items
+        return read_ids
         
     @staticmethod
     def read_item_rarity(items: dict[int, RF5Item]):
@@ -397,6 +400,7 @@ if __name__ == '__main__':
 
     categories:   dict[int, RF5Category] = {}
     items:        dict[int, RF5Item] = {}
+    base_items:   dict[int, RF5Item] = {}
     characters:   dict[int, RF5Character] = {}
     recipes:      dict[int, List[int]] = {}
 
@@ -411,8 +415,15 @@ if __name__ == '__main__':
     TsvReader.read_character_images(character_ids, characters)
 
     # Raw stats
-    TsvReader.read_item_stats('../tsv/map_itemid_to_baseitem_stats_data.tsv', items)
     TsvReader.read_item_stats('../tsv/map_itemid_to_strengthening_data.tsv', items)
+
+    # Handle base item subset
+    TsvReader.read_item_names(item_ids, base_items)
+    TsvReader.read_item_images(item_ids, base_items)
+    base_item_ids = TsvReader.read_item_stats('../tsv/map_itemid_to_baseitem_stats_data.tsv', base_items)
+    for key in list(base_items.keys()):
+        if not key in base_item_ids:
+            base_items.pop(key, None)
 
     # Item stats
     TsvReader.read_item_rarity(items)
@@ -509,6 +520,7 @@ if __name__ == '__main__':
         write_json(f, 'categories', json_dump_object(categories))
         write_json(f, 'recipes', json_dump_object(recipes))
         write_json(f, 'items', json_dump_object(items))
+        write_json(f, 'base_items', json_dump_object(base_items))
         write_json(f, 'characters', json_dump_object(characters))
 
 

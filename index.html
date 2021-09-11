@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-16"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-16"/>
         <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/>
         <link rel="stylesheet" href="css/jquery-ui.min.css"/>
         <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
@@ -171,7 +171,7 @@
                             <span class="lang en" data-bind="text: name_en"></span>
                         </td>
                         <td class="icon-td">
-                            <input type="text" data-bind="autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.ViewModel.AutoCompleteSelectHandler }">
+                            <input type="text" data-bind="autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.ViewModel.AutoCompleteSelectHandler }, value: RF5Character.id()">
                         </td>
                     </tr>
                 </tbody>
@@ -205,7 +205,7 @@
     <!-- Context RF5Item -->
     <script type="text/html" id="TEMPLATE-header-icon-group">
         <div class="icon-group" data-bind="class: $data.EquipmentType">
-            <input type="checkbox" data-bind="checked: IsActive(), click: Character().ViewModel.OnEquipmentRadioClickHandler.bind(event, equipmentType, $index()), attr: { name: 'char-'+ characterIdx + equipmentType } "/>
+            <input type="checkbox" data-bind="checked: IsActive(), click: Character().ViewModel.OnEquipmentRadioClickHandler.bind(event, equipmentType, $index())"/>
             <!--
                 <button class="btn collapsed" data-bs-toggle="collapse" data-bind="attr: { 'data-bs-target': '.char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx }, class: 'char-'+ characterIdx +'-'+ equipmentType +'-toggler'">
             -->
@@ -235,7 +235,7 @@
                     <span class="lang en" data-bind="text: name_en"></span>
                 </button>
             </td>
-            <td colspan="41" style="background-color: #dddddd;">foobar</td>
+            <td colspan="43" style="background-color: #dddddd;">foobar</td>
         </tr>
     </script>
 
@@ -326,28 +326,84 @@
     <script type="text/html" id="TEMPLATE-slot">
         <tr class="collapse" data-bind="css: { show: !$data.RF5Slot.ViewModel.IsCollapsed() }">
             <td>
-                <label class="icon-group small" data-bind="class: $data.uiEquipmentType">
+                <label class="icon-group small" data-bind="class: RF5Slot.EquipmentType">
                     <table>
                         <tbody>
                             <tr>
                                 <td>
-                                    <span data-bind="text: $data.slotType + slotIdx, css: { displayNone: $data.RF5Slot.ViewModel.IsRestricted() }"></span>
-                                    <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! $data.RF5Slot.ViewModel.IsRestricted() }"/>
+                                    <span data-bind="text: $data.slotType + slotIdx, css: { displayNone: RF5Slot.ViewModel.IsRestricted() }"></span>
+                                    <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! RF5Slot.ViewModel.IsRestricted() }"/>
                                 </td>
-                                <td class="icon-td"><img class="icon small" data-bind="attr: { src: $data.RF5Slot.image_uri }"/></td>
+                                <td class="icon-td"><img class="icon small" data-bind="attr: { src: RF5Slot.image_uri }"/></td>
                                 <td>
-                                    <span class="lang jp" data-bind="text: $data.RF5Slot.name_jp"></span>
-                                    <span class="lang en" data-bind="text: $data.RF5Slot.name_en"></span>
+                                    <span class="lang jp" data-bind="text: RF5Slot.name_jp"></span>
+                                    <span class="lang en" data-bind="text: RF5Slot.name_en"></span>
                                 </td>
                                 <td>
-                                    <input type="text" data-bind="attr: { disabled: $data.RF5Slot.ViewModel.IsLocked() }, autocomplete: { source: $data.RF5Slot.ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: $data.RF5Slot.ViewModel.AutoCompleteSelectHandler }">
+                                    <input type="text" data-bind="attr: { disabled: RF5Slot.ViewModel.IsLocked() }, autocomplete: { source: RF5Slot.ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: RF5Slot.ViewModel.AutoCompleteSelectHandler }, value: $data.RF5Slot.id()">
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </label>
             </td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: RF5Slot } --><!-- /ko -->
         </tr>
     </script>
 
-</xhtml>
+    <script type="text/html" id="TEMPLATE-stats">
+        <!-- ko template: { name: 'TEMPLATE-cell', data: level() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: rarity() } --><!-- /ko -->
+
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_ATK() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_DEF() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_MAT() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_MDF() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_STR() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_INT() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_VIT() } --><!-- /ko -->
+
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_CRT() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_KNO() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_KNOTM() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_STN() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PSN() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SEA() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PAR() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SLP() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_FTG() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SCK() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_FNT() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DRN() } --><!-- /ko -->
+
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_FIRE() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_WATER() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_EARTH() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_WIND() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_LIGHT() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_DARK() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_LOVE() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_VOID() } --><!-- /ko -->
+
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_CRT() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_KNO() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_KNOTM() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_STN() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PSN() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SEA() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PAR() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SLP() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_FTG() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SCK() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_FNT() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DRN() } --><!-- /ko -->
+
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_chargespeed() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_attacklength() } --><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-cell">
+        <td data-bind="text: $data"></td>
+    </script>
+
+</html>

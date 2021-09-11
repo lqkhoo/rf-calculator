@@ -29,8 +29,8 @@ class VMRF5SlotRecipe extends VMRF5Slot {
 
         let items: any;
         if(cacheKey === "0") {
-            items = planner.Items; // All items
-        } else if (cacheKey in planner.Items) {
+            items = planner.Item_ids; // All items
+        } else if (cacheKey in planner.Item_ids) {
             items = {};
             items[cacheKey] = undefined;
         } else { // Category
