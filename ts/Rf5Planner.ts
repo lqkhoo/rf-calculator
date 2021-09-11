@@ -8,7 +8,8 @@ import Data = require('./model/Data');
 
 class RF5Planner implements IRF5Planner {
 
-    // readonly Data: Data = Data; // Internalize a reference to make binding available to HTML.
+    // Uncomment this to inspect Data from the console. Otherwise not used.
+    readonly Data: Data = Data; 
 
     // Model
     readonly IsEnglishSelected: ko.Observable<boolean>;

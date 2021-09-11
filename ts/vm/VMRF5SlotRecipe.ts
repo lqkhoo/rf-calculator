@@ -20,7 +20,7 @@ class VMRF5SlotRecipe extends VMRF5Slot {
 
         var self = this;
         this.IsRestricted = ko.pureComputed(function() {
-            return self.Model.Restriction() !== "0";
+            return self.Model.Restriction() !== 0;
         });
         this.IsLocked = ko.pureComputed(function() {
             const itemIds: any = Data.Item_ids;
@@ -34,7 +34,7 @@ class VMRF5SlotRecipe extends VMRF5Slot {
         let items: any;
         if(cacheKey === "0") {
             items = Data.Item_ids; // All items
-        } else if (cacheKey in Data.Item_ids) {
+        } else if (cacheKey in Data.Item_ids) { // Single item
             items = {};
             items[cacheKey] = undefined;
         } else { // Category
@@ -67,7 +67,7 @@ class VMRF5SlotRecipe extends VMRF5Slot {
             VMRF5Slot.SearchStringsCache[key] = [];
         }
         if(VMRF5Slot.SearchStringsCache[key].length === 0) {
-            this.CacheSearchStrings(key);
+            this.CacheSearchStrings(key.toString());
         }
         return VMRF5Slot.SearchStringsCache[key];
     }

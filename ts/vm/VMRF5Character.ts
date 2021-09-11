@@ -82,7 +82,7 @@ class VMRF5Character implements IVMRF5Slot {
     // Event handlers
 
     public AutoCompleteSelectHandler = (event: any, ui: any): boolean => {
-        let id: string = ui.item.value;
+        let id: number = parseInt(ui.item.value);
         this.Model.ChangeId(id);
         event.target.value = id;
         return false; // prevent jQueryUI from setting the field.

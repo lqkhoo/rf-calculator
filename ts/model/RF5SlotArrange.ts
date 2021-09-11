@@ -3,8 +3,8 @@ import RF5Item = require('./RF5Item');
 
 class RF5SlotArrange extends RF5Slot {
 
-    constructor(item: RF5Item, equipment_type: EquipmentType, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
-        super(item, item_id, equipment_type);
+    constructor(item: RF5Item, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
+        super(item, item_id);
     }
 
 }

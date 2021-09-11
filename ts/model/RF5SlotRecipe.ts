@@ -11,17 +11,17 @@ import RF5Item = require('./RF5Item');
 
 class RF5SlotRecipe extends RF5Slot {
 
-    readonly Restriction: ko.Observable<string>; // item or category id
+    readonly Restriction: ko.Observable<number>; // item or category id
 
     override readonly image_uri: ko.PureComputed<string>;
     override readonly ViewModel: VMRF5SlotRecipe;
 
-    constructor(item: RF5Item, equipment_type: EquipmentType, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
+    constructor(item: RF5Item, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
 
-        super(item, item_id, equipment_type);
+        super(item, item_id);
         var self = this;
 
-        this.Restriction = ko.observable("0");
+        this.Restriction = ko.observable(0);
 
         this.image_uri = ko.pureComputed(function() {
             let image_uri: string = "icon/Empty.png";
@@ -39,10 +39,10 @@ class RF5SlotRecipe extends RF5Slot {
     }
 
 
-    public ApplyRestriction = (id: string): void => {
+    public ApplyRestriction = (id: number): void => {
         this.Restriction(id);
 
-        if(id === "0") {
+        if(id === 0) {
             return;
         }
         if(!Data.Category_ids.hasOwnProperty(id)) {
@@ -51,16 +51,15 @@ class RF5SlotRecipe extends RF5Slot {
         } else {
             // Category restriction. If current item not in category, set to zero.
             let itemIds: number[] = (Data.Categories as any)[id].item_ids;
-            const numId: number = parseInt(id);
             let found: boolean = false;
             for(var i=0; i<itemIds.length; i++) {
-                if(numId === itemIds[i]) {
+                if(id === itemIds[i]) {
                     found = true;
                     break;
                 }
             }
             if(!found) {
-                this.ChangeId("0");
+                this.ChangeId(0);
             }
         }
     }

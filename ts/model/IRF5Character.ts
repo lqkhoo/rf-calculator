@@ -21,7 +21,7 @@ interface IRF5Character extends IStatVector, IModel {
     AddShield(): void;
     AddWeapon(): void;
 
-    ChangeId (id: string): void;
+    ChangeId (id: number): void;
     SetActiveEquipment(equipmentType: EquipmentType, idx: number): void;
 
 }

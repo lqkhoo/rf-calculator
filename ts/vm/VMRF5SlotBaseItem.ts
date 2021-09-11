@@ -48,7 +48,7 @@ class VMRF5SlotBaseItem extends VMRF5Slot {
     }
 
     public override GetSearchStrings = (): any[] => {
-        let key: string = this.Model.EquipmentType;
+        let key: string = this.Model.Item().EquipmentType;
         if(VMRF5Slot.SearchStringsCache[key] === undefined) {
             VMRF5Slot.SearchStringsCache[key] = [];
         }

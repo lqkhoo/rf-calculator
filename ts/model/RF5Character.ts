@@ -1,9 +1,8 @@
 import ko = require('knockout');
-
-import IModel = require('./IModel');
 import IRF5Item = require('./IRF5Item');
 // Parent
 import IRF5Planner = require('./IRF5Planner');
+import IRF5Character = require('./IRF5Character');
 // Children
 import RF5StatVector = require('./RF5StatVector');
 import RF5Accessory = require('./RF5Accessory');
@@ -17,7 +16,7 @@ import VMRF5Character = require('../vm/VMRF5Character');
 // Data
 import Data = require('./Data');
 
-class RF5Character extends RF5StatVector implements IModel {
+class RF5Character extends RF5StatVector implements IRF5Character {
     
     static readonly DEFAULT_CHARACTER_ID: number = 0;
 
@@ -30,13 +29,14 @@ class RF5Character extends RF5StatVector implements IModel {
     readonly Shields:       ko.ObservableArray<RF5Shield>;
     readonly Weapons:       ko.ObservableArray<RF5Weapon>;
 
+    override readonly Context: ko.PureComputed<any>;
     readonly ViewModel: VMRF5Character;
 
-    constructor(planner: IRF5Planner, character_id: number=RF5Character.DEFAULT_CHARACTER_ID) {
+    constructor(planner: IRF5Planner, characterId: number=RF5Character.DEFAULT_CHARACTER_ID) {
 
-        super((Data.Characters as any)[character_id]
-                || (Data.Characters as any)[RF5Character.DEFAULT_CHARACTER_ID]);
+        super(characterId);
 
+        var self = this;
         this.Planner     = planner;
 
         this.Accessories = ko.observableArray([]);
@@ -45,6 +45,10 @@ class RF5Character extends RF5StatVector implements IModel {
         this.Headgears   = ko.observableArray([]);
         this.Shields     = ko.observableArray([]);
         this.Weapons     = ko.observableArray([]);
+
+        this.Context = ko.computed(function() {
+            return (Data.Characters as any)[self.id()]
+        });
 
         this.ViewModel = new VMRF5Character(this);
 
@@ -93,9 +97,8 @@ class RF5Character extends RF5StatVector implements IModel {
         }
     }
 
-    public ChangeId = (id: string): void => {
-        let ctx: any = (Data.Characters as any)[id];
-        this.Context(ctx);
+    public ChangeId = (id: number): void => {
+        this.id(id);
     }
 
     public SetActiveEquipment = (equipmentType: EquipmentType, idx: number): void => {

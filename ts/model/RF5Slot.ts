@@ -15,26 +15,35 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
     
     static readonly DEFAULT_ITEM_ID: number = 0;
 
-    readonly EquipmentType: EquipmentType;
     readonly Item: ko.Observable<IRF5Item>;
-
     readonly ViewModel: VMRF5Slot;
 
-    constructor(item: IRF5Item, item_id: number, equipment_type: EquipmentType) {
-        super((Data.Items as any)[item_id]
-                || (Data.Items as any)[RF5Slot.DEFAULT_ITEM_ID]);
+    // For overrides
+    readonly EquipmentType: ko.PureComputed<EquipmentType|undefined>;
+    readonly WeaponType: ko.PureComputed<WeaponType|undefined>;
 
-        this.EquipmentType = equipment_type;
+
+    constructor(item: IRF5Item, item_id: number) {
+        super(item_id);
+
+        var self = this;
         this.Item = ko.observable(item);
+        
+        this.EquipmentType = ko.pureComputed((function() {
+            return Data.EquipmentTypeMap[self.id()];
+        }));
+        this.WeaponType = ko.pureComputed(function() {
+            return Data.WeaponTypeMap[self.id()];
+        })
+
         this.ViewModel = new VMRF5Slot(this);
     }
 
-    public ChangeIdScoper = (id: string): void => {
-        let ctx: any = (Data.Items as any)[id];
-        this.Context(ctx);
+    public ChangeIdScoper = (id: number): void => {
+        this.id(id);
     }
 
-    public ChangeId(id: string): void {
+    public ChangeId(id: number): void {
         return this.ChangeIdScoper(id);
     }
 

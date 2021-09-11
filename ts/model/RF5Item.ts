@@ -1,6 +1,5 @@
 import ko = require('knockout');
-import IEquipmentType = require('./IEquipmentType');
-import IModel = require('./IModel');
+import IRF5Item = require('./IRF5Item');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
@@ -15,7 +14,8 @@ import VMRF5Item = require('../vm/VMRF5Item');
 // Data
 import Data = require('./Data');
 
-class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
+
+class RF5Item extends RF5StatVector implements IRF5Item {
 
     static readonly NSLOTS_RECIPE: number = 6;
     static readonly NSLOTS_ARRANGE: number = 3;
@@ -46,23 +46,23 @@ class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
 
         this.ViewModel = new VMRF5Item(this); // Needs to be before slots
 
-        this.BaseItem = ko.observable(new RF5SlotBaseItem(this, equipment_type));
+        this.BaseItem = ko.observable(new RF5SlotBaseItem(this));
         this.RecipeSlots = ko.observableArray([]);
         for(var i=0; i<RF5Item.NSLOTS_RECIPE; i++) {
-            this.RecipeSlots.push(new RF5SlotRecipe(this, equipment_type));
+            this.RecipeSlots.push(new RF5SlotRecipe(this));
         }
         this.ArrangeSlots = ko.observableArray([]);
         for(var i=0; i<RF5Item.NSLOTS_ARRANGE; i++) {
-            this.ArrangeSlots.push(new RF5SlotArrange(this, equipment_type));
+            this.ArrangeSlots.push(new RF5SlotArrange(this));
         }
         this.UpgradeSlots = ko.observableArray([]);
         for(var i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
-            this.UpgradeSlots.push(new RF5SlotUpgrade(this, equipment_type));
+            this.UpgradeSlots.push(new RF5SlotUpgrade(this));
         }
     }
 
     public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
-        const baseitemId: string = baseItem.id();
+        const baseitemId: number = baseItem.id();
         const recipes: any = (Data.Recipes as any);
         const n = this.RecipeSlots().length; // should be 6;
 
@@ -74,7 +74,7 @@ class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
         }
         for(var i=0; i<n; i++) {
             var id = (i < ids.length) ? ids[i] : 0;
-            this.RecipeSlots()[i].ApplyRestriction(id.toString());
+            this.RecipeSlots()[i].ApplyRestriction(id);
         }
     }
 
