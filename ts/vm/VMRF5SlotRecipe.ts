@@ -1,53 +1,57 @@
 import ko = require('knockout');
 import _ = require('lodash');
+// Super
 import VMRF5Slot = require('./VMRF5Slot');
-import RF5SlotRecipe = require('../model/RF5SlotRecipe');
+// Model
+import IRF5SlotRecipe = require('../model/IRF5SlotRecipe');
+// Data
+import Data = require('../model/Data');
+import Utils = require('../Utils');
 
 class VMRF5SlotRecipe extends VMRF5Slot {
 
-    override readonly Model: RF5SlotRecipe;
-    override readonly IsRestricted: ko.Computed<boolean>;
-    override readonly IsLocked: ko.Computed<boolean>
+    override readonly Model: IRF5SlotRecipe;
+    override readonly IsRestricted: ko.PureComputed<boolean>;
+    override readonly IsLocked: ko.PureComputed<boolean>
 
-    constructor(model: RF5SlotRecipe) {
+    constructor(model: IRF5SlotRecipe) {
         super(model)
         this.Model = model;
 
         var self = this;
-        this.IsRestricted = ko.computed(function() {
+        this.IsRestricted = ko.pureComputed(function() {
             return self.Model.Restriction() !== "0";
         });
-        this.IsLocked = ko.computed(function() {
-            const itemIds: any = self.Model.Item().Character().Planner.Item_ids;
+        this.IsLocked = ko.pureComputed(function() {
+            const itemIds: any = Data.Item_ids;
             return self.IsRestricted() && itemIds.hasOwnProperty(self.Model.Restriction());
         })
     }
 
     protected override CacheSearchStrings = (cacheKey: string): void => {
         let self = this;
-        const planner = self.Model.Item().Character().Planner;
 
         let items: any;
         if(cacheKey === "0") {
-            items = planner.Item_ids; // All items
-        } else if (cacheKey in planner.Item_ids) {
+            items = Data.Item_ids; // All items
+        } else if (cacheKey in Data.Item_ids) {
             items = {};
             items[cacheKey] = undefined;
         } else { // Category
             items = {};
-            var itemIds: number[] = (planner.Categories as any)[cacheKey].item_ids;
+            var itemIds: number[] = (Data.Categories as any)[cacheKey].item_ids;
             for(var i=0; i<itemIds.length; i++) {
                 items[itemIds[i].toString()] = undefined;
             }
         }
 
-        let all_items: any = (planner.Items as any);
+        let all_items: any = (Data.Items as any);
         _.forOwn(items, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = all_items[item_id].name_en;
             let name_jp: string = all_items[item_id].name_jp;
             let image_uri: string = all_items[item_id].image_uri;
-            let html_fragment: string = self.Model.Item().Character().Planner.Utils.ConstructAutocompleteListHtml(
+            let html_fragment: string = Utils.ConstructAutocompleteListHtml(
                 item_id, name_en, name_jp, image_uri
             );
             VMRF5Slot.SearchStringsCache[cacheKey].push({

@@ -5,7 +5,7 @@ class Utils {
 
     constructor() { }
 
-    ConstructAutocompleteListHtml(id: string, name_en: string, name_jp: string, image_uri: string): string {
+    public static ConstructAutocompleteListHtml(id: string, name_en: string, name_jp: string, image_uri: string): string {
 
         /*
         var html: string = '<div class="icon-group autoselect">'+

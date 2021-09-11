@@ -1,24 +1,27 @@
 import ko = require('knockout');
 
+import IModel = require('./IModel');
+import IRF5Item = require('./IRF5Item');
+// Parent
+import IRF5Planner = require('./IRF5Planner');
+// Children
+import RF5StatVector = require('./RF5StatVector');
 import RF5Accessory = require('./RF5Accessory');
 import RF5Armor = require('./RF5Armor');
-import IModel = require('./IModel');
 import RF5Boot = require('./RF5Boot');
 import RF5Headgear = require('./RF5Headgear');
 import RF5Shield = require('./RF5Shield');
 import RF5Weapon = require('./RF5Weapon');
-import RF5Planner = require('../RF5Planner');
-import RF5StatVector = require('./RF5StatVector');
+// VM
 import VMRF5Character = require('../vm/VMRF5Character');
-import RF5Item = require('./RF5Item');
+// Data
+import Data = require('./Data');
 
 class RF5Character extends RF5StatVector implements IModel {
     
     static readonly DEFAULT_CHARACTER_ID: number = 0;
 
-    readonly Planner:       RF5Planner;
-
-    readonly Stats:         RF5StatVector;
+    readonly Planner:       IRF5Planner;
 
     readonly Accessories:   ko.ObservableArray<RF5Accessory>;
     readonly Armors:        ko.ObservableArray<RF5Armor>;
@@ -29,10 +32,10 @@ class RF5Character extends RF5StatVector implements IModel {
 
     readonly ViewModel: VMRF5Character;
 
-    constructor(planner: RF5Planner, character_id: number=RF5Character.DEFAULT_CHARACTER_ID) {
+    constructor(planner: IRF5Planner, character_id: number=RF5Character.DEFAULT_CHARACTER_ID) {
 
-        super((planner.Characters as any)[character_id]
-                || (planner.Characters as any)[RF5Character.DEFAULT_CHARACTER_ID]);
+        super((Data.Characters as any)[character_id]
+                || (Data.Characters as any)[RF5Character.DEFAULT_CHARACTER_ID]);
 
         this.Planner     = planner;
 
@@ -85,19 +88,18 @@ class RF5Character extends RF5StatVector implements IModel {
     }
     public AddWeapon = (): void => {
         this.Weapons.push(new RF5Weapon(this));
-
         if(this.Weapons().length === 1) {
             this.Weapons()[0].IsActive(true);
         }
     }
 
     public ChangeId = (id: string): void => {
-        let ctx: any = (this.Planner.Characters as any)[id];
+        let ctx: any = (Data.Characters as any)[id];
         this.Context(ctx);
     }
 
     public SetActiveEquipment = (equipmentType: EquipmentType, idx: number): void => {
-        let array: RF5Item[];
+        let array: IRF5Item[];
         switch(equipmentType) {
             case "weapon": array = this.Weapons(); break;
             case "shield": array = this.Shields(); break;

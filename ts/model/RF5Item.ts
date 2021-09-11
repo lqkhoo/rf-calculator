@@ -1,13 +1,19 @@
 import ko = require('knockout');
+import IEquipmentType = require('./IEquipmentType');
+import IModel = require('./IModel');
+// Super
+import RF5StatVector = require('./RF5StatVector');
+// Parent
+import IRF5Character = require('./IRF5Character');
+// Children
+import RF5SlotBaseItem = require('./RF5SlotBaseItem');
 import RF5SlotRecipe = require('./RF5SlotRecipe');
 import RF5SlotArrange = require('./RF5SlotArrange');
 import RF5SlotUpgrade = require('./RF5SlotUpgrade');
-import RF5SlotBaseItem = require('./RF5SlotBaseItem');
-import RF5Character = require('./RF5Character');
-import RF5StatVector = require('./RF5StatVector');
-import IEquipmentType = require('./IEquipmentType');
-import IModel = require('./IModel');
-import VMRF5ItemViewModel = require('../vm/VMRF5ItemViewModel');
+// VM
+import VMRF5Item = require('../vm/VMRF5Item');
+// Data
+import Data = require('./Data');
 
 class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
 
@@ -19,26 +25,26 @@ class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
     readonly EquipmentType: EquipmentType;
     readonly IsActive: ko.Observable<boolean>;
 
-    readonly Character: ko.Observable<RF5Character>;
+    readonly Character: ko.Observable<IRF5Character>;
 
     readonly BaseItem: ko.Observable<RF5SlotBaseItem>;
     readonly RecipeSlots: ko.ObservableArray<RF5SlotRecipe>;
     readonly ArrangeSlots: ko.ObservableArray<RF5SlotArrange>;
     readonly UpgradeSlots: ko.ObservableArray<RF5SlotUpgrade>;
 
-    readonly ViewModel: VMRF5ItemViewModel;
+    readonly ViewModel: VMRF5Item;
 
-    constructor(character: RF5Character, equipment_type: EquipmentType,
+    constructor(character: IRF5Character, equipment_type: EquipmentType,
                     item_id: number=RF5Item.DEFAULT_ITEM_ID) {
 
-        super((character.Planner.Items as any)[item_id]
-                || (character.Planner.Items as any)[RF5Item.DEFAULT_ITEM_ID]);
+        super((Data.Items as any)[item_id]
+                || (Data.Items as any)[RF5Item.DEFAULT_ITEM_ID]);
 
         this.Character = ko.observable(character);
         this.EquipmentType = equipment_type;
         this.IsActive = ko.observable(false);
 
-        this.ViewModel = new VMRF5ItemViewModel(this); // Needs to be before slots
+        this.ViewModel = new VMRF5Item(this); // Needs to be before slots
 
         this.BaseItem = ko.observable(new RF5SlotBaseItem(this, equipment_type));
         this.RecipeSlots = ko.observableArray([]);
@@ -57,12 +63,12 @@ class RF5Item extends RF5StatVector implements IEquipmentType, IModel {
 
     public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
         const baseitemId: string = baseItem.id();
-        const recipes: any = (this.Character().Planner.Recipes as any);
+        const recipes: any = (Data.Recipes as any);
         const n = this.RecipeSlots().length; // should be 6;
 
         let ids: number[];
         if(recipes.hasOwnProperty(baseitemId)) {
-            ids = (this.Character().Planner.Recipes as any)[baseitemId];
+            ids = (Data.Recipes as any)[baseitemId];
         } else {
             ids = [];
         }

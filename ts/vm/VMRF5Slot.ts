@@ -1,39 +1,43 @@
 import ko = require('knockout');
 import _ = require('lodash');
-import VMBaseViewModel = require('./VMBaseViewModel');
-import RF5Slot = require('../model/RF5Slot');
+// Model
+import IRF5Slot = require('../model/IRF5Slot');
+// Super
+import IVMRF5Slot = require('./IVMRF5Slot');
+// Data
+import Data = require('../model/Data');
+import Utils = require('../Utils');
 
-class VMRF5Slot extends VMBaseViewModel {
+class VMRF5Slot implements IVMRF5Slot {
 
-    override readonly Model: RF5Slot;
+    readonly Model: IRF5Slot;
     readonly IsCollapsed: ko.Observable<boolean>;
-    readonly IsRestricted: ko.Computed<boolean>;
-    readonly IsLocked: ko.Computed<boolean>
+    readonly IsRestricted: ko.PureComputed<boolean>;
+    readonly IsLocked: ko.PureComputed<boolean>
 
     static readonly SearchStringsCache: Record<string, any[]> = {};
 
-    constructor(model: RF5Slot) {
-        super();
+    constructor(model: IRF5Slot) {
         this.Model = model;
 
         // const isCollapsed: boolean = this.Model.Item().ViewModel.IsCollapsed();
         const isCollapsed: boolean = true; // Always generate as collapsed
         this.IsCollapsed = ko.observable(isCollapsed);
 
-        this.IsRestricted = ko.computed(function() { return false; });
-        this.IsLocked = ko.computed(function() { return false; })
+        this.IsRestricted = ko.pureComputed(function() { return false; });
+        this.IsLocked = ko.pureComputed(function() { return false; })
     }
 
     protected CacheSearchStrings = (cacheKey: string): void => {
 
         let self = this;
-        let all_items: any = (self.Model.Item().Character().Planner.Items as any)
-        _.forOwn(self.Model.Item().Character().Planner.Item_ids, function(value: any, key: any) {
+        let all_items: any = (Data.Items as any)
+        _.forOwn(Data.Item_ids, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = all_items[item_id].name_en;
             let name_jp: string = all_items[item_id].name_jp;
             let image_uri: string = all_items[item_id].image_uri;
-            let html_fragment: string = self.Model.Item().Character().Planner.Utils.ConstructAutocompleteListHtml(
+            let html_fragment: string = Utils.ConstructAutocompleteListHtml(
                 item_id, name_en, name_jp, image_uri
             );
             VMRF5Slot.SearchStringsCache[cacheKey].push({

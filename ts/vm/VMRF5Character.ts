@@ -1,24 +1,23 @@
 import _ = require('lodash');
 import ko = require('knockout');
-import RF5Character = require('../model/RF5Character');
-import VMBaseViewmodel = require('./VMBaseViewmodel');
-import RF5Item = require('../model/RF5Item');
-import RF5Weapon = require('../model/RF5Weapon');
-import RF5Shield = require('../model/RF5Shield');
-import RF5Headgear = require('../model/RF5Headgear');
-import RF5Armor = require('../model/RF5Armor');
-import RF5Boot = require('../model/RF5Boot');
-import RF5Accessory = require('../model/RF5Accessory');
+// Model
+import IRF5Item = require('../model/IRF5Item');
+import IRF5Character = require('../model/IRF5Character');
+// Super
+import IVMRF5Slot = require('./IVMRF5Slot');
+// Data
+import Data = require('../model/Data');
+import Utils = require('../Utils');
 
-class VMRF5Character extends VMBaseViewmodel {
 
-    override readonly Model: RF5Character;
+class VMRF5Character implements IVMRF5Slot {
+
+    readonly Model: IRF5Character;
     static readonly SearchStringsCache: any[] = [];
 
     readonly IsItemGroupCollapsed: Record<EquipmentType, ko.Observable<boolean>>;
 
-    constructor(model: RF5Character) {
-        super();
+    constructor(model: IRF5Character) {
         this.Model = model;
 
         this.IsItemGroupCollapsed = {
@@ -41,7 +40,7 @@ class VMRF5Character extends VMBaseViewmodel {
         return ! isCollapsed;
     }
 
-    protected GetItemGroup = (equipmentType: EquipmentType): RF5Item[] => {
+    protected GetItemGroup = (equipmentType: EquipmentType): IRF5Item[] => {
         switch(equipmentType) {
             case "weapon": return this.Model.Weapons();
             case "shield": return this.Model.Shields();
@@ -56,14 +55,14 @@ class VMRF5Character extends VMBaseViewmodel {
 
     protected CacheSearchStrings = (): void => {
         let self = this;
-        let character_ids: any = self.Model.Planner.Character_ids;
-        let characters: any = (self.Model.Planner.Characters as any);
+        let character_ids: any = Data.Character_ids;
+        let characters: any = (Data.Characters as any);
         _.forOwn(character_ids, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = characters[item_id].name_en;
             let name_jp: string = characters[item_id].name_jp;
             let image_uri: string = characters[item_id].image_uri;
-            let html_fragment: string = self.Model.Planner.Utils.ConstructAutocompleteListHtml(
+            let html_fragment: string = Utils.ConstructAutocompleteListHtml(
                 item_id, name_en, name_jp, image_uri
             );
             VMRF5Character.SearchStringsCache.push({
@@ -80,6 +79,8 @@ class VMRF5Character extends VMBaseViewmodel {
         return VMRF5Character.SearchStringsCache;
     }
 
+    // Event handlers
+
     public AutoCompleteSelectHandler = (event: any, ui: any): boolean => {
         let id: string = ui.item.value;
         this.Model.ChangeId(id);
@@ -87,15 +88,13 @@ class VMRF5Character extends VMBaseViewmodel {
         return false; // prevent jQueryUI from setting the field.
     }
 
-    // Event handlers
-
     public OnGroupHeaderClickHandler = (equipmentType: EquipmentType, dataContext: any, event: any): boolean => {
         this.ToggleGroupHeaderCollapsedState(equipmentType);
         return true;
     }
 
     public OnAddItemClickHandler = (equipmentType: EquipmentType, dataContext: any, _event: any): boolean => {
-        const character: RF5Character = dataContext;
+        const character: IRF5Character = dataContext;
         switch (equipmentType) {
             case "weapon": character.AddWeapon(); break;
             case "shield": character.AddShield(); break;
@@ -109,7 +108,7 @@ class VMRF5Character extends VMBaseViewmodel {
 
     public OnEquipmentRadioClickHandler = (equipmentType: EquipmentType, equipmentIdx: number,
                                                 dataContext: any, _event: any): boolean => {
-        const rf5Item: RF5Item = (dataContext as RF5Item);
+        const rf5Item: IRF5Item = (dataContext as IRF5Item);
         if(equipmentType !== null) {
             rf5Item.Character().SetActiveEquipment(equipmentType, equipmentIdx);
         }

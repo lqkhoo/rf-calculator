@@ -52,7 +52,7 @@
                     <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-'+ characterIdx }" data-bs-toggle="tab" role="tab">
-                                <img class="icon" data-bind="attr: { src: image_uri }"/>
+                                <img class="icon" data-bind="attr: { src: image_uri() }"/>
                             </button>
                         </li>
                         <!-- ko if: ($index() === ($parent.CharacterList().length-1)) -->
