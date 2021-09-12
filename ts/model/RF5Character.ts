@@ -1,8 +1,8 @@
 import ko = require('knockout');
 import IRF5Item = require('./IRF5Item');
+import IRF5Character = require('./IRF5Character');
 // Parent
 import IRF5Planner = require('./IRF5Planner');
-import IRF5Character = require('./IRF5Character');
 // Children
 import RF5StatVector = require('./RF5StatVector');
 import RF5Accessory = require('./RF5Accessory');

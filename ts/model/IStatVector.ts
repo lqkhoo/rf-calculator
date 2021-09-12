@@ -2,6 +2,8 @@ import ko = require('knockout');
 
 interface IStatVector {
 
+    readonly Context:           ko.PureComputed<any>;
+
     readonly id:                ko.Observable<number>;
     readonly name_en:           ko.PureComputed<string>;
     readonly name_jp:           ko.PureComputed<string>;

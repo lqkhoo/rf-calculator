@@ -141,6 +141,9 @@ h4.title {
     thead > tr > th:last-child {
         box-shadow: inset 1px 0 0 #cccccc, inset 0 1px 0 #cccccc, inset -1px 0 0 #cccccc;
     }
+    thead > tr > th.box-shadow-override {
+        box-shadow: inset 1px 0 0 #cccccc, inset 0 1px 0 #cccccc;
+    }
 
 }
 

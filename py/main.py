@@ -375,6 +375,8 @@ if __name__ == '__main__':
                                         | is_eq_farm_fishingpole | is_eq_farm_hammer | is_eq_farm_hoe
                                         | is_eq_farm_sickle | is_eq_farm_waterpot | is_eq_fists
                                         | is_eq_hammer | is_eq_spear  | is_eq_staff | is_eq_sword)
+    is_equipment:           set[int] = (is_eq_weapon | is_eq_shield | is_eq_headgear | is_eq_armor
+                                        | is_eq_shoes | is_eq_accessory)
 
     is_mat_2foldsteel:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_2foldsteel.tsv')
     is_mat_10foldsteel:     set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_10foldsteel.tsv')
@@ -497,6 +499,7 @@ if __name__ == '__main__':
         write_json(f, 'is_eq_staff', json.dumps(sorted(list(is_eq_staff))))
         write_json(f, 'is_eq_sword', json.dumps(sorted(list(is_eq_sword))))
         write_json(f, 'is_eq_weapon', json.dumps(sorted(list(is_eq_weapon))))
+        write_json(f, 'is_equipment', json.dumps(sorted(list(is_equipment))))
 
         write_json(f, 'is_mat_2foldsteel', json.dumps(sorted(list(is_mat_2foldsteel))))
         write_json(f, 'is_mat_10foldsteel', json.dumps(sorted(list(is_mat_10foldsteel))))

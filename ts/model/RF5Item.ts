@@ -1,5 +1,7 @@
+import _ = require('lodash');
 import ko = require('knockout');
 import IRF5Item = require('./IRF5Item');
+import IRF5Slot = require('./IRF5Slot');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
@@ -13,6 +15,7 @@ import RF5SlotUpgrade = require('./RF5SlotUpgrade');
 import VMRF5Item = require('../vm/VMRF5Item');
 // Data
 import Data = require('./Data');
+import RF5Slot = require('./RF5Slot');
 
 
 class RF5Item extends RF5StatVector implements IRF5Item {
@@ -35,10 +38,9 @@ class RF5Item extends RF5StatVector implements IRF5Item {
     readonly ViewModel: VMRF5Item;
 
     constructor(character: IRF5Character, equipment_type: EquipmentType,
-                    item_id: number=RF5Item.DEFAULT_ITEM_ID) {
-
-        super((Data.Items as any)[item_id]
-                || (Data.Items as any)[RF5Item.DEFAULT_ITEM_ID]);
+                    character_id: number=RF5Item.DEFAULT_ITEM_ID) {
+        // TODO: need to set context
+        super(character_id);
 
         this.Character = ko.observable(character);
         this.EquipmentType = equipment_type;
@@ -46,18 +48,23 @@ class RF5Item extends RF5StatVector implements IRF5Item {
 
         this.ViewModel = new VMRF5Item(this); // Needs to be before slots
 
-        this.BaseItem = ko.observable(new RF5SlotBaseItem(this));
+        let i = 0;
+        this.BaseItem = ko.observable(new RF5SlotBaseItem(this, i));
+        i++;
         this.RecipeSlots = ko.observableArray([]);
-        for(var i=0; i<RF5Item.NSLOTS_RECIPE; i++) {
-            this.RecipeSlots.push(new RF5SlotRecipe(this));
+        for(var j=0; j<RF5Item.NSLOTS_RECIPE; j++) {
+            this.RecipeSlots.push(new RF5SlotRecipe(this, i));
+            i++;
         }
         this.ArrangeSlots = ko.observableArray([]);
-        for(var i=0; i<RF5Item.NSLOTS_ARRANGE; i++) {
-            this.ArrangeSlots.push(new RF5SlotArrange(this));
+        for(var j=0; j<RF5Item.NSLOTS_ARRANGE; j++) {
+            this.ArrangeSlots.push(new RF5SlotArrange(this, i));
+            i++
         }
         this.UpgradeSlots = ko.observableArray([]);
-        for(var i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
-            this.UpgradeSlots.push(new RF5SlotUpgrade(this));
+        for(var j=0; j<RF5Item.NSLOTS_UPGRADE; j++) {
+            this.UpgradeSlots.push(new RF5SlotUpgrade(this, i));
+            i++;
         }
     }
 
@@ -75,6 +82,19 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         for(var i=0; i<n; i++) {
             var id = (i < ids.length) ? ids[i] : 0;
             this.RecipeSlots()[i].ApplyRestriction(id);
+        }
+    }
+
+    public GetSlotByIndex = (index: number): IRF5Slot => {
+        index = _.clamp(index, 0, 18); // Inclusive both
+        if(index == 0) {
+            return this.BaseItem();
+        } else if (index < RF5Slot.ARRANGE_START_IDX) {
+            return this.RecipeSlots()[index - 1];
+        } else if (index < RF5Slot.UPGRADE_START_IDX) {
+            return this.ArrangeSlots()[index - RF5Slot.ARRANGE_START_IDX];
+        } else {
+            return this.UpgradeSlots()[index - RF5Slot.UPGRADE_START_IDX];
         }
     }
 

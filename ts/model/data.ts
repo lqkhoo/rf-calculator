@@ -27,6 +27,7 @@ class Data {
     static readonly Is_eq_staff:            object = Data.ArrayToObject(_RAWDATA.is_eq_staff);
     static readonly Is_eq_sword:            object = Data.ArrayToObject(_RAWDATA.is_eq_sword);
     static readonly Is_eq_weapon:           object = Data.ArrayToObject(_RAWDATA.is_eq_weapon);
+    static readonly Is_equipment:           object = Data.ArrayToObject(_RAWDATA.is_equipment);
     static readonly Is_mat_2foldsteel:      object = Data.ArrayToObject(_RAWDATA.is_mat_2foldsteel);
     static readonly Is_mat_10foldsteel:     object = Data.ArrayToObject(_RAWDATA.is_mat_10foldsteel);
     static readonly Is_mat_clawsandfangs:   object = Data.ArrayToObject(_RAWDATA.is_mat_clawsandfangs);
@@ -83,6 +84,27 @@ class Data {
         _.forOwn(Data.Is_eq_farm_waterpot,  (_value: any, key: any) => { map[key] = "farm_waterpot" });
         return map;
     }());
+
+    // Query methods
+    public static IsEquipment(id: number): boolean {
+        return Data.Is_equipment.hasOwnProperty(id);
+    }
+    public static IsWeapon(id: number): boolean {
+        return Data.Is_eq_weapon.hasOwnProperty(id);
+    }
+    public static IsObjectX(id: number): boolean {
+        return Data.Is_mat_objectx.hasOwnProperty(id);
+    }
+    public static Is2foldSteel(id: number): boolean {
+        return Data.Is_mat_2foldsteel.hasOwnProperty(id);
+    }
+    public static Is10foldSteel(id: number): boolean {
+        return Data.Is_mat_10foldsteel.hasOwnProperty(id);
+    }
+    public static IsLightOre(id: number): boolean {
+        return Data.Is_mat_lightore.hasOwnProperty(id);
+    }
+
 
     protected static ArrayToObject(arr: number[]): object {
         var obj: any = {};

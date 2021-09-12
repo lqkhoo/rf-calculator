@@ -11,11 +11,13 @@ import Data = require('./Data');
 class RF5SlotBaseItem extends RF5Slot {
 
     override readonly ViewModel: VMRF5SlotBaseItem;
+    override readonly UseEquipmentStats: ko.PureComputed<boolean>;
 
-    constructor(item: IRF5Item, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
-        super(item, item_id);
-        this.UseEquipmentStats(true);
-        // Set context to reference base item stats.
+    constructor(item: IRF5Item, index: number, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
+        super(item, index, item_id, true);
+        this.UseEquipmentStats = ko.pureComputed(function() {
+            return true;
+        });
 
         this.ViewModel = new VMRF5SlotBaseItem(this);
     }
