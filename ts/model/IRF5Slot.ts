@@ -1,3 +1,4 @@
+import IVMRF5Slot = require("../vm/IVMRF5Slot");
 import IModel = require("./IModel");
 import IRF5Item = require("./IRF5Item");
 import IStatVector = require("./IStatVector");
@@ -17,14 +18,18 @@ interface IRF5Slot extends IStatVector, IModel {
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
     readonly IsEffective10FoldSteel: ko.PureComputed<boolean>;
 
+    readonly HasPrecedingOverrider: ko.PureComputed<boolean>;
     readonly IsOverriding: ko.PureComputed<boolean>;
     readonly IsBeingOverridden: ko.PureComputed<boolean>;
+
+    readonly LightOreCount: ko.PureComputed<number>;
     readonly IsApplyingStats: ko.PureComputed<boolean>;
 
     readonly ObjectXMultiplier: ko.PureComputed<number>;
     readonly IsApplyingStatsMultiplier: ko.PureComputed<number>;
     readonly DiminishingMultiplier: ko.PureComputed<number>;
 
+    readonly ViewModel: IVMRF5Slot;
 
     //TODO diminishing returns
     //ELEMENT

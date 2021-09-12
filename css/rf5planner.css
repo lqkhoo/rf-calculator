@@ -10174,7 +10174,7 @@ h4.title, .title.h4 {
 }
 
 .displayNone {
-  display: none;
+  display: none !important;
 }
 
 .btn {
@@ -10392,6 +10392,29 @@ div.icon-group {
   height: 100%;
   width: 100%;
   font-size: 10px;
+}
+
+.detail-button:hover {
+  background: transparent;
+}
+
+.detail-panel {
+  text-align: left;
+}
+
+.detail-panel > * {
+  display: block;
+  width: 100%;
+  padding-left: 5px;
+  font-size: 12px;
+  margin: 1px;
+}
+
+.detail-panel img {
+  float: none;
+  display: inline-block;
+  height: 14px;
+  width: 14px;
 }
 
 /*# sourceMappingURL=rf5planner.css.map */

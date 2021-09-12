@@ -12,20 +12,40 @@ class VMRF5Slot implements IVMRF5Slot {
 
     readonly Model: IRF5Slot;
     readonly IsCollapsed: ko.Observable<boolean>;
+    readonly AreDetailsCollapsed: ko.Observable<boolean>;
+
     readonly IsRestricted: ko.PureComputed<boolean>;
     readonly IsLocked: ko.PureComputed<boolean>
+
+    readonly SlotName: ko.PureComputed<string>;
 
     static readonly SearchStringsCache: Record<string, any[]> = {};
 
     constructor(model: IRF5Slot) {
+        var self = this;
         this.Model = model;
 
         // const isCollapsed: boolean = this.Model.Item().ViewModel.IsCollapsed();
         const isCollapsed: boolean = true; // Always generate as collapsed
         this.IsCollapsed = ko.observable(isCollapsed);
+        this.AreDetailsCollapsed = ko.observable(true);
 
         this.IsRestricted = ko.pureComputed(function() { return false; });
         this.IsLocked = ko.pureComputed(function() { return false; })
+
+        this.SlotName = ko.pureComputed(function() {
+            if(self.Model.Index === 0) { return 'B'; }
+            else if (self.Model.Index < 7) {
+                return 'R' + (self.Model.Index-1).toString();
+            }
+            else if (self.Model.Index < 10) {
+                return 'A' + (self.Model.Index-7).toString();
+            }
+            else {
+                return 'U' + (self.Model.Index-10).toString();
+            }
+        });
+
     }
 
     protected CacheSearchStrings = (cacheKey: string): void => {
@@ -58,6 +78,13 @@ class VMRF5Slot implements IVMRF5Slot {
         return VMRF5Slot.SearchStringsCache[key];
     }
 
+    public SetCollapsedState = (isCollapsed: boolean): void => {
+        this.IsCollapsed(isCollapsed);
+        if(isCollapsed) {
+            this.AreDetailsCollapsed(isCollapsed);
+        }
+    }
+
     // Handlers
 
     public AutoCompleteSelectHandler = (event: any, ui: any): boolean => {
@@ -65,6 +92,12 @@ class VMRF5Slot implements IVMRF5Slot {
         this.Model.ChangeId(id);
         event.target.value = id;
         return false; // prevent jQueryUI from setting the field.
+    }
+
+    public DetailButtonClickHandler = (event: any, ui: any): boolean => {
+        var val = this.AreDetailsCollapsed();
+        this.AreDetailsCollapsed(!val);
+        return false;
     }
 
 }

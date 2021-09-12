@@ -30,8 +30,11 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
     readonly IsEffective10FoldSteel: ko.PureComputed<boolean>;
 
+    readonly HasPrecedingOverrider: ko.PureComputed<boolean>;
     readonly IsOverriding: ko.PureComputed<boolean>;
     readonly IsBeingOverridden: ko.PureComputed<boolean>;
+
+    readonly LightOreCount: ko.PureComputed<number>;
     readonly IsApplyingStats: ko.PureComputed<boolean>;
 
     readonly ObjectXMultiplier: ko.PureComputed<number>;
@@ -108,8 +111,12 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         this.IsEffective2FoldSteel = ko.pureComputed(self._compute_isEffective2FoldSteel);
         this.IsEffective10FoldSteel = ko.pureComputed(self._compute_isEffective10FoldSteel);
 
+        this.HasPrecedingOverrider = ko.computed(self._compute_hasPrecedingOverrider);
         this.IsOverriding = ko.pureComputed(self._compute_isOverriding);
         this.IsBeingOverridden = ko.pureComputed(self._compute_isBeingOverridden);
+
+        this.LightOreCount = ko.pureComputed(self._compute_LightOreCount);
+
         this.IsApplyingStats = ko.pureComputed(self._compute_isApplyingStats);
 
         this.ObjectXMultiplier = ko.pureComputed(self._compute_objectXMultiplier);
@@ -164,6 +171,13 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         return true;
     }
 
+    protected _compute_hasPrecedingOverrider = (): boolean => {
+        if(this.Index === 0) { return false; } // Terminating condition.
+        let predecessor = this.Predecessor();
+        // Order of evaluation of the OR is important.
+        return predecessor.HasPrecedingOverrider() || predecessor.IsOverriding();
+    };
+    
     protected _compute_isOverriding = (): boolean => {
         // We could make this faster by incorporating recipe info,
         // or chaining override or light ore status, but this is simple and it's good enough.
@@ -176,12 +190,8 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
             return false;
         }
         // Check if something else is already overriding.
-        // Not sufficient to just check predecessor. So 1/2*O(n^2) where n_max=6
-        for(var i=1; i<this.Index; i++) {
-            if (this.Item().GetSlotByIndex(i).IsOverriding()) {
-                return false;
-            }
-        }
+       if(this.HasPrecedingOverrider()) { return false; }
+
         // Now do the real work.
         let baseItem: IRF5Slot = this.Item().GetSlotByIndex(0);
         if (! Data.IsWeapon(this.id())) { // Case: this is a non-weapon. We've already ruled out zero.
@@ -194,14 +204,8 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
                 return true;
             } else {
                 // Case: Light ore
-                // Check if there is light ore before us.
-                let hasLightOre: boolean = false;
-                for(var i=1; i<this.Index; i++) {
-                    if (Data.IsLightOre(this.Item().GetSlotByIndex(i).id())) {
-                        hasLightOre = true;
-                        break;
-                    }
-                }
+                let hasLightOre: boolean = (this.LightOreCount() > 0);
+
                 if (hasLightOre && Data.IsWeapon(baseItem.id())) {
                     // Make sure base item is actually a weapon.
                     return true;
@@ -219,6 +223,24 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
             }
         }
         return false;
+    }
+
+    protected _compute_LightOreCount = (): number => {
+        if(this.Index === 0 || this.Index >= RF5Slot.ARRANGE_START_IDX) { // Light ore only works in recipe slots.
+            return 0;
+        } else if(this.Index > 1) {
+            return this.Item().GetSlotByIndex(1).LightOreCount();
+        } else {
+            // Light ore usage is in ANY recipe slot, so we need to check all slots,
+            // even if we're not counting. We're not saving any computation here.
+            let count = 0;
+            for(var i=1; i<RF5Slot.ARRANGE_START_IDX; i++) {
+                if (Data.IsLightOre(this.Item().GetSlotByIndex(i).id())) {
+                    count += 1;
+                }
+            }
+            return count;
+        }
     }
 
     protected _compute_isApplyingStats = (): boolean => {

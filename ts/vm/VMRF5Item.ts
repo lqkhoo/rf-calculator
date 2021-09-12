@@ -26,15 +26,15 @@ class VMRF5Item implements IVMRF5Slot {
     }
 
     protected CollapseChildSlots = (isCollapsed: boolean): boolean => {
-        this.Model.BaseItem().ViewModel.IsCollapsed(isCollapsed);
+        this.Model.BaseItem().ViewModel.SetCollapsedState(isCollapsed);
         for(const recipeSlot of this.Model.RecipeSlots()) {
-            recipeSlot.ViewModel.IsCollapsed(isCollapsed);
+            recipeSlot.ViewModel.SetCollapsedState(isCollapsed);
         }
         for(const arrangeSlot of this.Model.ArrangeSlots()) {
-            arrangeSlot.ViewModel.IsCollapsed(isCollapsed);
+            arrangeSlot.ViewModel.SetCollapsedState(isCollapsed);
         }
         for(const upgradeSlot of this.Model.UpgradeSlots()) {
-            upgradeSlot.ViewModel.IsCollapsed(isCollapsed);
+            upgradeSlot.ViewModel.SetCollapsedState(isCollapsed);
         }
         return isCollapsed;
     }
