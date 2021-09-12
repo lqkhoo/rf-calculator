@@ -29,8 +29,12 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     readonly Shields:       ko.ObservableArray<RF5Shield>;
     readonly Weapons:       ko.ObservableArray<RF5Weapon>;
 
-    override readonly Context: ko.PureComputed<any>;
     readonly ViewModel: VMRF5Character;
+
+    override readonly Context: ko.PureComputed<any>;
+    override readonly name_en:           ko.PureComputed<string>;
+    override readonly name_jp:           ko.PureComputed<string>;
+    override readonly image_uri:         ko.PureComputed<string>;
 
     constructor(planner: IRF5Planner, characterId: number=RF5Character.DEFAULT_CHARACTER_ID) {
 
@@ -49,6 +53,9 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         this.Context = ko.computed(function() {
             return (Data.Characters as any)[self.id()]
         });
+        this.name_en = ko.pureComputed(self._compute_name_en);
+        this.name_jp = ko.pureComputed(self._compute_name_jp);
+        this.image_uri = ko.pureComputed(self._compute_image_uri);
 
         this.ViewModel = new VMRF5Character(this);
 
@@ -115,6 +122,10 @@ class RF5Character extends RF5StatVector implements IRF5Character {
             array[i].IsActive(i===idx);
         }
     }
+
+    protected override _compute_name_en = this._compute_string_helper(RF5StatVector.KEY_name_en, "None");
+    protected override _compute_name_jp = this._compute_string_helper(RF5StatVector.KEY_name_jp, "\u306a\u3057");
+    protected override _compute_image_uri = this._compute_string_helper(RF5StatVector.KEY_image_uri, "icon/Empty.png");
 
 }
 export = RF5Character;

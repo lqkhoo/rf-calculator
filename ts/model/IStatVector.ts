@@ -52,5 +52,7 @@ interface IStatVector {
     readonly stat_chargespeed:  ko.PureComputed<number>;
     readonly stat_attacklength: ko.PureComputed<number>;
 
+    GetStatByName(name: StatVectorKey): number | string;
+
 }
 export = IStatVector;

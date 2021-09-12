@@ -11,13 +11,19 @@ import Data = require('./Data');
 class RF5SlotBaseItem extends RF5Slot {
 
     override readonly ViewModel: VMRF5SlotBaseItem;
-    override readonly UseEquipmentStats: ko.PureComputed<boolean>;
 
     constructor(item: IRF5Item, index: number, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
         super(item, index, item_id, true);
+        
         this.UseEquipmentStats = ko.pureComputed(function() {
             return true;
         });
+
+        this.level = ko.pureComputed(function() {
+            return 0; // Arrange slots' level values don't count.
+        });
+
+        this.FinalizeVectorOverride();
 
         this.ViewModel = new VMRF5SlotBaseItem(this);
     }

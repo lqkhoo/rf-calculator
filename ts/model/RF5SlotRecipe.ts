@@ -13,7 +13,6 @@ class RF5SlotRecipe extends RF5Slot {
 
     readonly Restriction: ko.Observable<number>; // item or category id
 
-    override readonly image_uri: ko.PureComputed<string>;
     override readonly ViewModel: VMRF5SlotRecipe;
 
     constructor(item: RF5Item, index: number, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
@@ -34,6 +33,8 @@ class RF5SlotRecipe extends RF5Slot {
             }
             return image_uri;
         });
+        
+        this.FinalizeVectorOverride();
 
         this.ViewModel = new VMRF5SlotRecipe(this);
     }

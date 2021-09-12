@@ -92,13 +92,13 @@
                             <tr>
                                 <th><span class="lang stack jp">&#x7dcf</span><span class="lang stack en">LVL</span></th>
                                 <th><span class="lang stack jp">&#x7d20</span><span class="lang stack en">RAR</span></th>
-                                <th><span class="lang stack en jp">ATK</span></th>
-                                <th><span class="lang stack en jp">DEF</span></th>
-                                <th><span class="lang stack en jp">MAT</span></th>
-                                <th><span class="lang stack en jp">MDF</span></th>
-                                <th><span class="lang stack en jp">STR</span></th>
-                                <th><span class="lang stack en jp">INT</span></th>
-                                <th><span class="lang stack en jp">VIT</span></th>
+                                <th class="wide"><span class="lang stack en jp">ATK</span></th>
+                                <th class="wide"><span class="lang stack en jp">DEF</span></th>
+                                <th class="wide"><span class="lang stack en jp">MAT</span></th>
+                                <th class="wide"><span class="lang stack en jp">MDF</span></th>
+                                <th class="wide"><span class="lang stack en jp">STR</span></th>
+                                <th class="wide"><span class="lang stack en jp">INT</span></th>
+                                <th class="wide"><span class="lang stack en jp">VIT</span></th>
                                 <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
                                 <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
                                 <th><span class="lang stack jp">&#x98db</span><span class="lang stack en">KNO</span></th>
@@ -132,7 +132,7 @@
                                 <th><span class="lang stack jp">&#x6c17</span><span class="lang stack en">FNT</span></th>
                                 <th><span class="lang stack jp">&#x5438</span><span class="lang stack en">DRN</span></th>
                                 <th><span class="lang stack jp">&#x901f</span><span class="lang stack en">CHG</span></th>
-                                <th><span class="lang stack jp">&#x9577</span><span class="lang stack en">LNG</span></th>
+                                <th><span class="lang stack jp">&#x9577</span><span class="lang stack en">RCH</span></th>
 
                             </tr>
                             <!-- ko template: { name: 'TEMPLATE-character-upper' } --><!-- /ko -->
@@ -208,10 +208,10 @@
             <table>
                 <tbody>
                     <tr>
-                        <td class="icon-td"><img data-bind="attr: { src: image_uri }"/></td>
+                        <td class="icon-td"><img data-bind="attr: { src: image_uri() }"/></td>
                         <td>
-                            <span class="lang jp" data-bind="text: name_jp"></span>
-                            <span class="lang en" data-bind="text: name_en"></span>
+                            <span class="lang jp" data-bind="text: name_jp()"></span>
+                            <span class="lang en" data-bind="text: name_en()"></span>
                         </td>
                         <td class="icon-td">
                             <input type="text" data-bind="autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: RF5Character.ViewModel.AutoCompleteSelectHandler }, value: RF5Character.id()">
@@ -296,6 +296,7 @@
     <script type="text/html" id="TEMPLATE-weapon">
         <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
@@ -303,6 +304,7 @@
     <script type="text/html" id="TEMPLATE-shield">
         <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
@@ -310,6 +312,7 @@
     <script type="text/html" id="TEMPLATE-headgear">
         <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
@@ -317,6 +320,7 @@
     <script type="text/html" id="TEMPLATE-armor">
         <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
@@ -324,6 +328,7 @@
     <script type="text/html" id="TEMPLATE-boots">
         <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
@@ -331,6 +336,7 @@
     <script type="text/html" id="TEMPLATE-accessory">
         <tr class="collapse" data-bind="css: { show: !ViewModel.IsCollapsed() }">
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>

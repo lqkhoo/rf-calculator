@@ -12,6 +12,8 @@ class RF5SlotArrange extends RF5Slot {
         this.level = ko.pureComputed(function() {
             return 0; // Arrange slots' level values don't count.
         });
+        
+        this.FinalizeVectorOverride();
 
     }
 

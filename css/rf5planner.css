@@ -10215,6 +10215,9 @@ h4.title, .title.h4 {
   max-width: 25px;
   overflow: hidden;
 }
+.stats-table th.wide {
+  min-width: 32px;
+}
 .stats-table td:first-child, .stats-table th:first-child {
   max-width: initial;
 }

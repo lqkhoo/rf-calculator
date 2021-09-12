@@ -144,6 +144,9 @@ h4.title {
         // text-overflow: ellipsis;
         // border-bottom: 1px solid inherit;
     }
+    th.wide {
+        min-width: 32px;
+    }
 
     td:first-child, th:first-child {
         max-width: initial;
