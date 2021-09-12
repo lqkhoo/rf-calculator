@@ -30,11 +30,17 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
     readonly IsUnderObjectX: ko.Computed<boolean>; // pure can't be called recursively.
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
     readonly IsEffective10FoldSteel: ko.PureComputed<boolean>;
+
     readonly IsOverriding: ko.PureComputed<boolean>;
     readonly IsBeingOverridden: ko.PureComputed<boolean>;
-    readonly DiminishingMultiplier: ko.PureComputed<number>;
+    readonly IsApplyingStats: ko.PureComputed<boolean>;
 
+    readonly ObjectXMultiplier: ko.PureComputed<number>;
+    readonly IsApplyingStatsMultiplier: ko.PureComputed<number>;
+    readonly DiminishingMultiplier: ko.PureComputed<number>;
+    
     readonly Multiplier: ko.PureComputed<number>;
+
     readonly ViewModel: VMRF5Slot;
 
     override readonly name_en:           ko.PureComputed<string>;
@@ -51,8 +57,8 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
     override readonly stat_VIT:          ko.PureComputed<number>;
     override readonly stat_atk_CRT:      ko.PureComputed<number>;
     override readonly stat_atk_KNO:      ko.PureComputed<number>;
-    override readonly stat_atk_KNOTM:    ko.PureComputed<number>;
     override readonly stat_atk_STN:      ko.PureComputed<number>;
+    override readonly stat_atk_DIZ:      ko.PureComputed<number>;
     override readonly stat_atk_PSN:      ko.PureComputed<number>;
     override readonly stat_atk_SEA:      ko.PureComputed<number>;
     override readonly stat_atk_PAR:      ko.PureComputed<number>;
@@ -71,8 +77,8 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
     override readonly stat_def_ele_VOID:  ko.PureComputed<number>;
     override readonly stat_def_CRT:      ko.PureComputed<number>;
     override readonly stat_def_KNO:      ko.PureComputed<number>;
-    override readonly stat_def_KNOTM:    ko.PureComputed<number>;
     override readonly stat_def_STN:      ko.PureComputed<number>;
+    override readonly stat_def_DIZ:      ko.PureComputed<number>;
     override readonly stat_def_PSN:      ko.PureComputed<number>;
     override readonly stat_def_SEA:      ko.PureComputed<number>;
     override readonly stat_def_PAR:      ko.PureComputed<number>;
@@ -92,6 +98,7 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         this.Item = ko.observable(item);
         this.Index = index;
 
+        // Toggle between base item table or normal item upgrade table
         this.UseEquipmentStats = ko.pureComputed(function() {
             return self.IsOverriding();
         });
@@ -104,8 +111,13 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         this.IsUnderObjectX = ko.computed(self._compute_isUnderObjectX);
         this.IsEffective2FoldSteel = ko.pureComputed(self._compute_isEffective2FoldSteel);
         this.IsEffective10FoldSteel = ko.pureComputed(self._compute_isEffective10FoldSteel);
+
         this.IsOverriding = ko.pureComputed(self._compute_isOverriding);
         this.IsBeingOverridden = ko.pureComputed(self._compute_isBeingOverridden);
+        this.IsApplyingStats = ko.pureComputed(self._compute_isApplyingStats);
+
+        this.ObjectXMultiplier = ko.pureComputed(self._compute_objectXMultiplier);
+        this.IsApplyingStatsMultiplier = ko.pureComputed(self._compute_isApplyingStatsMultiplier);
         this.DiminishingMultiplier = ko.pureComputed(self._compute_diminishingMultiplier);
 
         this.Multiplier = ko.pureComputed(self._compute_multiplier);
@@ -130,8 +142,8 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         this.stat_VIT = ko.pureComputed(self._compute_stat_VIT);
         this.stat_atk_CRT = ko.pureComputed(self._compute_atk_CRT);
         this.stat_atk_KNO = ko.pureComputed(self._compute_atk_KNO);
-        this.stat_atk_KNOTM = ko.pureComputed(self._compute_atk_KNOTM);
         this.stat_atk_STN = ko.pureComputed(self._compute_atk_STN);
+        this.stat_atk_DIZ = ko.pureComputed(self._compute_atk_DIZ);
         this.stat_atk_PSN = ko.pureComputed(self._compute_atk_PSN);
         this.stat_atk_SEA = ko.pureComputed(self._compute_atk_SEA);
         this.stat_atk_PAR = ko.pureComputed(self._compute_atk_PAR);
@@ -150,8 +162,8 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         this.stat_def_ele_VOID = ko.pureComputed(self._compute_def_ele_VOID);
         this.stat_def_CRT = ko.pureComputed(self._compute_def_CRT);
         this.stat_def_KNO = ko.pureComputed(self._compute_def_KNO);
-        this.stat_def_KNOTM = ko.pureComputed(self._compute_def_KNOTM);
         this.stat_def_STN = ko.pureComputed(self._compute_def_STN);
+        this.stat_def_DIZ = ko.pureComputed(self._compute_def_DIZ);
         this.stat_def_PSN = ko.pureComputed(self._compute_def_PSN);
         this.stat_def_SEA = ko.pureComputed(self._compute_def_SEA);
         this.stat_def_PAR = ko.pureComputed(self._compute_def_PAR);
@@ -279,11 +291,29 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         return false;
     }
 
+    protected _compute_isApplyingStats = (): boolean => {
+        if(this.IsBeingOverridden()) {
+            return false;
+        } else if(this.Index > 0) { // Following rule doesn't apply to base item
+            if(this.Index < RF5Slot.ARRANGE_START_IDX && !this.IsOverriding()) { // Only base item / overrider give stats in recipe slots
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    protected _compute_objectXMultiplier = (): number => {
+        return (this.IsUnderObjectX()) ? -1 : 1;
+    }
+
+    protected _compute_isApplyingStatsMultiplier = (): number => {
+        return (this.IsApplyingStats()) ? 1 : 0;
+    }
 
     protected _compute_diminishingMultiplier = (): number => {
         // Arrange slots not subject to diminishing returns.
-        // Recipe slots don't apply item stats but that's not the
-        // reponsibility of this function.
+        // Recipe slots don't apply item stats but that's not the reponsibility of this function.
         if(this.Index < RF5Slot.UPGRADE_START_IDX) {
             return 1;
         } else if (this.id() === 0 || Data.IsEquipment(this.id())) {
@@ -302,20 +332,14 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
 
     protected _compute_multiplier = (): number => {
         // These cases don't care about about ObjectX NOR diminishing returns.
-        if(this.IsOverriding()) {
-            return 1;
-        } else if (this.IsEffective2FoldSteel()) {
+        if (this.IsEffective2FoldSteel()) {
             return 2;
         } else if (this.IsEffective10FoldSteel()) {
             return 8;
         } else if (this.IsBeingOverridden()) {
             return 0;
         } else {
-            if(this.IsUnderObjectX()) {
-                return -1 * this.DiminishingMultiplier();
-            } else {
-                return this.DiminishingMultiplier();
-            }
+            return this.ObjectXMultiplier() * this.IsApplyingStatsMultiplier() * this.DiminishingMultiplier();
         }
     }
 
@@ -343,47 +367,47 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
     }
 
 
-    protected override _compute_stat_ATK = this._compute_number_helper("stat_ATK", 88);
-    protected override _compute_stat_DEF = this._compute_number_helper("stat_DEF", 88);
-    protected override _compute_stat_MAT = this._compute_number_helper("stat_MAT", 88);
-    protected override _compute_stat_MDF = this._compute_number_helper("stat_MDF", 88);
-    protected override _compute_stat_STR = this._compute_number_helper("stat_STR", 88);
-    protected override _compute_stat_INT = this._compute_number_helper("stat_INT", 88);
-    protected override _compute_stat_VIT = this._compute_number_helper("stat_VIT", 88);
-    protected override _compute_atk_CRT = this._compute_number_helper("stat_atk_CRT", 88);
-    protected override _compute_atk_KNO = this._compute_number_helper("stat_atk_KNO", 88);
-    protected override _compute_atk_KNOTM = this._compute_number_helper("stat_atk_KNOTM", 88);
-    protected override _compute_atk_STN = this._compute_number_helper("stat_atk_STN", 88);
-    protected override _compute_atk_PSN = this._compute_number_helper("stat_atk_PSN", 88);
-    protected override _compute_atk_SEA = this._compute_number_helper("stat_atk_SEA", 88);
-    protected override _compute_atk_PAR = this._compute_number_helper("stat_atk_PAR", 88);
-    protected override _compute_atk_SLP = this._compute_number_helper("stat_atk_SLP", 88);
-    protected override _compute_atk_FTG = this._compute_number_helper("stat_atk_FTG", 88);
-    protected override _compute_atk_SCK = this._compute_number_helper("stat_atk_SCK", 88);
-    protected override _compute_atk_FNT = this._compute_number_helper("stat_atk_FNT", 88);
-    protected override _compute_atk_DRN = this._compute_number_helper("stat_atk_DRN", 88);
-    protected override _compute_def_ele_FIRE = this._compute_number_helper("def_ele_FIRE", 88);
-    protected override _compute_def_ele_WATER = this._compute_number_helper("def_ele_WATER", 88);
-    protected override _compute_def_ele_EARTH = this._compute_number_helper("def_ele_EARTH", 88);
-    protected override _compute_def_ele_WIND = this._compute_number_helper("def_ele_WIND", 88);
-    protected override _compute_def_ele_LIGHT = this._compute_number_helper("def_ele_LIGHT", 88);
-    protected override _compute_def_ele_DARK = this._compute_number_helper("def_ele_DARK", 88);
-    protected override _compute_def_ele_LOVE = this._compute_number_helper("def_ele_LOVE", 88);
-    protected override _compute_def_ele_VOID = this._compute_number_helper("def_ele_VOID", 88);
-    protected override _compute_def_CRT = this._compute_number_helper("stat_def_CRT", 88);
-    protected override _compute_def_KNO = this._compute_number_helper("stat_def_KNO", 88);
-    protected override _compute_def_KNOTM = this._compute_number_helper("stat_def_KNOTM", 88);
-    protected override _compute_def_STN = this._compute_number_helper("stat_def_STN", 88);
-    protected override _compute_def_PSN = this._compute_number_helper("stat_def_PSN", 88);
-    protected override _compute_def_SEA = this._compute_number_helper("stat_def_SEA", 88);
-    protected override _compute_def_PAR = this._compute_number_helper("stat_def_PAR", 88);
-    protected override _compute_def_SLP = this._compute_number_helper("stat_def_SLP", 88);
-    protected override _compute_def_FTG = this._compute_number_helper("stat_def_FTG", 88);
-    protected override _compute_def_SCK = this._compute_number_helper("stat_def_SCK", 88);
-    protected override _compute_def_FNT = this._compute_number_helper("stat_def_FNT", 88);
-    protected override _compute_def_DRN = this._compute_number_helper("stat_def_DRN", 88);
-    protected override _compute_stat_chargespeed = this._compute_number_helper("stat_chargespeed", 88);
-    protected override _compute_stat_attacklength = this._compute_number_helper("stat_attacklength", 88);
+    protected override _compute_stat_ATK = this._compute_number_helper("stat_ATK", 0);
+    protected override _compute_stat_DEF = this._compute_number_helper("stat_DEF", 0);
+    protected override _compute_stat_MAT = this._compute_number_helper("stat_MAT", 0);
+    protected override _compute_stat_MDF = this._compute_number_helper("stat_MDF", 0);
+    protected override _compute_stat_STR = this._compute_number_helper("stat_STR", 0);
+    protected override _compute_stat_INT = this._compute_number_helper("stat_INT", 0);
+    protected override _compute_stat_VIT = this._compute_number_helper("stat_VIT", 0);
+    protected override _compute_atk_CRT = this._compute_number_helper("stat_atk_CRT", 0);
+    protected override _compute_atk_KNO = this._compute_number_helper("stat_atk_KNO", 0);
+    protected override _compute_atk_STN = this._compute_number_helper("stat_atk_STN", 0);
+    protected override _compute_atk_DIZ = this._compute_number_helper("stat_atk_DIZ", 0);
+    protected override _compute_atk_PSN = this._compute_number_helper("stat_atk_PSN", 0);
+    protected override _compute_atk_SEA = this._compute_number_helper("stat_atk_SEA", 0);
+    protected override _compute_atk_PAR = this._compute_number_helper("stat_atk_PAR", 0);
+    protected override _compute_atk_SLP = this._compute_number_helper("stat_atk_SLP", 0);
+    protected override _compute_atk_FTG = this._compute_number_helper("stat_atk_FTG", 0);
+    protected override _compute_atk_SCK = this._compute_number_helper("stat_atk_SCK", 0);
+    protected override _compute_atk_FNT = this._compute_number_helper("stat_atk_FNT", 0);
+    protected override _compute_atk_DRN = this._compute_number_helper("stat_atk_DRN", 0);
+    protected override _compute_def_ele_FIRE = this._compute_number_helper("stat_def_ele_FIRE", 0);
+    protected override _compute_def_ele_WATER = this._compute_number_helper("stat_def_ele_WATER", 0);
+    protected override _compute_def_ele_EARTH = this._compute_number_helper("stat_def_ele_EARTH", 0);
+    protected override _compute_def_ele_WIND = this._compute_number_helper("stat_def_ele_WIND", 0);
+    protected override _compute_def_ele_LIGHT = this._compute_number_helper("stat_def_ele_LIGHT", 0);
+    protected override _compute_def_ele_DARK = this._compute_number_helper("stat_def_ele_DARK", 0);
+    protected override _compute_def_ele_LOVE = this._compute_number_helper("stat_def_ele_LOVE", 0);
+    protected override _compute_def_ele_VOID = this._compute_number_helper("stat_def_ele_VOID", 0);
+    protected override _compute_def_CRT = this._compute_number_helper("stat_def_CRT", 0);
+    protected override _compute_def_KNO = this._compute_number_helper("stat_def_KNO", 0);
+    protected override _compute_def_STN = this._compute_number_helper("stat_def_STN", 0);
+    protected override _compute_def_DIZ = this._compute_number_helper("stat_def_DIZ", 0);
+    protected override _compute_def_PSN = this._compute_number_helper("stat_def_PSN", 0);
+    protected override _compute_def_SEA = this._compute_number_helper("stat_def_SEA", 0);
+    protected override _compute_def_PAR = this._compute_number_helper("stat_def_PAR", 0);
+    protected override _compute_def_SLP = this._compute_number_helper("stat_def_SLP", 0);
+    protected override _compute_def_FTG = this._compute_number_helper("stat_def_FTG", 0);
+    protected override _compute_def_SCK = this._compute_number_helper("stat_def_SCK", 0);
+    protected override _compute_def_FNT = this._compute_number_helper("stat_def_FNT", 0);
+    protected override _compute_def_DRN = this._compute_number_helper("stat_def_DRN", 0);
+    protected override _compute_stat_chargespeed = this._compute_number_helper("stat_chargespeed", 0);
+    protected override _compute_stat_attacklength = this._compute_number_helper("stat_attacklength", 0);
 
 }
 export = RF5Slot;

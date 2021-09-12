@@ -11,7 +11,12 @@ sass css/rf5planner.scss css/rf5planner.css
 6. Then just navigate your browser to index.html, or hit F5 from Visual Studio Code.
 7. Python 3.4+ is required to run the script that transforms tsv data into DATA.ts.
 
-We use knockout.js because it constructs the computation graph automatically. We just have to declaratively specify the computed observables.
+# Dev notes
+We use knockout.js because it constructs the computation graph automatically. This project is extremely heavy on bindings (easily in the thousands), so doing this eliminates a major source of bugs.
+
+Browserify combines javascript files, so some of the libraries have already been combined into our output. Instead of including the source files twice, which can cause issues (knockout especially), we expose the libraries via the window in App.ts, and then include their dependencies after our script.
+
+Likewise, our sass file imports Bootstrap's sass file to modify their parameters, so we don't need to include Bootstrap's css in the html head.
 
 # Credits
 Art assets are from Blazagon's data dump, who is part of Reddit's RF5 reverse-engineering group.

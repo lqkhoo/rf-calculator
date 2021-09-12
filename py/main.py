@@ -59,8 +59,8 @@ class RF5Item(object):
     stat_def_ele_VOID: float = 0
     stat_atk_CRT: float = 0
     stat_atk_KNO: float = 0
-    stat_atk_KNOTM: float = 0 # knockback time
     stat_atk_STN: float = 0
+    stat_atk_DIZ: float = 0
     stat_atk_PSN: float = 0
     stat_atk_SEA: float = 0
     stat_atk_PAR: float = 0
@@ -77,9 +77,9 @@ class RF5Item(object):
     stat_def_ele_DARK: float = 0
     stat_def_ele_LOVE: float = 0
     stat_def_ele_VOID: float = 0 # elementless
-    stat_def_CRT: float = 0
+    stat_def_CRT: float = 0   # ----
+    stat_def_DIZ: float = 0   # In RF5/RF4 data these two rows are always swapped
     stat_def_KNO: float = 0
-    stat_def_KNOTM: float = 0
     stat_def_STN: float = 0
     stat_def_PSN: float = 0
     stat_def_SEA: float = 0
@@ -245,6 +245,9 @@ class TsvReader(object):
                 id: int = int(row[0])
                 read_ids.add(id)
 
+                # For the confusing STN/DIZ/KNO/knockback time,
+                # align data between games using e.g. "Bat", "Blessed Hoe"
+
                 item: RF5Item = items[id]
                 item.stat_ATK = int(row[1])
                 item.stat_DEF = int(row[2])
@@ -255,8 +258,10 @@ class TsvReader(object):
                 item.stat_VIT = int(row[7])
                 item.stat_atk_CRT = float(row[8])
                 item.stat_atk_KNO = float(row[9])
-                item.stat_atk_KNOTM = float(row[10])
-                item.stat_atk_STN = float(row[11])
+                # item.stat_atk_KNOTM = float(row[10])
+                # item.stat_atk_STN = float(row[11])
+                item.stat_atk_STN = float(row[10]) # labeled as knockback time in data dump
+                item.stat_atk_DIZ = float(row[11]) # labered as stun in data dump
                 item.stat_atk_PSN = float(row[12])
                 item.stat_atk_SEA = float(row[13])
                 item.stat_atk_PAR = float(row[14])
@@ -273,10 +278,12 @@ class TsvReader(object):
                 item.stat_def_ele_DARK = float(row[25])
                 item.stat_def_ele_LOVE = float(row[26])
                 item.stat_def_ele_VOID = float(row[27])
-                item.stat_def_STN = float(row[28])
+                # item.stat_def_STN = float(row[28])
+                item.stat_def_DIZ = float(row[28]) # labeled as stun in data dump
                 item.stat_def_CRT = float(row[29])
                 item.stat_def_KNO = float(row[30])
-                item.stat_def_KNOTM = float(row[31])
+                # item.stat_def_KNOTM = float(row[31])
+                item.stat_def_STN = float(row[31]) # labeled as knockback time in data dump
                 item.stat_def_PSN = float(row[32])
                 item.stat_def_SEA = float(row[33])
                 item.stat_def_PAR = float(row[34])

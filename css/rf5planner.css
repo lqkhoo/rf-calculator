@@ -10127,12 +10127,18 @@ span.lang {
   display: none;
 }
 
-#main.lang_en .lang.en {
+body .lang_en .lang.en {
   display: inline-block;
 }
 
-#main.lang_jp .lang.jp {
+body .lang_jp .lang.jp {
   display: inline-block;
+}
+
+.lang.stack {
+  float: left;
+  clear: left;
+  width: 100%;
 }
 
 html, body {
@@ -10197,15 +10203,24 @@ h4.title, .title.h4 {
   background: #ffffff;
   z-index: 99;
 }
+.stats-table tr:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
 .stats-table td, .stats-table th {
   font-size: 0.7rem;
   text-align: center;
   padding: 0;
   min-width: 25px;
   width: 25px;
+  max-width: 25px;
+  overflow: hidden;
+}
+.stats-table td:first-child, .stats-table th:first-child {
+  max-width: initial;
 }
 .stats-table thead > tr > th {
   border-width: 0;
+  vertical-align: middle;
   box-shadow: inset 1px 0 0 #cccccc, inset 0 1px 0 #cccccc;
 }
 .stats-table thead > tr > th:last-child {
@@ -10335,7 +10350,7 @@ div.icon-group {
   padding: 0;
 }
 .icon-group.small table td:first-child {
-  width: 8%;
+  width: 10%;
   text-align: center;
 }
 .icon-group.small table td:nth-child(2) {
@@ -10343,7 +10358,7 @@ div.icon-group {
   text-align: center;
 }
 .icon-group.small table td:nth-child(3) {
-  width: 56%;
+  width: 54%;
 }
 .icon-group.small table td:last-child {
   width: 20%;
@@ -10364,6 +10379,16 @@ div.icon-group {
 
 .group-header.collapsed::before {
   content: url("../bootstrap-icons/chevron-right.svg");
+}
+
+.position-relative {
+  position: relative;
+}
+
+.detail-button {
+  height: 100%;
+  width: 100%;
+  font-size: 10px;
 }
 
 /*# sourceMappingURL=rf5planner.css.map */

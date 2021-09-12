@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-16"/>
+        <!--
         <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/>
+        -->
         <link rel="stylesheet" href="css/jquery-ui.min.css"/>
         <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
         <link rel="stylesheet" href="css/rf5planner.css"/>
@@ -24,7 +26,7 @@
                 <table>
                     <tbody>
                         <tr>
-                            <td rowspan="2"><h4 class="title">Rune Factory 5 Gear Planner</h4></td>
+                            <td rowspan="2"><h4 class="title">Rune Factory 5 Gear Calculator</h4></td>
                             <td>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label">
@@ -76,24 +78,62 @@
                             <tr>
                                 <th rowspan="3"><div class="dummy-header" data-bind="template: { name: 'TEMPLATE-character-icon-group' }"></div></th>
                                 <th rowspan="2" colspan="2"></th>
-                                <th colspan="20">OFFENSE</th>
-                                <th colspan="21">DEFENSE</th>
+                                <th colspan="19"><span class="lang jp">&#x653b</span><span>&nbsp;&nbsp;</span><span class="lang en">OFFENSE</span></th>
+                                <th colspan="20"><span class="lang jp">&#x9632</span><span>&nbsp;&nbsp;</span><span class="lang en">DEFENSE</span></th>
                                 <th colspan="2" rowspan="2"></th>
                             </tr>
                             <tr>
-                                <th colspan="7">STAT</th>
-                                <th colspan="13">STATUS</th>
-                                <th colspan="8">ELE</th>
-                                <th colspan="13" class="box-shadow-override">STATUS</th>
+                                <th colspan="7"><span class="lang en jp">STAT</span></th>
+                                <th colspan="12"><span class="lang jp">&#x72b6&#x614b</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
+                                <th colspan="8"><span class="lang jp">&#x5c5e&#x6027</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">ELE</span></th>
+                                <th colspan="12" class="box-shadow-override"><span class="lang jp">&#x72b6&#x614b</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
 
                             </tr>
                             <tr>
-                                <th>LVL</th><th>RAR</th>
-                                <th>ATK</th><th>DEF</th><th>MAT</th><th>MDF</th><th>STR</th><th>INT</th><th>VIT</th>
-                                <th>DIZ</th><th>CRT</th><th>KNO</th><th>DUR</th><th>STN</th><th>PSN</th><th>SEA</th><th>PAR</th><th>SLP</th><th>FTG</th><th>SCK</th><th>FNT</th><th>DRN</th>
-                                <th>FIR</th><th>WTR</th><th>EAR</th><th>WND</th><th>LGT</th><th>DRK</th><th>LOV</th><th>NUL</th>
-                                <th>DIZ</th><th>CRT</th><th>KNO</th><th>DUR</th><th>STN</th><th>PSN</th><th>SEA</th><th>PAR</th><th>SLP</th><th>FTG</th><th>SCK</th><th>FNT</th><th>DRN</th>
-                                <th>LGH</th><th>CHG</th>
+                                <th><span class="lang stack jp">&#x7dcf</span><span class="lang stack en">LVL</span></th>
+                                <th><span class="lang stack jp">&#x7d20</span><span class="lang stack en">RAR</span></th>
+                                <th><span class="lang stack en jp">ATK</span></th>
+                                <th><span class="lang stack en jp">DEF</span></th>
+                                <th><span class="lang stack en jp">MAT</span></th>
+                                <th><span class="lang stack en jp">MDF</span></th>
+                                <th><span class="lang stack en jp">STR</span></th>
+                                <th><span class="lang stack en jp">INT</span></th>
+                                <th><span class="lang stack en jp">VIT</span></th>
+                                <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                                <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
+                                <th><span class="lang stack jp">&#x98db</span><span class="lang stack en">KNO</span></th>
+                                <th><span class="lang stack jp">&#x30b9</span><span class="lang stack en">STN</span></th>
+                                <th><span class="lang stack jp">&#x6bd2</span><span class="lang stack en">PSN</span></th>
+                                <th><span class="lang stack jp">&#x5c01</span><span class="lang stack en">SEA</span></th>
+                                <th><span class="lang stack jp">&#x9ebb</span><span class="lang stack en">PAR</span></th>
+                                <th><span class="lang stack jp">&#x7761</span><span class="lang stack en">SLP</span></th>
+                                <th><span class="lang stack jp">&#x75b2</span><span class="lang stack en">FTG</span></th>
+                                <th><span class="lang stack jp">&#x75c5</span><span class="lang stack en">SCK</span></th>
+                                <th><span class="lang stack jp">&#x6c17</span><span class="lang stack en">FNT</span></th>
+                                <th><span class="lang stack jp">&#x5438</span><span class="lang stack en">DRN</span></th>
+                                <th><span class="lang stack jp">&#x706b</span><span class="lang stack en">FIR</span></th>
+                                <th><span class="lang stack jp">&#x6c34</span><span class="lang stack en">WTR</span></th>
+                                <th><span class="lang stack jp">&#x5730</span><span class="lang stack en">EAR</span></th>
+                                <th><span class="lang stack jp">&#x98a8</span><span class="lang stack en">WND</span></th>
+                                <th><span class="lang stack jp">&#x5149</span><span class="lang stack en">LGT</span></th>
+                                <th><span class="lang stack jp">&#x95c7</span><span class="lang stack en">DRK</span></th>
+                                <th><span class="lang stack jp">&#x611b</span><span class="lang stack en">LOV</span></th>
+                                <th><span class="lang stack jp">&#x7121</span><span class="lang stack en">NUL</span></th>
+                                <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                                <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
+                                <th><span class="lang stack jp">&#x98db</span><span class="lang stack en">KNO</span></th>
+                                <th><span class="lang stack jp">&#x30b9</span><span class="lang stack en">STN</span></th>
+                                <th><span class="lang stack jp">&#x6bd2</span><span class="lang stack en">PSN</span></th>
+                                <th><span class="lang stack jp">&#x5c01</span><span class="lang stack en">SEA</span></th>
+                                <th><span class="lang stack jp">&#x9ebb</span><span class="lang stack en">PAR</span></th>
+                                <th><span class="lang stack jp">&#x7761</span><span class="lang stack en">SLP</span></th>
+                                <th><span class="lang stack jp">&#x75b2</span><span class="lang stack en">FTG</span></th>
+                                <th><span class="lang stack jp">&#x75c5</span><span class="lang stack en">SCK</span></th>
+                                <th><span class="lang stack jp">&#x6c17</span><span class="lang stack en">FNT</span></th>
+                                <th><span class="lang stack jp">&#x5438</span><span class="lang stack en">DRN</span></th>
+                                <th><span class="lang stack jp">&#x901f</span><span class="lang stack en">CHG</span></th>
+                                <th><span class="lang stack jp">&#x9577</span><span class="lang stack en">LNG</span></th>
+
                             </tr>
                             <!-- ko template: { name: 'TEMPLATE-character-upper' } --><!-- /ko -->
                         </thead>
@@ -327,15 +367,17 @@
 
     <!-- Context { RF5Slot: RF5Slot, slotType: str } -->
     <script type="text/html" id="TEMPLATE-slot">
-        <tr class="collapse" data-bind="css: { show: !$data.RF5Slot.ViewModel.IsCollapsed() }">
+        <tr class="collapse position-relative" data-bind="css: { show: !$data.RF5Slot.ViewModel.IsCollapsed() }">
             <td>
                 <label class="icon-group small" data-bind="class: RF5Slot.Item().EquipmentType">
                     <table>
                         <tbody>
                             <tr>
                                 <td>
-                                    <span data-bind="text: $data.slotType + slotIdx, css: { displayNone: RF5Slot.ViewModel.IsRestricted() }"></span>
-                                    <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! RF5Slot.ViewModel.IsRestricted() }"/>
+                                    <button class="btn detail-button">
+                                        <span data-bind="text: $data.slotType + slotIdx, css: { displayNone: RF5Slot.ViewModel.IsRestricted() }"></span>
+                                        <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! RF5Slot.ViewModel.IsRestricted() }"/>
+                                    </button>
                                 </td>
                                 <td class="icon-td"><img class="icon small" data-bind="attr: { src: RF5Slot.image_uri }"/></td>
                                 <td>
@@ -366,9 +408,9 @@
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_INT() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_VIT() } --><!-- /ko -->
 
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DIZ() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_CRT() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_KNO() } --><!-- /ko -->
-        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_KNOTM() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_STN() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PSN() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SEA() } --><!-- /ko -->
@@ -388,9 +430,9 @@
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_LOVE() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_VOID() } --><!-- /ko -->
 
+        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DIZ() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_CRT() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_KNO() } --><!-- /ko -->
-        <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_KNOTM() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_STN() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PSN() } --><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SEA() } --><!-- /ko -->

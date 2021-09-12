@@ -19,8 +19,8 @@ interface IStatVector {
     readonly stat_VIT:          ko.PureComputed<number>;
     readonly stat_atk_CRT:      ko.PureComputed<number>;
     readonly stat_atk_KNO:      ko.PureComputed<number>;
-    readonly stat_atk_KNOTM:    ko.PureComputed<number>;
     readonly stat_atk_STN:      ko.PureComputed<number>;
+    readonly stat_atk_DIZ:      ko.PureComputed<number>;
     readonly stat_atk_PSN:      ko.PureComputed<number>;
     readonly stat_atk_SEA:      ko.PureComputed<number>;
     readonly stat_atk_PAR:      ko.PureComputed<number>;
@@ -39,8 +39,8 @@ interface IStatVector {
     readonly stat_def_ele_VOID:  ko.PureComputed<number>;
     readonly stat_def_CRT:      ko.PureComputed<number>;
     readonly stat_def_KNO:      ko.PureComputed<number>;
-    readonly stat_def_KNOTM:    ko.PureComputed<number>;
     readonly stat_def_STN:      ko.PureComputed<number>;
+    readonly stat_def_DIZ:      ko.PureComputed<number>;
     readonly stat_def_PSN:      ko.PureComputed<number>;
     readonly stat_def_SEA:      ko.PureComputed<number>;
     readonly stat_def_PAR:      ko.PureComputed<number>;

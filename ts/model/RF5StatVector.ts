@@ -22,8 +22,8 @@ class RF5StatVector implements IStatVector {
     readonly stat_VIT:          ko.PureComputed<number>;
     readonly stat_atk_CRT:      ko.PureComputed<number>;
     readonly stat_atk_KNO:      ko.PureComputed<number>;
-    readonly stat_atk_KNOTM:    ko.PureComputed<number>;
     readonly stat_atk_STN:      ko.PureComputed<number>;
+    readonly stat_atk_DIZ:      ko.PureComputed<number>;
     readonly stat_atk_PSN:      ko.PureComputed<number>;
     readonly stat_atk_SEA:      ko.PureComputed<number>;
     readonly stat_atk_PAR:      ko.PureComputed<number>;
@@ -42,8 +42,8 @@ class RF5StatVector implements IStatVector {
     readonly stat_def_ele_VOID:  ko.PureComputed<number>;
     readonly stat_def_CRT:      ko.PureComputed<number>;
     readonly stat_def_KNO:      ko.PureComputed<number>;
-    readonly stat_def_KNOTM:    ko.PureComputed<number>;
     readonly stat_def_STN:      ko.PureComputed<number>;
+    readonly stat_def_DIZ:      ko.PureComputed<number>;
     readonly stat_def_PSN:      ko.PureComputed<number>;
     readonly stat_def_SEA:      ko.PureComputed<number>;
     readonly stat_def_PAR:      ko.PureComputed<number>;
@@ -83,8 +83,8 @@ class RF5StatVector implements IStatVector {
         this.stat_VIT = ko.pureComputed(self._compute_stat_VIT);
         this.stat_atk_CRT = ko.pureComputed(self._compute_atk_CRT);
         this.stat_atk_KNO = ko.pureComputed(self._compute_atk_KNO);
-        this.stat_atk_KNOTM = ko.pureComputed(self._compute_atk_KNOTM);
         this.stat_atk_STN = ko.pureComputed(self._compute_atk_STN);
+        this.stat_atk_DIZ = ko.pureComputed(self._compute_atk_DIZ);
         this.stat_atk_PSN = ko.pureComputed(self._compute_atk_PSN);
         this.stat_atk_SEA = ko.pureComputed(self._compute_atk_SEA);
         this.stat_atk_PAR = ko.pureComputed(self._compute_atk_PAR);
@@ -103,8 +103,8 @@ class RF5StatVector implements IStatVector {
         this.stat_def_ele_VOID = ko.pureComputed(self._compute_def_ele_VOID);
         this.stat_def_CRT = ko.pureComputed(self._compute_def_CRT);
         this.stat_def_KNO = ko.pureComputed(self._compute_def_KNO);
-        this.stat_def_KNOTM = ko.pureComputed(self._compute_def_KNOTM);
         this.stat_def_STN = ko.pureComputed(self._compute_def_STN);
+        this.stat_def_DIZ = ko.pureComputed(self._compute_def_DIZ);
         this.stat_def_PSN = ko.pureComputed(self._compute_def_PSN);
         this.stat_def_SEA = ko.pureComputed(self._compute_def_SEA);
         this.stat_def_PAR = ko.pureComputed(self._compute_def_PAR);
@@ -165,8 +165,8 @@ class RF5StatVector implements IStatVector {
     protected _compute_stat_VIT = this._compute_number_helper("stat_VIT", 0);
     protected _compute_atk_CRT = this._compute_number_helper("stat_atk_CRT", 0);
     protected _compute_atk_KNO = this._compute_number_helper("stat_atk_KNO", 0);
-    protected _compute_atk_KNOTM = this._compute_number_helper("stat_atk_KNOTM", 0);
     protected _compute_atk_STN = this._compute_number_helper("stat_atk_STN", 0);
+    protected _compute_atk_DIZ = this._compute_number_helper("stat_atk_DIZ", 0);
     protected _compute_atk_PSN = this._compute_number_helper("stat_atk_PSN", 0);
     protected _compute_atk_SEA = this._compute_number_helper("stat_atk_SEA", 0);
     protected _compute_atk_PAR = this._compute_number_helper("stat_atk_PAR", 0);
@@ -185,8 +185,8 @@ class RF5StatVector implements IStatVector {
     protected _compute_def_ele_VOID = this._compute_number_helper("stat_def_ele_VOID", 0);
     protected _compute_def_CRT = this._compute_number_helper("stat_def_CRT", 0);
     protected _compute_def_KNO = this._compute_number_helper("stat_def_KNO", 0);
-    protected _compute_def_KNOTM = this._compute_number_helper("stat_def_KNOTM", 0);
     protected _compute_def_STN = this._compute_number_helper("stat_def_STN", 0);
+    protected _compute_def_DIZ = this._compute_number_helper("stat_def_DIZ", 0);
     protected _compute_def_PSN = this._compute_number_helper("stat_def_PSN", 0);
     protected _compute_def_SEA = this._compute_number_helper("stat_def_SEA", 0);
     protected _compute_def_PAR = this._compute_number_helper("stat_def_PAR", 0);

@@ -16,9 +16,15 @@ interface IRF5Slot extends IStatVector, IModel {
     readonly IsUnderObjectX: ko.Computed<boolean>;
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
     readonly IsEffective10FoldSteel: ko.PureComputed<boolean>;
+
     readonly IsOverriding: ko.PureComputed<boolean>;
     readonly IsBeingOverridden: ko.PureComputed<boolean>;
+    readonly IsApplyingStats: ko.PureComputed<boolean>;
+
+    readonly ObjectXMultiplier: ko.PureComputed<number>;
+    readonly IsApplyingStatsMultiplier: ko.PureComputed<number>;
     readonly DiminishingMultiplier: ko.PureComputed<number>;
+
 
     //TODO diminishing returns
     //ELEMENT

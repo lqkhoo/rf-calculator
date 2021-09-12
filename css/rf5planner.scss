@@ -53,12 +53,18 @@ span.lang {
     display: none;
 }
 
-#main.lang_en .lang.en {
+body .lang_en .lang.en {
     display: inline-block;
 }
 
-#main.lang_jp .lang.jp {
+body .lang_jp .lang.jp {
     display: inline-block;
+}
+
+.lang.stack {
+    float: left;
+    clear: left;
+    width: 100%;
 }
 
 
@@ -123,18 +129,30 @@ h4.title {
         z-index: 99; // autocopmlete popup has z of 100 by default.
     }
 
+    tr:hover {
+        background: rgba(255,255,255,0.5);
+    }
+
     td, th {
         font-size: 0.7rem;
         text-align: center;
         padding: 0;
         min-width: 25px;
         width: 25px;
+        max-width: 25px;
+        overflow: hidden;
+        // text-overflow: ellipsis;
         // border-bottom: 1px solid inherit;
+    }
+
+    td:first-child, th:first-child {
+        max-width: initial;
     }
 
     // Can't use position:fixed with border-collapse, so fake it with box-shadow.
     thead > tr > th {
         border-width: 0;
+        vertical-align: middle;
         // box-shadow: inset 1px 0px 1px $floatTableBoxShadowColor;
         box-shadow: inset 1px 0 0 #cccccc, inset 0 1px 0 #cccccc;
     }
@@ -279,7 +297,7 @@ div.icon-group {
             padding: 0;
         }
         td:first-child {
-            width: 8%;
+            width: 10%;
             text-align: center;
         }
         td:nth-child(2) {
@@ -287,7 +305,7 @@ div.icon-group {
             text-align: center;
         }
         td:nth-child(3) {
-            width: 56%;
+            width: 54%;
         }
         td:last-child {
             width: 20%;
@@ -317,3 +335,11 @@ $header-font-size: 14px;
     content: url('../bootstrap-icons/chevron-right.svg');
 }
 
+.position-relative {
+    position: relative;
+}
+.detail-button {
+    height: 100%;
+    width: 100%;
+    font-size: 10px;
+}
