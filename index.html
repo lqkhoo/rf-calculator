@@ -365,7 +365,7 @@
         <!-- /ko -->
     </script>
 
-    <!-- Context { RF5Slot: RF5Slot, slotType: str } -->
+    <!-- Context RF5Slot -->
     <script type="text/html" id="TEMPLATE-slot">
         <tr class="collapse" data-bind="css: { show: ! ViewModel.IsCollapsed() }">
             <td>
@@ -401,12 +401,12 @@
             <td colspan="44">
                 <!-- Context: RF5Slot -->
                 <div class="detail-panel"><!-- Always display warnings -->
-                    
+
                     <!-- ko if: $root.Data.IsEquipment(id()) && HasPrecedingOverrider() -->
                         <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only one item can override.', text_jp: '効果がありません。性能継承アレンジは、一つのアイテムの性能しか継承出来ません。' } } --><!-- /ko -->
                     <!-- /ko -->
                     <!-- ko if: (Index !== 0) && $root.Data.IsEquipment(id()) && (! IsOverriding()) && (! HasPrecedingOverrider())  -->
-                        <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only items of same type can override. Overriding a weapon of different type requires Light Ore in any recipe slot.', text_jp: '効果がありません。性能継承アレンジは、同じ種類のアイテムが必要です。別のカテゴリの武器の場合はメッシライト鉱石をレシピ枠に混じって。' } } --><!-- /ko -->
+                        <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only items of same type can override. Overriding a weapon of different type requires Light Ore in any recipe slot.', text_jp: '効果がありません。性能継承アレンジは、同じ種類のアイテムが必要です。別のカテゴリの武器の場合はメッシライト鉱石を同時に使って。' } } --><!-- /ko -->
                     <!-- /ko -->
 
                     <!-- ko if: (Index < 11) && ($root.Data.Is2foldSteel(id()) || $root.Data.Is10foldSteel(id()))  -->
