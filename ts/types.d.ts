@@ -4,6 +4,8 @@ declare global {
     type WeaponType = "2hsword" | "axe" | "dualblades" | "fists" | "hammer" | "spear" | "staff" | "sword"
                         | "farm_axe" | "farm_fishingpole" | "farm_hammer" | "farm_hoe" | "farm_sickle" | "farm_waterpot";
 
+    type ElementType = "FIREWATER" | "EARTHWIND" | "FIRE" | "WATER" | "EARTH" | "WIND" | "LIGHT" | "DARK" | "LOVE" | "NONE";
+
     type StatVectorKey = "id"
                         | "name_en"
                         | "name_jp"
@@ -52,6 +54,5 @@ declare global {
                         | "stat_chargespeed"
                         | "stat_attacklength";
 
-    type UiSlotType = "B" | "R" | "A" | "U";
 }
 

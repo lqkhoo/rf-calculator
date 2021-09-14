@@ -11,13 +11,17 @@ class RF5Weapon extends RF5Item {
 
     readonly HasRareCan: ko.PureComputed<boolean>;
     readonly HasScrapMetalPlus: ko.PureComputed<boolean>;
+    readonly Element: ko.PureComputed<ElementType>;
 
     constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
         super(character, "weapon", item_id);
         var self = this;
 
-        this.HasRareCan = ko.computed(self._compute_hasRareCan);
-        this.HasScrapMetalPlus = ko.computed(self._compute_hasScrapMetalPlus);
+        this.HasRareCan = ko.pureComputed(self._compute_hasRareCan);
+        this.HasScrapMetalPlus = ko.pureComputed(self._compute_hasScrapMetalPlus);
+
+        this.Element = ko.pureComputed(self._compute_Element);
+
     }
 
     protected _compute_hasRareCan = (): boolean => {
@@ -37,6 +41,11 @@ class RF5Weapon extends RF5Item {
         }
         return false;
     }
+
+    protected _compute_Element = (): ElementType => {
+
+        return "NONE";
+    };
     
 }
 export = RF5Weapon;

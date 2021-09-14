@@ -2,6 +2,8 @@ import _ = require('lodash');
 import ko = require('knockout');
 import IRF5Item = require('./IRF5Item');
 import IRF5Slot = require('./IRF5Slot');
+import IRF5StatVector = require('./IRF5StatVector');
+import RF5AbstractSlot = require('./RF5AbstractSlot');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
@@ -13,11 +15,11 @@ import RF5SlotArrange = require('./RF5SlotArrange');
 import RF5SlotUpgrade = require('./RF5SlotUpgrade');
 import LevelBonusVector = require('./LevelBonusVector');
 import RarityBonusVector = require('./RarityBonusVector');
+import CoreBonusVector = require('./CoreBonusVector');
 // VM
 import VMRF5Item = require('../vm/VMRF5Item');
 // Data
 import Data = require('./Data');
-import RF5AbstractSlot = require('./RF5AbstractSlot');
 
 
 class RF5Item extends RF5StatVector implements IRF5Item {
@@ -27,11 +29,14 @@ class RF5Item extends RF5StatVector implements IRF5Item {
     static readonly NSLOTS_UPGRADE: number = 9;
     static readonly DEFAULT_ITEM_ID: number = 0;
 
+    override readonly id: ko.PureComputed<number>;
+
     readonly EquipmentType: EquipmentType;
     readonly IsActive: ko.Observable<boolean>;
 
     readonly LevelBonus: ko.Observable<RF5StatVector>;
     readonly RarityBonus: ko.Observable<RF5StatVector>;
+    readonly CoreBonus: ko.Observable<RF5StatVector>;
     readonly HasClover: ko.PureComputed<boolean>;
 
     readonly Character: ko.Observable<IRF5Character>;
@@ -49,6 +54,10 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         super(character_id);
         var self = this;
 
+        this.id = ko.pureComputed(function() {
+            if(self.BaseItem() === undefined) { return 0; }
+            else { return self.BaseItem().id(); }
+        });
         this.level = ko.pureComputed(self._compute_level)
         this.rarity = ko.pureComputed(self._compute_rarity);
         this.stat_ATK = ko.pureComputed(self._compute_stat_ATK);
@@ -96,6 +105,7 @@ class RF5Item extends RF5StatVector implements IRF5Item {
 
         this.LevelBonus = ko.observable(new LevelBonusVector(this));
         this.RarityBonus = ko.observable(new RarityBonusVector(this));
+        this.CoreBonus = ko.observable(new CoreBonusVector(this));
 
         this.Character = ko.observable(character);
         this.EquipmentType = equipment_type;
@@ -122,10 +132,12 @@ class RF5Item extends RF5StatVector implements IRF5Item {
             i++;
         }
 
-        // Has to be after slots have been initialized.
+        // Certain attributes have to be initialized after all slots because they need
+        // the RF5Slots themselves or observables to have been initialize.
         this.HasClover = ko.pureComputed(self._compute_hasClover);
 
     }
+
 
     public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
         const baseitemId: number = baseItem.id();
@@ -157,34 +169,40 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         }
     }
 
+    
     protected _compute_hasClover = (): boolean => {
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
             let id = this.GetSlotByIndex(i).id();
+            if(id === 0) { continue; }
             if(Data.IsClover(id) || Data.IsGiantClover(id)) { return true; }
         }
         return false;
     }
 
-
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number, _isPercent: boolean=false) => {
         var self = this;
         return function(): number {
-            let val: number = defaultValue;
 
-            val += (self.BaseItem().GetStatByName(fieldName) as number);
+            let val: number = defaultValue;
+            let slot: IRF5StatVector;
+            let accumulate = function(_slot: IRF5StatVector) {
+                slot = _slot;
+                val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);
+            };
+
+            accumulate(self.BaseItem());
             for(let i=0; i<RF5Item.NSLOTS_RECIPE; i++) {
-                val += (self.RecipeSlots()[i].GetStatByName(fieldName) as number);
+                accumulate(self.RecipeSlots()[i]);
             }
             for(let i=0; i<RF5Item.NSLOTS_ARRANGE; i++) {
-                val += (self.ArrangeSlots()[i].GetStatByName(fieldName) as number);
+                accumulate(self.ArrangeSlots()[i]);
             }
             for(let i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
-                val += (self.UpgradeSlots()[i].GetStatByName(fieldName) as number);
+                accumulate(self.UpgradeSlots()[i]);
             }
-
-            val += (self.LevelBonus().GetStatByName(fieldName) as number);
-            val += (self.RarityBonus().GetStatByName(fieldName) as number);
-
+            accumulate(self.LevelBonus());
+            accumulate(self.RarityBonus());
+            accumulate(self.CoreBonus());
             return val;
         };
     }

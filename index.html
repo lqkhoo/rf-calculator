@@ -314,6 +314,9 @@
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
         <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-hastruescale-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-shieldstatmultiplier-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-corebonus-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
@@ -325,6 +328,7 @@
         </tr>
         <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-corebonus-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -335,6 +339,7 @@
         </tr>
         <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-corebonus-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -345,6 +350,7 @@
         </tr>
         <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-corebonus-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -355,6 +361,7 @@
         </tr>
         <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-corebonus-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -380,17 +387,6 @@
         </tr>
     </script>
 
-    <script type="text/html" id="TEMPLATE-rarecan-slot">
-        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
-            <td>
-                <span class="lang jp">レアなあきかん</span>
-                &nbsp;<span class="lang en">Rare Can</span>
-                <span class="badge" data-bind="text: $data.HasRareCan()"></span>
-            </td>
-            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
-        </tr>
-    </script>
-
     <script type="text/html" id="TEMPLATE-clover-slot">
         <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
             <td>
@@ -398,6 +394,17 @@
                 <span class="lang jp">クローバー</span>
                 &nbsp;<span class="lang en">Clover</span>
                 <span class="badge" data-bind="text: $data.HasClover()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-rarecan-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">レアなあきかん</span>
+                &nbsp;<span class="lang en">Rare Can</span>
+                <span class="badge" data-bind="text: $data.HasRareCan()"></span>
             </td>
             <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
         </tr>
@@ -411,6 +418,39 @@
                 <span class="badge" data-bind="text: $data.HasScrapMetalPlus()"></span>
             </td>
             <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-hastruescale-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">ウロコある</span>
+                &nbsp;<span class="lang en">Has scale effect</span>
+                <span class="badge" data-bind="text: $data.HasTrueScale()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-shieldstatmultiplier-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">STAT倍数</span>
+                &nbsp;<span class="lang en">STAT multiplier</span>
+                <span class="badge" data-bind="text: $data.ShieldStatMultiplier() + 'x'"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-corebonus-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">四つのコア</span>
+                &nbsp;<span class="lang en">4x Core bonus</span>
+                <span class="badge" data-bind="text: $data.CoreBonus().HasCoreBonus()"></span>
+            </td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data.CoreBonus() } --><!-- /ko -->
         </tr>
     </script>
 
@@ -509,8 +549,12 @@
                     <!-- ko if: (Index >= 11) && ($root.Data.Is2foldSteel(id()) || $root.Data.Is10foldSteel(id()))  -->
                         <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Fold steel directly multiplies preceding item parameters. Ignores ObjectX and diminishing returns.', text_jp: '倍鉄は物体Xの効果と半減効果が無視して、一つ前の素材本来のパラメーター直接に乗算します。' } } --><!-- /ko -->
                     <!-- /ko -->
-                    <!-- ko if: (Index >= 7) && $root.Data.IsObjectX(id())  -->
+                    <!-- ko if: (Index >= 7) && $root.Data.IsObjectX(id()) -->
                         <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Object X inverts all following item parameters, until another Object X. Effect carries over from arrange slots.', text_jp: '物体Xは後の素材のパラメーター反転します。その反転効果はアレンジ枠から引き続き出来ます。' } } --><!-- /ko -->
+                    <!-- /ko -->
+
+                    <!-- ko if: (Index >= 7) && (Item().EquipmentType === "shield") && $root.Data.IsScale(id()) && ($root.Data.IsTrueScale(id())) -->
+                        <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Wet/Hard/Mermaid scale will not apply scale bonus.', text_jp: '湿った/固い/人魚のうろこは盾の倍数に効果がありません。' } } --><!-- /ko -->
                     <!-- /ko -->
 
                 </div>
@@ -591,8 +635,7 @@
         <!--
         <td><input type="number" data-bind="value: level()" /></td>
         -->
-        
-        <td data-bind="class: console.log($data)">
+        <td>
             <select data-bind="value: LevelOverride, options: ViewModel.LevelOptions"></select>
         </td>
         <!-- ko template: { name: 'TEMPLATE-stats-base', data: $data } -->
@@ -604,12 +647,12 @@
     </script>
 
     <script type="text/html" id="TEMPLATE-stats-empty">
-        <!-- 44 cells -->
+        <!-- 43 cells -->
         <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-        <td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td>
     </script>
 
     <script type="text/html" id="TEMPLATE-cell">

@@ -12,6 +12,13 @@ interface IRF5Character extends IRF5StatVector, IModel {
     readonly Shields:       ko.ObservableArray<IRF5Item>;
     readonly Weapons:       ko.ObservableArray<IRF5Item>;
 
+    readonly ActiveAccessoryIdx:    ko.PureComputed<number>;
+    readonly ActiveArmorIdx:        ko.PureComputed<number>;
+    readonly ActiveBootsIdx:        ko.PureComputed<number>;
+    readonly ActiveHeadgearIdx:     ko.PureComputed<number>;
+    readonly ActiveShieldIdx:       ko.PureComputed<number>;
+    readonly ActiveWeaponIdx:       ko.PureComputed<number>;
+
     readonly ViewModel: VMRF5Character;
 
     AddAccessory(): void;

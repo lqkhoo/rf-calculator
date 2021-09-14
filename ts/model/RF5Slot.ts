@@ -18,11 +18,15 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     readonly Item: ko.Observable<IRF5Item>;
     readonly Index: number; // Note: This isn't an observable.
 
-    // For overrides
-    readonly EquipmentType: ko.PureComputed<EquipmentType|undefined>;
-    readonly WeaponType: ko.PureComputed<WeaponType|undefined>;
     readonly LevelOverride: ko.Observable<number>;
 
+    // For overrides
+    readonly EquipmentType: ko.PureComputed<EquipmentType|undefined>;
+    readonly WeaponType: ko.PureComputed<WeaponType|undefined>;    
+    // For weapons
+    readonly Element: ko.PureComputed<ElementType>;
+
+    // For multiplier computation
     readonly IsUnderObjectX: ko.Computed<boolean>; // ko.Pure can't be called recursively.
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
     readonly IsEffective10FoldSteel: ko.PureComputed<boolean>;
@@ -105,6 +109,10 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         });
         this.WeaponType = ko.pureComputed(function() {
             return Data.WeaponTypeMap[self.id()];
+        });
+
+        this.Element = ko.pureComputed(function() {
+            return ("NONE" as ElementType);
         });
 
         this.IsUnderObjectX = ko.computed(self._compute_isUnderObjectX);

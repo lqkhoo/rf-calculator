@@ -29,9 +29,16 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     readonly Shields:       ko.ObservableArray<RF5Shield>;
     readonly Weapons:       ko.ObservableArray<RF5Weapon>;
 
+    readonly ActiveAccessoryIdx:    ko.PureComputed<number>;
+    readonly ActiveArmorIdx:        ko.PureComputed<number>;
+    readonly ActiveBootsIdx:        ko.PureComputed<number>;
+    readonly ActiveHeadgearIdx:     ko.PureComputed<number>;
+    readonly ActiveShieldIdx:       ko.PureComputed<number>;
+    readonly ActiveWeaponIdx:       ko.PureComputed<number>;
+
     readonly ViewModel: VMRF5Character;
 
-    override readonly Context: ko.PureComputed<any>;
+    override readonly Context:           ko.PureComputed<any>;
     override readonly name_en:           ko.PureComputed<string>;
     override readonly name_jp:           ko.PureComputed<string>;
     override readonly image_uri:         ko.PureComputed<string>;
@@ -39,8 +46,8 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     constructor(planner: IRF5Planner, characterId: number=RF5Character.DEFAULT_CHARACTER_ID) {
 
         super(characterId);
-
         var self = this;
+
         this.Planner     = planner;
 
         this.Accessories = ko.observableArray([]);
@@ -56,6 +63,14 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         this.name_en = ko.pureComputed(self._compute_name_en);
         this.name_jp = ko.pureComputed(self._compute_name_jp);
         this.image_uri = ko.pureComputed(self._compute_image_uri);
+        this.FinalizeVectorOverride();
+
+        this.ActiveAccessoryIdx = ko.pureComputed(self._compute_ActiveAccessoryIdx);
+        this.ActiveArmorIdx = ko.pureComputed(self._compute_ActiveArmorIdx);
+        this.ActiveBootsIdx = ko.pureComputed(self._compute_ActiveBootsIdx);
+        this.ActiveHeadgearIdx = ko.pureComputed(self._compute_ActiveHeadgearIdx);
+        this.ActiveShieldIdx = ko.pureComputed(self._compute_ActiveShieldIdx);
+        this.ActiveWeaponIdx = ko.pureComputed(self._compute_ActiveWeaponIdx);
 
         this.ViewModel = new VMRF5Character(this);
 
@@ -121,6 +136,40 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         for(var i=0; i<array.length; i++) {
             array[i].IsActive(i===idx);
         }
+    }
+
+
+    protected _compute_activeIdx_helper = (observableArray: ko.ObservableArray<IRF5Item>) => {
+        let idx: number = -1;
+        let nItems = observableArray().length;
+        if (nItems !== 0) {
+            for(let i=0; i<nItems; i++) {
+                if(observableArray()[i].IsActive()) {
+                    idx = i;
+                    break;
+                }
+            }
+        }
+        return idx;
+    }
+
+    protected _compute_ActiveAccessoryIdx = (): number => {
+        return this._compute_activeIdx_helper(this.Accessories);
+    }
+    protected _compute_ActiveArmorIdx = (): number => {
+        return this._compute_activeIdx_helper(this.Armors);
+    }
+    protected _compute_ActiveBootsIdx = (): number => {
+        return this._compute_activeIdx_helper(this.Boots);
+    }
+    protected _compute_ActiveHeadgearIdx = (): number => {
+        return this._compute_activeIdx_helper(this.Headgears);
+    }
+    protected _compute_ActiveShieldIdx = (): number => {
+        return this._compute_activeIdx_helper(this.Shields)
+    }
+    protected _compute_ActiveWeaponIdx = (): number => {
+        return this._compute_activeIdx_helper(this.Weapons);
     }
 
     protected override _compute_name_en = this._compute_string_helper(RF5StatVector.KEY_name_en, "None");

@@ -18,7 +18,7 @@ class VMRF5Slot implements IVMRF5Slot {
     readonly IsLocked: ko.PureComputed<boolean>
 
     readonly SlotName: ko.PureComputed<string>;
-    readonly LevelOptions: number[] = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]; // No need to be observable.
+    readonly LevelOptions: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]; // No need to be observable.
 
     static readonly SearchStringsCache: Record<string, any[]> = {};
 

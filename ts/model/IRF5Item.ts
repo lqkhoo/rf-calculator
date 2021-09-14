@@ -12,9 +12,8 @@ interface IRF5Item extends IRF5StatVector, IModel {
 
     readonly LevelBonus: ko.Observable<IRF5StatVector>;
     readonly RarityBonus: ko.Observable<IRF5StatVector>;
+    readonly CoreBonus: ko.Observable<IRF5StatVector>;
     readonly HasClover: ko.PureComputed<boolean>;
-    // readonly HasRareCan: ko.PureComputed<boolean>;
-    // readonly HasScrapMetalPlus: ko.PureComputed<boolean>;
 
     readonly Character: ko.Observable<IRF5Character>;
 

@@ -54,7 +54,7 @@ abstract class RF5StatVector implements IRF5StatVector {
     static readonly KEY_stat_attacklength: StatVectorKey = "stat_attacklength";
 
     // Id
-    readonly id:       ko.Observable<number>;
+    readonly id:       ko.Observable<number>|ko.PureComputed<number>;
 
     // Context
     UseEquipmentStats: ko.PureComputed<boolean>;

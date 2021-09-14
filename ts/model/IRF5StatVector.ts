@@ -4,7 +4,7 @@ interface IRF5StatVector {
 
     readonly Context:           ko.PureComputed<any>;
 
-    readonly id:                ko.Observable<number>;
+    readonly id:                ko.Observable<number>|ko.PureComputed<number>;
     readonly name_en:           ko.PureComputed<string>;
     readonly name_jp:           ko.PureComputed<string>;
     readonly image_uri:         ko.PureComputed<string>;

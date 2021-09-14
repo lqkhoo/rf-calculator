@@ -14,6 +14,8 @@ interface IRF5Slot extends IRF5StatVector, IModel {
     readonly WeaponType: ko.PureComputed<WeaponType|undefined>;
     readonly LevelOverride: ko.Observable<number>;
 
+    readonly Element: ko.PureComputed<ElementType>;
+
     // All of these alter the context to draw stats from.
     readonly IsUnderObjectX: ko.Computed<boolean>;
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;

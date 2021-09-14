@@ -55,8 +55,8 @@ class Data {
     static readonly Characters:             object = _RAWDATA.characters;
     static readonly Recipes:                object = _RAWDATA.recipes;
 
-    // Construct reverse type maps
 
+    // Construct reverse type maps
     static readonly EquipmentTypeMap:       Record<string, EquipmentType|undefined> = (function() {
         var map: Record<string, EquipmentType> = {};
         _.forOwn(Data.Is_eq_weapon,     (_value: any, key: any) => { map[key] = "weapon" });
@@ -105,6 +105,12 @@ class Data {
     public static IsLightOre(id: number): boolean {
         return Data.Is_mat_lightore.hasOwnProperty(id);
     }
+    public static IsScale(id: number): boolean {
+        return Data.Is_mat_scales.hasOwnProperty(id);
+    }
+    public static IsTrueScale(id: number): boolean {
+        return Data.Is_mat_truescale.hasOwnProperty(id);
+    }
     public static IsClover(id: number): boolean {
         return (id === 168);
     }
@@ -116,6 +122,18 @@ class Data {
     }
     public static IsScrapMetalPlus(id: number): boolean {
         return (id === 2153);
+    }
+    public static IsGreenCore(id: number): boolean {
+        return (id === 2166);
+    }
+    public static IsRedCore(id: number): boolean {
+        return (id === 2167);
+    }
+    public static IsYellowCore(id: number): boolean {
+        return (id === 2168);
+    }
+    public static IsBlueCore(id: number): boolean {
+        return (id === 2169);
     }
 
 
