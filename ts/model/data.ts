@@ -34,6 +34,7 @@ class Data {
     static readonly Is_mat_clothsandskins:  object = Data.ArrayToObject(_RAWDATA.is_mat_clothsandskins);
     static readonly Is_mat_core:            object = Data.ArrayToObject(_RAWDATA.is_mat_core);
     static readonly Is_mat_crystals:        object = Data.ArrayToObject(_RAWDATA.is_mat_crystals);
+    static readonly Is_mat_elecrystals:     object = Data.ArrayToObject(_RAWDATA.is_mat_elecrystals);
     static readonly Is_mat_feathers:        object = Data.ArrayToObject(_RAWDATA.is_mat_feathers);
     static readonly Is_mat_furs:            object = Data.ArrayToObject(_RAWDATA.is_mat_furs);
     static readonly Is_mat_jewels:          object = Data.ArrayToObject(_RAWDATA.is_mat_jewels);
@@ -92,6 +93,12 @@ class Data {
     }
     public static IsWeapon(id: number): boolean {
         return Data.Is_eq_weapon.hasOwnProperty(id);
+    }
+    public static IsCrystal(id: number): boolean {
+        return Data.Is_mat_crystals.hasOwnProperty(id);
+    }
+    public static IsEleCrystal(id: number): boolean {
+        return Data.Is_mat_elecrystals.hasOwnProperty(id);
     }
     public static IsObjectX(id: number): boolean {
         return Data.Is_mat_objectx.hasOwnProperty(id);

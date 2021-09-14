@@ -301,6 +301,7 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
+        <!-- ko template: { name: 'TEMPLATE-weapon-element-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-rarecan-slot' }--><!-- /ko -->
@@ -427,6 +428,17 @@
                 <span class="lang jp">ウロコある</span>
                 &nbsp;<span class="lang en">Has scale effect</span>
                 <span class="badge" data-bind="text: $data.HasTrueScale()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-weapon-element-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">属性</span>
+                &nbsp;<span class="lang en">Element</span>
+                <span class="badge" data-bind="text: $data.Element()"></span>
             </td>
             <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
         </tr>
