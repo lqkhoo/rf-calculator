@@ -1,8 +1,8 @@
 import ko = require('knockout');
 import Data = require('./Data');
-import IStatVector = require('./IStatVector');
+import IRF5StatVector = require('./IRF5StatVector');
 
-abstract class RF5StatVector implements IStatVector {
+abstract class RF5StatVector implements IRF5StatVector {
 
     // Field names
     static readonly KEY_name_id:        StatVectorKey = "id";
@@ -268,7 +268,8 @@ abstract class RF5StatVector implements IStatVector {
     protected _compute_name_en = this._compute_string_helper(RF5StatVector.KEY_name_en, "None");
     protected _compute_name_jp = this._compute_string_helper(RF5StatVector.KEY_name_jp, "\u306a\u3057");
     protected _compute_image_uri = this._compute_string_helper(RF5StatVector.KEY_image_uri, "icon/Empty.png");
-    protected _compute_level = this._compute_number_helper(RF5StatVector.KEY_level, 0);
+    // protected _compute_level = this._compute_number_helper(RF5StatVector.KEY_level, 1);
+    protected _compute_level = (): number => { return 0; }
     protected _compute_rarity = this._compute_number_helper(RF5StatVector.KEY_rarity, 0);
     protected _compute_stat_ATK = this._compute_number_helper(RF5StatVector.KEY_stat_ATK, 0);
     protected _compute_stat_DEF = this._compute_number_helper(RF5StatVector.KEY_stat_DEF, 0);

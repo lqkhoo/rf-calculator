@@ -10209,6 +10209,7 @@ h4.title, .title.h4 {
 .stats-table td, .stats-table th {
   font-size: 0.7rem;
   text-align: center;
+  vertical-align: middle;
   padding: 0;
   min-width: 25px;
   width: 25px;
@@ -10367,6 +10368,20 @@ div.icon-group {
   width: 20%;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  border-radius: 3px;
+  height: 21px;
+  line-height: 15px;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
 .group-header {
   font-size: 14px;
   text-align: left;
@@ -10415,6 +10430,19 @@ div.icon-group {
   display: inline-block;
   height: 14px;
   width: 14px;
+}
+
+.badge {
+  color: #000000;
+  font-weight: bold;
+  border: 1px solid #aaaaaa;
+  float: right;
+}
+
+.subslot td:first-child {
+  text-align: left;
+  padding: 2px 5px;
+  border-bottom: 1px solid #aaaaaa;
 }
 
 /*# sourceMappingURL=rf5planner.css.map */

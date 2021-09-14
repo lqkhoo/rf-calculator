@@ -48,6 +48,7 @@ class Data {
     static readonly Is_mat_sticksandstems:  object = Data.ArrayToObject(_RAWDATA.is_mat_sticksandstems);
     static readonly Is_mat_stones:          object = Data.ArrayToObject(_RAWDATA.is_mat_stones);
     static readonly Is_mat_strings:         object = Data.ArrayToObject(_RAWDATA.is_mat_strings);
+    static readonly Is_mat_truescale:       object = Data.ArrayToObject(_RAWDATA.is_mat_truescale); // Scales that provide the shield bonus
     static readonly Categories:             object = _RAWDATA.categories;
     static readonly Items:                  object = _RAWDATA.items;
     static readonly BaseItems:              object = _RAWDATA.base_items;
@@ -103,6 +104,18 @@ class Data {
     }
     public static IsLightOre(id: number): boolean {
         return Data.Is_mat_lightore.hasOwnProperty(id);
+    }
+    public static IsClover(id: number): boolean {
+        return (id === 168);
+    }
+    public static IsGiantClover(id: number): boolean {
+        return (id === 169);
+    }
+    public static IsRareCan(id: number): boolean {
+        return (id === 1902);
+    }
+    public static IsScrapMetalPlus(id: number): boolean {
+        return (id === 2153);
     }
 
 

@@ -11,11 +11,13 @@ import RF5SlotBaseItem = require('./RF5SlotBaseItem');
 import RF5SlotRecipe = require('./RF5SlotRecipe');
 import RF5SlotArrange = require('./RF5SlotArrange');
 import RF5SlotUpgrade = require('./RF5SlotUpgrade');
+import LevelBonusVector = require('./LevelBonusVector');
+import RarityBonusVector = require('./RarityBonusVector');
 // VM
 import VMRF5Item = require('../vm/VMRF5Item');
 // Data
 import Data = require('./Data');
-import RF5Slot = require('./RF5Slot');
+import RF5AbstractSlot = require('./RF5AbstractSlot');
 
 
 class RF5Item extends RF5StatVector implements IRF5Item {
@@ -27,6 +29,10 @@ class RF5Item extends RF5StatVector implements IRF5Item {
 
     readonly EquipmentType: EquipmentType;
     readonly IsActive: ko.Observable<boolean>;
+
+    readonly LevelBonus: ko.Observable<RF5StatVector>;
+    readonly RarityBonus: ko.Observable<RF5StatVector>;
+    readonly HasClover: ko.PureComputed<boolean>;
 
     readonly Character: ko.Observable<IRF5Character>;
 
@@ -88,6 +94,8 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         this.stat_attacklength = ko.pureComputed(self._compute_stat_attacklength);
         this.FinalizeVectorOverride();
 
+        this.LevelBonus = ko.observable(new LevelBonusVector(this));
+        this.RarityBonus = ko.observable(new RarityBonusVector(this));
 
         this.Character = ko.observable(character);
         this.EquipmentType = equipment_type;
@@ -114,6 +122,9 @@ class RF5Item extends RF5StatVector implements IRF5Item {
             i++;
         }
 
+        // Has to be after slots have been initialized.
+        this.HasClover = ko.pureComputed(self._compute_hasClover);
+
     }
 
     public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
@@ -137,13 +148,21 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         index = _.clamp(index, 0, 18); // Inclusive both
         if(index == 0) {
             return this.BaseItem();
-        } else if (index < RF5Slot.ARRANGE_START_IDX) {
+        } else if (index < RF5AbstractSlot.ARRANGE_START_IDX) {
             return this.RecipeSlots()[index - 1];
-        } else if (index < RF5Slot.UPGRADE_START_IDX) {
-            return this.ArrangeSlots()[index - RF5Slot.ARRANGE_START_IDX];
+        } else if (index < RF5AbstractSlot.UPGRADE_START_IDX) {
+            return this.ArrangeSlots()[index - RF5AbstractSlot.ARRANGE_START_IDX];
         } else {
-            return this.UpgradeSlots()[index - RF5Slot.UPGRADE_START_IDX];
+            return this.UpgradeSlots()[index - RF5AbstractSlot.UPGRADE_START_IDX];
         }
+    }
+
+    protected _compute_hasClover = (): boolean => {
+        for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
+            let id = this.GetSlotByIndex(i).id();
+            if(Data.IsClover(id) || Data.IsGiantClover(id)) { return true; }
+        }
+        return false;
     }
 
 
@@ -162,6 +181,10 @@ class RF5Item extends RF5StatVector implements IRF5Item {
             for(let i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
                 val += (self.UpgradeSlots()[i].GetStatByName(fieldName) as number);
             }
+
+            val += (self.LevelBonus().GetStatByName(fieldName) as number);
+            val += (self.RarityBonus().GetStatByName(fieldName) as number);
+
             return val;
         };
     }

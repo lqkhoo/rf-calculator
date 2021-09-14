@@ -405,6 +405,8 @@ if __name__ == '__main__':
     is_mat_sticksandstems:  set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_sticksandstems.tsv')
     is_mat_stones:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_stones.tsv')
     is_mat_strings:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_strings.tsv')
+    # Scales which provide scale bonus in shields.
+    is_mat_truescale:       set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_truescale.tsv')
 
 
     categories:   dict[int, RF5Category] = {}
@@ -528,6 +530,7 @@ if __name__ == '__main__':
         write_json(f, 'is_mat_sticksandstems', json.dumps(sorted(list(is_mat_sticksandstems))))
         write_json(f, 'is_mat_stones', json.dumps(sorted(list(is_mat_stones))))
         write_json(f, 'is_mat_strings', json.dumps(sorted(list(is_mat_strings))))
+        write_json(f, 'is_mat_truescale', json.dumps(sorted(list(is_mat_truescale))))
 
 
         write_json(f, 'categories', json_dump_object(categories))

@@ -1,14 +1,20 @@
 import IModel = require("./IModel");
 import IRF5Character = require("./IRF5Character");
 import IRF5Slot = require("./IRF5Slot");
-import IStatVector = require("./IStatVector");
+import IRF5StatVector = require("./IRF5StatVector");
 // VM
 import VMRF5Item = require("../vm/VMRF5Item");
 
-interface IRF5Item extends IStatVector, IModel {
+interface IRF5Item extends IRF5StatVector, IModel {
 
     readonly EquipmentType: EquipmentType;
     readonly IsActive: ko.Observable<boolean>;
+
+    readonly LevelBonus: ko.Observable<IRF5StatVector>;
+    readonly RarityBonus: ko.Observable<IRF5StatVector>;
+    readonly HasClover: ko.PureComputed<boolean>;
+    // readonly HasRareCan: ko.PureComputed<boolean>;
+    // readonly HasScrapMetalPlus: ko.PureComputed<boolean>;
 
     readonly Character: ko.Observable<IRF5Character>;
 

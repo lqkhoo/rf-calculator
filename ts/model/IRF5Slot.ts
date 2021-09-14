@@ -1,9 +1,9 @@
 import IVMRF5Slot = require("../vm/IVMRF5Slot");
 import IModel = require("./IModel");
 import IRF5Item = require("./IRF5Item");
-import IStatVector = require("./IStatVector");
+import IRF5StatVector = require("./IRF5StatVector");
 
-interface IRF5Slot extends IStatVector, IModel {
+interface IRF5Slot extends IRF5StatVector, IModel {
 
     readonly Item: ko.Observable<IRF5Item>;
     // Index in terms of slots. e.g. 0 -> Base. 1 -> Recipe1
@@ -12,6 +12,7 @@ interface IRF5Slot extends IStatVector, IModel {
     // For slots, EquipmentType is mutable, hence computed.
     readonly EquipmentType: ko.PureComputed<EquipmentType|undefined>;
     readonly WeaponType: ko.PureComputed<WeaponType|undefined>;
+    readonly LevelOverride: ko.Observable<number>;
 
     // All of these alter the context to draw stats from.
     readonly IsUnderObjectX: ko.Computed<boolean>;
@@ -31,7 +32,6 @@ interface IRF5Slot extends IStatVector, IModel {
 
     readonly ViewModel: IVMRF5Slot;
 
-    //TODO diminishing returns
     //ELEMENT
 
     ChangeId(id: number): void;

@@ -9,22 +9,19 @@ import IRF5Item = require('./IRF5Item');
 import VMRF5Slot = require('../vm/VMRF5Slot');
 // Data
 import Data = require('./Data');
-import RF5Item = require('./RF5Item');
+import RF5AbstractSlot = require('./RF5AbstractSlot');
 
 // This is the class responsible for most of the bindings, so
 // try to make the bindings as efficient as possible.
-class RF5Slot extends RF5StatVector implements IRF5Slot {
+class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     
-    static readonly DEFAULT_ITEM_ID: number = 0;
-    static readonly ARRANGE_START_IDX: number = 7;
-    static readonly UPGRADE_START_IDX: number = 10;
-
     readonly Item: ko.Observable<IRF5Item>;
     readonly Index: number; // Note: This isn't an observable.
 
     // For overrides
     readonly EquipmentType: ko.PureComputed<EquipmentType|undefined>;
     readonly WeaponType: ko.PureComputed<WeaponType|undefined>;
+    readonly LevelOverride: ko.Observable<number>;
 
     readonly IsUnderObjectX: ko.Computed<boolean>; // ko.Pure can't be called recursively.
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
@@ -50,6 +47,9 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         super(item_id, useEquipmentStats);
         var self = this;
 
+        this.LevelOverride = ko.observable(10); // Set default to 10 for convenience;
+
+        this.level    = ko.pureComputed(self._compute_level);
         this.stat_ATK = ko.pureComputed(self._compute_stat_ATK);
         this.stat_DEF = ko.pureComputed(self._compute_stat_DEF);
         this.stat_MAT = ko.pureComputed(self._compute_stat_MAT);
@@ -319,8 +319,10 @@ class RF5Slot extends RF5StatVector implements IRF5Slot {
         };
     }
 
-    protected override _compute_level = this._compute_number_helper(RF5StatVector.KEY_level, 0);
-    protected override _compute_rarity = this._compute_number_helper(RF5StatVector.KEY_rarity, 0);
+    protected override _compute_level = (): number => {
+        return this.LevelOverride();
+    }
+
     protected override _compute_stat_ATK = this._compute_number_helper(RF5StatVector.KEY_stat_ATK, 0);
     protected override _compute_stat_DEF = this._compute_number_helper(RF5StatVector.KEY_stat_DEF, 0);
     protected override _compute_stat_MAT = this._compute_number_helper(RF5StatVector.KEY_stat_MAT, 0);

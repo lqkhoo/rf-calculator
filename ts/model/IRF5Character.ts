@@ -1,9 +1,9 @@
-import IStatVector = require("./IStatVector");
+import IRF5StatVector = require("./IRF5StatVector");
 import IRF5Item = require("./IRF5Item");
 import IModel = require("./IModel");
 import VMRF5Character = require("../vm/VMRF5Character");
 
-interface IRF5Character extends IStatVector, IModel {
+interface IRF5Character extends IRF5StatVector, IModel {
 
     readonly Accessories:   ko.ObservableArray<IRF5Item>;
     readonly Armors:        ko.ObservableArray<IRF5Item>;

@@ -203,6 +203,8 @@
         
     </body>
 
+    <!-- ================================== Character templates =============================== -->
+
     <script type="text/html" id="TEMPLATE-character-icon-group">
         <label class="icon-group character">
             <table>
@@ -244,6 +246,7 @@
         </tr>
     </script>
 
+    <!-- =========================================== Item group templates ====================================== -->
 
     <!-- Context RF5Item -->
     <script type="text/html" id="TEMPLATE-header-icon-group">
@@ -298,6 +301,10 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
+        <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-rarecan-slot' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-scrapmetalplus-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -306,6 +313,8 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
+        <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -314,6 +323,8 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
+        <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -322,6 +333,8 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
+        <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -330,6 +343,8 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
+        <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
@@ -338,75 +353,127 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
+        <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-equipment-slots' } --><!-- /ko -->
     </script>
 
-    <!--
-    <script type="text/html" id="TEMPLATE-level-rarity-bonus">
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
-            <td>rarity bonus</td>
+    <!-- ================================= Slot templates ================================= -->
+
+    <!-- Context RF5Item -->
+    <!-- For collapsible support, we just piggyback onto BaseItem's ViewModel, so we don't need yet another viewmodel -->
+    <script type="text/html" id="TEMPLATE-rarity-lvl-slots">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">総Lvボーナス</span>
+                &nbsp;<span class="lang en">Level bonus</span>
+            </td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data.LevelBonus() } --><!-- /ko -->
         </tr>
-        <tr class="collapse" data-bind="class: 'char-'+ characterIdx +'-'+ equipmentType +'-'+ equipmentIdx">
-            <td>level bonus</td>
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">素Lvボーナス</span>
+                &nbsp;<span class="lang en">Rarity bonus</span>
+                <span class="badge" data-bind="text: $data.RarityBonus().RarityStatType()"></span>
+            </td>
+            <!-- ko template: { name: 'TEMPLATE-stats', data: $data.RarityBonus() } --><!-- /ko -->
         </tr>
     </script>
-    -->
+
+    <script type="text/html" id="TEMPLATE-rarecan-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">レアなあきかん</span>
+                &nbsp;<span class="lang en">Rare Can</span>
+                <span class="badge" data-bind="text: $data.HasRareCan()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-clover-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span data-bind="text: console.log($data)"></span>
+                <span class="lang jp">クローバー</span>
+                &nbsp;<span class="lang en">Clover</span>
+                <span class="badge" data-bind="text: $data.HasClover()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-scrapmetalplus-slot">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">すごいクズ鉄</span>
+                &nbsp;<span class="lang en">Scrap Metal+</span>
+                <span class="badge" data-bind="text: $data.HasScrapMetalPlus()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
 
     <script type="text/html" id="TEMPLATE-equipment-slots">
         <!-- ko template: { name: 'TEMPLATE-slot', data: BaseItem() }--><!-- /ko -->
         <!-- ko foreach: { data: RecipeSlots } -->
-            <!-- ko template: { name: 'TEMPLATE-slot', data: $data } --><!-- /ko -->
+            <!-- ko template: 'TEMPLATE-slot-editable-level' --><!-- /ko -->
         <!-- /ko -->
         <!-- ko foreach: { data: ArrangeSlots } -->
-            <!-- ko template: { name: 'TEMPLATE-slot', data: $data } --><!-- /ko -->
+            <!-- ko template: 'TEMPLATE-slot' --><!-- /ko -->
         <!-- /ko -->
         <!-- ko foreach: { data: UpgradeSlots } -->
-            <!-- ko template: { name: 'TEMPLATE-slot', data: $data } --><!-- /ko -->
+            <!-- ko template: 'TEMPLATE-slot-editable-level' --><!-- /ko -->
         <!-- /ko -->
     </script>
 
     <!-- Context RF5Slot -->
-    <script type="text/html" id="TEMPLATE-slot">
-        <tr class="collapse" data-bind="css: { show: ! ViewModel.IsCollapsed() }">
-            <td>
-                <label class="icon-group small" data-bind="class: Item().EquipmentType">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <button class="btn detail-button" data-bind="click: ViewModel.DetailButtonClickHandler">
-                                        <span data-bind="text: ViewModel.SlotName(), css: { displayNone: ViewModel.IsRestricted() }"></span>
-                                        <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! ViewModel.IsRestricted() }"/>
-                                    </button>
-                                </td>
-                                <td class="icon-td"><img class="icon small" data-bind="attr: { src: image_uri }"/></td>
-                                <td>
-                                    <span class="lang jp" data-bind="text: name_jp"></span>
-                                    <span class="lang en" data-bind="text: name_en"></span>
-                                </td>
-                                <td>
-                                    <input type="text" data-bind="attr: { disabled: ViewModel.IsLocked() }, autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: ViewModel.AutoCompleteSelectHandler }, value: id()">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <script type="text/html" id="TEMPLATE-slot-header">
+        <td>
+            <label class="icon-group small" data-bind="class: Item().EquipmentType">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <button class="btn detail-button" data-bind="click: ViewModel.DetailButtonClickHandler">
+                                    <span data-bind="text: ViewModel.SlotName(), css: { displayNone: ViewModel.IsRestricted() }"></span>
+                                    <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! ViewModel.IsRestricted() }"/>
+                                </button>
+                            </td>
+                            <td class="icon-td"><img class="icon small" data-bind="attr: { src: image_uri }"/></td>
+                            <td>
+                                <span class="lang jp" data-bind="text: name_jp"></span>
+                                <span class="lang en" data-bind="text: name_en"></span>
+                            </td>
+                            <td>
+                                <input type="text" data-bind="attr: { disabled: ViewModel.IsLocked() }, autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: ViewModel.AutoCompleteSelectHandler }, value: id()">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </label>
+        </td>
+    </script>
 
-                </label>
-            </td>
-            <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
-        </tr>
-
+    <script type="text/html" id="TEMPLATE-slot-footer">
         <!-- Expanded tooltips. All display conditions are AND-based, so most of them should short-circuit by the first id or index check. -->
         <tr class="collapse" data-bind="css: { show: ! ViewModel.IsCollapsed() }">
             <td colspan="44">
+
                 <!-- Context: RF5Slot -->
+                <!-- Arrange start: 7. Upgrade start: 10 -->
                 <div class="detail-panel"><!-- Always display warnings -->
 
                     <!-- ko if: $root.Data.IsEquipment(id()) && HasPrecedingOverrider() -->
                         <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only one item can override.', text_jp: '効果がありません。性能継承アレンジは、一つのアイテムの性能しか継承出来ません。' } } --><!-- /ko -->
                     <!-- /ko -->
-                    <!-- ko if: (Index !== 0) && $root.Data.IsEquipment(id()) && (! IsOverriding()) && (! HasPrecedingOverrider())  -->
-                        <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only items of same type can override. Overriding a weapon of different type requires Light Ore in any recipe slot.', text_jp: '効果がありません。性能継承アレンジは、同じ種類のアイテムが必要です。別のカテゴリの武器の場合はメッシライト鉱石を同時に使って。' } } --><!-- /ko -->
+
+                    <!-- ko if: (Index !== 0 && Index < 7) && $root.Data.IsEquipment(id()) && (! IsOverriding()) && (! HasPrecedingOverrider()) -->
+                        <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only items of same type can override. Overriding a weapon of different type requires Light Ore in any recipe slot.', text_jp: '効果がありません。性能継承アレンジは、ベースと同じ種類のアイテムが必要です。別のカテゴリの武器の場合なら、レシピにメッシライト鉱石も必要です。' } } --><!-- /ko -->
+                    <!-- /ko -->
+
+                    <!-- ko if: (Index >= 10) && $root.Data.IsEquipment(id())  -->
+                        <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'Equipment in upgrade slots only contributes to item level! (Farm equipment contributes rarity)', text_jp: '強化枠に入った装備は総Lv以外のパラメーターがカウントしません。（農用装備だけの素材Lvカウントします）' } } --><!-- /ko -->
                     <!-- /ko -->
 
                     <!-- ko if: (Index < 11) && ($root.Data.Is2foldSteel(id()) || $root.Data.Is10foldSteel(id()))  -->
@@ -451,8 +518,26 @@
         </tr>
     </script>
 
-    <script type="text/html" id="TEMPLATE-stats">
-        <!-- ko template: { name: 'TEMPLATE-cell', data: level() } --><!-- /ko -->
+
+    <script type="text/html" id="TEMPLATE-slot">
+        <tr class="collapse" data-bind="css: { show: ! ViewModel.IsCollapsed() }">
+            <!-- ko template: 'TEMPLATE-slot-header' --><!-- /ko -->
+            <!-- ko template: 'TEMPLATE-stats' --><!-- /ko -->
+        </tr>
+        <!-- ko template: 'TEMPLATE-slot-footer' --><!-- /ko -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-slot-editable-level">
+        <tr class="collapse" data-bind="css: { show: ! ViewModel.IsCollapsed() }">
+            <!-- ko template: { name: 'TEMPLATE-slot-header', data: $data } --><!-- /ko -->
+            <!-- ko template: { name: 'TEMPLATE-stats-editable-level', data: $data } --><!-- /ko -->
+        </tr>
+        <!-- ko template: { name: 'TEMPLATE-slot-footer', data: $data } --><!-- /ko -->
+    </script>
+
+
+    <script type="text/html" id="TEMPLATE-stats-base">
+        
         <!-- ko template: { name: 'TEMPLATE-cell', data: rarity() } --><!-- /ko -->
 
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_ATK() } --><!-- /ko -->
@@ -502,8 +587,38 @@
         <!-- ko template: { name: 'TEMPLATE-cell', data: stat_attacklength() } --><!-- /ko -->
     </script>
 
+    <script type="text/html" id="TEMPLATE-stats-editable-level">
+        <!--
+        <td><input type="number" data-bind="value: level()" /></td>
+        -->
+        
+        <td data-bind="class: console.log($data)">
+            <select data-bind="value: LevelOverride, options: ViewModel.LevelOptions"></select>
+        </td>
+        <!-- ko template: { name: 'TEMPLATE-stats-base', data: $data } -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-stats">
+        <!-- ko template: { name: 'TEMPLATE-cell', data: level() } --><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-stats-base', data: $data } -->
+    </script>
+
+    <script type="text/html" id="TEMPLATE-stats-empty">
+        <!-- 44 cells -->
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td>
+    </script>
+
     <script type="text/html" id="TEMPLATE-cell">
-        <td data-bind="text: $data"></td>
+        <!-- ko if: $data === 0 -->
+            <td></td>
+        <!-- /ko -->
+        <!-- ko ifnot: $data === 0 -->
+            <td data-bind="text: $data"></td>
+        <!-- /ko -->
     </script>
 
     <script type="text/html" id="TEMPLATE-detail-info">
