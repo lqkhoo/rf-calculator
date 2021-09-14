@@ -35,7 +35,7 @@ class VMRF5Slot implements IVMRF5Slot {
         this.IsLocked = ko.pureComputed(function() { return false; })
 
         this.SlotName = ko.pureComputed(function() {
-            if(self.Model.Index === 0) { return 'B'; }
+            if(self.Model.Index === 0) { return 'Base'; }
             else if (self.Model.Index < 7) {
                 return 'R' + (self.Model.Index-1).toString();
             }

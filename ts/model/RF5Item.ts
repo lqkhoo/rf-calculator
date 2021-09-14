@@ -156,6 +156,33 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         }
     }
 
+    /*
+    public ApplyArrangeRestrictions = (): void => {
+        if(this.EquipmentType === "boots" || this.EquipmentType === "accessory") {
+            if(! this.BaseItem().IsBeingOverridden()) {
+                this.ArrangeSlots()[0].ApplyRestriction(0); // Clear restrictions.
+            }
+            // Find overriding item
+            for(let i=0; i<RF5AbstractSlot.ARRANGE_START_IDX; i++) {
+                let slot: IRF5Slot = this.GetSlotByIndex(i);
+                if(slot.IsOverriding()) {
+                    this.ArrangeSlots()[0].ApplyRestriction(slot.id());
+                    break;
+                }
+            }
+        }
+        // Else do nothing.
+    }
+    */
+   public ApplyArrangeRestrictions = (): void => {
+       // Do nothing.
+       // The original plan was that inheriting from boots / accessories would also
+       // mean that it takes up one arrange slot as well. The thing is not all boots
+       // or accessories have inheritable special effects. And if they do, if the piece
+       // already has 4 or more effects, then the inheritance is random (?). I'm not entirely
+       // sure that the base would always go into the arrange slot, so just let it be.
+   }
+
     public GetSlotByIndex = (index: number): IRF5Slot => {
         index = _.clamp(index, 0, 18); // Inclusive both
         if(index == 0) {

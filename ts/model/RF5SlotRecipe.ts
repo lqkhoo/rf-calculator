@@ -65,6 +65,11 @@ class RF5SlotRecipe extends RF5Slot {
         }
     }
 
+    public override ChangeId(newId: number) {
+        this.id(newId);
+        this.Item().ApplyArrangeRestrictions();
+    }
+
     
 
 }

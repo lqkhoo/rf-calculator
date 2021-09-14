@@ -181,6 +181,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
 
     protected _compute_hasPrecedingOverrider = (): boolean => {
         if(this.Index === 0) { return false; } // Terminating condition.
+        if(this.Index >= RF5AbstractSlot.ARRANGE_START_IDX) { return false; }
         let predecessor = this.Predecessor();
         // Order of evaluation of the OR is important.
         return predecessor.HasPrecedingOverrider() || predecessor.IsOverriding();

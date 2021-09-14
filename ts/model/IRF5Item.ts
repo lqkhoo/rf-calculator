@@ -25,6 +25,7 @@ interface IRF5Item extends IRF5StatVector, IModel {
     readonly ViewModel: VMRF5Item;
 
     ApplyRecipeRestrictions(baseItem: IRF5Slot): void;
+    ApplyArrangeRestrictions(): void;
     GetSlotByIndex(index: number): IRF5Slot;
 
 }

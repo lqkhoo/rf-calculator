@@ -545,9 +545,10 @@
                     <!-- ko if: (Index === 0) && (id() !== 0) && IsBeingOverridden() -->
                         <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Item being overridden. All parameters become zero.', text_jp: '性能継承発生中。全パラメーターゼロになります。' } } --><!-- /ko -->
                     <!-- /ko -->
-                    <!-- ko if: ViewModel.IsRestricted() -->
+                    <!-- ko if: (Index < 7) && ViewModel.IsRestricted() -->
                         <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Slot being restricted by recipe.', text_jp: '本枠はレシピにより制限されています。' } } --><!-- /ko -->
                     <!-- /ko -->
+
                     <!-- ko if: IsOverriding() -->
                         <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Item overriding base. All parameters in full effect.', text_jp: '性能継承発生中。全パラメーター代用されています。' } } --><!-- /ko -->
                     <!-- /ko -->
