@@ -334,7 +334,7 @@ class TsvReader(object):
 
     @staticmethod
     def read_item_magic(items: dict[int, RF5Item]):
-        with open('../tsv/map_itemid_to_magic.tsv') as f:
+        with open('../tsv/map_itemid_to_magicid.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -351,6 +351,16 @@ class TsvReader(object):
                 id = int(row[0])
                 ls = [int(x) for x in row[1:]]
                 recipes[id] = ls
+
+    @staticmethod
+    def read_magics(magics: dict[int, str]):
+        with open('../tsv/map_magicid_to_name_shiftjis.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                id = int(row[0])
+                name = row[2]
+                magics[id] = name
+
 
 
 if __name__ == '__main__':
@@ -415,6 +425,7 @@ if __name__ == '__main__':
     base_items:   dict[int, RF5Item] = {}
     characters:   dict[int, RF5Character] = {}
     recipes:      dict[int, List[int]] = {}
+    magics:       dict[int, str] = {}
 
 
     # All names
@@ -446,6 +457,9 @@ if __name__ == '__main__':
 
     # Recipes
     TsvReader.read_recipes(recipes)
+
+    # Magics
+    TsvReader.read_magics(magics)
 
     # Link material groups
     categories[3000].item_ids = list(is_mat_minerals)
@@ -536,18 +550,11 @@ if __name__ == '__main__':
 
 
         write_json(f, 'categories', json_dump_object(categories))
-        write_json(f, 'recipes', json_dump_object(recipes))
         write_json(f, 'items', json_dump_object(items))
         write_json(f, 'base_items', json_dump_object(base_items))
         write_json(f, 'characters', json_dump_object(characters))
-
-
-        # write_json(f, 'categories', json.dumps(list(categories.values())))
-        # write_json(f, 'items', json.dumps(list(items.values())))
-
+        write_json(f, 'recipes', json_dump_object(recipes))
+        write_json(f, 'magics', json_dump_object(magics))
 
         f.write('};\n')
         f.write('export = '+variablename+';')
-
-
-

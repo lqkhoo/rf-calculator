@@ -99,8 +99,12 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         this.stat_def_SCK = ko.pureComputed(self._compute_def_SCK);
         this.stat_def_FNT = ko.pureComputed(self._compute_def_FNT);
         this.stat_def_DRN = ko.pureComputed(self._compute_def_DRN);
-        this.stat_chargespeed = ko.pureComputed(self._compute_stat_chargespeed);
-        this.stat_attacklength = ko.pureComputed(self._compute_stat_attacklength);
+        this.stat_chargespeed = ko.pureComputed((function() {
+            return 0;
+        }));
+        this.stat_attacklength = ko.pureComputed((function() {
+            return 0;
+        }));
         this.FinalizeVectorOverride();
 
         this.LevelBonus = ko.observable(new LevelBonusVector(this));
@@ -275,8 +279,6 @@ class RF5Item extends RF5StatVector implements IRF5Item {
     protected override _compute_def_SCK = this._compute_number_helper(RF5StatVector.KEY_stat_def_SCK, 0);
     protected override _compute_def_FNT = this._compute_number_helper(RF5StatVector.KEY_stat_def_FNT, 0);
     protected override _compute_def_DRN = this._compute_number_helper(RF5StatVector.KEY_stat_def_DRN, 0);
-    protected override _compute_stat_chargespeed = this._compute_number_helper(RF5StatVector.KEY_stat_chargespeed, 0);
-    protected override _compute_stat_attacklength = this._compute_number_helper(RF5StatVector.KEY_stat_attacklength, 0);
 
 }
 export = RF5Item;

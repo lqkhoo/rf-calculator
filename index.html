@@ -301,8 +301,11 @@
             <td data-bind="template: { name: 'TEMPLATE-header-icon-group' }"></td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: $data } --><!-- /ko -->
         </tr>
-        <!-- ko template: { name: 'TEMPLATE-weapon-element-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-rarity-lvl-slots' }--><!-- /ko -->
+        <!-- ko template: { name: 'TEMPLATE-weapon-element-slot' }--><!-- /ko -->
+        <!-- ko if: $root.Data.IsStaff($data.id()) -->
+            <!-- ko template: { name: 'TEMPLATE-staff-spell-slots' } --><!-- /ko -->
+        <!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-clover-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-rarecan-slot' }--><!-- /ko -->
         <!-- ko template: { name: 'TEMPLATE-scrapmetalplus-slot' }--><!-- /ko -->
@@ -391,7 +394,6 @@
     <script type="text/html" id="TEMPLATE-clover-slot">
         <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
             <td>
-                <span data-bind="text: console.log($data)"></span>
                 <span class="lang jp">クローバー</span>
                 &nbsp;<span class="lang en">Clover</span>
                 <span class="badge" data-bind="text: $data.HasClover()"></span>
@@ -466,6 +468,35 @@
         </tr>
     </script>
 
+    <script type="text/html" id="TEMPLATE-staff-spell-slots">
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">魔法Lv1</span>
+                &nbsp;<span class="lang en">MagicLv1</span>
+                <span class="badge" data-bind="text: $data.MagicIdCharge1Name()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">魔法Lv2</span>
+                &nbsp;<span class="lang en">MagicLv2</span>
+                <span class="badge" data-bind="text: $data.MagicIdCharge2Name()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+        <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+            <td>
+                <span class="lang jp">魔法Lv3</span>
+                &nbsp;<span class="lang en">MagicLv3</span>
+                <span class="badge" data-bind="text: $data.MagicIdCharge3Name()"></span>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty' --><!-- /ko -->
+        </tr>
+    </script>
+
+
+
     <script type="text/html" id="TEMPLATE-equipment-slots">
         <!-- ko template: { name: 'TEMPLATE-slot', data: BaseItem() }--><!-- /ko -->
         <!-- ko foreach: { data: RecipeSlots } -->
@@ -525,7 +556,7 @@
                     <!-- /ko -->
 
                     <!-- ko if: (Index >= 10) && $root.Data.IsEquipment(id())  -->
-                        <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'Equipment in upgrade slots only contributes to item level! (Farm equipment contributes rarity)', text_jp: '強化枠に入った装備は総Lv以外のパラメーターがカウントしません。（農用装備だけの素材Lvカウントします）' } } --><!-- /ko -->
+                        <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'Equipment in upgrade slots only contributes to item level! (Farm equipment contributes rarity)', text_jp: '強化枠に入った装備は総Lv以外のパラメーターがカウントしません。（農用装備の素材Lvカウントします）' } } --><!-- /ko -->
                     <!-- /ko -->
 
                     <!-- ko if: (Index < 11) && ($root.Data.Is2foldSteel(id()) || $root.Data.Is10foldSteel(id()))  -->

@@ -55,6 +55,7 @@ class Data {
     static readonly BaseItems:              object = _RAWDATA.base_items;
     static readonly Characters:             object = _RAWDATA.characters;
     static readonly Recipes:                object = _RAWDATA.recipes;
+    static readonly Magics:                 object = _RAWDATA.magics;
 
 
     // Construct reverse type maps
@@ -93,6 +94,9 @@ class Data {
     }
     public static IsWeapon(id: number): boolean {
         return Data.Is_eq_weapon.hasOwnProperty(id);
+    }
+    public static IsStaff(id: number): boolean {
+        return Data.Is_eq_staff.hasOwnProperty(id);
     }
     public static IsCrystal(id: number): boolean {
         return Data.Is_mat_crystals.hasOwnProperty(id);
