@@ -89952,6 +89952,7 @@ const _RAWDATA = {
     "image_uri": "icon/Icon_ch000.png",
     "name_en": "Ares",
     "name_jp": "\u30a2\u30ec\u30b9",
+    "sprite_uri": "charasprites/BU_Are_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -89990,14 +89991,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "1": {
     "id": 1,
     "image_uri": "icon/Icon_ch001.png",
     "name_en": "Alice",
     "name_jp": "\u30a2\u30ea\u30b9",
+    "sprite_uri": "charasprites/BU_Ali_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90036,14 +90037,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "2": {
     "id": 2,
     "image_uri": "icon/Icon_ch002.png",
     "name_en": "Priscilla",
     "name_jp": "\u30d7\u30ea\u30b7\u30e9",
+    "sprite_uri": "charasprites/BU_Prs_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90082,14 +90083,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "3": {
     "id": 3,
     "image_uri": "icon/Icon_ch003.png",
     "name_en": "Lucy",
     "name_jp": "\u30eb\u30fc\u30b7\u30fc",
+    "sprite_uri": "charasprites/BU_Luy_120.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90128,14 +90129,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "4": {
     "id": 4,
     "image_uri": "icon/Icon_ch004.png",
     "name_en": "Scarlett",
     "name_jp": "\u30b9\u30ab\u30fc\u30ec\u30c3\u30c8",
+    "sprite_uri": "charasprites/BU_Sca_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90174,14 +90175,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.25,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.25
   },
   "5": {
     "id": 5,
     "image_uri": "icon/Icon_ch005.png",
     "name_en": "Fuqua",
     "name_jp": "\u30d5\u30fc\u30ab",
+    "sprite_uri": "charasprites/BU_Fuq_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90220,14 +90221,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "6": {
     "id": 6,
     "image_uri": "icon/Icon_ch006.png",
     "name_en": "Beatrice",
     "name_jp": "\u30d9\u30a2\u30c8\u30ea\u30b9",
+    "sprite_uri": "charasprites/BU_Bea_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90266,14 +90267,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.25,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "7": {
     "id": 7,
     "image_uri": "icon/Icon_ch007.png",
     "name_en": "Ludmilla",
     "name_jp": "\u30eb\u30c9\u30df\u30e9",
+    "sprite_uri": "charasprites/BU_Ldm_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90312,14 +90313,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "8": {
     "id": 8,
     "image_uri": "icon/Icon_ch008.png",
     "name_en": "Martin",
     "name_jp": "\u30de\u30fc\u30c6\u30a3\u30f3",
+    "sprite_uri": "charasprites/BU_Mtn_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90358,14 +90359,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "9": {
     "id": 9,
     "image_uri": "icon/Icon_ch009.png",
     "name_en": "Cecile",
     "name_jp": "\u30bb\u30b7\u30eb",
+    "sprite_uri": "charasprites/BU_Cec_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90404,14 +90405,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.25,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "10": {
     "id": 10,
     "image_uri": "icon/Icon_ch010.png",
     "name_en": "Murakumo",
     "name_jp": "\u3080\u3089\u304f\u3082",
+    "sprite_uri": "charasprites/BU_Mur_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90450,14 +90451,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "11": {
     "id": 11,
     "image_uri": "icon/Icon_ch011.png",
     "name_en": "Lyka",
     "name_jp": "\u30ea\u30e5\u30ab",
+    "sprite_uri": "charasprites/BU_Lyk_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90496,14 +90497,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "12": {
     "id": 12,
     "image_uri": "icon/Icon_ch012.png",
     "name_en": "Reinhardt",
     "name_jp": "\u30e9\u30a4\u30f3\u30cf\u30eb\u30c8",
+    "sprite_uri": "charasprites/BU_Reh_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90542,14 +90543,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.25,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.25
   },
   "13": {
     "id": 13,
     "image_uri": "icon/Icon_ch013.png",
     "name_en": "Lucas",
     "name_jp": "\u30eb\u30fc\u30ab\u30b9",
+    "sprite_uri": "charasprites/BU_Lcs_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90588,14 +90589,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.1,
-    "stat_def_ele_WIND": 0.1,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.1
   },
   "14": {
     "id": 14,
     "image_uri": "icon/Icon_ch014.png",
     "name_en": "Elsje",
     "name_jp": "\u30a8\u30eb\u30b7\u30a7",
+    "sprite_uri": "charasprites/BU_Els_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90634,14 +90635,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "15": {
     "id": 15,
     "image_uri": "icon/Icon_ch015.png",
     "name_en": "Heinz",
     "name_jp": "\u30d1\u30eb\u30e2",
+    "sprite_uri": "charasprites/BU_Hez_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90680,14 +90681,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.1,
-    "stat_def_ele_WIND": 0.1,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.1
   },
   "16": {
     "id": 16,
     "image_uri": "icon/Icon_ch016.png",
     "name_en": "Palmo",
     "name_jp": "\u30cf\u30a4\u30f3\u30c4",
+    "sprite_uri": "charasprites/BU_Pal_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90726,14 +90727,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "17": {
     "id": 17,
     "image_uri": "icon/Icon_ch017.png",
     "name_en": "Randolph",
     "name_jp": "\u30e9\u30f3\u30c9\u30eb\u30d5",
+    "sprite_uri": "charasprites/BU_Rad_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90772,14 +90773,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "18": {
     "id": 18,
     "image_uri": "icon/Icon_ch018.png",
     "name_en": "Yuki",
     "name_jp": "\u30e6\u30ad",
+    "sprite_uri": "charasprites/BU_Yuk_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90818,14 +90819,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "19": {
     "id": 19,
     "image_uri": "icon/Icon_ch019.png",
     "name_en": "Simone",
     "name_jp": "\u30b7\u30e2\u30fc\u30cc",
+    "sprite_uri": "charasprites/BU_Sim_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90864,14 +90865,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "20": {
     "id": 20,
     "image_uri": "icon/Icon_ch020.png",
     "name_en": "Misasagi",
     "name_jp": "\u307f\u3055\u3055\u304e",
+    "sprite_uri": "charasprites/BU_Mis_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90910,14 +90911,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "21": {
     "id": 21,
     "image_uri": "icon/Icon_ch021.png",
     "name_en": "Terry",
     "name_jp": "\u30c6\u30ea\u30fc",
+    "sprite_uri": "charasprites/BU_Ter_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -90956,14 +90957,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "22": {
     "id": 22,
     "image_uri": "icon/Icon_ch022.png",
     "name_en": "Rivia",
     "name_jp": "\u30ea\u30f4\u30a3\u30a2",
+    "sprite_uri": "charasprites/BU_Riv_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91002,14 +91003,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "24": {
     "id": 24,
     "image_uri": "icon/Icon_ch024.png",
     "name_en": "Laedia",
     "name_jp": "\u30ec\u30c7\u30a3\u30a2",
+    "sprite_uri": "charasprites/BU_Led_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91048,14 +91049,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": -0.25,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.15,
-    "stat_def_ele_WIND": 0.15,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.15
   },
   "26": {
     "id": 26,
     "image_uri": "icon/Icon_ch026.png",
     "name_en": "Dogu",
     "name_jp": "\u30c9\u30b0",
+    "sprite_uri": "charasprites/BU_Dou_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91094,14 +91095,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "27": {
     "id": 27,
     "image_uri": "icon/Icon_ch027.png",
     "name_en": "Julian",
     "name_jp": "\u30b8\u30e5\u30ea\u30a2\u30f3",
+    "sprite_uri": "charasprites/BU_Jul_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91140,14 +91141,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "28": {
     "id": 28,
     "image_uri": "icon/Icon_ch028.png",
     "name_en": "Hina",
     "name_jp": "\u3072\u306a",
+    "sprite_uri": "charasprites/BU_Hna_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91186,14 +91187,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "32": {
     "id": 32,
     "image_uri": "icon/Icon_ch032.png",
     "name_en": "Doug",
     "name_jp": "\u30c0\u30b0",
+    "sprite_uri": "charasprites/BU_Dag_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91232,14 +91233,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "33": {
     "id": 33,
     "image_uri": "icon/Icon_ch033.png",
     "name_en": "Margaret",
     "name_jp": "\u30de\u30fc\u30ac\u30ec\u30c3\u30c8",
+    "sprite_uri": "charasprites/BU_Mag_100.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91278,14 +91279,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.25,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.25
   },
   "37": {
     "id": 37,
     "image_uri": "icon/Icon_ch030_000_000.png",
     "name_en": "Charming son (Eris)",
     "name_jp": "\u611b\u5b0c\u306e\u3042\u308b\u606f\u5b50\uff08\u30a8\u30ea\u30b9\uff09",
+    "sprite_uri": "charasprites/BU_CB101_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91324,14 +91325,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "38": {
     "id": 38,
     "image_uri": "icon/Icon_ch030_001_000.png",
     "name_en": "Lively son (Ibel)",
     "name_jp": "\u6d3b\u767a\u306a\u606f\u5b50\uff08\u30a4\u30d9\u30eb\uff09",
+    "sprite_uri": "charasprites/BU_CB201_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91370,14 +91371,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "39": {
     "id": 39,
     "image_uri": "icon/Icon_ch030_002_000.png",
     "name_en": "Reserved son (Conan)",
     "name_jp": "\u304a\u3068\u306a\u3057\u3044\u606f\u5b50\uff08\u30b3\u30ca\u30f3\uff09",
+    "sprite_uri": "charasprites/BU_CB301_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91416,14 +91417,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "40": {
     "id": 40,
     "image_uri": "icon/Icon_ch031_000_000.png",
     "name_en": "Lively daughter (Erica)",
     "name_jp": "\u5143\u6c17\u306a\u5a18\uff08\u30a8\u30ea\u30ab\uff09",
+    "sprite_uri": "charasprites/BU_CG101_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91462,14 +91463,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "41": {
     "id": 41,
     "image_uri": "icon/Icon_ch031_001_000.png",
     "name_en": "Precocious daughter (Irisu)",
     "name_jp": "\u307e\u305b\u3066\u308b\u5a18\uff08\u30a4\u30ea\u30b9\uff09",
+    "sprite_uri": "charasprites/BU_CG201_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91508,14 +91509,14 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   },
   "42": {
     "id": 42,
     "image_uri": "icon/Icon_ch031_002_000.png",
     "name_en": "Reserved daughter (Colette)",
     "name_jp": "\u304a\u3068\u306a\u3057\u3044\u5a18\uff08\u30b3\u30ec\u30c3\u30c8\uff09",
+    "sprite_uri": "charasprites/BU_CG301_101.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -91554,8 +91555,7 @@ const _RAWDATA = {
     "stat_def_ele_LOVE": 0.0,
     "stat_def_ele_VOID": 0.0,
     "stat_def_ele_WATER": 0.0,
-    "stat_def_ele_WIND": 0.0,
-    "tachiei_uri": ""
+    "stat_def_ele_WIND": 0.0
   }
 },
 "recipes": {

@@ -27,7 +27,7 @@ class RF5Character(object):
     name_en: str = ''
     name_jp: str = ''
     image_uri: str = ''
-    tachiei_uri: str = ''
+    sprite_uri: str = ''
 
     stat_ATK: int = 0
     stat_DEF: int = 0
@@ -276,7 +276,7 @@ class TsvReader(object):
     @staticmethod
     def read_character_images(character_ids: set[int], characters: dict[int, RF5Character]):
         
-        with open('../tsv/map_characterid_to_image.tsv') as f:
+        with open('../tsv/map_characterid_to_icon.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, image_uri) = TsvReader.parse_name_tsv_row(row)
@@ -284,6 +284,13 @@ class TsvReader(object):
                     raise KeyError(id) # This should not happen.
                 character = characters[id]
                 character.image_uri = image_uri
+
+        with open('../tsv/map_characterid_to_sprites.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                id = int(row[0])
+                character = characters[id]
+                character.sprite_uri = row[1]
 
 
     @staticmethod
@@ -677,7 +684,6 @@ if __name__ == '__main__':
         write_json(f, 'is_mat_truescale', json.dumps(sorted(list(is_mat_truescale))))
 
         write_json(f, 'has_effect',  json.dumps(sorted(list(has_effect))))
-
 
         write_json(f, 'categories', json_dump_object(categories))
         write_json(f, 'items', json_dump_object(items))

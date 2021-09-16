@@ -1,9 +1,17 @@
+// Super
 import IRF5StatVector = require("./IRF5StatVector");
-import IRF5Item = require("./IRF5Item");
 import IModel = require("./IModel");
+// Parent
+import IRF5Planner = require("./IRF5Planner");
+// Children
+import IRF5Item = require("./IRF5Item");
+// VM
 import VMRF5Character = require("../vm/VMRF5Character");
 
+
 interface IRF5Character extends IRF5StatVector, IModel {
+
+    readonly Planner:       IRF5Planner;
 
     readonly Accessories:   ko.ObservableArray<IRF5Item>;
     readonly Armors:        ko.ObservableArray<IRF5Item>;

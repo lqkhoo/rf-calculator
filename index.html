@@ -23,47 +23,57 @@
 
         <nav class="navbar navbar-default">
             <div class="container">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td rowspan="2"><h4 class="title">Rune Factory 5 Gear Calculator</h4></td>
-                            <td>
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsEnglishSelected"/>
-                                        Show English
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsJapaneseSelected"/>
-                                        Show Japanese
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <!-- Binding context window.RF5Planner -->
-                <ul id="character-tabs" class="nav nav-tabs" data-bind="foreach: { data: CharacterList }" role="tablist" >
-                    <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-'+ characterIdx }" data-bs-toggle="tab" role="tab">
-                                <img class="icon" data-bind="attr: { src: image_uri() }"/>
-                            </button>
-                        </li>
-                        <!-- ko if: ($index() === ($parent.CharacterList().length-1)) -->
+                <div class="row">
+                    <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"></div>
+                    <div class="col">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="2"><h4 class="title">Rune Factory 5 Gear Calculator</h4></td>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" data-bind="checked: IsEnglishSelected"/>
+                                                Show English
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" data-bind="checked: IsJapaneseSelected"/>
+                                                Show Japanese
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"></div>
+                    <div class="col">
+                        <!-- Binding context window.RF5Planner -->
+                        <ul id="character-tabs" class="nav nav-tabs" role="tablist" >
+                            <!-- ko foreach: CharacterList -->
+                                <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-'+ characterIdx }" data-bs-toggle="tab" role="tab">
+                                            <img class="icon" data-bind="attr: { src: image_uri() }"/>
+                                        </button>
+                                    </li>
+                                <!-- /ko -->
+                            <!-- /ko -->
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" data-bind="click: $root.AddCharacter">+</button>
                             </li>
-                        <!-- /ko -->
-                    <!-- /ko -->
-                </ul>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </nav>
 
@@ -73,123 +83,138 @@
             <div id="character-tab-pages" class="tab-content" data-bind="foreach: { data: CharacterList }">
                 <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
                 <div class="tab-pane fade" data-bind="attr: { id: 'character-' + $index() }" role="tab-panel">
-                    <table class="table table-bordered stats-table">
-                        <thead>
-                            <tr>
-                                <th rowspan="3"><div class="dummy-header" data-bind="template: { name: 'TEMPLATE-character-icon-group' }"></div></th>
-                                <th rowspan="2" colspan="2"></th>
-                                <th colspan="19"><span class="lang jp">攻</span><span>&nbsp;&nbsp;</span><span class="lang en">OFFENSE</span></th>
-                                <th colspan="20"><span class="lang jp">防</span><span>&nbsp;&nbsp;</span><span class="lang en">DEFENSE</span></th>
-                                <th colspan="2" rowspan="2"></th>
-                            </tr>
-                            <tr>
-                                <th colspan="7"><span class="lang en jp">STAT</span></th>
-                                <th colspan="12"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
-                                <th colspan="8"><span class="lang jp">属性</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">ELE</span></th>
-                                <th colspan="12" class="box-shadow-override"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
+                    <div class="row">
+                        <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                            <div class="sprite-container">
+                                <img data-bind="attr: { src: ViewModel.SpriteUri() }, style: { left: ViewModel.SpriteAdjustment() } " />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="stats-table-wrapper">
+                                <table class="table table-bordered stats-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="3">
+                                                <div class="dummy-header"></div>
+                                                <!-- ko template: 'TEMPLATE-character-icon-group' --><!-- /ko -->
+                                            </th>
+                                            <th rowspan="2" colspan="2"></th>
+                                            <th colspan="19"><span class="lang jp">攻</span><span>&nbsp;&nbsp;</span><span class="lang en">OFFENSE</span></th>
+                                            <th colspan="20"><span class="lang jp">防</span><span>&nbsp;&nbsp;</span><span class="lang en">DEFENSE</span></th>
+                                            <th colspan="2" rowspan="2"></th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="7"><span class="lang en jp">STAT</span></th>
+                                            <th colspan="12"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
+                                            <th colspan="8"><span class="lang jp">属性</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">ELE</span></th>
+                                            <th colspan="12" class="box-shadow-override"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
+            
+                                        </tr>
+                                        <tr>
+                                            <th><span class="lang stack jp">総</span><span class="lang stack en">LVL</span></th>
+                                            <th><span class="lang stack jp">素</span><span class="lang stack en">RAR</span></th>
+                                            <th class="wide"><span class="lang stack en jp">ATK</span></th>
+                                            <th class="wide"><span class="lang stack en jp">DEF</span></th>
+                                            <th class="wide"><span class="lang stack en jp">MAT</span></th>
+                                            <th class="wide"><span class="lang stack en jp">MDF</span></th>
+                                            <th class="wide"><span class="lang stack en jp">STR</span></th>
+                                            <th class="wide"><span class="lang stack en jp">INT</span></th>
+                                            <th class="wide"><span class="lang stack en jp">VIT</span></th>
+                                            <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                                            <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
+                                            <th><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
+                                            <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                                            <th><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
+                                            <th><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
+                                            <th><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
+                                            <th><span class="lang stack jp">睡</span><span class="lang stack en">SLP</span></th>
+                                            <th><span class="lang stack jp">疲</span><span class="lang stack en">FTG</span></th>
+                                            <th><span class="lang stack jp">病</span><span class="lang stack en">SCK</span></th>
+                                            <th><span class="lang stack jp">気</span><span class="lang stack en">FNT</span></th>
+                                            <th><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
+                                            <th><span class="lang stack jp">火</span><span class="lang stack en">FIR</span></th>
+                                            <th><span class="lang stack jp">水</span><span class="lang stack en">WTR</span></th>
+                                            <th><span class="lang stack jp">地</span><span class="lang stack en">EAR</span></th>
+                                            <th><span class="lang stack jp">風</span><span class="lang stack en">WND</span></th>
+                                            <th><span class="lang stack jp">光</span><span class="lang stack en">LGT</span></th>
+                                            <th><span class="lang stack jp">闇</span><span class="lang stack en">DRK</span></th>
+                                            <th><span class="lang stack jp">愛</span><span class="lang stack en">LOV</span></th>
+                                            <th><span class="lang stack jp">無</span><span class="lang stack en">NUL</span></th>
+                                            <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                                            <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
+                                            <th><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
+                                            <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                                            <th><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
+                                            <th><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
+                                            <th><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
+                                            <th><span class="lang stack jp">睡</span><span class="lang stack en">SLP</span></th>
+                                            <th><span class="lang stack jp">疲</span><span class="lang stack en">FTG</span></th>
+                                            <th><span class="lang stack jp">病</span><span class="lang stack en">SCK</span></th>
+                                            <th><span class="lang stack jp">気</span><span class="lang stack en">FNT</span></th>
+                                            <th><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
+                                            <th><span class="lang stack jp">速</span><span class="lang stack en">CHG</span></th>
+                                            <th><span class="lang stack jp">長</span><span class="lang stack en">LNG</span></th>
+            
+                                        </tr>
+                                        <!-- ko template: 'TEMPLATE-character-upper' --><!-- /ko -->
+                                    </thead>
+                                    <tbody>
+                                        <!-- ko template: { name: 'TEMPLATE-character-lower', data: RF5Character } --><!-- /ko -->
+                                        
+                                        <!-- ko let: { equipmentType: 'weapon' } -->
+                                            <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Weapons', name_jp: '\u6b66\u5668' } } --><!-- /ko -->
+                                            <!-- ko foreach: Weapons() -->
+                                                <!-- ko template: 'TEMPLATE-weapon' --><!-- /ko -->
+                                            <!-- /ko -->
+                                            <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
+                                        <!-- /ko -->
+            
+                                        <!-- ko let: { equipmentType: 'shield' } -->
+                                        <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Shields', name_jp: '\u76fe' } } --><!-- /ko -->
+                                        <!-- ko foreach: Shields() -->
+                                            <!-- ko template: 'TEMPLATE-shield' --><!-- /ko -->
+                                        <!-- /ko -->
+                                        <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
+                                        <!-- /ko -->
+            
+                                        <!-- ko let: { equipmentType: 'headgear' } -->
+                                            <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Headgears', name_jp: '\u982d\u88c5\u5099' } } --><!-- /ko -->
+                                            <!-- ko foreach: Headgears() -->
+                                                <!-- ko template: 'TEMPLATE-headgear' --><!-- /ko -->
+                                            <!-- /ko -->
+                                            <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
+                                        <!-- /ko -->
+            
+                                        <!-- ko let: { equipmentType: 'armor' } -->
+                                            <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Armor', name_jp: '\u4f53\u88c5\u5099' } } --><!-- /ko -->
+                                            <!-- ko foreach: Armors() -->
+                                                <!-- ko template: 'TEMPLATE-armor' --><!-- /ko -->
+                                            <!-- /ko -->
+                                            <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
+                                        <!-- /ko -->
+            
+                                        <!-- ko let: { equipmentType: 'boots' } -->
+                                            <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Boots', name_jp: '\u8db3\u88c5\u5099' } } --><!-- /ko -->
+                                            <!-- ko foreach: Boots() -->
+                                                <!-- ko template: 'TEMPLATE-boots' --><!-- /ko -->
+                                            <!-- /ko -->
+                                            <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
+                                        <!-- /ko -->
+            
+                                        <!-- ko let: { equipmentType: 'accessory' } -->
+                                            <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Accessories', name_jp: '\u30a2\u30af\u30bb\u30b5\u30ea\u30fc' } } --><!-- /ko -->
+                                            <!-- ko foreach: Accessories() -->
+                                                <!-- ko template: 'TEMPLATE-accessory' --><!-- /ko -->
+                                            <!-- /ko -->
+                                            <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
+                                        <!-- /ko -->
+            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
-                            </tr>
-                            <tr>
-                                <th><span class="lang stack jp">総</span><span class="lang stack en">LVL</span></th>
-                                <th><span class="lang stack jp">素</span><span class="lang stack en">RAR</span></th>
-                                <th class="wide"><span class="lang stack en jp">ATK</span></th>
-                                <th class="wide"><span class="lang stack en jp">DEF</span></th>
-                                <th class="wide"><span class="lang stack en jp">MAT</span></th>
-                                <th class="wide"><span class="lang stack en jp">MDF</span></th>
-                                <th class="wide"><span class="lang stack en jp">STR</span></th>
-                                <th class="wide"><span class="lang stack en jp">INT</span></th>
-                                <th class="wide"><span class="lang stack en jp">VIT</span></th>
-                                <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
-                                <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
-                                <th><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
-                                <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
-                                <th><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
-                                <th><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
-                                <th><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
-                                <th><span class="lang stack jp">睡</span><span class="lang stack en">SLP</span></th>
-                                <th><span class="lang stack jp">疲</span><span class="lang stack en">FTG</span></th>
-                                <th><span class="lang stack jp">病</span><span class="lang stack en">SCK</span></th>
-                                <th><span class="lang stack jp">気</span><span class="lang stack en">FNT</span></th>
-                                <th><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
-                                <th><span class="lang stack jp">火</span><span class="lang stack en">FIR</span></th>
-                                <th><span class="lang stack jp">水</span><span class="lang stack en">WTR</span></th>
-                                <th><span class="lang stack jp">地</span><span class="lang stack en">EAR</span></th>
-                                <th><span class="lang stack jp">風</span><span class="lang stack en">WND</span></th>
-                                <th><span class="lang stack jp">光</span><span class="lang stack en">LGT</span></th>
-                                <th><span class="lang stack jp">闇</span><span class="lang stack en">DRK</span></th>
-                                <th><span class="lang stack jp">愛</span><span class="lang stack en">LOV</span></th>
-                                <th><span class="lang stack jp">無</span><span class="lang stack en">NUL</span></th>
-                                <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
-                                <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
-                                <th><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
-                                <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
-                                <th><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
-                                <th><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
-                                <th><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
-                                <th><span class="lang stack jp">睡</span><span class="lang stack en">SLP</span></th>
-                                <th><span class="lang stack jp">疲</span><span class="lang stack en">FTG</span></th>
-                                <th><span class="lang stack jp">病</span><span class="lang stack en">SCK</span></th>
-                                <th><span class="lang stack jp">気</span><span class="lang stack en">FNT</span></th>
-                                <th><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
-                                <th><span class="lang stack jp">速</span><span class="lang stack en">CHG</span></th>
-                                <th><span class="lang stack jp">長</span><span class="lang stack en">LNG</span></th>
-
-                            </tr>
-                            <!-- ko template: 'TEMPLATE-character-upper' --><!-- /ko -->
-                        </thead>
-                        <tbody>
-                            <!-- ko template: { name: 'TEMPLATE-character-lower', data: RF5Character } --><!-- /ko -->
-                            
-                            <!-- ko let: { equipmentType: 'weapon' } -->
-                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Weapons', name_jp: '\u6b66\u5668' } } --><!-- /ko -->
-                                <!-- ko foreach: Weapons() -->
-                                    <!-- ko template: 'TEMPLATE-weapon' --><!-- /ko -->
-                                <!-- /ko -->
-                                <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
-                            <!-- /ko -->
-
-                            <!-- ko let: { equipmentType: 'shield' } -->
-                            <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Shields', name_jp: '\u76fe' } } --><!-- /ko -->
-                            <!-- ko foreach: Shields() -->
-                                <!-- ko template: 'TEMPLATE-shield' --><!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
-                            <!-- /ko -->
-
-                            <!-- ko let: { equipmentType: 'headgear' } -->
-                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Headgears', name_jp: '\u982d\u88c5\u5099' } } --><!-- /ko -->
-                                <!-- ko foreach: Headgears() -->
-                                    <!-- ko template: 'TEMPLATE-headgear' --><!-- /ko -->
-                                <!-- /ko -->
-                                <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
-                            <!-- /ko -->
-
-                            <!-- ko let: { equipmentType: 'armor' } -->
-                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Armor', name_jp: '\u4f53\u88c5\u5099' } } --><!-- /ko -->
-                                <!-- ko foreach: Armors() -->
-                                    <!-- ko template: 'TEMPLATE-armor' --><!-- /ko -->
-                                <!-- /ko -->
-                                <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
-                            <!-- /ko -->
-
-                            <!-- ko let: { equipmentType: 'boots' } -->
-                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Boots', name_jp: '\u8db3\u88c5\u5099' } } --><!-- /ko -->
-                                <!-- ko foreach: Boots() -->
-                                    <!-- ko template: 'TEMPLATE-boots' --><!-- /ko -->
-                                <!-- /ko -->
-                                <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
-                            <!-- /ko -->
-
-                            <!-- ko let: { equipmentType: 'accessory' } -->
-                                <!-- ko template: { name: 'TEMPLATE-group-header', data: { model: $data, name_en: 'Accessories', name_jp: '\u30a2\u30af\u30bb\u30b5\u30ea\u30fc' } } --><!-- /ko -->
-                                <!-- ko foreach: Accessories() -->
-                                    <!-- ko template: 'TEMPLATE-accessory' --><!-- /ko -->
-                                <!-- /ko -->
-                                <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
-                            <!-- /ko -->
-
-                        </tbody>
-                    </table>
                 </div>
                 <!-- /ko -->
             </div>
@@ -232,6 +257,7 @@
     </script>
 
     <script type="text/html" id="TEMPLATE-character-lower">
+        <!-- ko template: 'TEMPLATE-delete-character' --><!-- /ko -->
         <!-- ko template: 'TEMPLATE-character-base-stats' --><!-- /ko -->
         <!-- ko template: 'TEMPLATE-character-general-bonus' --><!-- /ko -->
         <!-- ko template: 'TEMPLATE-character-rarecan' --><!-- /ko -->
@@ -612,6 +638,23 @@
                 &nbsp;<span class="lang en">General's set bonus</span>
             </td>
             <!-- ko template: { name: 'TEMPLATE-stats', data: GeneralSetBonus } --><!-- /ko -->
+        </tr>
+    </script>
+
+    <script type="text/html" id="TEMPLATE-delete-character">
+        <tr class="subslot">
+            <td>
+                <div class="form-check form-switch delete-item">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" data-bind="checked: ViewModel.IsSafetyOn ">
+                        Lock
+                    </label>
+                </div>
+                <button class="delete-item btn-danger" data-bind="click: ViewModel.OnDeleteCharacterClickHandler, attr: { disabled: ViewModel.IsSafetyOn }, css: { disabled: ViewModel.IsSafetyOn }">
+                    <span>Delete</span>
+                </button>
+            </td>
+            <!-- ko template: 'TEMPLATE-stats-empty-43' --><!-- /ko -->
         </tr>
     </script>
 

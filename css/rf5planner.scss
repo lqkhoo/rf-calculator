@@ -7,17 +7,19 @@
 $grid-breakpoints: (
     xs: 0,
     sm: 1px,
-    md: 2px,
-    lg: 3px,
-    xl: 1300px
+    md: 1400px,
+    lg: 1600px,
+    xl: 1800px,
+    xxl: 1800px
 );
 
 $container-max-widths: (
-    xs: 1296px,
-    sm: 1297px,
-    md: 1298px,
-    lg: 1299px,
-    xl: 1300px
+    xs: 1400px,
+    sm: 1400px,
+    md: 1400px,
+    lg: 1600px,
+    xl: 1800px,
+    xxl: 1800px
 );
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
@@ -25,6 +27,12 @@ $container-max-widths: (
 .container {
     overflow-x: auto;
     min-width: 1200px;
+}
+.row {
+    width: 100%;
+}
+.col {
+    padding: 0;
 }
 
 
@@ -42,7 +50,7 @@ $icon-group-autoselect-width:250px;
 $icon-size: 40px;
 $icon-small-size: 32px;
 $icon-group-font-size: 13px;
-$icon-group-small-font-size: 11px;
+$icon-group-small-font-size: 12px;
 $border-indent-1: 5px;
 
 $color-weapon: #ce3a3a;
@@ -89,6 +97,7 @@ h4.title {
 
 #character-tabs {
     width: 100%;
+    background: #eeeeee;
 }
 
 #character-tabs li > button:last-child {
@@ -119,6 +128,12 @@ h4.title {
     background: rgb(13 110 253 / 25%);
 }
 
+.stats-table-wrapper {
+    padding: 10px;
+    box-shadow: 0 0 5px;
+    background: rgba(247,247,247,0.9);
+}
+
 .stats-table {
     // table-layout: fixed;
     border-collapse: separate;
@@ -129,6 +144,7 @@ h4.title {
         position: -webkit-sticky;
         top: 0;
         background: #ffffff;
+        box-shadow: 0 1px 1px #aaaaaa;
         z-index: 99; // autocomplete popup has z of 100 by default.
     }
 
@@ -137,7 +153,7 @@ h4.title {
     }
 
     td, th {
-        font-size: 0.7rem;
+        font-size: 12px;
         text-align: center;
         vertical-align: middle;
         padding: 0;
@@ -214,7 +230,7 @@ label.icon-group {
     width: 100%;
     border-bottom: 1px solid #aaaaaa;
 }
-.dummy-header > label.icon-group {
+th > label.icon-group {
     height: 100%;
     border-bottom: none;
 }
@@ -474,4 +490,11 @@ button.group-header.collapsed::before {
 
 .negative {
     color: #ff0000;
+}
+
+.sprite-container > img {
+    z-index: -1;
+    height: 600px;
+    position: fixed;
+    bottom: 0;
 }

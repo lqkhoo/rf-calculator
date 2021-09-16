@@ -1,9 +1,12 @@
 import ko = require('knockout');
+import IRF5Character = require('./model/IRF5Character');
+// Parent
 import IRF5Planner = require('./model/IRF5Planner');
 // Children
 import RF5Character = require('./model/RF5Character');
 // Data
 import Data = require('./model/Data');
+
 
 
 class RF5Planner implements IRF5Planner {
@@ -14,7 +17,7 @@ class RF5Planner implements IRF5Planner {
     // Model
     readonly IsEnglishSelected: ko.Observable<boolean>;
     readonly IsJapaneseSelected: ko.Observable<boolean>;
-    readonly CharacterList: ko.ObservableArray<RF5Character>;
+    readonly CharacterList: ko.ObservableArray<IRF5Character>;
 
     constructor() {
         // Model
@@ -28,12 +31,17 @@ class RF5Planner implements IRF5Planner {
         console.log('add character');
     }
 
+    public DeleteCharacter = (character: IRF5Character): void => {
+        this.CharacterList.remove(character);
+    }
+
     public DisplayFirstCharacterSheet = (): void => {
         var elem: Element | null = document.querySelector('#character-tabs button');
         if(elem !== null) {
             (elem as HTMLElement).click();
         }
     }
+
 
 
 }
