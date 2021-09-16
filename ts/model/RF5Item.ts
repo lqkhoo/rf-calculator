@@ -13,9 +13,9 @@ import RF5SlotBaseItem = require('./RF5SlotBaseItem');
 import RF5SlotRecipe = require('./RF5SlotRecipe');
 import RF5SlotArrange = require('./RF5SlotArrange');
 import RF5SlotUpgrade = require('./RF5SlotUpgrade');
-import LevelBonusVector = require('./LevelBonusVector');
-import RarityBonusVector = require('./RarityBonusVector');
-import CoreBonusVector = require('./CoreBonusVector');
+import VectorLevelBonus = require('./VectorLevelBonus');
+import VectorRarityBonus = require('./VectorRarityBonus');
+import VectorCoreBonus = require('./VectorCoreBonus');
 // VM
 import VMRF5Item = require('../vm/VMRF5Item');
 // Data
@@ -107,9 +107,9 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         }));
         this.FinalizeVectorOverride();
 
-        this.LevelBonus = ko.observable(new LevelBonusVector(this));
-        this.RarityBonus = ko.observable(new RarityBonusVector(this));
-        this.CoreBonus = ko.observable(new CoreBonusVector(this));
+        this.LevelBonus = ko.observable(new VectorLevelBonus(this));
+        this.RarityBonus = ko.observable(new VectorRarityBonus(this));
+        this.CoreBonus = ko.observable(new VectorCoreBonus(this));
 
         this.Character = ko.observable(character);
         this.EquipmentType = equipment_type;
@@ -199,7 +199,6 @@ class RF5Item extends RF5StatVector implements IRF5Item {
             return this.UpgradeSlots()[index - RF5AbstractSlot.UPGRADE_START_IDX];
         }
     }
-
     
     protected _compute_hasClover = (): boolean => {
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
@@ -210,7 +209,7 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         return false;
     }
 
-    protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number, _isPercent: boolean=false) => {
+    protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number) => {
         var self = this;
         return function(): number {
 

@@ -50,12 +50,14 @@ class Data {
     static readonly Is_mat_stones:          object = Data.ArrayToObject(_RAWDATA.is_mat_stones);
     static readonly Is_mat_strings:         object = Data.ArrayToObject(_RAWDATA.is_mat_strings);
     static readonly Is_mat_truescale:       object = Data.ArrayToObject(_RAWDATA.is_mat_truescale); // Scales that provide the shield bonus
+    static readonly Has_effect:             object = Data.ArrayToObject(_RAWDATA.has_effect);
     static readonly Categories:             object = _RAWDATA.categories;
     static readonly Items:                  object = _RAWDATA.items;
     static readonly BaseItems:              object = _RAWDATA.base_items;
     static readonly Characters:             object = _RAWDATA.characters;
     static readonly Recipes:                object = _RAWDATA.recipes;
     static readonly Magics:                 object = _RAWDATA.magics;
+    static readonly Effects:                object = _RAWDATA.effects;
 
 
     // Construct reverse type maps
@@ -98,6 +100,10 @@ class Data {
     public static IsStaff(id: number): boolean {
         return Data.Is_eq_staff.hasOwnProperty(id);
     }
+    public static HasEffect(id: number): boolean {
+        return Data.Has_effect.hasOwnProperty(id);
+    }
+
     public static IsCrystal(id: number): boolean {
         return Data.Is_mat_crystals.hasOwnProperty(id);
     }
@@ -134,6 +140,9 @@ class Data {
     public static IsScrapMetalPlus(id: number): boolean {
         return (id === 2153);
     }
+    public static IsShadeStone(id: number): boolean {
+        return (id === 2177);
+    }
     public static IsGreenCore(id: number): boolean {
         return (id === 2166);
     }
@@ -146,6 +155,19 @@ class Data {
     public static IsBlueCore(id: number): boolean {
         return (id === 2169);
     }
+    public static IsGeneralsHoe(id: number): boolean {
+        return (id === 905);
+    }
+    public static IsGeneralsHat(id: number): boolean {
+        return (id === 1130);
+    }
+    public static IsGeneralsRobe(id: number): boolean {
+        return (id === 1219);
+    }
+    public static IsGeneralsShield(id: number): boolean {
+        return (id === 1018);
+    }
+
 
 
     protected static ArrayToObject(arr: number[]): object {

@@ -14,6 +14,7 @@ class RF5Weapon extends RF5Item {
 
     readonly HasRareCan: ko.PureComputed<boolean>;
     readonly HasScrapMetalPlus: ko.PureComputed<boolean>;
+    readonly HasShadeStone: ko.PureComputed<boolean>;
     readonly Element: ko.PureComputed<ElementType>;
 
     readonly MagicIdCharge1: ko.PureComputed<number>;
@@ -34,6 +35,7 @@ class RF5Weapon extends RF5Item {
 
         this.HasRareCan = ko.pureComputed(self._compute_hasRareCan);
         this.HasScrapMetalPlus = ko.pureComputed(self._compute_hasScrapMetalPlus);
+        this.HasShadeStone = ko.pureComputed(self._compute_hasShadeStone);
 
         this.Element = ko.pureComputed(self._compute_element);
 
@@ -60,6 +62,15 @@ class RF5Weapon extends RF5Item {
         if(this.EquipmentType === "weapon") {
             for(let i=RF5Slot.ARRANGE_START_IDX; i<RF5Slot.SLOT_END_IDX; i++) {
                 if(Data.IsScrapMetalPlus(this.GetSlotByIndex(i).id())) { return true; }
+            }
+        }
+        return false;
+    }
+
+    protected _compute_hasShadeStone = (): boolean => {
+        if(this.EquipmentType === "weapon") {
+            for(let i=RF5Slot.ARRANGE_START_IDX; i<RF5Slot.SLOT_END_IDX; i++) {
+                if(Data.IsShadeStone(this.GetSlotByIndex(i).id())) { return true; }
             }
         }
         return false;

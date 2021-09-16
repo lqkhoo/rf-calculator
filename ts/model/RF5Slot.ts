@@ -25,6 +25,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     readonly WeaponType: ko.PureComputed<WeaponType|undefined>;    
     // For weapons
     readonly Element: ko.PureComputed<ElementType>;
+    readonly HasEffect: ko.PureComputed<boolean>;
 
     // For multiplier computation
     readonly IsUnderObjectX: ko.Computed<boolean>; // ko.Pure can't be called recursively.
@@ -113,6 +114,9 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
 
         this.Element = ko.pureComputed(function() {
             return ("NONE" as ElementType);
+        });
+        this.HasEffect = ko.pureComputed(function() {
+            return Data.HasEffect(self.id());
         });
 
         this.IsUnderObjectX = ko.computed(self._compute_isUnderObjectX);

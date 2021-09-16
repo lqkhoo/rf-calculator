@@ -1,4 +1,5 @@
 import ko = require('knockout');
+import IRF5StatVector = require('./IRF5StatVector');
 import IRF5Item = require('./IRF5Item');
 import IRF5Character = require('./IRF5Character');
 // Parent
@@ -15,6 +16,9 @@ import RF5Weapon = require('./RF5Weapon');
 import VMRF5Character = require('../vm/VMRF5Character');
 // Data
 import Data = require('./Data');
+import VectorCharEquipmentStats = require('./VectorCharEquipmentStats');
+import VectorGeneralSetBonus = require('./VectorGeneralSetBonus');
+import VectorCharFinalStats = require('./VectorCharFinalStats');
 
 class RF5Character extends RF5StatVector implements IRF5Character {
     
@@ -36,12 +40,17 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     readonly ActiveShieldIdx:       ko.PureComputed<number>;
     readonly ActiveWeaponIdx:       ko.PureComputed<number>;
 
+    readonly HasClover: ko.PureComputed<boolean>;
+    readonly HasRareCan: ko.PureComputed<boolean>;
+    readonly HasGeneralSetBonus: ko.PureComputed<boolean>;
+
+    readonly EquipmentStats: ko.Observable<IRF5StatVector>;
+    readonly GeneralSetBonus: ko.Observable<IRF5StatVector>;
+    readonly FinalStats: ko.Observable<IRF5StatVector>;
+
     readonly ViewModel: VMRF5Character;
 
-    override readonly Context:           ko.PureComputed<any>;
-    override readonly name_en:           ko.PureComputed<string>;
-    override readonly name_jp:           ko.PureComputed<string>;
-    override readonly image_uri:         ko.PureComputed<string>;
+    override readonly Context: ko.PureComputed<any>;
 
     constructor(planner: IRF5Planner, characterId: number=RF5Character.DEFAULT_CHARACTER_ID) {
 
@@ -60,9 +69,6 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         this.Context = ko.computed(function() {
             return (Data.Characters as any)[self.id()]
         });
-        this.name_en = ko.pureComputed(self._compute_name_en);
-        this.name_jp = ko.pureComputed(self._compute_name_jp);
-        this.image_uri = ko.pureComputed(self._compute_image_uri);
         this.FinalizeVectorOverride();
 
         this.ActiveAccessoryIdx = ko.pureComputed(self._compute_ActiveAccessoryIdx);
@@ -71,6 +77,12 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         this.ActiveHeadgearIdx = ko.pureComputed(self._compute_ActiveHeadgearIdx);
         this.ActiveShieldIdx = ko.pureComputed(self._compute_ActiveShieldIdx);
         this.ActiveWeaponIdx = ko.pureComputed(self._compute_ActiveWeaponIdx);
+
+        this.HasClover = ko.pureComputed(self._compute_hasClover);
+        this.HasRareCan = ko.pureComputed(self._compute_hasRareCan);
+        this.EquipmentStats = ko.observable(new VectorCharEquipmentStats(this));
+        this.GeneralSetBonus = ko.observable(new VectorGeneralSetBonus(this));
+        this.FinalStats = ko.observable(new VectorCharFinalStats(this));
 
         this.ViewModel = new VMRF5Character(this);
 
@@ -81,6 +93,7 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         this.AddAccessory();
         this.AddBoots();
     }
+
 
     public AddAccessory = (): void => {
         this.Accessories.push(new RF5Accessory(this));
@@ -118,6 +131,19 @@ class RF5Character extends RF5StatVector implements IRF5Character {
             this.Weapons()[0].IsActive(true);
         }
     }
+    public DeleteItem = (equipmentType: EquipmentType, item: IRF5Item): void => {
+        let array: ko.ObservableArray<IRF5Item>;
+        switch(equipmentType) {
+            case "weapon": array = this.Weapons; break;
+            case "shield": array = this.Shields; break;
+            case "headgear": array = this.Headgears; break;
+            case "armor": array = this.Armors; break;
+            case "boots": array = this.Boots; break;
+            case "accessory": array = this.Accessories; break;
+        }
+        console.log(item);
+        array.remove(item);
+    }
 
     public ChangeId = (id: number): void => {
         this.id(id);
@@ -137,7 +163,6 @@ class RF5Character extends RF5StatVector implements IRF5Character {
             array[i].IsActive(i===idx);
         }
     }
-
 
     protected _compute_activeIdx_helper = (observableArray: ko.ObservableArray<IRF5Item>) => {
         let idx: number = -1;
@@ -172,9 +197,39 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         return this._compute_activeIdx_helper(this.Weapons);
     }
 
-    protected override _compute_name_en = this._compute_string_helper(RF5StatVector.KEY_name_en, "None");
-    protected override _compute_name_jp = this._compute_string_helper(RF5StatVector.KEY_name_jp, "\u306a\u3057");
-    protected override _compute_image_uri = this._compute_string_helper(RF5StatVector.KEY_image_uri, "icon/Empty.png");
+    protected _compute_hasClover = (): boolean => {
+        let activeIdx: number = this.ActiveWeaponIdx();
+        if(activeIdx !== -1 ) {
+            if(this.Weapons()[activeIdx].HasClover()) { return true; }
+        }
+        activeIdx = this.ActiveShieldIdx();
+        if(activeIdx !== -1) {
+            if(this.Shields()[activeIdx].HasClover()) { return true; }
+        }
+        activeIdx = this.ActiveHeadgearIdx();
+        if(activeIdx !== -1) {
+            if(this.Headgears()[activeIdx].HasClover()) { return true; }
+        }
+        activeIdx = this.ActiveArmorIdx();
+        if(activeIdx !== -1) {
+            if(this.Armors()[activeIdx].HasClover()) { return true; }
+        }
+        activeIdx = this.ActiveBootsIdx();
+        if(activeIdx !== -1) {
+            if(this.Boots()[activeIdx].HasClover()) { return true; }
+        }
+        activeIdx = this.ActiveAccessoryIdx();
+        if(activeIdx !== -1) {
+            if(this.Accessories()[activeIdx].HasClover()) { return true; }
+        }
+        return false;
+    }
+
+    protected _compute_hasRareCan = (): boolean => {
+        let activeWeaponIdx: number = this.ActiveWeaponIdx();
+        if(activeWeaponIdx === -1 ) { return false; }
+        return this.Weapons()[activeWeaponIdx].HasRareCan();
+    }
 
 }
 export = RF5Character;

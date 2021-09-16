@@ -7,13 +7,18 @@ from pprint import pprint
 
 
 class RF5Category(object):
-
     def __init__(self, _id):
         id: int = _id
         name_en: str = ''
         name_jp: str = ''
         image_uri: str = ''
         item_ids: List[int] = []
+
+@dataclass
+class RF5Effect(object):
+    id: int
+    desc_en: str = ''
+    desc_jp: str = ''
 
 
 @dataclass
@@ -22,7 +27,55 @@ class RF5Character(object):
     name_en: str = ''
     name_jp: str = ''
     image_uri: str = ''
-    tachi_uri: str = ''
+    tachiei_uri: str = ''
+
+    stat_ATK: int = 0
+    stat_DEF: int = 0
+    stat_MAT: int = 0
+    stat_MDF: int = 0
+    stat_STR: int = 0
+    stat_INT: int = 0
+    stat_VIT: int = 0
+    stat_def_ele_FIRE: float = 0
+    stat_def_ele_WATER: float = 0
+    stat_def_ele_EARTH: float = 0
+    stat_def_ele_WIND: float = 0
+    stat_def_ele_LIGHT: float = 0
+    stat_def_ele_DARK: float = 0
+    stat_def_ele_LOVE: float = 0
+    stat_def_ele_VOID: float = 0
+    stat_atk_CRT: float = 0
+    stat_atk_KNO: float = 0
+    stat_atk_STN: float = 0
+    stat_atk_DIZ: float = 0
+    stat_atk_PSN: float = 0
+    stat_atk_SEA: float = 0
+    stat_atk_PAR: float = 0
+    stat_atk_SLP: float = 0
+    stat_atk_FTG: float = 0
+    stat_atk_SCK: float = 0
+    stat_atk_FNT: float = 0
+    stat_atk_DRN: float = 0
+    stat_def_ele_FIRE: float = 0
+    stat_def_ele_WATER: float = 0
+    stat_def_ele_EARTH: float = 0
+    stat_def_ele_WIND: float = 0
+    stat_def_ele_LIGHT: float = 0
+    stat_def_ele_DARK: float = 0
+    stat_def_ele_LOVE: float = 0
+    stat_def_ele_VOID: float = 0 # elementless
+    stat_def_CRT: float = 0   # ----
+    stat_def_DIZ: float = 0   # In RF5/RF4 data these two rows are always swapped
+    stat_def_KNO: float = 0
+    stat_def_STN: float = 0
+    stat_def_PSN: float = 0
+    stat_def_SEA: float = 0
+    stat_def_PAR: float = 0
+    stat_def_SLP: float = 0
+    stat_def_FTG: float = 0
+    stat_def_SCK: float = 0
+    stat_def_FNT: float = 0
+    stat_def_DRN: float = 0
 
 
 @dataclass
@@ -233,6 +286,58 @@ class TsvReader(object):
                 character.image_uri = image_uri
 
 
+    @staticmethod
+    def read_character_stats(filepath: str, characters: dict[int,RF5Character]):
+        with open(filepath) as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                id: int = int(row[0])
+                character: RF5Character = characters[id]
+
+                character.stat_ATK = int(row[1])
+                character.stat_DEF = int(row[2])
+                character.stat_MAT = int(row[3])
+                character.stat_MDF = int(row[4])
+                character.stat_STR = int(row[5])
+                character.stat_INT = int(row[6])
+                character.stat_VIT = int(row[7])
+                character.stat_atk_CRT = float(row[8])
+                character.stat_atk_KNO = float(row[9])
+                # character.stat_atk_KNOTM = float(row[10])
+                # character.stat_atk_STN = float(row[11])
+                character.stat_atk_STN = float(row[10]) # labeled as knockback time in data dump
+                character.stat_atk_DIZ = float(row[11]) # labered as stun in data dump
+                character.stat_atk_PSN = float(row[12])
+                character.stat_atk_SEA = float(row[13])
+                character.stat_atk_PAR = float(row[14])
+                character.stat_atk_SLP = float(row[15])
+                character.stat_atk_FTG = float(row[16])
+                character.stat_atk_SCK = float(row[17])
+                character.stat_atk_FNT = float(row[18])
+                character.stat_atk_DRN = float(row[19])
+                character.stat_def_ele_FIRE = float(row[20])
+                character.stat_def_ele_WATER = float(row[21])
+                character.stat_def_ele_EARTH = float(row[22])
+                character.stat_def_ele_WIND = float(row[23])
+                character.stat_def_ele_LIGHT = float(row[24])
+                character.stat_def_ele_DARK = float(row[25])
+                character.stat_def_ele_LOVE = float(row[26])
+                character.stat_def_ele_VOID = float(row[27])
+                # character.stat_def_STN = float(row[28])
+                character.stat_def_DIZ = float(row[28]) # labeled as stun in data dump
+                character.stat_def_CRT = float(row[29])
+                character.stat_def_KNO = float(row[30])
+                # character.stat_def_KNOTM = float(row[31])
+                character.stat_def_STN = float(row[31]) # labeled as knockback time in data dump
+                character.stat_def_PSN = float(row[32])
+                character.stat_def_SEA = float(row[33])
+                character.stat_def_PAR = float(row[34])
+                character.stat_def_SLP = float(row[35])
+                character.stat_def_FTG = float(row[36])
+                character.stat_def_SCK = float(row[37])
+                character.stat_def_FNT = float(row[38])
+                character.stat_def_DRN = float(row[39])
+
 
     @staticmethod
     def read_item_stats(filepath: str, items: dict[int, RF5Item]) -> Set[int]:
@@ -361,6 +466,22 @@ class TsvReader(object):
                 name = row[2]
                 magics[id] = name
 
+    @staticmethod
+    def read_effects(effects: dict[int, RF5Effect]):
+        with open('../tsv/map_itemid_to_effect_japanese_shiftjis.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                id = int(row[0])
+                desc_jp = row[1]
+                effects[id] = RF5Effect(id=id, desc_jp=desc_jp)
+
+        with open('../tsv/map_itemid_to_effect_english.tsv') as f:
+            reader = csv.reader(f, delimiter='\t')
+            for row in reader:
+                id = int(row[0])
+                desc_en = row[1]
+                effects[id].desc_en = desc_en
+
 
 
 if __name__ == '__main__':
@@ -419,6 +540,8 @@ if __name__ == '__main__':
     # Scales which provide scale bonus in shields.
     is_mat_truescale:       set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_truescale.tsv')
 
+    has_effect:             set[int] = TsvReader.read_set_tsv('../tsv/set_has_effect.tsv')
+
 
     categories:   dict[int, RF5Category] = {}
     items:        dict[int, RF5Item] = {}
@@ -426,9 +549,10 @@ if __name__ == '__main__':
     characters:   dict[int, RF5Character] = {}
     recipes:      dict[int, List[int]] = {}
     magics:       dict[int, str] = {}
+    effects:      dict[int, RF5Effect] = {}
 
 
-    # All names
+    # All names and images
     TsvReader.read_category_names(category_ids, categories)
     TsvReader.read_item_names(item_ids, items)
     TsvReader.read_character_names(character_ids, characters)
@@ -439,6 +563,7 @@ if __name__ == '__main__':
 
     # Raw stats
     TsvReader.read_item_stats('../tsv/map_itemid_to_strengthening_data.tsv', items)
+    TsvReader.read_character_stats('../tsv/map_characterid_to_stats.tsv', characters)
 
     # Handle base item subset
     TsvReader.read_item_names(item_ids, base_items)
@@ -460,6 +585,9 @@ if __name__ == '__main__':
 
     # Magics
     TsvReader.read_magics(magics)
+
+    # Special effects (boots + acce)
+    TsvReader.read_effects(effects)
 
     # Link material groups
     categories[3000].item_ids = list(is_mat_minerals)
@@ -548,6 +676,8 @@ if __name__ == '__main__':
         write_json(f, 'is_mat_strings', json.dumps(sorted(list(is_mat_strings))))
         write_json(f, 'is_mat_truescale', json.dumps(sorted(list(is_mat_truescale))))
 
+        write_json(f, 'has_effect',  json.dumps(sorted(list(has_effect))))
+
 
         write_json(f, 'categories', json_dump_object(categories))
         write_json(f, 'items', json_dump_object(items))
@@ -555,6 +685,7 @@ if __name__ == '__main__':
         write_json(f, 'characters', json_dump_object(characters))
         write_json(f, 'recipes', json_dump_object(recipes))
         write_json(f, 'magics', json_dump_object(magics))
+        write_json(f, 'effects', json_dump_object(effects))
 
         f.write('};\n')
         f.write('export = '+variablename+';')

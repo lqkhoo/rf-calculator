@@ -7,6 +7,7 @@ import IVMRF5Slot = require('./IVMRF5Slot');
 // Data
 import Data = require('../model/Data');
 import Utils = require('../Utils');
+import RF5AbstractSlot = require('../model/RF5AbstractSlot');
 
 class VMRF5Slot implements IVMRF5Slot {
 
@@ -37,13 +38,13 @@ class VMRF5Slot implements IVMRF5Slot {
         this.SlotName = ko.pureComputed(function() {
             if(self.Model.Index === 0) { return 'Base'; }
             else if (self.Model.Index < 7) {
-                return 'R' + (self.Model.Index-1).toString();
+                return 'R' + (self.Model.Index-RF5AbstractSlot.RECIPE_START_IDX+1).toString();
             }
             else if (self.Model.Index < 10) {
-                return 'A' + (self.Model.Index-7).toString();
+                return 'A' + (self.Model.Index-RF5AbstractSlot.ARRANGE_START_IDX+1).toString();
             }
             else {
-                return 'U' + (self.Model.Index-10).toString();
+                return 'U' + (self.Model.Index-RF5AbstractSlot.UPGRADE_START_IDX+1).toString();
             }
         });
 

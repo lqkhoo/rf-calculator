@@ -19,6 +19,14 @@ interface IRF5Character extends IRF5StatVector, IModel {
     readonly ActiveShieldIdx:       ko.PureComputed<number>;
     readonly ActiveWeaponIdx:       ko.PureComputed<number>;
 
+    readonly HasClover: ko.PureComputed<boolean>;
+    readonly HasRareCan: ko.PureComputed<boolean>;
+    readonly HasGeneralSetBonus: ko.PureComputed<boolean>;
+
+    readonly EquipmentStats: ko.Observable<IRF5StatVector>;
+    readonly GeneralSetBonus: ko.Observable<IRF5StatVector>;
+    readonly FinalStats: ko.Observable<IRF5StatVector>;
+
     readonly ViewModel: VMRF5Character;
 
     AddAccessory(): void;
@@ -30,6 +38,7 @@ interface IRF5Character extends IRF5StatVector, IModel {
 
     ChangeId (id: number): void;
     SetActiveEquipment(equipmentType: EquipmentType, idx: number): void;
+    DeleteItem(equipmentType: EquipmentType, item: IRF5Item): void;
 
 }
 export = IRF5Character;

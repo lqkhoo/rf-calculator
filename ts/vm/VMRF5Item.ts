@@ -9,12 +9,14 @@ class VMRF5Item implements IVMRF5Slot {
     readonly Model: RF5Item;
 
     readonly IsCollapsed: ko.Observable<boolean>;
+    readonly IsSafetyOn: ko.Observable<boolean>;
 
     constructor(model: RF5Item) {
         this.Model = model;
         const isCollapsed: boolean = this.Model.Character().ViewModel.IsItemGroupCollapsed[this.Model.EquipmentType]();
         // const isCollapsed = true; // Always generate as collapsed.
         this.IsCollapsed = ko.observable(isCollapsed);
+        this.IsSafetyOn = ko.observable(true);
     }
 
     public SetCollapsedState = (isCollapsed: boolean, setChildSlots: boolean=true): boolean => {
@@ -44,10 +46,14 @@ class VMRF5Item implements IVMRF5Slot {
     }
 
     // Event handlers
-    public OnGroupHeaderClickHandler = (dataContext: any, event: any): boolean => {
+    public OnGroupHeaderClickHandler = (_dataContext: any, _event: any): boolean => {
         // Just check the first one
         const areChildSlotsCollapsed: boolean = this.Model.BaseItem().ViewModel.IsCollapsed();
         return this.CollapseChildSlots(! areChildSlotsCollapsed);
+    }
+
+    public OnDeleteItemClickHandler = (_dataContext: any, _event: any): void => {
+        this.Model.Character().DeleteItem(this.Model.EquipmentType, this.Model);
     }
 
 }
