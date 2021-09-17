@@ -4,8 +4,7 @@ import IRF5Item = require('./IRF5Item');
 import RF5StatVector = require('./RF5StatVector');
 // Parent
 import IRF5Character = require('./IRF5Character');
-import RF5AbstractSlot = require('./RF5AbstractSlot');
-import Data = require('./Data');
+// Data
 
 class VectorCharEquipmentStats extends RF5StatVector {
 

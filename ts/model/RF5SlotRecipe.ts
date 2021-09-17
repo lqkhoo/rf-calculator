@@ -15,9 +15,12 @@ class RF5SlotRecipe extends RF5Slot {
     readonly Restriction: ko.Observable<number>; // item or category id
     override readonly ViewModel: VMRF5SlotRecipe;
 
-    constructor(item: IRF5Item, index: number, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
+    constructor(item: IRF5Item,
+        index: number,
+        item_id: number=RF5Slot.DEFAULT_ITEM_ID,
+        level: number=RF5Slot.DEFAULT_LEVEL) {
 
-        super(item, index, item_id);
+        super(item, index, item_id, level);
         const self = this;
 
         this.Restriction = ko.observable(0);

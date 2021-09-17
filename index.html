@@ -46,8 +46,8 @@
                                             <td>
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsEnglishSelected"/>
-                                                        English 英語
+                                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsJapaneseSelected"/>
+                                                        日本語 Japanese
                                                     </label>
                                                 </div>
                                             </td>
@@ -56,8 +56,8 @@
                                             <td>
                                                 <div class="form-check form-switch">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsJapaneseSelected"/>
-                                                        日本語 Japanese
+                                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsEnglishSelected"/>
+                                                        English 英語
                                                     </label>
                                                 </div>
                                             </td>
@@ -252,7 +252,7 @@
                 <textarea id="json-serialize-target"></textarea>
                 <div>
                     <span class="lang jp">上のテキストを何処かにセーブして下さい。</span>
-                    <span class="lang en">Just copy and save the text above somewhere.</span>
+                    <span class="lang en">Copy and save the text above somewhere.</span>
                 </div>
             </div>
             <div class="modal-footer">
@@ -403,7 +403,9 @@
     <!-- /ko -->
     <!-- ko template: 'TEMPLATE-clover-slot' --><!-- /ko -->
     <!-- ko template: 'TEMPLATE-rarecan-slot' --><!-- /ko -->
+    <!-- ko tempalte: 'TEMPLATE-shadestone-slot' --><!-- /ko -->
     <!-- ko template: 'TEMPLATE-scrapmetalplus-slot' --><!-- /ko -->
+    <!-- ko template: 'TEMPLATE-dualsmith-slot' --><!-- /ko -->
     <!-- ko template: 'TEMPLATE-equipment-slots' --><!-- /ko -->
 </script>
 
@@ -560,6 +562,38 @@
     </tr>
 </script>
 
+<script type="text/html" id="TEMPLATE-dualsmith-slot">
+    <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
+        <td>
+            <span class="lang jp">一緒鍛冶</span>
+            &nbsp;<span class="lang en">Dual Smith</span>
+            <div>
+                <select class="dualsmith-relation-level-select" data-bind="value: DualSmith().DualSmithRelationLevel, options: DualSmith().DualSmithRelationLevelOptions, optionsText: function(item) { return item.toString()+' \u2764' } ">
+                </select>
+                <select class="dualsmith-bonus-type-select" data-bind="value: DualSmith().DualSmithBonusType">
+                    <option value="NONE">NONE</option>
+                    <option value="ATK">ATK</option>
+                    <option value="DEF">DEF</option>
+                    <option value="MAT">MAT</option>
+                    <option value="MDF">MDF</option>
+                    <option value="STR">STR</option>
+                    <option value="INT">INT</option>
+                    <option value="VIT">VIT</option>
+                    <option value="CRT">CRT</option>
+                    <option value="STN">ス STN</option>
+                    <option value="DEF_FIR">火防 Fire def</option>
+                    <option value="DEF_WTR">水防 Water def</option>
+                    <option value="DEF_EAR">地防 Earth def</option>
+                    <option value="DEF_WND">風防 Wind def</option>
+                    <option value="DEF_LGT">風防 Light def</option>
+                    <option value="DEF_DRK">光防 Dark def</option>
+                </select>
+            </div>
+        </td>
+        <!-- ko template: { name: 'TEMPLATE-stats', data: DualSmith() } --><!-- /ko -->
+    </tr>
+</script>
+
 <script type="text/html" id="TEMPLATE-hastruescale-slot">
     <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
         <td>
@@ -665,7 +699,12 @@
             &nbsp;<span class="lang en">Clover</span>
             <span class="badge" data-bind="text: HasClover()"></span>
         </td>
-        <td colspan="43"></td>
+        <td colspan="43" class="inline-description">
+            <!-- ko if: HasClover() -->
+            <span class="lang jp">ドロップ率上昇（普通アイテム）</span>
+            <span class="lang en">Increased drop rate (normal items)</span>
+            <!-- /ko -->
+        </td>
     </tr>
 </script>
 
@@ -676,7 +715,12 @@
             &nbsp;<span class="lang en">Rare Can</span>
             <span class="badge" data-bind="text: HasRareCan()"></span>
         </td>
-        <td colspan="43"></td>
+        <td colspan="43" class="inline-description">
+            <!-- ko if: HasRareCan() -->
+            <span class="lang jp">ドロップ率上昇（レアアイテム）</span>
+            <span class="lang en">Increased drop rate (rare items)</span>
+            <!-- /ko -->
+        </td>
     </tr>
 </script>
 

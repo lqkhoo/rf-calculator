@@ -16,8 +16,12 @@ class RF5SlotArrange extends RF5Slot {
     readonly Restriction: ko.Observable<number>; // Only for boots / accessories. First arrange slot is tied to overriding item.
     override readonly ViewModel: VMRF5SlotArrange;
 
-    constructor(item: RF5Item, index: number, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
-        super(item, index, item_id);
+    constructor(item: RF5Item,
+                index: number,
+                item_id: number=RF5Slot.DEFAULT_ITEM_ID,
+                level: number=RF5Slot.DEFAULT_LEVEL) {
+                    
+        super(item, index, item_id, level);
         const self = this;
 
         this.level = ko.pureComputed(function() {

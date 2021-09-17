@@ -53,12 +53,13 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     constructor(item: IRF5Item,
                 index: number,
                 item_id: number,
+                level: number=RF5Slot.DEFAULT_LEVEL,
                 useEquipmentStats: boolean=false) {
                     
         super(item_id, useEquipmentStats);
         const self = this;
 
-        this.LevelOverride = ko.observable(10); // Set default to 10 for convenience;
+        this.LevelOverride = ko.observable(level); // Set default to 10 for convenience;
 
         this.level    = ko.pureComputed(self._compute_level);
         this.stat_ATK = ko.pureComputed(self._compute_stat_ATK);
@@ -159,10 +160,6 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     public ChangeId(id: number): void {
         return this.ChangeIdScoper(id);
     }
-    public toJSON = (): any => {
-        return this.id();
-    }
-
 
     protected _compute_isUnderObjectX = (): boolean => { // Chained
         // ObjectX doesn't work in recipe slots.

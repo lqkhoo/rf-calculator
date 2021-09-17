@@ -12,8 +12,12 @@ class RF5SlotBaseItem extends RF5Slot {
 
     override readonly ViewModel: VMRF5SlotBaseItem;
 
-    constructor(item: IRF5Item, index: number, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
-        super(item, index, item_id, true);
+    constructor(item: IRF5Item,
+                index: number,
+                item_id: number=RF5Slot.DEFAULT_ITEM_ID,
+                level: number=RF5Slot.DEFAULT_LEVEL) {
+                    
+        super(item, index, item_id, level, true);
         
         this.UseEquipmentStats = ko.pureComputed(function() {
             return true;

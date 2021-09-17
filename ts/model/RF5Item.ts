@@ -120,28 +120,31 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         this.ViewModel = new VMRF5Item(this); // Needs to be before slots
 
         let i = 0;
-        let arr: number[];
+        let ids: number[];
+        let levels: number[];
         if(deserializedObject !== undefined) {
             this.IsActive(deserializedObject.isActive);
-            arr = deserializedObject.slots;
+            ids = deserializedObject.ids;
+            levels = deserializedObject.levels;
         } else {
-            arr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+            ids = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+            levels = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10];
         }
-        this.BaseItem = ko.observable(new RF5SlotBaseItem(this, i, arr[i]));
+        this.BaseItem = ko.observable(new RF5SlotBaseItem(this, i, ids[i], levels[i]));
         i++;
         this.RecipeSlots = ko.observableArray([]);
         for(let j=0; j<RF5Item.NSLOTS_RECIPE; j++) {
-            this.RecipeSlots.push(new RF5SlotRecipe(this, i, arr[i]));
+            this.RecipeSlots.push(new RF5SlotRecipe(this, i, ids[i], levels[i]));
             i++;
         }
         this.ArrangeSlots = ko.observableArray([]);
         for(let j=0; j<RF5Item.NSLOTS_ARRANGE; j++) {
-            this.ArrangeSlots.push(new RF5SlotArrange(this, i, arr[i]));
+            this.ArrangeSlots.push(new RF5SlotArrange(this, i, ids[i], levels[i]));
             i++
         }
         this.UpgradeSlots = ko.observableArray([]);
         for(let j=0; j<RF5Item.NSLOTS_UPGRADE; j++) {
-            this.UpgradeSlots.push(new RF5SlotUpgrade(this, i, arr[i]));
+            this.UpgradeSlots.push(new RF5SlotUpgrade(this, i, ids[i], levels[i]));
             i++;
         }
         this.ApplyRecipeRestrictions(this.BaseItem());
@@ -210,23 +213,34 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         }
     }
     
-    public toJSON = (): any => {
-        let array: IRF5Slot[] = [];
-        array.push(this.BaseItem());
+    protected toJSON_scoper = (): any => {
+        let itemIds: number[] = [];
+        let levels: number[] = [];
+
+        itemIds.push(this.BaseItem().id());
+        levels.push(this.BaseItem().level());
         for(let i=0; i<this.RecipeSlots().length; i++) {
-            array.push(this.RecipeSlots()[i]);
+            itemIds.push(this.RecipeSlots()[i].id());
+            levels.push(this.RecipeSlots()[i].level());
         }
         for(let i=0; i<this.ArrangeSlots().length; i++) {
-            array.push(this.ArrangeSlots()[i]);
+            itemIds.push(this.ArrangeSlots()[i].id());
+            levels.push(this.ArrangeSlots()[i].level());
         }
         for(let i=0; i<this.UpgradeSlots().length; i++) {
-            array.push(this.UpgradeSlots()[i]);
+            itemIds.push(this.UpgradeSlots()[i].id());
+            levels.push(this.UpgradeSlots()[i].level());
         }
         let obj: any = {
             isActive: this.IsActive(),
-            slots: array
+            ids: itemIds,
+            levels: levels
         };
         return obj;
+    }
+
+    public toJSON(): any {
+        return this.toJSON_scoper();
     }
 
     protected _compute_hasClover = (): boolean => {

@@ -5,6 +5,7 @@ declare global {
                         | "farm_axe" | "farm_fishingpole" | "farm_hammer" | "farm_hoe" | "farm_sickle" | "farm_waterpot";
 
     type ElementType = "FIREWATER" | "EARTHWIND" | "FIRE" | "WATER" | "EARTH" | "WIND" | "LIGHT" | "DARK" | "LOVE" | "NONE";
+    type DualSmithBonusType = "NONE"|"ATK"|"DEF"|"MAT"|"MDF"|"STR"|"INT"|"VIT"|"CRT"|"STN"|"DEF_FIR"|"DEF_WTR"|"DEF_EAR"|"DEF_WND"|"DEF_LGT"|"DEF_DRK"; // no LOV or NUL
 
     type StatVectorKey = "id"
                         | "name_en"

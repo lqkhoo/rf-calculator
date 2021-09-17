@@ -6,6 +6,8 @@ import RF5StatVector = require('./RF5StatVector');
 abstract class RF5AbstractSlot extends RF5StatVector {
 
     static readonly DEFAULT_ITEM_ID: number = 0;
+    static readonly DEFAULT_LEVEL: number = 10;
+
     static readonly RECIPE_START_IDX: number = 1;
     static readonly ARRANGE_START_IDX: number = 7;
     static readonly UPGRADE_START_IDX: number = 10;
