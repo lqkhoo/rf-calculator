@@ -79,7 +79,7 @@ class VectorCharEquipmentStats extends RF5StatVector {
 
             let val: number = defaultValue;
             let item: IRF5Item;
-            let accumulate = function(_item: IRF5Item) {
+            function accumulate(_item: IRF5Item): void {
                 item = _item;
                 // In this case we can skip if id === 0
                 val += (item.id() === 0) ? 0 : (item.GetStatByName(fieldName) as number);

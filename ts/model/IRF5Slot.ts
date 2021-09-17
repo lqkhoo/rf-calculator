@@ -9,10 +9,11 @@ interface IRF5Slot extends IRF5StatVector, IModel {
     // Index in terms of slots. e.g. 0 -> Base. 1 -> Recipe1
     readonly Index: number;
 
+    readonly LevelOverride: ko.Observable<number>;
+
     // For slots, EquipmentType is mutable, hence computed.
     readonly EquipmentType: ko.PureComputed<EquipmentType|undefined>;
     readonly WeaponType: ko.PureComputed<WeaponType|undefined>;
-    readonly LevelOverride: ko.Observable<number>;
 
     readonly Element: ko.PureComputed<ElementType>;
     readonly HasEffect: ko.PureComputed<boolean>;
@@ -22,6 +23,8 @@ interface IRF5Slot extends IRF5StatVector, IModel {
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
     readonly IsEffective10FoldSteel: ko.PureComputed<boolean>;
 
+    readonly IsRestricted: ko.PureComputed<boolean>;
+    readonly IsLocked: ko.PureComputed<boolean>
     readonly HasPrecedingOverrider: ko.PureComputed<boolean>;
     readonly IsOverriding: ko.PureComputed<boolean>;
     readonly IsBeingOverridden: ko.PureComputed<boolean>;

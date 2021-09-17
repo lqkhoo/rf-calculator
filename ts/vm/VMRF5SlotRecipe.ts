@@ -11,25 +11,14 @@ import Utils = require('../Utils');
 class VMRF5SlotRecipe extends VMRF5Slot {
 
     override readonly Model: IRF5SlotRecipe;
-    override readonly IsRestricted: ko.PureComputed<boolean>;
-    override readonly IsLocked: ko.PureComputed<boolean>
 
     constructor(model: IRF5SlotRecipe) {
         super(model)
         this.Model = model;
-
-        const self = this;
-        this.IsRestricted = ko.pureComputed(function() {
-            return self.Model.Restriction() !== 0;
-        });
-        this.IsLocked = ko.pureComputed(function() {
-            const itemIds: any = Data.Item_ids;
-            return self.IsRestricted() && itemIds.hasOwnProperty(self.Model.Restriction());
-        })
     }
 
     protected override CacheSearchStrings = (cacheKey: string): void => {
-        let self = this;
+        const self = this;
 
         let items: any;
         if(cacheKey === "0") {

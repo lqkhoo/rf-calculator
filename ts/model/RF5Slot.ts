@@ -22,7 +22,8 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
 
     // For overrides
     readonly EquipmentType: ko.PureComputed<EquipmentType|undefined>;
-    readonly WeaponType: ko.PureComputed<WeaponType|undefined>;    
+    readonly WeaponType: ko.PureComputed<WeaponType|undefined>;
+
     // For weapons
     readonly Element: ko.PureComputed<ElementType>;
     readonly HasEffect: ko.PureComputed<boolean>;
@@ -32,6 +33,8 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     readonly IsEffective2FoldSteel: ko.PureComputed<boolean>;
     readonly IsEffective10FoldSteel: ko.PureComputed<boolean>;
 
+    IsRestricted: ko.PureComputed<boolean>; // Recipe override
+    IsLocked: ko.PureComputed<boolean>      // Recipe override
     readonly HasPrecedingOverrider: ko.PureComputed<boolean>;
     readonly IsOverriding: ko.PureComputed<boolean>;
     readonly IsBeingOverridden: ko.PureComputed<boolean>;
@@ -126,6 +129,8 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         this.IsEffective2FoldSteel = ko.pureComputed(self._compute_isEffective2FoldSteel);
         this.IsEffective10FoldSteel = ko.pureComputed(self._compute_isEffective10FoldSteel);
 
+        this.IsRestricted = ko.pureComputed(function() { return false; });
+        this.IsLocked = ko.pureComputed(function() { return false; })
         this.HasPrecedingOverrider = ko.computed(self._compute_hasPrecedingOverrider);
         this.IsOverriding = ko.pureComputed(self._compute_isOverriding);
         this.IsBeingOverridden = ko.pureComputed(self._compute_isBeingOverridden);
@@ -154,7 +159,6 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     public ChangeId(id: number): void {
         return this.ChangeIdScoper(id);
     }
-
     public toJSON = (): any => {
         return this.id();
     }
@@ -190,6 +194,8 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         return true;
     }
 
+
+    
     protected _compute_hasPrecedingOverrider = (): boolean => {
         if(this.Index === 0) { return false; } // Terminating condition.
         if(this.Index >= RF5AbstractSlot.ARRANGE_START_IDX) { return false; }
@@ -206,6 +212,9 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
             || this.Item().GetSlotByIndex(0).id() === 0 // Can't override nothing.
             || this.Index >= RF5Slot.ARRANGE_START_IDX  // Overriding only works from recipe slots.
             || ! Data.IsEquipment(this.id())            // Must be equipment to override.
+            || this.IsLocked()                          // Recipe items cannot override e.g. Platinum Shield in Platinum Shield+ recipe.
+            || this.Item().EquipmentType === "boots"    // No stat override mechanics in boots / accessory
+            || this.Item().EquipmentType === "accessory"
             || this.Index === 0) {                      // Terminating condition.
             return false;
         }
@@ -321,6 +330,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     //   image, name, level, rarity remain as fold steel.
     // Otherwise use the normal item context.
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number, isPercent: boolean=false) => {
+
         const self = this;
         return function(): number {
             let val: number = defaultValue;
@@ -381,7 +391,16 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     protected override _compute_def_SCK = this._compute_number_helper(RF5StatVector.KEY_stat_def_SCK, 0, true);
     protected override _compute_def_FNT = this._compute_number_helper(RF5StatVector.KEY_stat_def_FNT, 0, true);
     protected override _compute_def_DRN = this._compute_number_helper(RF5StatVector.KEY_stat_def_DRN, 0, true);
-    protected override _compute_stat_chargespeed = this._compute_number_helper(RF5StatVector.KEY_stat_chargespeed, 0);
+    // Chargespeed not affected by multiplier nor predecessor context.
+    protected override _compute_stat_chargespeed = ():number => {
+        let val: number = 0;
+        let ctx: any = this.Context();
+        if (ctx[RF5StatVector.KEY_stat_chargespeed] !== undefined) {
+            val = ctx[RF5StatVector.KEY_stat_chargespeed];
+        }
+        return val;
+    }
+    // protected override _compute_stat_chargespeed = this._compute_number_helper(RF5StatVector.KEY_stat_chargespeed, 0);
     protected override _compute_stat_attacklength = this._compute_number_helper(RF5StatVector.KEY_stat_attacklength, 0);
 
 }

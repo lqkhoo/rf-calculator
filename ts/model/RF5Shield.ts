@@ -67,7 +67,7 @@ class RF5Shield extends RF5Item {
 
             let val: number = defaultValue;
             let slot: IRF5StatVector;
-            let accumulate = function(_slot: IRF5StatVector, skipIdZero: boolean=true) {
+            function accumulate(_slot: IRF5StatVector, skipIdZero: boolean=true) {
                 slot = _slot;
                 if(skipIdZero) {
                     val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);

@@ -130,29 +130,30 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         this.BaseItem = ko.observable(new RF5SlotBaseItem(this, i, arr[i]));
         i++;
         this.RecipeSlots = ko.observableArray([]);
-        for(var j=0; j<RF5Item.NSLOTS_RECIPE; j++) {
+        for(let j=0; j<RF5Item.NSLOTS_RECIPE; j++) {
             this.RecipeSlots.push(new RF5SlotRecipe(this, i, arr[i]));
             i++;
         }
         this.ArrangeSlots = ko.observableArray([]);
-        for(var j=0; j<RF5Item.NSLOTS_ARRANGE; j++) {
+        for(let j=0; j<RF5Item.NSLOTS_ARRANGE; j++) {
             this.ArrangeSlots.push(new RF5SlotArrange(this, i, arr[i]));
             i++
         }
         this.UpgradeSlots = ko.observableArray([]);
-        for(var j=0; j<RF5Item.NSLOTS_UPGRADE; j++) {
+        for(let j=0; j<RF5Item.NSLOTS_UPGRADE; j++) {
             this.UpgradeSlots.push(new RF5SlotUpgrade(this, i, arr[i]));
             i++;
         }
         this.ApplyRecipeRestrictions(this.BaseItem());
 
-        // Certain attributes have to be initialized after all slots because they need
-        // the RF5Slots themselves or observables to have been initialized.
+        // Certain attributes have to be initialized after all slots, because otherwise
+        // we get undefined references as slots are still missing.
         this.HasClover = ko.pureComputed(self._compute_hasClover);
     }
 
 
     public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
+        const self = this;
         const baseitemId: number = baseItem.id();
         const recipes: any = (Data.Recipes as any);
         const n = this.RecipeSlots().length; // should be 6;
@@ -243,7 +244,7 @@ class RF5Item extends RF5StatVector implements IRF5Item {
 
             let val: number = defaultValue;
             let slot: IRF5StatVector;
-            let accumulate = function(_slot: IRF5StatVector, skipIdZero: boolean=true) {
+            function accumulate(_slot: IRF5StatVector, skipIdZero: boolean=true) {
                 slot = _slot;
                 if(skipIdZero) {
                     val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);

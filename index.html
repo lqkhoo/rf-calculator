@@ -741,8 +741,8 @@
                     <tr>
                         <td>
                             <button class="btn detail-button" data-bind="click: ViewModel.DetailButtonClickHandler">
-                                <span data-bind="text: ViewModel.SlotName(), css: { displayNone: ViewModel.IsRestricted() }"></span>
-                                <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! ViewModel.IsRestricted() }"/>
+                                <span data-bind="text: ViewModel.SlotName(), css: { displayNone: IsRestricted() }"></span>
+                                <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! IsRestricted() }"/>
                             </button>
                         </td>
                         <td class="icon-td"><img class="icon small" data-bind="attr: { src: image_uri }"/></td>
@@ -751,7 +751,7 @@
                             <span class="lang en" data-bind="text: name_en"></span>
                         </td>
                         <td>
-                            <input type="text" data-bind="attr: { disabled: ViewModel.IsLocked() }, autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: ViewModel.AutoCompleteSelectHandler }, value: id()">
+                            <input type="text" data-bind="attr: { disabled: IsLocked() }, autocomplete: { source: ViewModel.GetSearchStrings(), html: 'html', minLength: 0, select: ViewModel.AutoCompleteSelectHandler }, value: id()">
                         </td>
                     </tr>
                 </tbody>
@@ -773,7 +773,7 @@
                     <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only one item can override.', text_jp: '効果がありません。性能継承アレンジは、一つのアイテムの性能しか継承出来ません。' } } --><!-- /ko -->
                 <!-- /ko -->
 
-                <!-- ko if: (Index !== 0 && Index < 7) && $root.Data.IsEquipment(id()) && (! IsOverriding()) && (! HasPrecedingOverrider()) -->
+                <!-- ko if: (Index !== 0 && Index < 7) && $root.Data.IsEquipment(id()) && ( Item().EquipmentType !== 'boots' && Item().EquipmentType !== 'accessory' ) && !IsLocked() && (! IsOverriding()) && (! HasPrecedingOverrider()) -->
                     <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only items of same type can override. Overriding a weapon of different type requires Light Ore in any recipe slot.', text_jp: '効果がありません。性能継承アレンジは、ベースと同じ種類のアイテムが必要です。別のカテゴリの武器の場合なら、レシピにメッシライト鉱石も必要です。' } } --><!-- /ko -->
                 <!-- /ko -->
 
@@ -798,7 +798,7 @@
                 <!-- ko if: (Index === 0) && (id() !== 0) && IsBeingOverridden() -->
                     <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Item being overridden. All parameters become zero.', text_jp: '性能継承発生中。全パラメーターゼロになります。' } } --><!-- /ko -->
                 <!-- /ko -->
-                <!-- ko if: (Index < 7) && ViewModel.IsRestricted() -->
+                <!-- ko if: (Index < 7) && IsRestricted() -->
                     <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Slot being restricted by recipe.', text_jp: '本枠はレシピにより制限されています。' } } --><!-- /ko -->
                 <!-- /ko -->
 

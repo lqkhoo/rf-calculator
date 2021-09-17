@@ -101,7 +101,6 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     }
 
     protected FromDeserializedObject = (obj: any): void => {
-        console.log(obj);
         this.id(obj.id);
         const accessories = obj.Accessories;
         const armors = obj.Armors;

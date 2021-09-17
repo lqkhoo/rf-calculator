@@ -1,3 +1,4 @@
+import ko = require('knockout');
 import RF5Slot = require('./RF5Slot');
 import RF5Item = require('./RF5Item');
 

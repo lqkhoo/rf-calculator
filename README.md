@@ -11,6 +11,13 @@ If you're looking for a Gear Planner for RF4 / RF4 Special, you can try my imple
 * I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials are fully modeled.
 * As of time of writing, the game is not released in English yet, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
 
+The data is from Kuroba's data dump of v1.0.0 of the Japanese release. Given the game's buggy release, there are some things which are patched in later, so if you notice anything off, just let me know.
+
+I scanned through the Japanese wiki and fixed a couple of data points:
+* Platinum Shield+ didn't have resistances.
+* Wind Mantle has 10% wind resistance (patched in game JP v1.0.7)
+* Elven Mantle was slightly buffed in JP v1.0.7.
+
 # For developers
 ## Building
 1. Ensure that you have npm ([Node Package Manager](https://www.npmjs.com/)) installed. You can get it through their website or via Node.js development tools from [Visual Studio](https://visualstudio.microsoft.com/).

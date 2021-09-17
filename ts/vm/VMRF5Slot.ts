@@ -15,9 +15,6 @@ class VMRF5Slot implements IVMRF5Slot {
     readonly IsCollapsed: ko.Observable<boolean>;
     readonly AreDetailsCollapsed: ko.Observable<boolean>;
 
-    readonly IsRestricted: ko.PureComputed<boolean>;
-    readonly IsLocked: ko.PureComputed<boolean>
-
     readonly SlotName: ko.PureComputed<string>;
     readonly LevelOptions: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]; // No need to be observable.
 
@@ -31,9 +28,6 @@ class VMRF5Slot implements IVMRF5Slot {
         const isCollapsed: boolean = true; // Always generate as collapsed
         this.IsCollapsed = ko.observable(isCollapsed);
         this.AreDetailsCollapsed = ko.observable(true);
-
-        this.IsRestricted = ko.pureComputed(function() { return false; });
-        this.IsLocked = ko.pureComputed(function() { return false; })
 
         this.SlotName = ko.pureComputed(function() {
             if(self.Model.Index === 0) { return 'Base'; }

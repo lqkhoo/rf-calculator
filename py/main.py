@@ -92,9 +92,7 @@ class RF5Item(object):
 
     element: str = 'NONE' # weapon element
 
-    # Equipment stats. These are combined
-    # base stats / upgrade stats because they
-    # are mutually-exclusive.
+    # Equipment stats.
     stat_ATK: int = 0
     stat_DEF: int = 0
     stat_MAT: int = 0
@@ -355,6 +353,7 @@ class TsvReader(object):
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id: int = int(row[0])
+
                 read_ids.add(id)
 
                 # For the confusing STN/DIZ/KNO/knockback time,
@@ -576,9 +575,10 @@ if __name__ == '__main__':
     TsvReader.read_item_names(item_ids, base_items)
     TsvReader.read_item_images(item_ids, base_items)
     base_item_ids = TsvReader.read_item_stats('../tsv/map_itemid_to_baseitem_stats_data.tsv', base_items)
+    
     for key in list(base_items.keys()):
         if not key in base_item_ids:
-            base_items.pop(key, None)
+            base_items.pop(key, None)    
 
     # Item stats
     TsvReader.read_item_rarity(items)

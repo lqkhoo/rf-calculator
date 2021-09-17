@@ -92,7 +92,7 @@ class RF5Planner implements IRF5Planner, ISerializable {
         this.IsBusy(true);
         let json: string = "";
         let characters: IRF5Character[] = this.Deserialize(json);
-        
+
         for(let i=0; i<characters.length; i++) {
             this.CharacterList.push(characters[i]);
         }
