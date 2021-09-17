@@ -70,10 +70,15 @@ class RF5Planner implements IRF5Planner, ISerializable {
     }
 
     public DisplayFirstCharacterSheet = (): void => {
-        const elem: Element | null = document.querySelector('#character-tabs button');
+        const elem: Element | null = document.querySelector('#character-tabs .character button');
         if(elem !== null) {
             (elem as HTMLElement).click();
         }
+    }
+
+    public DisplayLastCharacterSheet = (): void => {
+        const elems: NodeListOf<Element> = document.querySelectorAll('#character-tabs .character button');
+        (elems[elems.length-1] as HTMLElement).click();
     }
 
     // We don't use ko.Observable because we want this to execute immediately.
@@ -88,15 +93,18 @@ class RF5Planner implements IRF5Planner, ISerializable {
         }
     }
 
-    public OnLoadExampleClickHandler = (): boolean => {
+    public OnExampleClickHandler = (): boolean => {
+        const self = this;
         this.IsBusy(true);
-        let json: string = "";
-        let characters: IRF5Character[] = this.Deserialize(json);
-
-        for(let i=0; i<characters.length; i++) {
-            this.CharacterList.push(characters[i]);
-        }
-        this.IsBusy(false);
+        window.setTimeout(function() {
+            const jsonString: string = '[{"id":40,"Accessories":[{"isActive":true,"ids":[1332,2178,2158,2189,2165,165,1337,1337,1357,1367,2282,2171,30,2172,2243,2166,2167,2168,2169],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1337,2155,168,1357,0,0,0,1357,1367,0,800,800,800,800,800,800,800,800,800],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1357,2214,2336,2272,2179,1367,0,1367,0,0,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1367,2159,2328,2272,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]}],"Armors":[{"isActive":true,"ids":[1218,2327,2311,2312,2349,2189,1218,2011,102,102,102,102,2011,2232,2171,2166,2167,2168,2169],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1218,2327,2311,2312,2349,2189,1200,2011,102,102,800,800,800,800,800,800,800,800,800],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1200,2273,2011,102,102,0,0,2011,102,102,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]}],"Boots":[{"isActive":true,"ids":[1264,2311,2187,2272,2228,2327,1265,1265,1261,1258,2358,2171,30,2172,169,2166,2167,2168,2169],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1265,2327,2311,2312,2349,2203,1261,1261,1258,0,800,800,800,800,800,800,800,800,800],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1261,2278,2303,2307,2170,2220,1258,1258,0,0,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1258,2228,2157,2156,2273,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]}],"Headgears":[{"isActive":true,"ids":[1106,2228,2228,165,165,165,1127,2011,102,102,102,102,2011,2183,2171,2166,2167,2168,2169],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1127,2159,2187,2304,2178,2189,1128,2011,102,102,800,800,800,800,800,800,800,800,800],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1128,29,2011,102,102,0,0,2011,102,102,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]}],"Shields":[{"isActive":true,"ids":[1000,2159,165,165,165,165,1018,2011,102,102,102,102,2011,2358,2171,2166,2167,2168,2169],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1018,2349,2176,2210,2188,1000,0,2011,102,102,800,800,800,800,800,800,800,800,800],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]},{"isActive":false,"ids":[1000,2152,2011,102,102,0,0,2011,102,102,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10]}],"Weapons":[{"isActive":true,"ids":[1795,2347,2348,2159,165,2175,1685,2272,2272,2173,2219,2171,2173,2172,2272,2243,1902,2188,909],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10],"dualLevel":10,"dualType":"ATK"},{"isActive":false,"ids":[1685,2176,2349,2327,2311,2312,1669,2272,2272,2173,800,800,800,800,800,800,800,800,800],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10],"dualLevel":0,"dualType":"NONE"},{"isActive":false,"ids":[1669,2152,2272,2272,2173,0,0,2272,2272,2173,0,0,0,0,0,0,0,0,0],"levels":[0,10,10,10,10,10,10,0,0,0,10,10,10,10,10,10,10,10,10],"dualLevel":0,"dualType":"NONE"}]}]'
+            let characters: IRF5Character[] = self.Deserialize(jsonString);
+            for(let i=0; i<characters.length; i++) {
+                self.CharacterList.push(characters[i]);
+            }
+            self.DisplayLastCharacterSheet();
+            self.IsBusy(false);
+        }, 50);
         return true;
     }
 
@@ -110,15 +118,18 @@ class RF5Planner implements IRF5Planner, ISerializable {
     }
 
     public OnLoadJsonAppendClickHandler = (): boolean => {
+        const self = this;
         this.IsBusy(true);
-        const elem: HTMLInputElement = (document.getElementById('json-deserialize-target') as HTMLInputElement);
-        if(elem !== null && elem.value !== null) {
-            let characters: IRF5Character[] = this.Deserialize(elem.value);
-            for(let i=0; i<characters.length; i++) {
-                this.CharacterList.push(characters[i]);
+        window.setTimeout(function() {
+            const elem: HTMLInputElement = (document.getElementById('json-deserialize-target') as HTMLInputElement);
+            if(elem !== null && elem.value !== null) {
+                let characters: IRF5Character[] = self.Deserialize(elem.value);
+                for(let i=0; i<characters.length; i++) {
+                    self.CharacterList.push(characters[i]);
+                }
+                self.IsBusy(false);
             }
-            this.IsBusy(false);
-        }
+        }, 50);
         return true;
     }
 

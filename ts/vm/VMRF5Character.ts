@@ -27,11 +27,11 @@ class VMRF5Character implements IVMRF5Slot {
         this.IsSafetyOn = ko.observable(true);
         this.IsItemGroupCollapsed = {
             "weapon":    ko.observable(false),
-            "shield":    ko.observable(true),
-            "headgear":  ko.observable(true),
-            "armor":     ko.observable(true),
-            "boots":     ko.observable(true),
-            "accessory": ko.observable(true)
+            "shield":    ko.observable(false),
+            "headgear":  ko.observable(false),
+            "armor":     ko.observable(false),
+            "boots":     ko.observable(false),
+            "accessory": ko.observable(false)
         }
 
         this.SpriteUri = ko.computed(function() {

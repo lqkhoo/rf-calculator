@@ -15,7 +15,7 @@ The data is from Kuroba's data dump of v1.0.0 of the Japanese release. Given the
 
 I scanned through the Japanese wiki and fixed a couple of data points:
 * Platinum Shield+ didn't have resistances.
-* Wind Mantle has 10% wind resistance (patched in game JP v1.0.7)
+* Wind Mantle should have 10% wind resistance (patched in game JP v1.0.7)
 * Elven Mantle was slightly buffed in JP v1.0.7.
 
 # For developers

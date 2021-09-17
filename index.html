@@ -30,7 +30,7 @@
                         <div class="row">
                             <h4 class="title">Rune Factory 5 Gear Calculator</h4>
                             <div class="fullscreen-alert d-xs-block d-sm-block d-md-block d-lg-none d-xl-none alert alert-primary d-flex align-items-center">
-                                <small>フルスクリーン推奨&nbsp;Recommend fullscreen</small>
+                                <small>フルスクリーン推奨&nbsp;&nbsp;Best viewed in fullscreen</small>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                             <div>
@@ -38,7 +38,7 @@
                                     <tbody>
                                         <tr>
                                             <td rowspan="2">
-                                                <button class="btn">例 Example</button>
+                                                <button class="btn" data-bind="click: $root.OnExampleClickHandler">例 Example</button>
                                                 <button class="btn" data-bs-toggle="modal" data-bs-target="#save-modal" data-bind="click: $root.OnSaveToJsonClickHandler">セーブ Save</button>
                                                 <button class="btn" data-bs-toggle="modal" data-bs-target="#load-modal">ロード Load</button>
                                                 <button class="btn btn-secondary">Github</button>
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
                 <div class="row">
                     <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"></div>
                     <div class="col">
@@ -75,7 +75,7 @@
                         <ul id="character-tabs" class="nav nav-tabs" role="tablist" >
                             <!-- ko foreach: CharacterList -->
                                 <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
-                                    <li class="nav-item" role="presentation">
+                                    <li class="nav-item character" role="presentation">
                                         <button class="nav-link" data-bind="attr: { 'data-bs-target': '#character-'+ characterIdx }" data-bs-toggle="tab" role="tab">
                                             <img class="icon" data-bind="attr: { src: image_uri() }"/>
                                         </button>
@@ -124,7 +124,6 @@
                                             <th colspan="12"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
                                             <th colspan="8"><span class="lang jp">属性</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">ELE</span></th>
                                             <th colspan="12" class="box-shadow-override"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
-            
                                         </tr>
                                         <tr>
                                             <th><span class="lang stack jp">総</span><span class="lang stack en">LVL</span></th>
@@ -168,7 +167,7 @@
                                             <th><span class="lang stack jp">病</span><span class="lang stack en">SCK</span></th>
                                             <th><span class="lang stack jp">気</span><span class="lang stack en">FNT</span></th>
                                             <th><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
-                                            <th><span class="lang stack jp">速</span><span class="lang stack en">CHG</span></th>
+                                            <th><span class="lang stack jp">チャ</span><span class="lang stack en">CHG</span></th>
                                             <th><span class="lang stack jp">長</span><span class="lang stack en">LNG</span></th>
             
                                         </tr>
@@ -272,8 +271,8 @@
             <div class="modal-body">
                 <textarea id="json-deserialize-target"></textarea>
                 <div>
-                    <span class="lang jp">セーブしたテキストをここにコピーアンドペーストして下さい。</span>
-                    <span class="lang en">Paste the text previously saved in the space above.</span>
+                    <span class="lang jp">セーブしたテキストをここにコピーアンドペーストして下さい。データによって少し時間が掛かります。</span>
+                    <span class="lang en">Paste the text previously saved in the space above. Loading will take a few moments.</span>
                 </div>
             </div>
             <div class="modal-footer">
