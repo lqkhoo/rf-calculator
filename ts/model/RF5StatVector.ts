@@ -113,7 +113,7 @@ abstract class RF5StatVector implements IRF5StatVector {
 
     constructor(id: number, useEquipmentStats: boolean=false) {
 
-        var self = this;
+        const self = this;
         // Although the context has id, we don't use it directly.
         // We derive the context from id, rather than the other way around.
         this.id = ko.observable(id);
@@ -231,7 +231,7 @@ abstract class RF5StatVector implements IRF5StatVector {
     }
 
     protected _compute_string_helper = (fieldName: StatVectorKey, defaultValue: string) => {
-        var self = this;
+        const self = this;
         return function(): string {
             let val: string = defaultValue;
             let ctx: any = (self.Context() as any);
@@ -243,7 +243,7 @@ abstract class RF5StatVector implements IRF5StatVector {
     }
 
     protected _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number, isPercent: boolean=false) => {
-        var self = this;
+        const self = this;
         return function(): number {
             let val: number = defaultValue;
             let ctx: any = (self.Context() as any);

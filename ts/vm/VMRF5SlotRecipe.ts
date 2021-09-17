@@ -18,7 +18,7 @@ class VMRF5SlotRecipe extends VMRF5Slot {
         super(model)
         this.Model = model;
 
-        var self = this;
+        const self = this;
         this.IsRestricted = ko.pureComputed(function() {
             return self.Model.Restriction() !== 0;
         });

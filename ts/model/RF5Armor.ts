@@ -5,8 +5,8 @@ import IRF5Character = require('./IRF5Character');
     
 class RF5Armor extends RF5Item {
 
-    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
-        super(character, "armor", item_id);
+    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID, deserializedObject: any=undefined) {
+        super(character, "armor", item_id, deserializedObject);
     }
 
 }

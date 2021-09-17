@@ -13,7 +13,7 @@ class VectorCoreBonus extends RF5StatVector {
 
     constructor(item: IRF5Item) {
         super(0, false);
-        var self = this;
+        const self = this;
 
         this.Item = ko.observable(item);
         this.HasCoreBonus = ko.pureComputed(self._compute_hasCoreBonus);

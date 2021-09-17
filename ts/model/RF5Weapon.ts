@@ -25,9 +25,9 @@ class RF5Weapon extends RF5Item {
     readonly MagicIdCharge2Name: ko.PureComputed<string>;
     readonly MagicIdCharge3Name: ko.PureComputed<string>;
 
-    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
-        super(character, "weapon", item_id);
-        var self = this;
+    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID, deserializedObject: any=undefined) {
+        super(character, "weapon", item_id, deserializedObject);
+        const self = this;
 
         this.stat_chargespeed = ko.pureComputed(self._compute_stat_chargespeed);
         this.stat_attacklength = ko.pureComputed(self._compute_stat_attacklength);
@@ -147,7 +147,7 @@ class RF5Weapon extends RF5Item {
 
 
     protected _compute_magicCharge_helper = (idx: number) => {
-        var self = this;
+        const self = this;
         // There are no available mappings for certain staves to their original spells, e.g.
         // the imo/turnip/meteor staff vs the original charged magics so let's just
         // glom all of those into "original magic" and work from there.

@@ -47,10 +47,13 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
 
     readonly ViewModel: VMRF5Slot;
 
-    constructor(item: IRF5Item, index: number, item_id: number, useEquipmentStats: boolean=false) {
-        
+    constructor(item: IRF5Item,
+                index: number,
+                item_id: number,
+                useEquipmentStats: boolean=false) {
+                    
         super(item_id, useEquipmentStats);
-        var self = this;
+        const self = this;
 
         this.LevelOverride = ko.observable(10); // Set default to 10 for convenience;
 
@@ -152,6 +155,10 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         return this.ChangeIdScoper(id);
     }
 
+    public toJSON = (): any => {
+        return this.id();
+    }
+
 
     protected _compute_isUnderObjectX = (): boolean => { // Chained
         // ObjectX doesn't work in recipe slots.
@@ -244,8 +251,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         } else if(this.Index > 1) {
             return this.Item().GetSlotByIndex(1).LightOreCount();
         } else {
-            // Light ore usage is in ANY recipe slot, so we need to check all slots,
-            // even if we're not counting. We're not saving any computation here.
+            // Light ore usage is in ANY recipe slot, so we need to check all slots.
             let count = 0;
             for(var i=1; i<RF5Slot.ARRANGE_START_IDX; i++) {
                 if (Data.IsLightOre(this.Item().GetSlotByIndex(i).id())) {
@@ -315,7 +321,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     //   image, name, level, rarity remain as fold steel.
     // Otherwise use the normal item context.
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number, isPercent: boolean=false) => {
-        var self = this;
+        const self = this;
         return function(): number {
             let val: number = defaultValue;
             let ctx: any;

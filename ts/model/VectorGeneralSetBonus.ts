@@ -20,7 +20,7 @@ class VectorGeneralSetBonus extends RF5StatVector {
 
     constructor(character: IRF5Character) {
         super(0, false);
-        var self = this;
+        const self = this;
 
         this.stat_ATK = ko.pureComputed(function() {
             if(! self.HasGeneralSetBonus()) { return 0; }

@@ -10,16 +10,16 @@ $grid-breakpoints: (
     md: 1400px,
     lg: 1600px,
     xl: 1800px,
-    xxl: 1800px
+    // xxl: 1800px
 );
 
 $container-max-widths: (
-    xs: 1400px,
-    sm: 1400px,
+    xs: 1398px,
+    sm: 1399px,
     md: 1400px,
     lg: 1600px,
     xl: 1800px,
-    xxl: 1800px
+    // xxl: 1800px
 );
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
@@ -37,8 +37,6 @@ $container-max-widths: (
 
 
 
-
-
 // $backgroundcolor: #f9f6d2;
 $backgroundcolor: #eeeeee;
 $floatTableBoxShadowColor: #CDCDCD;
@@ -48,7 +46,7 @@ $lightBorderColor: #cccccc;
 $icon-group-width: 200px;
 $icon-group-autoselect-width:250px;
 $icon-size: 40px;
-$icon-small-size: 32px;
+$icon-small-size: 36px; // 32px;
 $icon-group-font-size: 13px;
 $icon-group-small-font-size: 12px;
 $border-indent-1: 5px;
@@ -64,11 +62,11 @@ span.lang {
     display: none;
 }
 
-body .lang_en .lang.en {
+.lang_en .lang.en {
     display: inline-block;
 }
 
-body .lang_jp .lang.jp {
+.lang_jp .lang.jp {
     display: inline-block;
 }
 
@@ -88,6 +86,22 @@ body {
 #main {
     overflow-x: visible;
     padding-bottom: 120px;
+}
+
+.nav-table button {
+    width: auto;
+    border: 1px solid #aaaaaa;
+    padding: 3px 10px;
+    box-shadow: 0 1px 1px #ffffff inset;
+}
+.nav-table .form-switch {
+    margin-left: 10px;
+}
+
+.ajax-loader {
+    height: 40px;
+    width: 40px;
+    margin-top: 18px;
 }
 
 h4.title {
@@ -128,16 +142,13 @@ h4.title {
     background: rgb(13 110 253 / 25%);
 }
 
-.stats-table-wrapper {
-    padding: 10px;
-    box-shadow: 0 0 5px;
-    background: rgba(247,247,247,0.9);
-}
-
 .stats-table {
     // table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0;
+    padding: 10px;
+    box-shadow: 0 0 5px;
+    background: rgba(247,247,247,0.9);
 
     thead {
         position: sticky;
@@ -498,3 +509,29 @@ button.group-header.collapsed::before {
     position: fixed;
     bottom: 0;
 }
+
+.modal textarea {
+    width: 100%;
+    height: 320px;
+    font-size: 12px;
+}
+
+.alert {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.fullscreen-alert.alert {
+    position: relative;
+    width: auto;
+    top: auto;
+    margin-left: 20px;
+    padding: 5px 10px;
+}
+.fullscreen-alert.alert small {
+    position: relative;
+    top: -2px;
+}
+

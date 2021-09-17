@@ -18,7 +18,7 @@ class RF5SlotRecipe extends RF5Slot {
     constructor(item: RF5Item, index: number, item_id: number=RF5Slot.DEFAULT_ITEM_ID) {
 
         super(item, index, item_id);
-        var self = this;
+        const self = this;
 
         this.Restriction = ko.observable(0);
 
@@ -51,7 +51,7 @@ class RF5SlotRecipe extends RF5Slot {
             this.ChangeId(id);
         } else {
             // Category restriction. If current item not in category, set to zero.
-            let itemIds: number[] = (Data.Categories as any)[id].item_ids;
+            const itemIds: number[] = (Data.Categories as any)[id].item_ids;
             let found: boolean = false;
             for(var i=0; i<itemIds.length; i++) {
                 if(id === itemIds[i]) {

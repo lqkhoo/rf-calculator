@@ -52,10 +52,12 @@ class RF5Character extends RF5StatVector implements IRF5Character {
 
     override readonly Context: ko.PureComputed<any>;
 
-    constructor(planner: IRF5Planner, characterId: number=RF5Character.DEFAULT_CHARACTER_ID) {
+    constructor(planner: IRF5Planner,
+                characterId: number=RF5Character.DEFAULT_CHARACTER_ID,
+                deserializedObject: any=undefined) {
 
         super(characterId);
-        var self = this;
+        const self = this;
 
         this.Planner     = planner;
 
@@ -86,51 +88,73 @@ class RF5Character extends RF5StatVector implements IRF5Character {
 
         this.ViewModel = new VMRF5Character(this);
 
-        this.AddWeapon();
-        this.AddShield();
-        this.AddHeadgear();
-        this.AddArmor();
-        this.AddAccessory();
-        this.AddBoots();
+        if(deserializedObject === undefined) {
+            this.AddWeapon();
+            this.AddShield();
+            this.AddHeadgear();
+            this.AddArmor();
+            this.AddAccessory();
+            this.AddBoots();
+        } else {
+            this.FromDeserializedObject(deserializedObject);
+        }
+    }
+
+    protected FromDeserializedObject = (obj: any): void => {
+        console.log(obj);
+        this.id(obj.id);
+        const accessories = obj.Accessories;
+        const armors = obj.Armors;
+        const boots = obj.Boots;
+        const headgears = obj.Headgears;
+        const shields = obj.Shields;
+        const weapons = obj.Weapons;
+        for(let i=0; i<accessories.length; i++) { this.AddAccessory(accessories[i]); }
+        for(let i=0; i<armors.length; i++) { this.AddArmor(armors[i]); }
+        for(let i=0; i<boots.length; i++) { this.AddBoots(boots[i]); }
+        for(let i=0; i<headgears.length; i++) { this.AddHeadgear(headgears[i]); }
+        for(let i=0; i<shields.length; i++) { this.AddShield(shields[i]); }
+        for(let i=0; i<weapons.length; i++) { this.AddWeapon(weapons[i]); }
     }
 
 
-    public AddAccessory = (): void => {
-        this.Accessories.push(new RF5Accessory(this));
-        if(this.Accessories().length === 1) {
+    public AddAccessory = (deserializedObject: any=undefined): void => {
+        this.Accessories.push(new RF5Accessory(this, 0, deserializedObject));
+        if(this.Accessories().length === 1 && deserializedObject === undefined) {
             this.Accessories()[0].IsActive(true);
         }
     }
-    public AddArmor = (): void => {
-        this.Armors.push(new RF5Armor(this));
-        if(this.Armors().length === 1) {
+    public AddArmor = (deserializedObject: any=undefined): void => {
+        this.Armors.push(new RF5Armor(this, 0, deserializedObject));
+        if(this.Armors().length === 1 && deserializedObject === undefined) {
             this.Armors()[0].IsActive(true);
         }
     }
-    public AddBoots = (): void => {
-        this.Boots.push(new RF5Boot(this));
-        if(this.Boots().length === 1) {
+    public AddBoots = (deserializedObject: any=undefined): void => {
+        this.Boots.push(new RF5Boot(this, 0, deserializedObject));
+        if(this.Boots().length === 1 && deserializedObject === undefined) {
             this.Boots()[0].IsActive(true);
         }
     }
-    public AddHeadgear = (): void => {
-        this.Headgears.push(new RF5Headgear(this));
-        if(this.Headgears().length === 1) {
+    public AddHeadgear = (deserializedObject: any=undefined): void => {
+        this.Headgears.push(new RF5Headgear(this, 0, deserializedObject));
+        if(this.Headgears().length === 1 && deserializedObject === undefined) {
             this.Headgears()[0].IsActive(true);
         }
     }
-    public AddShield = (): void => {
-        this.Shields.push(new RF5Shield(this));
-        if(this.Shields().length === 1) {
+    public AddShield = (deserializedObject: any=undefined): void => {
+        this.Shields.push(new RF5Shield(this, 0, deserializedObject));
+        if(this.Shields().length === 1 && deserializedObject === undefined) {
             this.Shields()[0].IsActive(true);
         }
     }
-    public AddWeapon = (): void => {
-        this.Weapons.push(new RF5Weapon(this));
-        if(this.Weapons().length === 1) {
+    public AddWeapon = (deserializedObject: any=undefined): void => {
+        this.Weapons.push(new RF5Weapon(this, 0, deserializedObject));
+        if(this.Weapons().length === 1 && deserializedObject === undefined) {
             this.Weapons()[0].IsActive(true);
         }
     }
+
     public DeleteItem = (equipmentType: EquipmentType, item: IRF5Item): void => {
         let array: ko.ObservableArray<IRF5Item>;
         switch(equipmentType) {
@@ -161,6 +185,18 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         }
         for(var i=0; i<array.length; i++) {
             array[i].IsActive(i===idx);
+        }
+    }
+
+    public toJSON = (): any => {
+        return {
+            id: this.id(),
+            Accessories: this.Accessories(),
+            Armors: this.Armors(),
+            Boots: this.Boots(),
+            Headgears: this.Headgears(),
+            Shields: this.Shields(),
+            Weapons: this.Weapons()
         }
     }
 
@@ -226,7 +262,7 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     }
 
     protected _compute_hasRareCan = (): boolean => {
-        let activeWeaponIdx: number = this.ActiveWeaponIdx();
+        const activeWeaponIdx: number = this.ActiveWeaponIdx();
         if(activeWeaponIdx === -1 ) { return false; }
         return this.Weapons()[activeWeaponIdx].HasRareCan();
     }

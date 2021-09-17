@@ -10,7 +10,7 @@ class VectorLevelBonus extends RF5StatVector {
 
     constructor(item: IRF5Item) {
         super(0, false);
-        var self = this;
+        const self = this;
 
         this.Item = ko.observable(item);
 

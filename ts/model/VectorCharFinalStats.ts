@@ -17,7 +17,7 @@ class VectorCharFinalStats extends RF5StatVector {
     
     constructor(character: IRF5Character) {
         super(0, false);
-        var self = this;
+        const self = this;
 
         this.level     = ko.pureComputed(function() { return 0; });
         this.rarity    = ko.pureComputed(function() { return 0; });
@@ -74,7 +74,7 @@ class VectorCharFinalStats extends RF5StatVector {
     }
 
     protected override _compute_number_helper = (fieldName: StatVectorKey, _defaultValue: number) => {
-        var self = this;
+        const self = this;
         return function(): number {
             return ((self.Character().GetStatByName(fieldName) as number)
                         + (self.Character().EquipmentStats().GetStatByName(fieldName) as number));

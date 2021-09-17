@@ -13,7 +13,7 @@ class VectorCharEquipmentStats extends RF5StatVector {
 
     constructor(character: IRF5Character) {
         super(0, false);
-        var self = this;
+        const self = this;
 
         this.level     = ko.pureComputed(function() { return 0; });
         this.rarity    = ko.pureComputed(function() { return 0; });
@@ -74,13 +74,14 @@ class VectorCharEquipmentStats extends RF5StatVector {
     }
 
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number) => {
-        var self = this;
+        const self = this;
         return function(): number {
 
             let val: number = defaultValue;
             let item: IRF5Item;
             let accumulate = function(_item: IRF5Item) {
                 item = _item;
+                // In this case we can skip if id === 0
                 val += (item.id() === 0) ? 0 : (item.GetStatByName(fieldName) as number);
             };
             let activeIdx: number = self.Character().ActiveWeaponIdx();

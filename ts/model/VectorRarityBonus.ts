@@ -15,7 +15,7 @@ class VectorRarityBonus extends RF5StatVector {
 
     constructor(item: IRF5Item) {
         super(0, false);
-        var self = this;
+        const self = this;
 
         this.Item = ko.observable(item);
         this.RarityStatType = ko.pureComputed(function() {
@@ -89,7 +89,7 @@ class VectorRarityBonus extends RF5StatVector {
         
         this.stat_MDF = ko.pureComputed(function() {
             let val: number = 0;
-            if(self.RarityStatType() === "DEF") {
+            if(self.RarityStatType() === "MDEF") {
                 let rar: number = self.Item().rarity();
                 if(rar >= 25) { val = 3; }
                 if(rar >= 50) { val = 10; }

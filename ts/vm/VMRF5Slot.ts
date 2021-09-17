@@ -24,7 +24,7 @@ class VMRF5Slot implements IVMRF5Slot {
     static readonly SearchStringsCache: Record<string, any[]> = {};
 
     constructor(model: IRF5Slot) {
-        var self = this;
+        const self = this;
         this.Model = model;
 
         // const isCollapsed: boolean = this.Model.Item().ViewModel.IsCollapsed();

@@ -48,11 +48,13 @@ class RF5Item extends RF5StatVector implements IRF5Item {
 
     readonly ViewModel: VMRF5Item;
 
-    constructor(character: IRF5Character, equipment_type: EquipmentType,
-                    character_id: number=RF5Item.DEFAULT_ITEM_ID) {
+    constructor(character: IRF5Character,
+                equipment_type: EquipmentType,
+                item_id: number=RF5Item.DEFAULT_ITEM_ID,
+                deserializedObject: any=undefined) {
         
-        super(character_id);
-        var self = this;
+        super(item_id);
+        const self = this;
 
         this.id = ko.pureComputed(function() {
             if(self.BaseItem() === undefined) { return 0; }
@@ -118,28 +120,35 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         this.ViewModel = new VMRF5Item(this); // Needs to be before slots
 
         let i = 0;
-        this.BaseItem = ko.observable(new RF5SlotBaseItem(this, i));
+        let arr: number[];
+        if(deserializedObject !== undefined) {
+            this.IsActive(deserializedObject.isActive);
+            arr = deserializedObject.slots;
+        } else {
+            arr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        }
+        this.BaseItem = ko.observable(new RF5SlotBaseItem(this, i, arr[i]));
         i++;
         this.RecipeSlots = ko.observableArray([]);
         for(var j=0; j<RF5Item.NSLOTS_RECIPE; j++) {
-            this.RecipeSlots.push(new RF5SlotRecipe(this, i));
+            this.RecipeSlots.push(new RF5SlotRecipe(this, i, arr[i]));
             i++;
         }
         this.ArrangeSlots = ko.observableArray([]);
         for(var j=0; j<RF5Item.NSLOTS_ARRANGE; j++) {
-            this.ArrangeSlots.push(new RF5SlotArrange(this, i));
+            this.ArrangeSlots.push(new RF5SlotArrange(this, i, arr[i]));
             i++
         }
         this.UpgradeSlots = ko.observableArray([]);
         for(var j=0; j<RF5Item.NSLOTS_UPGRADE; j++) {
-            this.UpgradeSlots.push(new RF5SlotUpgrade(this, i));
+            this.UpgradeSlots.push(new RF5SlotUpgrade(this, i, arr[i]));
             i++;
         }
+        this.ApplyRecipeRestrictions(this.BaseItem());
 
         // Certain attributes have to be initialized after all slots because they need
-        // the RF5Slots themselves or observables to have been initialize.
+        // the RF5Slots themselves or observables to have been initialized.
         this.HasClover = ko.pureComputed(self._compute_hasClover);
-
     }
 
 
@@ -200,6 +209,25 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         }
     }
     
+    public toJSON = (): any => {
+        let array: IRF5Slot[] = [];
+        array.push(this.BaseItem());
+        for(let i=0; i<this.RecipeSlots().length; i++) {
+            array.push(this.RecipeSlots()[i]);
+        }
+        for(let i=0; i<this.ArrangeSlots().length; i++) {
+            array.push(this.ArrangeSlots()[i]);
+        }
+        for(let i=0; i<this.UpgradeSlots().length; i++) {
+            array.push(this.UpgradeSlots()[i]);
+        }
+        let obj: any = {
+            isActive: this.IsActive(),
+            slots: array
+        };
+        return obj;
+    }
+
     protected _compute_hasClover = (): boolean => {
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
             let id = this.GetSlotByIndex(i).id();
@@ -210,14 +238,18 @@ class RF5Item extends RF5StatVector implements IRF5Item {
     }
 
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number) => {
-        var self = this;
+        const self = this;
         return function(): number {
 
             let val: number = defaultValue;
             let slot: IRF5StatVector;
-            let accumulate = function(_slot: IRF5StatVector) {
+            let accumulate = function(_slot: IRF5StatVector, skipIdZero: boolean=true) {
                 slot = _slot;
-                val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);
+                if(skipIdZero) {
+                    val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);
+                } else {
+                    val += (slot.GetStatByName(fieldName) as number);
+                }
             };
 
             accumulate(self.BaseItem());
@@ -230,9 +262,9 @@ class RF5Item extends RF5StatVector implements IRF5Item {
             for(let i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
                 accumulate(self.UpgradeSlots()[i]);
             }
-            accumulate(self.LevelBonus());
-            accumulate(self.RarityBonus());
-            accumulate(self.CoreBonus());
+            accumulate(self.LevelBonus(), false);
+            accumulate(self.RarityBonus(), false);
+            accumulate(self.CoreBonus(), false);
             return val;
         };
     }

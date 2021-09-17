@@ -21,7 +21,7 @@ class VMRF5Character implements IVMRF5Slot {
     readonly SpriteAdjustment: ko.Observable<string>;
 
     constructor(model: IRF5Character) {
-        var self = this;
+        const self = this;
         this.Model = model;
 
         this.IsSafetyOn = ko.observable(true);
@@ -46,10 +46,6 @@ class VMRF5Character implements IVMRF5Slot {
                 let width = img.naturalWidth;
                 let scalingCoeff = Math.min(MAX_HEIGHT / height, 1.0);
                 let scaledWidth = scalingCoeff * width;
-                console.log(height);
-                console.log(width);
-                console.log(scalingCoeff);
-                console.log(scaledWidth);
                 self.SpriteAdjustment(((COL_WIDTH - scaledWidth) / 2 + BIAS).toString()+'px');
             }
             return uri;

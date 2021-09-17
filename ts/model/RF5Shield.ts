@@ -14,9 +14,9 @@ class RF5Shield extends RF5Item {
     readonly HasTrueScale: ko.PureComputed<boolean>;
     readonly ShieldStatMultiplier: ko.PureComputed<number>;
 
-    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID) {
-        super(character, "shield", item_id);
-        var self = this;
+    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID, deserializedObject: any=undefined) {
+        super(character, "shield", item_id, deserializedObject);
+        const self = this;
 
         this.stat_ATK = ko.pureComputed(self._compute_stat_ATK);
         this.stat_DEF = ko.pureComputed(self._compute_stat_DEF);
@@ -62,14 +62,18 @@ class RF5Shield extends RF5Item {
     }
 
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number, _isPercent: boolean=false) => {
-        var self = this;
+        const self = this;
         return function(): number {
 
             let val: number = defaultValue;
             let slot: IRF5StatVector;
-            let accumulate = function(_slot: IRF5StatVector) {
+            let accumulate = function(_slot: IRF5StatVector, skipIdZero: boolean=true) {
                 slot = _slot;
-                val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);
+                if(skipIdZero) {
+                    val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);
+                } else {
+                    val += (slot.GetStatByName(fieldName) as number);
+                }
             };
 
             accumulate(self.BaseItem());
@@ -82,8 +86,8 @@ class RF5Shield extends RF5Item {
             for(let i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
                 accumulate(self.UpgradeSlots()[i]);
             }
-            accumulate(self.LevelBonus());
-            accumulate(self.RarityBonus());
+            accumulate(self.LevelBonus(), false);
+            accumulate(self.RarityBonus(), false);
             return self.ShieldStatMultiplier() * val;
         };
     }
