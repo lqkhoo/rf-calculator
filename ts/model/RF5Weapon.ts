@@ -7,7 +7,7 @@ import IRF5Character = require('./IRF5Character');
 // Children
 import RF5StatVector = require('./RF5StatVector');
 // Data
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
 import VectorDualSmith = require('./VectorDualSmith');
 import IRF5StatVector = require('./IRF5StatVector');
@@ -110,7 +110,7 @@ class RF5Weapon extends RF5Item {
     protected _compute_hasRareCan = (): boolean => {
         if(this.EquipmentType === "weapon") {
             for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
-                if(Data.IsRareCan(this.GetSlotByIndex(i).id())) { return true; }
+                if(RF5Data.IsRareCan(this.GetSlotByIndex(i).id())) { return true; }
             }
         }
         return false;
@@ -119,7 +119,7 @@ class RF5Weapon extends RF5Item {
     protected _compute_hasScrapMetalPlus = (): boolean => {
         if(this.EquipmentType === "weapon") {
             for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
-                if(Data.IsScrapMetalPlus(this.GetSlotByIndex(i).id())) { return true; }
+                if(RF5Data.IsScrapMetalPlus(this.GetSlotByIndex(i).id())) { return true; }
             }
         }
         return false;
@@ -128,7 +128,7 @@ class RF5Weapon extends RF5Item {
     protected _compute_hasShadeStone = (): boolean => {
         if(this.EquipmentType === "weapon") {
             for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
-                if(Data.IsShadeStone(this.GetSlotByIndex(i).id())) { return true; }
+                if(RF5Data.IsShadeStone(this.GetSlotByIndex(i).id())) { return true; }
             }
         }
         return false;
@@ -169,7 +169,7 @@ class RF5Weapon extends RF5Item {
             }
         }
         // Now get the element from the context
-        ctx = (Data.Items as any)[id];
+        ctx = (RF5Data.Items as any)[id];
         if(ctx.element !== undefined) { // Shouldn't be undefined if Data is consistent.
             ele = ctx.element;
         }
@@ -177,10 +177,10 @@ class RF5Weapon extends RF5Item {
         // Crystals influence elements from both arrange and upgrade slots.
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
             let slot: IRF5Slot = this.GetSlotByIndex(i);
-            if(! Data.IsEleCrystal(slot.id())) {
+            if(! RF5Data.IsEleCrystal(slot.id())) {
                 continue;
             }
-            ele = this._crossElement(ele, ((Data.Items as any)[slot.id()].element as ElementType));
+            ele = this._crossElement(ele, ((RF5Data.Items as any)[slot.id()].element as ElementType));
         }
         return ele;
     };
@@ -279,7 +279,7 @@ class RF5Weapon extends RF5Item {
         // glom all of those into "original magic" and work from there.
         return function() {
             let magicId: number = 0;
-            if(! Data.IsStaff(self.id())) {
+            if(! RF5Data.IsStaff(self.id())) {
                 return 0;
             } else {
                 magicId = self.id() // Fake original magic ids with item id because we don't have the data.
@@ -289,7 +289,7 @@ class RF5Weapon extends RF5Item {
                 let slotMagicId: number;
                 let slotItemId: number;
                 slotItemId = self.GetSlotByIndex(i).id();
-                slotMagicId = (Data.Items as any)[slotItemId]["magic_charge"+idx.toString()]
+                slotMagicId = (RF5Data.Items as any)[slotItemId]["magic_charge"+idx.toString()]
                 if (slotMagicId === 0) { continue; }
                 else { magicId = slotMagicId; }
             }
@@ -307,21 +307,21 @@ class RF5Weapon extends RF5Item {
         let magicId: number = this.MagicIdCharge1();
         if(magicId === 0) { return "NONE" }
         if(magicId > 200) { return "original1" }
-        return (Data.Magics as any)[magicId];
+        return (RF5Data.Magics as any)[magicId];
     }
 
     protected _compute_magicCharge2Name = (): string => {
         let magicId: number = this.MagicIdCharge2();
         if(magicId === 0) { return "NONE" }
         if(magicId > 200) { return "original2" }
-        return (Data.Magics as any)[magicId];
+        return (RF5Data.Magics as any)[magicId];
     }
 
     protected _compute_magicCharge3Name = (): string => {
         let magicId: number = this.MagicIdCharge3();
         if(magicId === 0) { return "NONE" }
         if(magicId > 200) { return "original3" }
-        return (Data.Magics as any)[magicId];
+        return (RF5Data.Magics as any)[magicId];
     }
 
 }

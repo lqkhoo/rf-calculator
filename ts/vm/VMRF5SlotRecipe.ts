@@ -5,7 +5,7 @@ import VMRF5Slot = require('./VMRF5Slot');
 // Model
 import IRF5SlotRecipe = require('../model/IRF5SlotRecipe');
 // Data
-import Data = require('../model/Data');
+import RF5Data = require('../model/RF5Data');
 import Utils = require('../Utils');
 
 class VMRF5SlotRecipe extends VMRF5Slot {
@@ -22,19 +22,19 @@ class VMRF5SlotRecipe extends VMRF5Slot {
 
         let items: any;
         if(cacheKey === "0") {
-            items = Data.Item_ids; // All items
-        } else if (cacheKey in Data.Item_ids) { // Single item
+            items = RF5Data.Item_ids; // All items
+        } else if (cacheKey in RF5Data.Item_ids) { // Single item
             items = {};
             items[cacheKey] = undefined;
         } else { // Category
             items = {};
-            var itemIds: number[] = (Data.Categories as any)[cacheKey].item_ids;
+            var itemIds: number[] = (RF5Data.Categories as any)[cacheKey].item_ids;
             for(var i=0; i<itemIds.length; i++) {
                 items[itemIds[i].toString()] = undefined;
             }
         }
 
-        let all_items: any = (Data.Items as any);
+        let all_items: any = (RF5Data.Items as any);
         _.forOwn(items, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = all_items[item_id].name_en;

@@ -4,7 +4,7 @@ import RF5SlotBaseItem = require('../model/RF5SlotBaseItem');
 // Super
 import VMRF5Slot = require('./VMRF5Slot');
 // Data
-import Data = require('../model/Data');
+import RF5Data = require('../model/RF5Data');
 import Utils = require('../Utils');
 
 class VMRF5SlotBaseItem extends VMRF5Slot {
@@ -21,15 +21,15 @@ class VMRF5SlotBaseItem extends VMRF5Slot {
 
         let self = this;
         let cacheKey: EquipmentType = (_cacheKey as EquipmentType);
-        let all_items: any = (Data.Items as any);
+        let all_items: any = (RF5Data.Items as any);
         let id_set: any;
         switch (cacheKey) {
-            case "weapon": id_set = Data.Is_eq_weapon; break;
-            case "shield": id_set = Data.Is_eq_shield; break;
-            case "headgear": id_set = Data.Is_eq_headgear; break;
-            case "armor": id_set = Data.Is_eq_armor; break;
-            case "boots": id_set = Data.Is_eq_shoes; break;
-            case "accessory": id_set = Data.Is_eq_accessory; break;
+            case "weapon": id_set = RF5Data.Is_eq_weapon; break;
+            case "shield": id_set = RF5Data.Is_eq_shield; break;
+            case "headgear": id_set = RF5Data.Is_eq_headgear; break;
+            case "armor": id_set = RF5Data.Is_eq_armor; break;
+            case "boots": id_set = RF5Data.Is_eq_shoes; break;
+            case "accessory": id_set = RF5Data.Is_eq_accessory; break;
         }
 
         _.forOwn(id_set, function(value: any, key: any) {

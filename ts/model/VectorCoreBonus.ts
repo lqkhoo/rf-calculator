@@ -4,7 +4,7 @@ import RF5StatVector = require('./RF5StatVector');
 // Parent
 import IRF5Item = require('./IRF5Item');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 
 class VectorCoreBonus extends RF5StatVector {
 
@@ -35,10 +35,10 @@ class VectorCoreBonus extends RF5StatVector {
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
             let id: number = this.Item().GetSlotByIndex(i).id();
             if(id === 0 ) { continue; }
-            if(Data.IsGreenCore(id)) { hasGreenCore = true; continue; }
-            if(Data.IsRedCore(id)) { hasRedCore = true; continue; }
-            if(Data.IsYellowCore(id)) { hasYellowCore = true; continue; }
-            if(Data.IsBlueCore(id)) { hasBlueCore = true; continue; }
+            if(RF5Data.IsGreenCore(id)) { hasGreenCore = true; continue; }
+            if(RF5Data.IsRedCore(id)) { hasRedCore = true; continue; }
+            if(RF5Data.IsYellowCore(id)) { hasYellowCore = true; continue; }
+            if(RF5Data.IsBlueCore(id)) { hasBlueCore = true; continue; }
         }
         return hasGreenCore && hasRedCore && hasYellowCore && hasBlueCore;
     }

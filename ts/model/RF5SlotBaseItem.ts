@@ -6,7 +6,7 @@ import RF5Slot = require('./RF5Slot');
 // VM
 import VMRF5SlotBaseItem = require('../vm/VMRF5SlotBaseItem');
 // Data
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 
 class RF5SlotBaseItem extends RF5Slot {
 

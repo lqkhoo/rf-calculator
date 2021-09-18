@@ -6,7 +6,7 @@ import RF5Item = require('./RF5Item');
 import IRF5Character = require('./IRF5Character');
 // Children
 import RF5StatVector = require('./RF5StatVector');
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
     
 class RF5Shield extends RF5Item {
@@ -32,7 +32,7 @@ class RF5Shield extends RF5Item {
             for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
                 let id: number = self.GetSlotByIndex(i).id();
                 if(id === 0) { continue; }
-                if(Data.IsTrueScale(id)) {
+                if(RF5Data.IsTrueScale(id)) {
                     hasScale = true;
                     break;
                 }
@@ -49,11 +49,11 @@ class RF5Shield extends RF5Item {
                 if(activeWeaponId === 0) {
                     return 1; // Active weapon is none. Full stats.
                 }
-                if(Data.WeaponTypeMap[activeWeaponId] === "sword") {
+                if(RF5Data.WeaponTypeMap[activeWeaponId] === "sword") {
                     return 1; // Sword. Full stats.
                 }
-                if(Data.WeaponTypeMap[activeWeaponId] === "dualblades"
-                        || Data.WeaponTypeMap[activeWeaponId] === "fists") {
+                if(RF5Data.WeaponTypeMap[activeWeaponId] === "dualblades"
+                        || RF5Data.WeaponTypeMap[activeWeaponId] === "fists") {
                     return self.HasTrueScale() ? 0.5 : 0;
                 }
                 return 0.5; // All other cases, half stats.

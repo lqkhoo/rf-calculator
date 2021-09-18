@@ -169,7 +169,7 @@ class TsvReader(object):
     @staticmethod
     def read_category_names(category_ids: set[int], categories: dict[int, RF5Category]):
 
-        with open('../tsv/map_categoryid_to_english_name.tsv') as f:
+        with open('../tsv/rf5/map_categoryid_to_english_name.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, name_en) = TsvReader.parse_name_tsv_row(row)
@@ -178,7 +178,7 @@ class TsvReader(object):
                 category = categories[id]
                 category.name_en = name_en
         
-        with open('../tsv/map_categoryid_to_japanese_name_shiftjis.tsv') as f:
+        with open('../tsv/rf5/map_categoryid_to_japanese_name_shiftjis.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, name_jp) = TsvReader.parse_name_tsv_row(row)
@@ -196,7 +196,7 @@ class TsvReader(object):
     @staticmethod
     def read_item_names(item_ids: set[int], items: dict[int, RF5Item]):
 
-        with open('../tsv/map_itemid_to_english_name.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_english_name.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, name_en) = TsvReader.parse_name_tsv_row(row)
@@ -205,7 +205,7 @@ class TsvReader(object):
                 item = items[id]
                 item.name_en = name_en
         
-        with open('../tsv/map_itemid_to_japanese_name_shiftjis.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_japanese_name_shiftjis.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, name_jp) = TsvReader.parse_name_tsv_row(row)
@@ -223,7 +223,7 @@ class TsvReader(object):
     @staticmethod
     def read_character_names(character_ids: set[int], characters: dict[int, RF5Character]):
 
-        with open('../tsv/map_characterid_to_english_name.tsv') as f:
+        with open('../tsv/rf5/map_characterid_to_english_name.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, name_en) = TsvReader.parse_name_tsv_row(row)
@@ -232,7 +232,7 @@ class TsvReader(object):
                 item = characters[id]
                 item.name_en = name_en
         
-        with open('../tsv/map_characterid_to_japanese_name_shiftjis.tsv') as f:
+        with open('../tsv/rf5/map_characterid_to_japanese_name_shiftjis.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, name_jp) = TsvReader.parse_name_tsv_row(row)
@@ -250,7 +250,7 @@ class TsvReader(object):
     @staticmethod
     def read_category_images(category_ids: set[int], categories: dict[int, RF5Category]):
         
-        with open('../tsv/map_categoryid_to_image.tsv') as f:
+        with open('../tsv/rf5/map_categoryid_to_image.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, image_uri) = TsvReader.parse_name_tsv_row(row)
@@ -262,7 +262,7 @@ class TsvReader(object):
     @staticmethod
     def read_item_images(item_ids: set[int], items: dict[int, RF5Item]):
         
-        with open('../tsv/map_itemid_to_image.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_image.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, image_uri) = TsvReader.parse_name_tsv_row(row)
@@ -274,7 +274,7 @@ class TsvReader(object):
     @staticmethod
     def read_character_images(character_ids: set[int], characters: dict[int, RF5Character]):
         
-        with open('../tsv/map_characterid_to_icon.tsv') as f:
+        with open('../tsv/rf5/map_characterid_to_icon.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 (id, image_uri) = TsvReader.parse_name_tsv_row(row)
@@ -283,7 +283,7 @@ class TsvReader(object):
                 character = characters[id]
                 character.image_uri = image_uri
 
-        with open('../tsv/map_characterid_to_sprites.tsv') as f:
+        with open('../tsv/rf5/map_characterid_to_sprites.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -409,7 +409,7 @@ class TsvReader(object):
         
     @staticmethod
     def read_item_rarity(items: dict[int, RF5Item]):
-        with open('../tsv/map_itemid_to_rarity.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_rarity.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -418,7 +418,7 @@ class TsvReader(object):
 
     @staticmethod
     def read_item_rarity_stat_type(items: dict[int, RF5Item]):
-        with open('../tsv/map_itemid_to_rarity_stat_type.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_rarity_stat_type.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -427,7 +427,7 @@ class TsvReader(object):
 
     @staticmethod
     def read_item_weapon_element(items: dict[int, RF5Item]):
-        with open('../tsv/map_itemid_to_weapon_element.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_weapon_element.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -436,7 +436,7 @@ class TsvReader(object):
 
     @staticmethod
     def read_item_crystal_element(items: dict[int, RF5Item]):
-        with open('../tsv/map_itemid_to_crystal_element.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_crystal_element.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -445,7 +445,7 @@ class TsvReader(object):
 
     @staticmethod
     def read_item_magic(items: dict[int, RF5Item]):
-        with open('../tsv/map_itemid_to_magicid.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_magicid.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -456,7 +456,7 @@ class TsvReader(object):
 
     @staticmethod
     def read_recipes(recipes: dict[int, List[int]]):
-        with open('../tsv/map_itemid_to_recipe.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_recipe.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -465,7 +465,7 @@ class TsvReader(object):
 
     @staticmethod
     def read_magics(magics: dict[int, str]):
-        with open('../tsv/map_magicid_to_name_shiftjis.tsv') as f:
+        with open('../tsv/rf5/map_magicid_to_name_shiftjis.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -474,14 +474,14 @@ class TsvReader(object):
 
     @staticmethod
     def read_effects(effects: dict[int, RF5Effect]):
-        with open('../tsv/map_itemid_to_effect_japanese_shiftjis.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_effect_japanese_shiftjis.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
                 desc_jp = row[1]
                 effects[id] = RF5Effect(id=id, desc_jp=desc_jp)
 
-        with open('../tsv/map_itemid_to_effect_english.tsv') as f:
+        with open('../tsv/rf5/map_itemid_to_effect_english.tsv') as f:
             reader = csv.reader(f, delimiter='\t')
             for row in reader:
                 id = int(row[0])
@@ -492,29 +492,29 @@ class TsvReader(object):
 
 if __name__ == '__main__':
     
-    category_ids:           set[int] = TsvReader.read_set_tsv('../tsv/set_categoryid.tsv')
-    item_ids:               set[int] = TsvReader.read_set_tsv('../tsv/set_itemid.tsv')
-    character_ids:          set[int] = TsvReader.read_set_tsv('../tsv/set_characterid.tsv')
+    category_ids:           set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_categoryid.tsv')
+    item_ids:               set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_itemid.tsv')
+    character_ids:          set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_characterid.tsv')
 
-    is_eq_2hsword:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_2hsword.tsv')
-    is_eq_accessory:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_accessory.tsv')
-    is_eq_armor:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_armor.tsv')
-    is_eq_axe:              set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_axe.tsv')
-    is_eq_dualblades:       set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_dualblades.tsv')
-    is_eq_farm_axe:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_axe.tsv')
-    is_eq_farm_fishingpole: set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_fishingpole.tsv')
-    is_eq_farm_hammer:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_hammer.tsv')
-    is_eq_farm_hoe:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_hoe.tsv')
-    is_eq_farm_sickle:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_sickle.tsv')
-    is_eq_farm_waterpot:    set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_farm_waterpot.tsv')
-    is_eq_fists:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_fists.tsv')
-    is_eq_hammer:           set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_hammer.tsv')
-    is_eq_headgear:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_headgear.tsv')
-    is_eq_shield:           set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_shield.tsv')
-    is_eq_shoes:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_shoes.tsv')
-    is_eq_spear:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_spear.tsv')
-    is_eq_staff:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_staff.tsv')
-    is_eq_sword:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_eq_sword.tsv')
+    is_eq_2hsword:          set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_2hsword.tsv')
+    is_eq_accessory:        set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_accessory.tsv')
+    is_eq_armor:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_armor.tsv')
+    is_eq_axe:              set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_axe.tsv')
+    is_eq_dualblades:       set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_dualblades.tsv')
+    is_eq_farm_axe:         set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_farm_axe.tsv')
+    is_eq_farm_fishingpole: set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_farm_fishingpole.tsv')
+    is_eq_farm_hammer:      set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_farm_hammer.tsv')
+    is_eq_farm_hoe:         set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_farm_hoe.tsv')
+    is_eq_farm_sickle:      set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_farm_sickle.tsv')
+    is_eq_farm_waterpot:    set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_farm_waterpot.tsv')
+    is_eq_fists:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_fists.tsv')
+    is_eq_hammer:           set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_hammer.tsv')
+    is_eq_headgear:         set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_headgear.tsv')
+    is_eq_shield:           set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_shield.tsv')
+    is_eq_shoes:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_shoes.tsv')
+    is_eq_spear:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_spear.tsv')
+    is_eq_staff:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_staff.tsv')
+    is_eq_sword:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_eq_sword.tsv')
     is_eq_weapon:           set[int] = (is_eq_2hsword | is_eq_axe | is_eq_dualblades | is_eq_farm_axe
                                         | is_eq_farm_fishingpole | is_eq_farm_hammer | is_eq_farm_hoe
                                         | is_eq_farm_sickle | is_eq_farm_waterpot | is_eq_fists
@@ -522,31 +522,31 @@ if __name__ == '__main__':
     is_equipment:           set[int] = (is_eq_weapon | is_eq_shield | is_eq_headgear | is_eq_armor
                                         | is_eq_shoes | is_eq_accessory)
 
-    is_mat_2foldsteel:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_2foldsteel.tsv')
-    is_mat_10foldsteel:     set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_10foldsteel.tsv')
-    is_mat_clawsandfangs:   set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_clawsandfangs.tsv')
-    is_mat_clothsandskins:  set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_clothsandskins.tsv')
-    is_mat_core:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_core.tsv')
-    is_mat_crystals:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_crystals.tsv')
-    is_mat_elecrystals:      set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_elecrystals.tsv')
-    is_mat_feathers:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_feathers.tsv')
-    is_mat_furs:            set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_furs.tsv')
-    is_mat_jewels:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_jewels.tsv')
-    is_mat_lightore:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_lightore.tsv')
-    is_mat_liquids:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_liquids.tsv')
-    is_mat_minerals:        set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_minerals.tsv')
-    is_mat_objectx:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_objectx.tsv')
-    is_mat_powdersandspores: set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_powdersandspores.tsv')
-    is_mat_scales:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_scales.tsv')
-    is_mat_shards:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_shards.tsv')
-    is_mat_shellsandbones:  set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_shellsandbones.tsv')
-    is_mat_sticksandstems:  set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_sticksandstems.tsv')
-    is_mat_stones:          set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_stones.tsv')
-    is_mat_strings:         set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_strings.tsv')
+    is_mat_2foldsteel:      set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_2foldsteel.tsv')
+    is_mat_10foldsteel:     set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_10foldsteel.tsv')
+    is_mat_clawsandfangs:   set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_clawsandfangs.tsv')
+    is_mat_clothsandskins:  set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_clothsandskins.tsv')
+    is_mat_core:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_core.tsv')
+    is_mat_crystals:        set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_crystals.tsv')
+    is_mat_elecrystals:      set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_elecrystals.tsv')
+    is_mat_feathers:        set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_feathers.tsv')
+    is_mat_furs:            set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_furs.tsv')
+    is_mat_jewels:          set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_jewels.tsv')
+    is_mat_lightore:        set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_lightore.tsv')
+    is_mat_liquids:         set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_liquids.tsv')
+    is_mat_minerals:        set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_minerals.tsv')
+    is_mat_objectx:         set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_objectx.tsv')
+    is_mat_powdersandspores: set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_powdersandspores.tsv')
+    is_mat_scales:          set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_scales.tsv')
+    is_mat_shards:          set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_shards.tsv')
+    is_mat_shellsandbones:  set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_shellsandbones.tsv')
+    is_mat_sticksandstems:  set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_sticksandstems.tsv')
+    is_mat_stones:          set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_stones.tsv')
+    is_mat_strings:         set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_strings.tsv')
     # Scales which provide scale bonus in shields.
-    is_mat_truescale:       set[int] = TsvReader.read_set_tsv('../tsv/set_is_mat_truescale.tsv')
+    is_mat_truescale:       set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_is_mat_truescale.tsv')
 
-    has_effect:             set[int] = TsvReader.read_set_tsv('../tsv/set_has_effect.tsv')
+    has_effect:             set[int] = TsvReader.read_set_tsv('../tsv/rf5/set_has_effect.tsv')
 
 
     categories:   dict[int, RF5Category] = {}
@@ -568,13 +568,13 @@ if __name__ == '__main__':
     TsvReader.read_character_images(character_ids, characters)
 
     # Raw stats
-    TsvReader.read_item_stats('../tsv/map_itemid_to_strengthening_data.tsv', items)
-    TsvReader.read_character_stats('../tsv/map_characterid_to_stats.tsv', characters)
+    TsvReader.read_item_stats('../tsv/rf5/map_itemid_to_strengthening_data.tsv', items)
+    TsvReader.read_character_stats('../tsv/rf5/map_characterid_to_stats.tsv', characters)
 
     # Handle base item subset
     TsvReader.read_item_names(item_ids, base_items)
     TsvReader.read_item_images(item_ids, base_items)
-    base_item_ids = TsvReader.read_item_stats('../tsv/map_itemid_to_baseitem_stats_data.tsv', base_items)
+    base_item_ids = TsvReader.read_item_stats('../tsv/rf5/map_itemid_to_baseitem_stats_data.tsv', base_items)
     
     for key in list(base_items.keys()):
         if not key in base_item_ids:
@@ -629,7 +629,7 @@ if __name__ == '__main__':
     def json_dump_object(obj: object) -> str:
         return json.dumps(obj, default=lambda o: o.__dict__, sort_keys=True, indent=2)
 
-    filename: str = '../ts/rawdata.ts'
+    filename: str = '../ts/rf5-rawdata.ts'
     variablename: str = '_RAWDATA'
 
     with open(filename, 'w+') as f:

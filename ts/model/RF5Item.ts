@@ -19,7 +19,7 @@ import VectorCoreBonus = require('./VectorCoreBonus');
 // VM
 import VMRF5Item = require('../vm/VMRF5Item');
 // Data
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 
 
 class RF5Item extends RF5StatVector implements IRF5Item {
@@ -158,12 +158,12 @@ class RF5Item extends RF5StatVector implements IRF5Item {
     public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
         const self = this;
         const baseitemId: number = baseItem.id();
-        const recipes: any = (Data.Recipes as any);
+        const recipes: any = (RF5Data.Recipes as any);
         const n = this.RecipeSlots().length; // should be 6;
 
         let ids: number[];
         if(recipes.hasOwnProperty(baseitemId)) {
-            ids = (Data.Recipes as any)[baseitemId];
+            ids = (RF5Data.Recipes as any)[baseitemId];
         } else {
             ids = [];
         }
@@ -247,7 +247,7 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
             let id = this.GetSlotByIndex(i).id();
             if(id === 0) { continue; }
-            if(Data.IsClover(id) || Data.IsGiantClover(id)) { return true; }
+            if(RF5Data.IsClover(id) || RF5Data.IsGiantClover(id)) { return true; }
         }
         return false;
     }

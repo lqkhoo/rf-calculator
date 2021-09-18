@@ -1,0 +1,546 @@
+
+@import '../node_modules/bootstrap/scss/functions.scss';
+@import '../node_modules/bootstrap/scss/variables.scss';
+
+// Set Bootstrap responsive layout to 1200px minimum.
+// https://stackoverflow.com/a/53858353
+$grid-breakpoints: (
+    xs: 0,
+    sm: 1px,
+    md: 1400px,
+    lg: 1600px,
+    xl: 1800px,
+    // xxl: 1800px
+);
+
+$container-max-widths: (
+    xs: 1398px,
+    sm: 1399px,
+    md: 1400px,
+    lg: 1600px,
+    xl: 1800px,
+    // xxl: 1800px
+);
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+.container {
+    overflow-x: auto;
+    min-width: 1200px;
+}
+.row {
+    width: 100%;
+}
+.col {
+    padding: 0;
+}
+
+
+
+// $backgroundcolor: #f9f6d2;
+$backgroundcolor: #eeeeee;
+$floatTableBoxShadowColor: #CDCDCD;
+$topBorderColor: #ffffff;
+$lightBorderColor: #cccccc;
+
+$icon-group-width: 200px;
+$icon-group-autoselect-width:250px;
+$icon-size: 40px;
+$icon-small-size: 36px; // 32px;
+$icon-group-font-size: 13px;
+$icon-group-small-font-size: 12px;
+$border-indent-1: 5px;
+
+$color-weapon: #ce3a3a;
+$color-shield: #f8b31f;
+$color-headgear: #6eb314;
+$color-armor: #236df5;
+$color-boots: #772dee;
+$color-accessory: #99378c;
+
+span.lang {
+    display: none;
+}
+
+.lang_en .lang.en {
+    display: inline-block;
+}
+
+.lang_jp .lang.jp {
+    display: inline-block;
+}
+
+.lang.stack {
+    float: left;
+    clear: left;
+    width: 100%;
+}
+
+
+html, body {
+    height: 100%;
+}
+body {
+    background: $backgroundcolor;
+}
+#main {
+    overflow-x: visible;
+    padding-bottom: 120px;
+}
+
+.nav-table button {
+    width: auto;
+    border: 1px solid #aaaaaa;
+    padding: 3px 10px;
+    box-shadow: 0 1px 1px #ffffff inset;
+}
+.nav-table .form-switch {
+    margin-left: 10px;
+}
+
+.ajax-loader {
+    height: 40px;
+    width: 40px;
+    margin-top: 18px;
+}
+
+h4.title {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+}
+
+#character-tabs {
+    width: 100%;
+    background: #eeeeee;
+}
+
+#character-tabs li > button:last-child {
+    line-height: 50px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.dummy-header {
+    width: $icon-group-width;
+}
+
+.displayNone {
+    display: none !important;
+}
+
+
+.btn {
+    padding: 0;
+    border-radius: 0;
+    border: 0;
+    width: 100%;
+}
+.btn:focus {
+    box-shadow: 0 0 0 0.1rem rgb(13 110 253 / 25%);
+}
+.btn:hover, label.icon-group:hover {
+    background: rgb(13 110 253 / 25%);
+}
+
+.stats-table {
+    // table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    padding: 10px;
+    box-shadow: 0 0 5px;
+    background: rgba(247,247,247,0.9);
+
+    thead {
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+        background: #ffffff;
+        box-shadow: 0 1px 1px #aaaaaa;
+        z-index: 99; // autocomplete popup has z of 100 by default.
+    }
+
+    tr:hover {
+        background: rgba(255,255,255,0.5);
+    }
+
+    td, th {
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+        min-width: 25px;
+        width: 25px;
+        max-width: 25px;
+        overflow: hidden;
+        // text-overflow: ellipsis;
+        // border-bottom: 1px solid inherit;
+    }
+    td {
+        border-right: none;
+        border-left: 1px solid #dddddd;
+    }
+    td:last-child {
+        border-right: 1px solid #dddddd;
+    }
+    th.wide {
+        min-width: 32px;
+    }
+    td:first-child, th:first-child {
+        max-width: initial;
+    }
+    tr:last-child > th {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    > tbody > tr:last-child td {
+        border-bottom: 1px solid $lightBorderColor;
+    }
+
+    // Can't use position:fixed with border-collapse, so fake it with box-shadow.
+    thead > tr > th {
+        border-width: 0;
+        vertical-align: middle;
+        // box-shadow: inset 1px 0px 1px $floatTableBoxShadowColor;
+        box-shadow: inset 1px 0 0 $lightBorderColor, inset 0 1px 0 $lightBorderColor;
+    }
+    thead > tr > th:last-child {
+        box-shadow: inset 1px 0 0 $lightBorderColor, inset 0 1px 0 $lightBorderColor, inset -1px 0 0 $lightBorderColor;
+    }
+    thead > tr > th.box-shadow-override {
+        box-shadow: inset 1px 0 0 $lightBorderColor, inset 0 1px 0 $lightBorderColor;
+    }
+
+    .inline-description {
+        text-align: left;
+    }
+    .inline-description span {
+        padding-left: 10px;
+    }
+}
+
+
+
+ul.ui-autocomplete {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.icon {
+    width: $icon-size;
+    height: $icon-size;
+}
+.icon.small {
+    width: $icon-small-size;
+    height: $icon-small-size;
+}
+
+label.icon-group {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    border-bottom: 1px solid #aaaaaa;
+}
+th > label.icon-group {
+    height: 100%;
+    border-bottom: none;
+}
+
+div.icon-group {
+    position: relative;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.icon-group {
+
+    table {
+        width: 100%;
+        height: $icon-size;
+        display: table;
+        table-layout: fixed;
+        border-top: 1px solid $topBorderColor;
+    
+        tr, td, th {
+            border: none;
+        }
+        img {
+            width: $icon-size;
+            height: $icon-size;
+        }
+        img.icon-lock {
+            width: 20px;
+            height: 20px;
+        }
+
+        td {
+            text-align: left;
+            padding-left: 5px;
+            font-size: $icon-group-font-size;
+        }
+        td:last-child {
+            border-right: none;
+        }
+        td.icon-td {
+            width: 20%;
+            padding: 5px 2px;
+        }
+    }
+
+    .lang {
+        float: left;
+        clear: left;
+    }
+
+    button {
+        padding: 0;
+    }
+
+    input[type="text"] {
+        width: 95%;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+        position: absolute;
+        right: 10px;
+        top: 35%;
+    }
+
+}
+
+.icon-group.autoselect {
+    table {
+        width: $icon-group-autoselect-width;
+        margin-right: 20px;
+        td {
+            font-size: 12px;
+        }
+    }
+
+    input[type="text"] {
+        width: $icon-size;
+        height: $icon-small-size;
+    }
+
+}
+
+.icon-group.weapon {
+    border-left: 5px solid $color-weapon;
+}
+.icon-group.shield {
+    border-left: 5px solid $color-shield;
+}
+.icon-group.headgear {
+    border-left: 5px solid $color-headgear;
+}
+.icon-group.armor {
+    border-left: 5px solid $color-armor;
+}
+.icon-group.boots {
+    border-left: 5px solid $color-boots;
+}
+.icon-group.accessory {
+    border-left: 5px solid $color-accessory;
+}
+/*
+button.weapon {
+    background: rgba($color-weapon, .5);
+}
+button.shield {
+    background: rgba($color-shield, .5);
+}
+button.headgear {
+    background: rgba($color-headgear, .5);
+}
+button.armor {
+    background: rgba($color-armor, .5);
+}
+button.boots {
+    background: rgba($color-boots, .5);
+}
+button.accessory {
+    background: rgba($color-accessory, .5);
+}
+*/
+
+.icon-group.small {
+
+    table {
+        height: $icon-small-size;
+        td {
+            font-size: $icon-group-small-font-size;
+            padding-top: 0;
+            padding-bottom: 0;
+            padding: 0;
+        }
+        td:first-child {
+            width: 11%;
+            text-align: center;
+        }
+        td:nth-child(2) {
+            width: 16%;
+            text-align: center;
+        }
+        td:nth-child(3) {
+            width: 54%;
+        }
+        td:last-child {
+            width: 19%;
+        }
+    }
+}
+
+div.delete-item {
+    margin-top: 5px;
+    float: left;
+}
+button.delete-item {
+    margin-top: 5px;
+    float: right;
+    border-radius: 3px;
+}
+.btn-danger:disabled, .btn-danger.disabled {
+    color: #000000;
+    background-color: transparent;
+    border: 1px solid #aaaaaa;
+}
+.delete-item label {
+    vertical-align: middle;
+}
+img.add-item-icon {
+    height: 20px;
+    width: 20px;
+    padding: 5px;
+    margin-bottom: 3px;
+}
+
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 21px;
+    text-align: center;
+    border-radius: 3px;
+    line-height: 15px;
+}
+select::-ms-expand {
+    display: none;
+}
+
+$header-font-size: 14px;
+
+tr.group-header td {
+    background-color: #eeeeee;
+    border-top: 1px solid $topBorderColor;
+    border-bottom: 1px solid $lightBorderColor;
+}
+
+button.group-header {
+    font-size: $header-font-size;
+    text-align: left;
+    padding: 5px;
+    width: 100%;
+}
+
+button.group-header::before {
+    content: url('../bootstrap-icons/chevron-down.svg');
+    position: relative;
+    left: 3px;
+    top: 2px;
+}
+
+button.group-header.collapsed::before {
+    content: url('../bootstrap-icons/chevron-right.svg');
+}
+
+.position-relative {
+    position: relative;
+}
+.detail-button {
+    height: 100%;
+    width: 100%;
+    font-size: 10px;
+}
+.detail-button:hover {
+    background: transparent;
+}
+.detail-panel {
+    text-align: left;
+}
+.detail-panel > * {
+    display: block;
+    width: 100%;
+    padding-left: 5px;
+    font-size: 12px;
+    margin: 1px;
+}
+
+.detail-panel {
+    img {
+        float: none;
+        display: inline-block;
+        height: 14px;
+        width: 14px;
+    }
+}
+
+.badge {
+    color: #000000;
+    font-weight: bold;
+    border: 1px solid #aaaaaa;
+    float: right;
+}
+
+.subslot td:first-child {
+    text-align: left;
+    padding: 2px 5px;
+    border-bottom: 1px solid #aaaaaa;
+    border-top: 1px solid $topBorderColor;
+}
+
+.negative {
+    color: #ff0000;
+}
+
+.sprite-container > img {
+    z-index: -1;
+    height: 600px;
+    position: fixed;
+    bottom: 0;
+}
+
+.modal textarea {
+    width: 100%;
+    height: 320px;
+    font-size: 12px;
+}
+
+.alert {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.fullscreen-alert.alert {
+    position: relative;
+    width: auto;
+    top: auto;
+    margin-left: 28px;
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+.fullscreen-alert.alert small {
+    position: relative;
+    top: -2px;
+}
+
+select.dualsmith-relation-level-select {
+    width: 40px;
+}
+
+select.dualsmith-bonus-type-select {
+    width: 100px;
+}

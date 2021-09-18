@@ -5,7 +5,7 @@ import IRF5Slot = require('../model/IRF5Slot');
 // Super
 import IVMRF5Slot = require('./IVMRF5Slot');
 // Data
-import Data = require('../model/Data');
+import RF5Data = require('../model/RF5Data');
 import Utils = require('../Utils');
 import RF5AbstractSlot = require('../model/RF5AbstractSlot');
 
@@ -47,8 +47,8 @@ class VMRF5Slot implements IVMRF5Slot {
     protected CacheSearchStrings = (cacheKey: string): void => {
 
         let self = this;
-        let all_items: any = (Data.Items as any)
-        _.forOwn(Data.Item_ids, function(value: any, key: any) {
+        let all_items: any = (RF5Data.Items as any)
+        _.forOwn(RF5Data.Item_ids, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = all_items[item_id].name_en;
             let name_jp: string = all_items[item_id].name_jp;

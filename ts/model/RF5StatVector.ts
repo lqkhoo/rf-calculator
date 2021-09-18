@@ -1,5 +1,5 @@
 import ko = require('knockout');
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 import IRF5StatVector = require('./IRF5StatVector');
 
 abstract class RF5StatVector implements IRF5StatVector {
@@ -257,9 +257,9 @@ abstract class RF5StatVector implements IRF5StatVector {
     protected _compute_context = (): any => {
         if(this.UseEquipmentStats()) {
             // Baseitem doesn't contain the empty item "0" so fallback to Data.Items
-            return (Data.BaseItems as any)[this.id()] || (Data.Items as any)["0"];
+            return (RF5Data.BaseItems as any)[this.id()] || (RF5Data.Items as any)["0"];
         } else {
-            return (Data.Items as any)[this.id()] || (Data.Items as any)["0"];
+            return (RF5Data.Items as any)[this.id()] || (RF5Data.Items as any)["0"];
         }
     }
 

@@ -9,10 +9,10 @@
         -->
         <link rel="stylesheet" href="css/jquery-ui.min.css"/>
         <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
-        <link rel="stylesheet" href="css/rf5planner.css"/>
+        <link rel="stylesheet" href="css/rf5-common.css"/>
         <!-- <script type="text/javascript" src="js/lib/requirejs-2.3.6-min.js"></script> -->
         <script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
-        <script type="text/javascript" src="js/rf5planner.js"></script>
+        <script type="text/javascript" src="js/rf5-calculator.js"></script>
         <script type="text/javascript" src="js/lib/jquery-ui-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/lib/jquery-ui-autocomplete-extension.js"></script>
         <script type="text/javascript" src="js/modified-knockout-jqueryui.js"></script>
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"></div>
                     <div class="col">
-                        <!-- Binding context window.RF5Planner -->
+                        <!-- Binding context window.RF5Calculator -->
                         <ul id="character-tabs" class="nav nav-tabs" role="tablist" >
                             <!-- ko foreach: CharacterList -->
                                 <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
@@ -96,7 +96,7 @@
         </nav>
 
         <main id="main" class="container">
-            <!-- Binding context indow.RF5Planner -->
+            <!-- Binding context indow.RF5Calculator -->
             <div id="character-tab-pages" class="tab-content" data-bind="foreach: { data: CharacterList }">
                 <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
                     <div class="tab-pane fade" data-bind="attr: { id: 'character-' + $index() }" role="tab-panel">

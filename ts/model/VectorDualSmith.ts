@@ -5,7 +5,7 @@ import RF5StatVector = require('./RF5StatVector');
 import IRF5Item = require('./IRF5Item');
 // Data
 import RF5AbstractSlot = require('./RF5AbstractSlot');
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 import IRF5StatVector = require('./IRF5StatVector');
 import RF5Item = require('./RF5Item');
 

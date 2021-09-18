@@ -7,7 +7,7 @@ import RF5StatVector = require('./RF5StatVector');
 // Parent
 import IRF5Character = require('./IRF5Character');
 // Data
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 
 class VectorGeneralSetBonus extends RF5StatVector {
 
@@ -74,10 +74,10 @@ class VectorGeneralSetBonus extends RF5StatVector {
             }
 
             return (
-                hasGeneralsEffect(self.Character().Weapons()[activeWeaponIdx], Data.IsGeneralsHoe)
-                && hasGeneralsEffect(self.Character().Shields()[activeShieldIdx], Data.IsGeneralsShield)
-                && hasGeneralsEffect(self.Character().Headgears()[activeHeadgearIdx], Data.IsGeneralsHat)
-                && hasGeneralsEffect(self.Character().Armors()[activeArmorIdx], Data.IsGeneralsRobe)
+                hasGeneralsEffect(self.Character().Weapons()[activeWeaponIdx], RF5Data.IsGeneralsHoe)
+                && hasGeneralsEffect(self.Character().Shields()[activeShieldIdx], RF5Data.IsGeneralsShield)
+                && hasGeneralsEffect(self.Character().Headgears()[activeHeadgearIdx], RF5Data.IsGeneralsHat)
+                && hasGeneralsEffect(self.Character().Armors()[activeArmorIdx], RF5Data.IsGeneralsRobe)
             );
 
         });

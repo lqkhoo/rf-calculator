@@ -3,7 +3,7 @@ import IRF5StatVector = require('./IRF5StatVector');
 import IRF5Item = require('./IRF5Item');
 import IRF5Character = require('./IRF5Character');
 // Parent
-import IRF5Planner = require('./IRF5Planner');
+import IRF5Calculator = require('./IRF5Calculator');
 // Children
 import RF5StatVector = require('./RF5StatVector');
 import RF5Accessory = require('./RF5Accessory');
@@ -15,7 +15,7 @@ import RF5Weapon = require('./RF5Weapon');
 // VM
 import VMRF5Character = require('../vm/VMRF5Character');
 // Data
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 import VectorCharEquipmentStats = require('./VectorCharEquipmentStats');
 import VectorGeneralSetBonus = require('./VectorGeneralSetBonus');
 import VectorCharFinalStats = require('./VectorCharFinalStats');
@@ -24,7 +24,7 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     
     static readonly DEFAULT_CHARACTER_ID: number = 0;
 
-    readonly Planner:       IRF5Planner;
+    readonly Calculator:       IRF5Calculator;
 
     readonly Accessories:   ko.ObservableArray<RF5Accessory>;
     readonly Armors:        ko.ObservableArray<RF5Armor>;
@@ -52,14 +52,14 @@ class RF5Character extends RF5StatVector implements IRF5Character {
 
     override readonly Context: ko.PureComputed<any>;
 
-    constructor(planner: IRF5Planner,
+    constructor(calculator: IRF5Calculator,
                 characterId: number=RF5Character.DEFAULT_CHARACTER_ID,
                 deserializedObject: any=undefined) {
 
         super(characterId);
         const self = this;
 
-        this.Planner     = planner;
+        this.Calculator     = calculator;
 
         this.Accessories = ko.observableArray([]);
         this.Armors      = ko.observableArray([]);
@@ -69,7 +69,7 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         this.Weapons     = ko.observableArray([]);
 
         this.Context = ko.computed(function() {
-            return (Data.Characters as any)[self.id()]
+            return (RF5Data.Characters as any)[self.id()]
         });
         this.FinalizeVectorOverride();
 

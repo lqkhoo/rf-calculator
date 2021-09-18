@@ -7,7 +7,7 @@ import IRF5Item = require('./IRF5Item');
 // VM
 import VMRF5SlotRecipe = require('../vm/VMRF5SlotRecipe');
 // Data
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 import RF5StatVector = require('./RF5StatVector');
 
 class RF5SlotRecipe extends RF5Slot {
@@ -27,7 +27,7 @@ class RF5SlotRecipe extends RF5Slot {
 
         this.image_uri = ko.pureComputed(function() {
             let image_uri: string = "icon/Empty.png";
-            const categories: any = Data.Categories;
+            const categories: any = RF5Data.Categories;
             const categoryId = self.Restriction()
             if(categories.hasOwnProperty(categoryId)) {
                 image_uri = categories[categoryId].image_uri;
@@ -84,7 +84,7 @@ class RF5SlotRecipe extends RF5Slot {
             return self.Restriction() !== 0;
         });
         this.IsLocked = ko.pureComputed(function() {
-            const itemIds: any = Data.Item_ids;
+            const itemIds: any = RF5Data.Item_ids;
             return self.IsRestricted() && itemIds.hasOwnProperty(self.Restriction());
         })
 
@@ -97,12 +97,12 @@ class RF5SlotRecipe extends RF5Slot {
         if(restrictionId === 0) {
             return;
         }
-        if(!Data.Category_ids.hasOwnProperty(restrictionId)) {
+        if(!RF5Data.Category_ids.hasOwnProperty(restrictionId)) {
             // Means this is a nonempty itemId, not a categoryId.
             this.ChangeId(restrictionId);
         } else {
             // Category restriction. If current item not in category, set to zero.
-            const itemIds: number[] = (Data.Categories as any)[restrictionId].item_ids;
+            const itemIds: number[] = (RF5Data.Categories as any)[restrictionId].item_ids;
             let found: boolean = false;
             for(var i=0; i<itemIds.length; i++) {
                 if(this.id() === itemIds[i]) {

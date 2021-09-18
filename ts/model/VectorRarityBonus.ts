@@ -5,7 +5,7 @@ import RF5StatVector = require('./RF5StatVector');
 // Parent
 import IRF5Item = require('./IRF5Item');
 // Data
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
 
 class VectorRarityBonus extends RF5StatVector {
@@ -32,7 +32,7 @@ class VectorRarityBonus extends RF5StatVector {
                     }
                 }
             }
-            return (Data.Items as any)[contextItemId]["rarity_stat_type"];
+            return (RF5Data.Items as any)[contextItemId]["rarity_stat_type"];
         });
 
         this.rarity = ko.pureComputed(function() {

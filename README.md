@@ -1,5 +1,5 @@
-# RF5 Gear Calculator
-The application is built specifically to be offline-capable, so you could just save a copy of the HTML and take it with you. No webserver required.
+# Rune Factory 5 Gear Calculator
+This application is built specifically to be offline-capable, so you could just save a copy of the HTML and take it with you. No webserver required.
 
 * If you wish to report a bug, please include the steps to reproduce the bug.
 * If you wish to submit a pull request, please open an issue first, so I can know what it's about and respond appropriately.

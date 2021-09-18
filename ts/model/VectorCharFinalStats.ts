@@ -7,7 +7,7 @@ import RF5StatVector = require('./RF5StatVector');
 import IRF5Character = require('./IRF5Character');
 // Data
 
-import Data = require('./Data');
+import RF5Data = require('./RF5Data');
 
 
 class VectorCharFinalStats extends RF5StatVector {

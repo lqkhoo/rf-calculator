@@ -6,7 +6,7 @@ import IRF5Character = require('../model/IRF5Character');
 // Super
 import IVMRF5Slot = require('./IVMRF5Slot');
 // Data
-import Data = require('../model/Data');
+import RF5Data = require('../model/RF5Data');
 import Utils = require('../Utils');
 
 
@@ -36,7 +36,7 @@ class VMRF5Character implements IVMRF5Slot {
 
         this.SpriteUri = ko.computed(function() {
             let img = new Image();
-            let uri: string = (Data.Characters as any )[self.Model.id()].sprite_uri;
+            let uri: string = (RF5Data.Characters as any )[self.Model.id()].sprite_uri;
             img.src = uri;
             img.onload = function(): void {
                 const BIAS = 50;
@@ -108,7 +108,7 @@ class VMRF5Character implements IVMRF5Slot {
     }
 
     public OnDeleteCharacterClickHandler = (_dataContext: any, _event: any): void => {
-        this.Model.Planner.DeleteCharacter(this.Model);
+        this.Model.Calculator.DeleteCharacter(this.Model);
     }
 
 
@@ -127,8 +127,8 @@ class VMRF5Character implements IVMRF5Slot {
 
     protected CacheSearchStrings = (): void => {
         let self = this;
-        let character_ids: any = Data.Character_ids;
-        let characters: any = (Data.Characters as any);
+        let character_ids: any = RF5Data.Character_ids;
+        let characters: any = (RF5Data.Characters as any);
         _.forOwn(character_ids, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = characters[item_id].name_en;

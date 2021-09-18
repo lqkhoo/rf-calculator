@@ -2,21 +2,28 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Browserify",
+			"label": "Browserify calculator",
 			"type": "shell",
-			"command": "browserify ts/App.ts -p [ tsify --noImplicitAny ] > js/rf5planner.js",
+			"command": "browserify ts/Calculator.ts -p [ tsify --noImplicitAny ] > js/rf5-calculator.js",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Browserify itemtable",
+			"type": "shell",
+			"command": "browserify ts/ItemTable.ts -p [ tsify --noImplicitAny ] > js/rf5-itemtable.js",
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
 			"label": "Sass compile",
 			"type": "shell",
-			"command": "sass css/rf5planner.scss css/rf5planner.css",
+			"command": "sass css/rf5-common.scss css/rf5-common.css",
 			"group": "build"
 		},
 		{
 			"label": "Build all",
-			"dependsOn": ["Browserify", "Sass compile"],
+			"dependsOn": ["Browserify calculator", "Sass compile", "Browserify itemtable"],
 			"group": {
 				"kind": "build",
 				"isDefault": true
