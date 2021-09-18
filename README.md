@@ -1,22 +1,61 @@
-# Rune Factory 5 Gear Calculator
+# Rune Factory 5 / 4SP Gear Calculator
+
+<img src="./charasprites/rf4/21_SYELZA_body_02_SP2.png" height="600px" align="right">
+
+This is a comprehensive tool for calculating stats across multiple pieces / combinations of equipment. It comes with built-in data tables to filter and sort out the best potential upgrades. Multi-language support is built-in; currently it is bilingual (English, Japanese).
+
+Supports:
+* Rune Factory 5 (Switch) 2020
+* Rune Factory 4 Special (Switch, Steam TBA) 2020
+* Rune Factory 4 (3DS) 2014
+
+The forging system in Rune Factory is quite intricate, and different pieces of equipment have different upgrade rules. However, since none of the games explain the system in detail, it's best to fully understand the forging rules first, otherwise the information in the calculator could be overwhelming.
+
+Quick basics check: if you are unfamiliar with rarity bonus tiers / rarity bonus types, how inheritance/overrides work, magic inheritance etc, it's probably best to read up.
+
+The best source of this information is the Japanese wiki:
+* Rune Factory 4 ([強化](https://wikiwiki.jp/rf4bu/%E5%BC%B7%E5%8C%96), [ボーナス詳細](https://wikiwiki.jp/rf4bu/%E3%83%9C%E3%83%BC%E3%83%8A%E3%82%B9%E8%A9%B3%E7%B4%B0))
+* Rune Factory 5 ([強化](https://wikiwiki.jp/rf5/%E5%BC%B7%E5%8C%96), [ボーナス詳細](https://wikiwiki.jp/rf5/%E3%83%9C%E3%83%BC%E3%83%8A%E3%82%B9%E8%A9%B3%E7%B4%B0))
+
+If language is an issue, you can try machine-translating it. Barring that, there are some posts on GameFaqs' Rune Factory 4 board that may be helpful. Try searching for "override", "inheritance" and "rarity".
+
 This application is built specifically to be offline-capable, so you could just save a copy of the HTML and take it with you. No webserver required.
 
 * If you wish to report a bug, please include the steps to reproduce the bug.
-* If you wish to submit a pull request, please open an issue first, so I can know what it's about and respond appropriately.
+* If you wish to contribute / submit a pull request, please open an issue first, so I can know what it's about and respond appropriately. If it's not a simple bugfix or language fix, let me know the scope of the changes and how long it'll take. 
 
-If you're looking for a Gear Planner for RF4 / RF4 Special, you can try my implementation in Google Sheets from about a year ago, over [here](https://docs.google.com/spreadsheets/d/1t1Iwalk-37DV94X_c5FR5UAcfVyxnbRnccIxo0E_lZo/edit?usp=sharing). Just make a copy first so you can work with it.
+# Credits and disclaimer
+This project makes use of game assets, included under terms of fair use. Fair use because this is strictly for-fun + zero-profit. This is a personal tool that I polished up for public release, because I think others might also find it useful. The license of this repository applies to the source code, NOT to game assets, which are the legal and intellectual property of the developing company. For library licences, please refer to the source headers.
 
-## Known edge cases and limitations
-* RF5 performs a straight sum of equipment stats. Back in RF4 (the 3DS version), the game uses the function `floor(total_stats * -1) * -1`, and it was possible to squeeze in one extra % in resistance from mealy apples / items with negative resistances, in conjunction with ObjectX.
-* I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials are fully modeled.
-* As of time of writing, the game is not released in English yet, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
+## Rune Factory 5
+* Asset dump by Blazagon.
+* Data dump by [Kuroba](https://github.com/KurobaM).
+  * This is from v1.0.0 of the JP release. I went through the wiki and fixed a couple of data points in the item table that have been patched (corrected). These are Platinum Shield+, Wind Mantle, Elven Mantle. If you notice anything else let me know.
 
-The data is from Kuroba's data dump of v1.0.0 of the Japanese release. Given the game's buggy release, there are some things which are patched in later, so if you notice anything off, just let me know.
+## Rune Factory 4
+* Data dump from the GameFaqs [data mining thread](https://gamefaqs.gamespot.com/boards/258612-rune-factory-4-special/78486979) (Omnigamer).
+* Asset dump by myself. Pipeline tools:
+   1. ROMFS ([Ryujinx](https://ryujinx.org/)).
+   2. BNTX to DDS / ASTC: [BNTX-Extractor](https://github.com/aboood40091/BNTX-Extractor) ([AboodXD](https://github.com/aboood40091)).
+   3. DDS to PNG: [Nvidia Texture Tools Exporter](https://developer.nvidia.com/nvidia-texture-tools-exporter).
+   4. ASTC to PNG: [astc-encoder](https://github.com/ARM-software/astc-encoder) ([ARM](https://github.com/ARM-software)).
+   5. Batch image rotation, crop, padding: [Python](https://www.python.org/), [OpenCV](https://opencv.org/), [Pillow](https://pillow.readthedocs.io/en/stable/).
 
-I scanned through the Japanese wiki and fixed a couple of data points:
-* Platinum Shield+ didn't have resistances.
-* Wind Mantle should have 10% wind resistance (patched in game JP v1.0.7)
-* Elven Mantle was slightly buffed in JP v1.0.7.
+## Libraries (top-level dependencies)
+* Deployment: [Knockout](https://knockoutjs.com/), [Bootstrap](https://getbootstrap.com/), [jQueryUI](https://jqueryui.com/), [Knockout-jQueryUI](https://gvas.github.io/knockout-jqueryui/) (I modified this a bit).
+* Development: [npm](https://www.npmjs.com/), [TypeScript (tsc)](https://www.typescriptlang.org/), [Sass](https://sass-lang.com/), [Browserify](https://browserify.org/), [tsify](https://github.com/TypeStrong/tsify), Python 3.4+ required.
+* Assets: [Bootstrap Icons](https://icons.getbootstrap.com/) (MIT), [Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif) (CC-BY-SA).
+* Formulae on this page generated using [CodeCogs](https://www.codecogs.com/latex/eqneditor.php).
+
+# Potential improvements
+* I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
+* As of time of writing, RF5 is not available in English yet, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
+* Maybe work on serializing JSON to local storage.
+* I'm not a native Japanese speaker. I did my best with the translation, but if you can improve on it, let me know!
+
+## Known differences across game versions
+* For each piece of equipment, RF5 performs a straight sum of the stats of ingredients in each slot. In RF4 (the 3DS version), the game uses the function `floor(total_stats * -1) * -1`, and it was possible to squeeze in one extra % in resistance from mealy apples / items with negative resistances, in conjunction with ObjectX.
+* As far as I know, there are no system (e.g. calculation) differences between Rune Factory 4, and Rune Factory 4 Special.
 
 # For developers
 ## Building
@@ -39,22 +78,12 @@ Browserify combines javascript files, so some of the libraries have already been
 
 Likewise, our sass file imports Bootstrap's sass file to modify their parameters, so we don't need to include Bootstrap's css in the html head.
 
-# Credits
-* Art assets are from Blazagon's data dump, who is part of Reddit's RF5 reverse-engineering group effort.
-* Most icons are from Bootstrap's icon library.
-* The Ajax loader gif is from Wikimedia Commons.
-
-# Disclaimer
-All art assets are originals from the game, and are thus copyrighted material owned by the publisher. They have been included in this project under fair use. There are no nonsense ads / tracking / Analytics and I don't take donations of any sort. This is a project built for fun, plain and simple (and it was fun!).
-
-It goes without saying that the MIT license for this repository only extends as far as the source code, not to those assets. This repository includes JavaScript library code and Bootstrap icons, all licensed under their own respective terms.
-
 # Solver (omitted)
-This section is mathematical. It's less to do with the gear calculator than an analysis of Rune Factory's item system, which has remained mostly unchanged over the years.
+This section is mathematical. It has less to do with the gear calculator than an analysis of Rune Factory's item system, which has remained mostly unchanged over the years.
 
-Originally, I intended to implement a solver for finding an optimum combination of imgredients in slots, given an objective function (in terms of desired stats). RF5's item system turned out to be simple enough to be solved via iterative application of linear programming with very limited branching. I decided against implementing this, because JavaScript is very poor for robust numerical work; to begin with, it treats all numbers as floats (IEEE 754 double precision) and it doesn't support vectorized operations like Numpy et al does. The procedure is also so easy it could be done by hand. That's what the gear calculator is for.
+Originally, I intended to implement a solver for finding an optimum combination of imgredients in slots, given an objective function (in terms of desired stats). RF5's item system turned out to be simple enough to be solved via iterative application of linear programming with very limited branching. Eventually I decided against implementing this, because JavaScript is very poor for robust numerical work; to begin with, it treats all numbers as floats (IEEE 754 double precision) and it doesn't support vectorized operations like Numpy et al does. The procedure is also so easy it could be done by hand. That's what the gear calculator is for.
 
-I'll explain how we can approach this kind of problem, and, in this particular case, solve it with a greedy algorithm. I'll be very verbose as the audience background is potentially quite wide, so if you're already familiar with optimization, please bear with it.
+I'll walk through a sketch of how we can approach this kind of problem, and, in this particular case, solve it with a greedy algorithm. I'll be very verbose as the audience background is potentially quite wide, so if you're already familiar with optimization, please bear with it.
 
 Let all stats in the table be represented by a real vector:
 
@@ -84,7 +113,7 @@ where
 
 <img src="https://latex.codecogs.com/svg.latex?g_2&space;=&space;k\cdot&space;a_{m_2}(a_{m_1})" title="g_2 = k\cdot a_{m_2}(a_{m_1})" /> ,
 
-<img src="https://latex.codecogs.com/svg.latex?g_t&space;=&space;k\cdot&space;a_{m_t}(a_{m_{t-1}},&space;a_{m_{t-2}},&space;...&space;a_1)" title="g_t = k\cdot a_{m_t}(a_{m_{t-1}}, a_{m_{t-2}}, ... a_1)" />
+<img src="https://latex.codecogs.com/svg.latex?g_t&space;=&space;k\cdot&space;a_{m_t}(a_{m_{t-1}},&space;a_{m_{t-2}},&space;...,&space;a_1)" title="g_t = k\cdot a_{m_t}(a_{m_{t-1}}, a_{m_{t-2}}, ..., a_1)" />
 
 
 Note that this isn't very nice because the value of `a_t` at time `t` is not a constant, but a function of all `a` that has come before. By extension, this means that `g_t` is a function of every `a` up to that time step. To give an example, if we've used Rune Sphere Shard before, later on, Rune Sphere Shard is worth less due to diminishing returns. This kind of recursively-defined value function is actually very common in games (in the game theory sense), such as chess. For these cases, we could use tree search algorithms, or we could just brute-force every combination if the search space is small. However, none of that is necessary here, because we can show that the optimal algorithm is equivalent to a locally-greedy algorithm:
@@ -118,7 +147,7 @@ That's objectX dealt with. Now the only remaining multi-slot effects to deal wit
 
 That's it! We've simplified the problem. Via the above reasoning, handling cores and other knicknacks separately via branching, we can reach the same optimum by using the following (much simplier) optimization objective:
 
-<img src="https://latex.codecogs.com/svg.latex?argmax_{({m*_{t_1},...m*_{t_\tau}})}&space;\sum^\tau_t&space;g(a_{m*_t})=\sum^\tau_t&space;\sum^n_ik_ia_{m*_t,i}" title="argmax_{({m*_{t_1},...m*_{t_\tau}})} \sum^\tau_t g(a_{m*_t})=\sum^\tau_t \sum^n_ik_ia_{m*_t,i}" />
+<img src="https://latex.codecogs.com/svg.latex?argmax_{({m*_{t_1},...,m*_{t_\tau}})}&space;\sum^\tau_t&space;g(a_{m*_t})=\sum^\tau_t&space;\sum^n_ik_ia_{m*_t,i}" title="argmax_{({m*_{t_1},...,m*_{t_\tau}})} \sum^\tau_t g(a_{m*_t})=\sum^\tau_t \sum^n_ik_ia_{m*_t,i}" />
 
 where `m*` is the choice that maximizes `g` in the same time step. In other words, the greedy choice.
 
