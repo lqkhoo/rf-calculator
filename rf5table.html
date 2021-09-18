@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-16"/>
+        <title>Rune Factory 5 Equipment Calculator</title>
+        <link rel="icon" href="icon/favicon.png" />
+        <!--
+        <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/>
+        -->
+        <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+        <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
+        <link rel="stylesheet" href="css/bootstrap-table-1.18.3.min.css"/>
+        <link rel="stylesheet" href="css/rf5-common.css"/>
+        <link rel="stylesheet" href="css/rf5-itemtable.css"/>
+        <!-- <script type="text/javascript" src="js/lib/requirejs-2.3.6-min.js"></script> -->
+        <script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="js/rf5-itemtable.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-ui-1.11.0.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-ui-autocomplete-extension.js"></script>
+        <script type="text/javascript" src="js/modified-knockout-jqueryui.js"></script>
+        <!--
+        <script type="text/javascript" src="js/lib/knockout-autocomplete.js"></script>
+        -->
+        
+    </head>
+    <body id="body" data-bind="css: { 'lang_en': IsEnglishSelected(), 'lang_jp': IsJapaneseSelected() }">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="row">
+                    <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"></div>
+                    <div class="col">
+                        <div class="row">
+                            <h4 class="title">Rune Factory 5 Gear Calculator (Item Table)</h4>
+                            <div class="fullscreen-alert d-xs-block d-sm-block d-md-block d-lg-none d-xl-none alert alert-primary d-flex align-items-center">
+                                <small>フルスクリーン推奨&nbsp;&nbsp;Best viewed in fullscreen</small>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            <div>
+                                <table class="nav-table">
+                                    <tbody>
+                                        <tr>
+                                            <td rowspan="2">
+                                                <button class="btn btn-secondary">RF5 Calculator</button>
+                                                <button class="btn btn-secondary">RF4 Calculator</button>
+                                                <button class="btn btn-secondary">RF5 Data</button>
+                                                <button class="btn btn-secondary">Github</button>
+                                            </td>
+                                            <td>
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsJapaneseSelected"/>
+                                                        日本語 Japanese
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="form-check form-switch">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="checkbox" data-bind="checked: IsEnglishSelected"/>
+                                                        English 英語
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"></div>
+                    <div class="col">
+                        <!-- Binding context window.RF5ItemTable -->
+                        <ul id="character-tabs" class="nav nav-tabs" role="tablist" >
+                            <li class="nav-item character" role="presentation">
+                                <button class="nav-link" data-bs-target="#baseitem-table-tab" data-bs-toggle="tab" role="tab">
+                                    <span class="lang jp">装備</span>&nbsp;<span class="lang en">Equipment</span>
+                                </button>
+                            </li>
+                            <li class="nav-item character" role="presentation">
+                                <button class="nav-link" data-bs-target="#upgrade-table-tab" data-bs-toggle="tab" role="tab">
+                                    <span class="lang jp">強化</span>&nbsp;<span class="lang en">Upgrade</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main id="main" class="container initial-load">
+            <div id="initial-load-message">データを整理中。しばらくお待ちください。&nbsp;Preparing data. Please be patient.</div>
+            <!-- Binding context indow.RF5Calculator -->
+            <div id="character-tab-pages" class="tab-content">
+                <!-- ko template: { name: 'TEMPLATE-table-tab', data: { model: $data.BaseItems(), bsTarget: 'baseitem-table-tab', tableId: 'baseitem-table' } } --><!-- /ko -->
+                <!-- ko template: { name: 'TEMPLATE-table-tab', data: { model: $data.UpgradeItems(), bsTarget: 'upgrade-table-tab', tableId: 'upgrade-table' } } --><!-- /ko -->
+            </div>
+        </main>
+        <!--
+        <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.js"></script>
+        -->
+        <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.min.js"></script>
+        <script type="text/javascript" src="js/lib/bootstrap-table-1.18.3.min.js"></script>
+    </body>
+</html>
+
+
+<!-- Context: { model: ko.observableArray[], bsTarget: string,  } -->
+<script type="text/html" id="TEMPLATE-table-tab">
+
+    <div class="tab-pane fade" data-bind="attr: { id: bsTarget }" role="tab-panel">
+        <div class="row">
+            <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
+                <div class="sprite-container">
+                    <img data-bind="attr: { src: $root.SpriteChara.ViewModel.SpriteUri() }, style: { left: $root.SpriteChara.ViewModel.SpriteAdjustment() } " />
+                </div>
+            </div>
+            <div class="col">
+                <table data-toggle="table" class="table table-bordered stats-table" data-bind="attr: { id: tableId } ">
+                    <thead>
+                        <tr>
+                            <th rowspan="3">
+                                <div class="dummy-header">
+                                    <img src="./icon/rf5-logo.png" width="100%" style="margin-top: 1px;">
+                                </div>
+                            </th>
+                            <th rowspan="2" colspan="2"></th>
+                            <th colspan="19"><span class="lang jp">攻</span><span>&nbsp;&nbsp;</span><span class="lang en">OFFENSE</span></th>
+                            <th colspan="20"><span class="lang jp">防</span><span>&nbsp;&nbsp;</span><span class="lang en">DEFENSE</span></th>
+                            <th colspan="2" rowspan="2"></th>
+                            <th colspan="3" rowspan="2">
+                                <span class="lang jp">魔法</span>&nbsp;&nbsp;<span class="lang en">Magic</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="7"><span class="lang en jp">STAT</span></th>
+                            <th colspan="12"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
+                            <th colspan="8"><span class="lang jp">属性</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">ELE</span></th>
+                            <th colspan="12" class="box-shadow-override"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
+                        </tr>
+                        <tr>
+                            <th data-sortable="true" data-sortable="true"><span>ID</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">素</span><span class="lang stack en">RAR</span></th>
+                            <th data-sortable="true" class="wide"><span class="lang stack en jp">ATK</span></th>
+                            <th data-sortable="true" class="wide"><span class="lang stack en jp">DEF</span></th>
+                            <th data-sortable="true" class="wide"><span class="lang stack en jp">MAT</span></th>
+                            <th data-sortable="true" class="wide"><span class="lang stack en jp">MDF</span></th>
+                            <th data-sortable="true" class="wide"><span class="lang stack en jp">STR</span></th>
+                            <th data-sortable="true" class="wide"><span class="lang stack en jp">INT</span></th>
+                            <th data-sortable="true" class="wide"><span class="lang stack en jp">VIT</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">睡</span><span class="lang stack en">SLP</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">疲</span><span class="lang stack en">FTG</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">病</span><span class="lang stack en">SCK</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">気</span><span class="lang stack en">FNT</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">火</span><span class="lang stack en">FIR</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">水</span><span class="lang stack en">WTR</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">地</span><span class="lang stack en">EAR</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">風</span><span class="lang stack en">WND</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">光</span><span class="lang stack en">LGT</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">闇</span><span class="lang stack en">DRK</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">愛</span><span class="lang stack en">LOV</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">無</span><span class="lang stack en">NUL</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">睡</span><span class="lang stack en">SLP</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">疲</span><span class="lang stack en">FTG</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">病</span><span class="lang stack en">SCK</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">気</span><span class="lang stack en">FNT</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">チャ</span><span class="lang stack en">CHG</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">長</span><span class="lang stack en">LNG</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">チャ1</span><span class="lang stack en">CH1</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">チャ2</span><span class="lang stack en">CH2</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">チャ3</span><span class="lang stack en">CH3</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- ko foreach: $data.model -->
+                            <!-- ko template: 'TEMPLATE-vectoritemtable' --><!-- /ko -->
+                        <!-- /ko -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</script>
+
+<!-- Context RF5Slot -->
+<script type="text/html" id="TEMPLATE-vectoritemtable-header">
+    <td>
+        <label class="icon-group small">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <!--
+                            <button class="btn detail-button" data-bind="click: ViewModel.DetailButtonClickHandler">
+                                <span data-bind="text: ViewModel.SlotName(), css: { displayNone: IsRestricted() }"></span>
+                                <img class="icon-lock" data-bind="attr: { src: 'bootstrap-icons/file-lock2.svg'}, css: { displayNone: ! IsRestricted() }"/>
+                            </button>
+                            -->
+                        </td>
+                        <td class="icon-td"><img class="icon small" data-bind="attr: { src: image_uri }"/></td>
+                        <td>
+                            <span class="lang jp" data-bind="text: name_jp"></span>
+                            <span class="lang en" data-bind="text: name_en"></span>
+                        </td>
+                        <td>
+                            <span data-bind="text: id()"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </label>
+    </td>
+</script>
+
+<script type="text/html" id="TEMPLATE-vectoritemtable">
+    <tr>
+        <!-- ko template: 'TEMPLATE-vectoritemtable-header' --><!-- /ko -->
+        <!-- ko template: 'TEMPLATE-stats' --><!-- /ko -->
+    </tr>
+</script>
+
+<script type="text/html" id="TEMPLATE-stats">
+    <!-- ko template: { name: 'TEMPLATE-cell', data: id() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: rarity() } --><!-- /ko -->
+
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_ATK() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_DEF() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_MAT() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_MDF() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_STR() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_INT() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_VIT() } --><!-- /ko -->
+
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DIZ() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_CRT() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_KNO() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_STN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PSN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SEA() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PAR() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SLP() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_FTG() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SCK() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_FNT() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DRN() } --><!-- /ko -->
+
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_FIRE() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_WATER() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_EARTH() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_WIND() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_LIGHT() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_DARK() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_LOVE() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_VOID() } --><!-- /ko -->
+
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DIZ() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_CRT() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_KNO() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_STN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PSN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SEA() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PAR() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SLP() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_FTG() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SCK() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_FNT() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DRN() } --><!-- /ko -->
+
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_chargespeed() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_attacklength() } --><!-- /ko -->
+
+    <!-- ko template: { name: 'TEMPLATE-cell', data: magic1() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: magic2() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: magic3() } --><!-- /ko -->
+</script>
+
+<script type="text/html" id="TEMPLATE-cell">
+    <!-- ko if: $data === 0 -->
+        <td></td>
+    <!-- /ko -->
+    <!-- ko ifnot: $data === 0 -->
+        <td data-bind="text: Math.round($data*100)/100, css: { negative: ($data < 0) }"></td>
+    <!-- /ko -->
+</script>

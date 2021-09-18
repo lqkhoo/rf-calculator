@@ -10198,6 +10198,9 @@ h4.title, .title.h4 {
 
 .dummy-header {
   width: 200px;
+  display: inline-block;
+  text-align: center;
+  margin-top: 1px;
 }
 
 .displayNone {
@@ -10236,6 +10239,7 @@ h4.title, .title.h4 {
 }
 .stats-table tr:hover {
   background: rgba(255, 255, 255, 0.5);
+  --bs-table-accent-bg: none !important;
 }
 .stats-table td, .stats-table th {
   font-size: 12px;
@@ -10602,6 +10606,13 @@ select.dualsmith-relation-level-select {
 
 select.dualsmith-bonus-type-select {
   width: 100px;
+}
+
+#initial-load-message {
+  text-align: center;
+  font-weight: bold;
+  padding-top: 110px;
+  font-size: 20px;
 }
 
 /*# sourceMappingURL=rf5-common.css.map */

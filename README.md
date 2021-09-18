@@ -1,15 +1,17 @@
-# Rune Factory 5 / 4SP Gear Calculator
+# Rune Factory 5 / 4SP / 4 Gear Calculator
 
-<img src="./charasprites/rf4/21_SYELZA_body_02_SP2.png" height="600px" align="right">
+<img alt="Like this?" src="./charasprites/rf4/21_SYELZA_body_02_SP2.png" height="600px" align="right">
 
 This is a comprehensive tool for calculating stats across multiple pieces / combinations of equipment. It comes with built-in data tables to filter and sort out the best potential upgrades. Multi-language support is built-in; currently it is bilingual (English, Japanese).
+
+It is hosted as a Github Project ||| here TODO |||
 
 Supports:
 * Rune Factory 5 (Switch) 2020
 * Rune Factory 4 Special (Switch, Steam TBA) 2020
 * Rune Factory 4 (3DS) 2014
 
-The forging system in Rune Factory is quite intricate, and different pieces of equipment have different upgrade rules. However, since none of the games explain the system in detail, it's best to fully understand the forging rules first, otherwise the information in the calculator could be overwhelming.
+The forging system in Rune Factory is quite intricate, and different pieces of equipment have different upgrade rules. None of the games explain the system in detail, however, so it's best to fully understand the forging rules first, otherwise the information in the calculator could be overwhelming.
 
 Quick basics check: if you are unfamiliar with rarity bonus tiers / rarity bonus types, how inheritance/overrides work, magic inheritance etc, it's probably best to read up.
 
@@ -22,7 +24,7 @@ If language is an issue, you can try machine-translating it. Barring that, there
 This application is built specifically to be offline-capable, so you could just save a copy of the HTML and take it with you. No webserver required.
 
 * If you wish to report a bug, please include the steps to reproduce the bug.
-* If you wish to contribute / submit a pull request, please open an issue first, so I can know what it's about and respond appropriately. If it's not a simple bugfix or language fix, let me know the scope of the changes and how long it'll take. 
+* If you wish to contribute / submit a pull request, please open an issue first, so I can know what it's about and respond appropriately. If it's not a simple bugfix or language fix, let me know the scope of the changes and how long you wish to take. 
 
 # Credits and disclaimer
 This project makes use of game assets, included under terms of fair use. Fair use because this is strictly for-fun + zero-profit. This is a personal tool that I polished up for public release, because I think others might also find it useful. The license of this repository applies to the source code, NOT to game assets, which are the legal and intellectual property of the developing company. For library licences, please refer to the source headers.
@@ -45,7 +47,7 @@ This project makes use of game assets, included under terms of fair use. Fair us
 * Deployment: [Knockout](https://knockoutjs.com/), [Bootstrap](https://getbootstrap.com/), [jQueryUI](https://jqueryui.com/), [Knockout-jQueryUI](https://gvas.github.io/knockout-jqueryui/) (I modified this a bit).
 * Development: [npm](https://www.npmjs.com/), [TypeScript (tsc)](https://www.typescriptlang.org/), [Sass](https://sass-lang.com/), [Browserify](https://browserify.org/), [tsify](https://github.com/TypeStrong/tsify), Python 3.4+ required.
 * Assets: [Bootstrap Icons](https://icons.getbootstrap.com/) (MIT), [Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif) (CC-BY-SA).
-* Formulae on this page generated using [CodeCogs](https://www.codecogs.com/latex/eqneditor.php).
+* Formulae on this page generated using [CodeCogs](https://www.codecogs.com/latex/eqneditor.php) as I'm not using MathJax.
 
 # Potential improvements
 * I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
@@ -55,6 +57,7 @@ This project makes use of game assets, included under terms of fair use. Fair us
 
 ## Known differences across game versions
 * For each piece of equipment, RF5 performs a straight sum of the stats of ingredients in each slot. In RF4 (the 3DS version), the game uses the function `floor(total_stats * -1) * -1`, and it was possible to squeeze in one extra % in resistance from mealy apples / items with negative resistances, in conjunction with ObjectX.
+* The JP wiki reports that in RF5, certain scales (three of them) don't provide the shield stat bonus.
 * As far as I know, there are no system (e.g. calculation) differences between Rune Factory 4, and Rune Factory 4 Special.
 
 # For developers

@@ -4,14 +4,14 @@
 		{
 			"label": "Browserify calculator",
 			"type": "shell",
-			"command": "browserify ts/Calculator.ts -p [ tsify --noImplicitAny ] > js/rf5-calculator.js",
+			"command": "browserify ts/RF5CalculatorApp.ts -p [ tsify --noImplicitAny ] > js/rf5-calculator.js",
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
 			"label": "Browserify itemtable",
 			"type": "shell",
-			"command": "browserify ts/ItemTable.ts -p [ tsify --noImplicitAny ] > js/rf5-itemtable.js",
+			"command": "browserify ts/RF5ItemTableApp.ts -p [ tsify --noImplicitAny ] > js/rf5-itemtable.js",
 			"problemMatcher": [],
 			"group": "build"
 		},

@@ -123,6 +123,7 @@
                                             <th colspan="7"><span class="lang en jp">STAT</span></th>
                                             <th colspan="12"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
                                             <th colspan="8"><span class="lang jp">属性</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">ELE</span></th>
+                                            <button class="btn btn-secondary">Data</button>
                                             <th colspan="12" class="box-shadow-override"><span class="lang jp">状態</span><span>&nbsp;&nbsp;&nbsp;</span><span class="lang en">STATUS</span></th>
                                         </tr>
                                         <tr>
@@ -169,7 +170,6 @@
                                             <th><span class="lang stack jp">吸</span><span class="lang stack en">DRN</span></th>
                                             <th><span class="lang stack jp">チャ</span><span class="lang stack en">CHG</span></th>
                                             <th><span class="lang stack jp">長</span><span class="lang stack en">LNG</span></th>
-            
                                         </tr>
                                         <!-- ko template: 'TEMPLATE-character-upper' --><!-- /ko -->
                                     </thead>
@@ -223,7 +223,7 @@
                                             <!-- /ko -->
                                             <!-- ko template: 'TEMPLATE-group-footer' --><!-- /ko -->
                                         <!-- /ko -->
-            
+
                                     </tbody>
                                 </table>
                             </div>
@@ -831,7 +831,6 @@
                 <!-- ko if: (Index >= 11) && ( ($root.Data.Is2foldSteel(id()) && ! IsEffective2FoldSteel()) || ($root.Data.Is10foldSteel(id()) && ! IsEffective10FoldSteel()) )-->
                     <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only one fold steel (of each type) per item.', text_jp: '効果がありません。一つのアイテムにつき一つのみ有効。' } } --><!-- /ko -->
                 <!-- /ko -->
-
 
             </div>
             <div class="detail-panel" data-bind="css: { displayNone: ViewModel.AreDetailsCollapsed() }">

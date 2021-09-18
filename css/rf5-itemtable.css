@@ -1,0 +1,30 @@
+.bootstrap-table .fixed-table-container .table thead th .th-inner {
+    padding: 0;
+    padding-right: 0 !important;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .sortable {
+    background-position: bottom;
+    padding-bottom: 20px;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body {
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+#character-tabs li > button:last-child {
+    line-height: 20px;
+    font-size: 20px;
+}
+
+main.initial-load {
+    background-image: url(../bootstrap-icons/Ajax_loader_metal_512.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100px 100px;
+}
+
+label.icon-group {
+    cursor: default;
+}
