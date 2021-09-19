@@ -15,8 +15,8 @@ class VMRF5Item implements IVMRF5Slot {
         this.Model = model;
         const isCollapsed: boolean = this.Model.Character().ViewModel.IsItemGroupCollapsed[this.Model.EquipmentType]();
         // const isCollapsed = true; // Always generate as collapsed.
-        this.IsCollapsed = ko.observable(isCollapsed);
-        this.IsSafetyOn = ko.observable(true);
+        this.IsCollapsed = ko.observable(isCollapsed).extend({ deferred: true });
+        this.IsSafetyOn = ko.observable(true).extend({ deferred: true });
     }
 
     public SetCollapsedState = (isCollapsed: boolean, setChildSlots: boolean=true): boolean => {

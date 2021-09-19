@@ -18,13 +18,13 @@ class RF5Shield extends RF5Item {
         super(character, "shield", item_id, deserializedObject);
         const self = this;
 
-        this.stat_ATK = ko.pureComputed(self._compute_stat_ATK);
-        this.stat_DEF = ko.pureComputed(self._compute_stat_DEF);
-        this.stat_MAT = ko.pureComputed(self._compute_stat_MAT);
-        this.stat_MDF = ko.pureComputed(self._compute_stat_MDF);
-        this.stat_STR = ko.pureComputed(self._compute_stat_STR);
-        this.stat_INT = ko.pureComputed(self._compute_stat_INT);
-        this.stat_VIT = ko.pureComputed(self._compute_stat_VIT);
+        this.stat_ATK = ko.pureComputed(self._compute_stat_ATK).extend({ deferred: true });
+        this.stat_DEF = ko.pureComputed(self._compute_stat_DEF).extend({ deferred: true });
+        this.stat_MAT = ko.pureComputed(self._compute_stat_MAT).extend({ deferred: true });
+        this.stat_MDF = ko.pureComputed(self._compute_stat_MDF).extend({ deferred: true });
+        this.stat_STR = ko.pureComputed(self._compute_stat_STR).extend({ deferred: true });
+        this.stat_INT = ko.pureComputed(self._compute_stat_INT).extend({ deferred: true });
+        this.stat_VIT = ko.pureComputed(self._compute_stat_VIT).extend({ deferred: true });
         this.FinalizeVectorOverride();
 
         this.HasTrueScale = ko.pureComputed(function() {
@@ -38,7 +38,7 @@ class RF5Shield extends RF5Item {
                 }
             }
             return hasScale;
-        });
+        }).extend({ deferred: true });
 
         this.ShieldStatMultiplier = ko.pureComputed(function() {
             let idx: number = self.Character().ActiveWeaponIdx();
@@ -58,7 +58,7 @@ class RF5Shield extends RF5Item {
                 }
                 return 0.5; // All other cases, half stats.
             }
-        });
+        }).extend({ deferred: true });
     }
 
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number, _isPercent: boolean=false) => {

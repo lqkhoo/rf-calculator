@@ -61,30 +61,31 @@ class RF5Character extends RF5StatVector implements IRF5Character {
 
         this.Calculator     = calculator;
 
-        this.Accessories = ko.observableArray([]);
-        this.Armors      = ko.observableArray([]);
-        this.Boots       = ko.observableArray([]);
-        this.Headgears   = ko.observableArray([]);
-        this.Shields     = ko.observableArray([]);
-        this.Weapons     = ko.observableArray([]);
+        this.Accessories = ko.observableArray([]).extend({ deferred: true });
+        this.Armors      = ko.observableArray([]).extend({ deferred: true });
+        this.Boots       = ko.observableArray([]).extend({ deferred: true });
+        this.Headgears   = ko.observableArray([]).extend({ deferred: true });
+        this.Shields     = ko.observableArray([]).extend({ deferred: true });
+        this.Weapons     = ko.observableArray([]).extend({ deferred: true });
 
         this.Context = ko.computed(function() {
             return (RF5Data.Characters as any)[self.id()]
-        });
+        }).extend({ deferred: true });
+
         this.FinalizeVectorOverride();
 
-        this.ActiveAccessoryIdx = ko.pureComputed(self._compute_ActiveAccessoryIdx);
-        this.ActiveArmorIdx = ko.pureComputed(self._compute_ActiveArmorIdx);
-        this.ActiveBootsIdx = ko.pureComputed(self._compute_ActiveBootsIdx);
-        this.ActiveHeadgearIdx = ko.pureComputed(self._compute_ActiveHeadgearIdx);
-        this.ActiveShieldIdx = ko.pureComputed(self._compute_ActiveShieldIdx);
-        this.ActiveWeaponIdx = ko.pureComputed(self._compute_ActiveWeaponIdx);
+        this.ActiveAccessoryIdx = ko.pureComputed(self._compute_ActiveAccessoryIdx).extend({ deferred: true });
+        this.ActiveArmorIdx     = ko.pureComputed(self._compute_ActiveArmorIdx).extend({ deferred: true });
+        this.ActiveBootsIdx     = ko.pureComputed(self._compute_ActiveBootsIdx).extend({ deferred: true });
+        this.ActiveHeadgearIdx  = ko.pureComputed(self._compute_ActiveHeadgearIdx).extend({ deferred: true });
+        this.ActiveShieldIdx    = ko.pureComputed(self._compute_ActiveShieldIdx).extend({ deferred: true });
+        this.ActiveWeaponIdx    = ko.pureComputed(self._compute_ActiveWeaponIdx).extend({ deferred: true });
 
-        this.HasClover = ko.pureComputed(self._compute_hasClover);
-        this.HasRareCan = ko.pureComputed(self._compute_hasRareCan);
-        this.EquipmentStats = ko.observable(new VectorCharEquipmentStats(this));
-        this.GeneralSetBonus = ko.observable(new VectorGeneralSetBonus(this));
-        this.FinalStats = ko.observable(new VectorCharFinalStats(this));
+        this.HasClover          = ko.pureComputed(self._compute_hasClover).extend({ deferred: true });
+        this.HasRareCan         = ko.pureComputed(self._compute_hasRareCan).extend({ deferred: true });
+        this.EquipmentStats     = ko.observable(new VectorCharEquipmentStats(this)).extend({ deferred: true });
+        this.GeneralSetBonus    = ko.observable(new VectorGeneralSetBonus(this)).extend({ deferred: true });
+        this.FinalStats         = ko.observable(new VectorCharFinalStats(this)).extend({ deferred: true });
 
         this.ViewModel = new VMRF5Character(this);
 

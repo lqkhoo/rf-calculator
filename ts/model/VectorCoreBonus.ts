@@ -15,12 +15,11 @@ class VectorCoreBonus extends RF5StatVector {
         super(0, false);
         const self = this;
 
-        this.Item = ko.observable(item);
-        this.HasCoreBonus = ko.pureComputed(self._compute_hasCoreBonus);
+        this.Item = ko.observable(item).extend({ deferred: true });
 
-        this.stat_def_ele_VOID = ko.pureComputed(function() {
-            return self.HasCoreBonus() ? 10 : 0;
-        });
+        this.HasCoreBonus = ko.pureComputed(self._compute_hasCoreBonus).extend({ deferred: true });
+
+        this.stat_def_ele_VOID = ko.pureComputed(self._compute_def_ele_VOID).extend({ deferred: true });
         this.FinalizeVectorOverride();
     }
 
@@ -41,6 +40,10 @@ class VectorCoreBonus extends RF5StatVector {
             if(RF5Data.IsBlueCore(id)) { hasBlueCore = true; continue; }
         }
         return hasGreenCore && hasRedCore && hasYellowCore && hasBlueCore;
+    }
+
+    protected override _compute_def_ele_VOID = (): number => {
+        return this.HasCoreBonus() ? 10 : 0;
     }
 
 }

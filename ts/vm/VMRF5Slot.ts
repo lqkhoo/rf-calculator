@@ -26,8 +26,8 @@ class VMRF5Slot implements IVMRF5Slot {
 
         // const isCollapsed: boolean = this.Model.Item().ViewModel.IsCollapsed();
         const isCollapsed: boolean = true; // Always generate as collapsed
-        this.IsCollapsed = ko.observable(isCollapsed);
-        this.AreDetailsCollapsed = ko.observable(true);
+        this.IsCollapsed = ko.observable(isCollapsed).extend({ deferred: true });
+        this.AreDetailsCollapsed = ko.observable(true).extend({ deferred: true });
 
         this.SlotName = ko.pureComputed(function() {
             if(self.Model.Index === 0) { return 'Base'; }
@@ -40,7 +40,7 @@ class VMRF5Slot implements IVMRF5Slot {
             else {
                 return 'U' + (self.Model.Index-RF5AbstractSlot.UPGRADE_START_IDX+1).toString();
             }
-        });
+        }).extend({ deferred: true });
 
     }
 

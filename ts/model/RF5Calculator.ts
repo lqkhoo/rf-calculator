@@ -23,6 +23,7 @@ class RF5Planner implements IRF5Calculator, ISerializable {
 
     constructor() {
         // Model
+        // Can't defer these, otherwise the UI won't show properly
         this.CharacterList = ko.observableArray([]);
         this.IsEnglishSelected = ko.observable(true);
         this.IsJapaneseSelected = ko.observable(true);
@@ -30,7 +31,6 @@ class RF5Planner implements IRF5Calculator, ISerializable {
 
     // Delayed so the UI thread has a chance to render the AJAX spinner.
     public AddCharacter = (setBusy: boolean=true, unsetBusy: boolean=true): void => {
-        console.trace();
         const self = this;
         if(setBusy) { self.IsBusy(true); }
         window.setTimeout(function() {

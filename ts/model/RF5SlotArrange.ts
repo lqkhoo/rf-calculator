@@ -24,12 +24,11 @@ class RF5SlotArrange extends RF5Slot {
         super(item, index, item_id, level);
         const self = this;
 
-        this.level = ko.pureComputed(function() {
-            return 0; // Arrange slots' level values don't count.
-        });
+        // Arrange slots' level values don't count.
+        this.level = ko.pureComputed(function() { return 0; }).extend({ deferred: true });
         this.FinalizeVectorOverride();
         
-        this.Restriction = ko.observable(0);
+        this.Restriction = ko.observable(0).extend({ deferred: true });
         this.ViewModel = new VMRF5SlotArrange(this);
     }
 

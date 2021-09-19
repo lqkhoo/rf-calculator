@@ -4,28 +4,12 @@ import RF5StatVector = require('./RF5StatVector');
 // Parent
 import IRF5Item = require('./IRF5Item');
 // Data
-import RF5AbstractSlot = require('./RF5AbstractSlot');
-import RF5Data = require('./RF5Data');
 import IRF5StatVector = require('./IRF5StatVector');
 import RF5Item = require('./RF5Item');
 
 class VectorDualSmith extends RF5StatVector {
     
     readonly Item: ko.Observable<IRF5Item>;
-
-    override readonly stat_ATK:          ko.PureComputed<number>;
-    override readonly stat_MAT:          ko.PureComputed<number>;
-    override readonly stat_STR:          ko.PureComputed<number>;
-    override readonly stat_INT:          ko.PureComputed<number>;
-    override readonly stat_VIT:          ko.PureComputed<number>;
-    override readonly stat_atk_CRT:      ko.PureComputed<number>;
-    override readonly stat_atk_STN:      ko.PureComputed<number>;
-    override readonly stat_def_ele_FIRE: ko.PureComputed<number>;
-    override readonly stat_def_ele_WATER: ko.PureComputed<number>;
-    override readonly stat_def_ele_EARTH: ko.PureComputed<number>;
-    override readonly stat_def_ele_WIND:  ko.PureComputed<number>;
-    override readonly stat_def_ele_LIGHT: ko.PureComputed<number>;
-    override readonly stat_def_ele_DARK:  ko.PureComputed<number>;
 
     readonly DualSmithRelationLevelOptions: number[] = [0,1,2,3,4,5,6,7,8,9,10];
 
@@ -36,25 +20,25 @@ class VectorDualSmith extends RF5StatVector {
         super(0, false);
         const self = this;
 
-        this.Item = ko.observable(item);
+        this.Item = ko.observable(item).extend({ deferred: true });
 
-        this.stat_ATK = ko.pureComputed(self._compute_stat_ATK);
-        this.stat_MAT = ko.pureComputed(self._compute_stat_MAT);
-        this.stat_STR = ko.pureComputed(self._compute_stat_STR);
-        this.stat_INT = ko.pureComputed(self._compute_stat_INT);
-        this.stat_VIT = ko.pureComputed(self._compute_stat_VIT);
-        this.stat_atk_CRT = ko.pureComputed(self._compute_stat_atk_CRT);
-        this.stat_atk_STN = ko.pureComputed(self._compute_stat_atk_STN);
-        this.stat_def_ele_FIRE = ko.pureComputed(self._compute_def_ele_FIRE);
-        this.stat_def_ele_WATER = ko.pureComputed(self._compute_def_ele_WATER);
-        this.stat_def_ele_EARTH = ko.pureComputed(self._compute_def_ele_EARTH);
-        this.stat_def_ele_WIND = ko.pureComputed(self._compute_def_ele_WIND);
-        this.stat_def_ele_LIGHT = ko.pureComputed(self._compute_def_ele_LIGHT);
-        this.stat_def_ele_DARK = ko.pureComputed(self._compute_def_ele_DARK);
+        this.stat_ATK = ko.pureComputed(self._compute_stat_ATK).extend({ deferred: true });
+        this.stat_MAT = ko.pureComputed(self._compute_stat_MAT).extend({ deferred: true });
+        this.stat_STR = ko.pureComputed(self._compute_stat_STR).extend({ deferred: true });
+        this.stat_INT = ko.pureComputed(self._compute_stat_INT).extend({ deferred: true });
+        this.stat_VIT = ko.pureComputed(self._compute_stat_VIT).extend({ deferred: true });
+        this.stat_atk_CRT = ko.pureComputed(self._compute_stat_atk_CRT).extend({ deferred: true });
+        this.stat_atk_STN = ko.pureComputed(self._compute_stat_atk_STN).extend({ deferred: true });
+        this.stat_def_ele_FIRE = ko.pureComputed(self._compute_def_ele_FIRE).extend({ deferred: true });
+        this.stat_def_ele_WATER = ko.pureComputed(self._compute_def_ele_WATER).extend({ deferred: true });
+        this.stat_def_ele_EARTH = ko.pureComputed(self._compute_def_ele_EARTH).extend({ deferred: true });
+        this.stat_def_ele_WIND = ko.pureComputed(self._compute_def_ele_WIND).extend({ deferred: true });
+        this.stat_def_ele_LIGHT = ko.pureComputed(self._compute_def_ele_LIGHT).extend({ deferred: true });
+        this.stat_def_ele_DARK = ko.pureComputed(self._compute_def_ele_DARK).extend({ deferred: true });
         this.FinalizeVectorOverride();
 
-        this.DualSmithRelationLevel = ko.observable(relationLevel);
-        this.DualSmithBonusType = ko.observable(bonusType);
+        this.DualSmithRelationLevel = ko.observable(relationLevel).extend({ deferred: true });
+        this.DualSmithBonusType = ko.observable(bonusType).extend({ deferred: true });
     }
 
     protected _compute_fixedstat_helper = (_fieldName: StatVectorKey, bonusType: DualSmithBonusType, step: number) => {

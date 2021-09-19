@@ -19,14 +19,9 @@ class RF5SlotBaseItem extends RF5Slot {
                     
         super(item, index, item_id, level, true);
         
-        this.UseEquipmentStats = ko.pureComputed(function() {
-            return true;
-        });
-
-        this.level = ko.pureComputed(function() {
-            return 0; // Arrange slots' level values don't count.
-        });
-
+        this.UseEquipmentStats = ko.pureComputed(function() { return true; }).extend({ deferred: true });
+         // Arrange slots' level values don't count.
+        this.level = ko.pureComputed(function() { return 0; }).extend({ deferred: true });
         this.FinalizeVectorOverride();
 
         this.ViewModel = new VMRF5SlotBaseItem(this);

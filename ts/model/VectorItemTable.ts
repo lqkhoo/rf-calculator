@@ -55,7 +55,7 @@ class VectorItemTable extends RF5StatVector {
 
     constructor(itemId: number, isBaseItem: boolean) {
         super(itemId, isBaseItem);
-        var self = this;
+        const self = this;
 
         this.magic1 = ko.observable(self.Context().magic_charge1);
         this.magic2 = ko.observable(self.Context().magic_charge2);

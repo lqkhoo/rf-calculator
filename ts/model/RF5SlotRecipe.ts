@@ -23,7 +23,8 @@ class RF5SlotRecipe extends RF5Slot {
         super(item, index, item_id, level);
         const self = this;
 
-        this.Restriction = ko.observable(0);
+        this.Restriction = ko.observable(0)
+                                .extend({ deferred: true });
 
         this.image_uri = ko.pureComputed(function() {
             let image_uri: string = "icon/Empty.png";
@@ -35,61 +36,64 @@ class RF5SlotRecipe extends RF5Slot {
                 image_uri = (self.Context() as any).image_uri;
             }
             return image_uri;
-        });
+        }).extend({ deferred: true });
 
-        this.stat_ATK = ko.pureComputed(self._compute_stat_ATK);
-        this.stat_DEF = ko.pureComputed(self._compute_stat_DEF);
-        this.stat_MAT = ko.pureComputed(self._compute_stat_MAT);
-        this.stat_MDF = ko.pureComputed(self._compute_stat_MDF);
-        this.stat_STR = ko.pureComputed(self._compute_stat_STR);
-        this.stat_INT = ko.pureComputed(self._compute_stat_INT);
-        this.stat_VIT = ko.pureComputed(self._compute_stat_VIT);
-        this.stat_atk_CRT = ko.pureComputed(self._compute_stat_atk_CRT);
-        this.stat_atk_KNO = ko.pureComputed(self._compute_stat_atk_KNO);
-        this.stat_atk_STN = ko.pureComputed(self._compute_stat_atk_STN);
-        this.stat_atk_DIZ = ko.pureComputed(self._compute_stat_atk_DIZ);
-        this.stat_atk_PSN = ko.pureComputed(self._compute_stat_atk_PSN);
-        this.stat_atk_SEA = ko.pureComputed(self._compute_stat_atk_SEA);
-        this.stat_atk_PAR = ko.pureComputed(self._compute_stat_atk_PAR);
-        this.stat_atk_SLP = ko.pureComputed(self._compute_stat_atk_SLP);
-        this.stat_atk_FTG = ko.pureComputed(self._compute_stat_atk_FTG);
-        this.stat_atk_SCK = ko.pureComputed(self._compute_stat_atk_SCK);
-        this.stat_atk_FNT = ko.pureComputed(self._compute_stat_atk_FNT);
-        this.stat_atk_DRN = ko.pureComputed(self._compute_stat_atk_DRN);
-        this.stat_def_ele_FIRE = ko.pureComputed(self._compute_def_ele_FIRE);
-        this.stat_def_ele_WATER = ko.pureComputed(self._compute_def_ele_WATER);
-        this.stat_def_ele_EARTH = ko.pureComputed(self._compute_def_ele_EARTH);
-        this.stat_def_ele_WIND = ko.pureComputed(self._compute_def_ele_WIND);
-        this.stat_def_ele_LIGHT = ko.pureComputed(self._compute_def_ele_LIGHT);
-        this.stat_def_ele_DARK = ko.pureComputed(self._compute_def_ele_DARK);
-        this.stat_def_ele_LOVE = ko.pureComputed(self._compute_def_ele_LOVE);
-        this.stat_def_ele_VOID = ko.pureComputed(self._compute_def_ele_VOID);
-        this.stat_def_CRT = ko.pureComputed(self._compute_def_CRT);
-        this.stat_def_KNO = ko.pureComputed(self._compute_def_KNO);
-        this.stat_def_STN = ko.pureComputed(self._compute_def_STN);
-        this.stat_def_DIZ = ko.pureComputed(self._compute_def_DIZ);
-        this.stat_def_PSN = ko.pureComputed(self._compute_def_PSN);
-        this.stat_def_SEA = ko.pureComputed(self._compute_def_SEA);
-        this.stat_def_PAR = ko.pureComputed(self._compute_def_PAR);
-        this.stat_def_SLP = ko.pureComputed(self._compute_def_SLP);
-        this.stat_def_FTG = ko.pureComputed(self._compute_def_FTG);
-        this.stat_def_SCK = ko.pureComputed(self._compute_def_SCK);
-        this.stat_def_FNT = ko.pureComputed(self._compute_def_FNT);
-        this.stat_def_DRN = ko.pureComputed(self._compute_def_DRN);
-        this.stat_chargespeed = ko.pureComputed(self._compute_stat_chargespeed);
-        this.stat_attacklength = ko.pureComputed(self._compute_stat_attacklength);
+        this.stat_ATK = ko.pureComputed(self._compute_stat_ATK).extend({ deferred: true });
+        this.stat_DEF = ko.pureComputed(self._compute_stat_DEF).extend({ deferred: true });
+        this.stat_MAT = ko.pureComputed(self._compute_stat_MAT).extend({ deferred: true });
+        this.stat_MDF = ko.pureComputed(self._compute_stat_MDF).extend({ deferred: true });
+        this.stat_STR = ko.pureComputed(self._compute_stat_STR).extend({ deferred: true });
+        this.stat_INT = ko.pureComputed(self._compute_stat_INT).extend({ deferred: true });
+        this.stat_VIT = ko.pureComputed(self._compute_stat_VIT).extend({ deferred: true });
+        this.stat_atk_CRT = ko.pureComputed(self._compute_stat_atk_CRT).extend({ deferred: true });
+        this.stat_atk_KNO = ko.pureComputed(self._compute_stat_atk_KNO).extend({ deferred: true });
+        this.stat_atk_STN = ko.pureComputed(self._compute_stat_atk_STN).extend({ deferred: true });
+        this.stat_atk_DIZ = ko.pureComputed(self._compute_stat_atk_DIZ).extend({ deferred: true });
+        this.stat_atk_PSN = ko.pureComputed(self._compute_stat_atk_PSN).extend({ deferred: true });
+        this.stat_atk_SEA = ko.pureComputed(self._compute_stat_atk_SEA).extend({ deferred: true });
+        this.stat_atk_PAR = ko.pureComputed(self._compute_stat_atk_PAR).extend({ deferred: true });
+        this.stat_atk_SLP = ko.pureComputed(self._compute_stat_atk_SLP).extend({ deferred: true });
+        this.stat_atk_FTG = ko.pureComputed(self._compute_stat_atk_FTG).extend({ deferred: true });
+        this.stat_atk_SCK = ko.pureComputed(self._compute_stat_atk_SCK).extend({ deferred: true });
+        this.stat_atk_FNT = ko.pureComputed(self._compute_stat_atk_FNT).extend({ deferred: true });
+        this.stat_atk_DRN = ko.pureComputed(self._compute_stat_atk_DRN).extend({ deferred: true });
+        this.stat_def_ele_FIRE = ko.pureComputed(self._compute_def_ele_FIRE).extend({ deferred: true });
+        this.stat_def_ele_WATER = ko.pureComputed(self._compute_def_ele_WATER).extend({ deferred: true });
+        this.stat_def_ele_EARTH = ko.pureComputed(self._compute_def_ele_EARTH).extend({ deferred: true });
+        this.stat_def_ele_WIND = ko.pureComputed(self._compute_def_ele_WIND).extend({ deferred: true });
+        this.stat_def_ele_LIGHT = ko.pureComputed(self._compute_def_ele_LIGHT).extend({ deferred: true });
+        this.stat_def_ele_DARK = ko.pureComputed(self._compute_def_ele_DARK).extend({ deferred: true });
+        this.stat_def_ele_LOVE = ko.pureComputed(self._compute_def_ele_LOVE).extend({ deferred: true });
+        this.stat_def_ele_VOID = ko.pureComputed(self._compute_def_ele_VOID).extend({ deferred: true });
+        this.stat_def_CRT = ko.pureComputed(self._compute_def_CRT).extend({ deferred: true });
+        this.stat_def_KNO = ko.pureComputed(self._compute_def_KNO).extend({ deferred: true });
+        this.stat_def_STN = ko.pureComputed(self._compute_def_STN).extend({ deferred: true });
+        this.stat_def_DIZ = ko.pureComputed(self._compute_def_DIZ).extend({ deferred: true });
+        this.stat_def_PSN = ko.pureComputed(self._compute_def_PSN).extend({ deferred: true });
+        this.stat_def_SEA = ko.pureComputed(self._compute_def_SEA).extend({ deferred: true });
+        this.stat_def_PAR = ko.pureComputed(self._compute_def_PAR).extend({ deferred: true });
+        this.stat_def_SLP = ko.pureComputed(self._compute_def_SLP).extend({ deferred: true });
+        this.stat_def_FTG = ko.pureComputed(self._compute_def_FTG).extend({ deferred: true });
+        this.stat_def_SCK = ko.pureComputed(self._compute_def_SCK).extend({ deferred: true });
+        this.stat_def_FNT = ko.pureComputed(self._compute_def_FNT).extend({ deferred: true });
+        this.stat_def_DRN = ko.pureComputed(self._compute_def_DRN).extend({ deferred: true });
+        this.stat_chargespeed = ko.pureComputed(self._compute_stat_chargespeed).extend({ deferred: true });
+        this.stat_attacklength = ko.pureComputed(self._compute_stat_attacklength).extend({ deferred: true });
+
         this.FinalizeVectorOverride();
 
         this.IsRestricted = ko.pureComputed(function() {
             return self.Restriction() !== 0;
-        });
+        }).extend({ deferred: true });
+
         this.IsLocked = ko.pureComputed(function() {
             const itemIds: any = RF5Data.Item_ids;
             return self.IsRestricted() && itemIds.hasOwnProperty(self.Restriction());
-        })
+        }).extend({ deferred: true });
 
         this.ViewModel = new VMRF5SlotRecipe(this);
     }
+
 
     public ApplyRestriction = (restrictionId: number): void => {
         this.Restriction(restrictionId);

@@ -6,7 +6,7 @@ import IRF5Character = require('../model/IRF5Character');
 // Super
 import IVMRF5Slot = require('./IVMRF5Slot');
 // Data
-import RF5Data = require('../model/RF5Data');
+import Data = require('../model/RF5Data');
 import Utils = require('../Utils');
 
 
@@ -24,19 +24,19 @@ class VMRF5Character implements IVMRF5Slot {
         const self = this;
         this.Model = model;
 
-        this.IsSafetyOn = ko.observable(true);
+        this.IsSafetyOn = ko.observable(true).extend({ deferred: true });
         this.IsItemGroupCollapsed = {
-            "weapon":    ko.observable(false),
-            "shield":    ko.observable(false),
-            "headgear":  ko.observable(false),
-            "armor":     ko.observable(false),
-            "boots":     ko.observable(false),
-            "accessory": ko.observable(false)
+            "weapon":    ko.observable(false).extend({ deferred: true }),
+            "shield":    ko.observable(false).extend({ deferred: true }),
+            "headgear":  ko.observable(false).extend({ deferred: true }),
+            "armor":     ko.observable(false).extend({ deferred: true }),
+            "boots":     ko.observable(false).extend({ deferred: true }),
+            "accessory": ko.observable(false).extend({ deferred: true })
         }
 
         this.SpriteUri = ko.computed(function() {
             let img = new Image();
-            let uri: string = (RF5Data.Characters as any )[self.Model.id()].sprite_uri;
+            let uri: string = (Data.Characters as any )[self.Model.id()].sprite_uri;
             img.src = uri;
             img.onload = function(): void {
                 const BIAS = 50;
@@ -49,9 +49,9 @@ class VMRF5Character implements IVMRF5Slot {
                 self.SpriteAdjustment(((COL_WIDTH - scaledWidth) / 2 + BIAS).toString()+'px');
             }
             return uri;
-        });
+        }).extend({ deferred: true });
 
-        this.SpriteAdjustment = ko.observable('initial');
+        this.SpriteAdjustment = ko.observable('initial').extend({ deferred: true });
     }
 
     public ToggleGroupHeaderCollapsedState = (equipmentType: EquipmentType): boolean => {
@@ -127,8 +127,8 @@ class VMRF5Character implements IVMRF5Slot {
 
     protected CacheSearchStrings = (): void => {
         let self = this;
-        let character_ids: any = RF5Data.Character_ids;
-        let characters: any = (RF5Data.Characters as any);
+        let character_ids: any = Data.Character_ids;
+        let characters: any = (Data.Characters as any);
         _.forOwn(character_ids, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = characters[item_id].name_en;
