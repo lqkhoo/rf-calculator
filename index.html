@@ -41,6 +41,9 @@
                                                 <button class="btn" data-bind="click: $root.OnExampleClickHandler">例 Example</button>
                                                 <button class="btn" data-bs-toggle="modal" data-bs-target="#save-modal" data-bind="click: $root.OnSaveToJsonClickHandler">セーブ Save</button>
                                                 <button class="btn" data-bs-toggle="modal" data-bs-target="#load-modal">ロード Load</button>
+                                                <a href="./rf5table.html" target="_blank"><button class="btn btn-secondary">RF5 Data Table</button></a>
+                                                <button class="btn btn-secondary">RF4 Calculator</button>
+                                                <button class="btn btn-secondary">RF4 Data</button>
                                                 <button class="btn btn-secondary">Github</button>
                                             </td>
                                             <td>
@@ -96,7 +99,7 @@
         </nav>
 
         <main id="main" class="container">
-            <!-- Binding context indow.RF5Calculator -->
+            <!-- Binding context window.RF5Calculator -->
             <div id="character-tab-pages" class="tab-content" data-bind="foreach: { data: CharacterList }">
                 <!-- ko let: { characterIdx: $index(), RF5Character: $data } -->
                     <div class="tab-pane fade" data-bind="attr: { id: 'character-' + $index() }" role="tab-panel">
@@ -860,7 +863,7 @@
                     <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Object X inverts all following item parameters, until another Object X. Effect carries over from arrange slots.', text_jp: '物体Xは後の素材のパラメーター反転します。その反転効果はアレンジ枠から引き続き出来ます。' } } --><!-- /ko -->
                 <!-- /ko -->
 
-                <!-- ko if: (Index >= 7) && (Item().EquipmentType === "shield") && $root.Data.IsScale(id()) && ($root.Data.IsTrueScale(id())) -->
+                <!-- ko if: (Index >= 7) && (Item().EquipmentType === "shield") && $root.Data.IsScales(id()) && ($root.Data.IsTrueScale(id())) -->
                     <!-- ko template: { name: 'TEMPLATE-detail-info', data: { text_en: 'Wet/Hard/Mermaid scale will not apply scale bonus.', text_jp: '湿った/固い/人魚のうろこは盾の倍数に効果がありません。' } } --><!-- /ko -->
                 <!-- /ko -->
 

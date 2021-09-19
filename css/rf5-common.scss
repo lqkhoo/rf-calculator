@@ -58,16 +58,21 @@ $color-armor: #236df5;
 $color-boots: #772dee;
 $color-accessory: #99378c;
 
-span.lang {
+.lang {
     display: none;
 }
 
-.lang_en .lang.en {
+.lang_en span.lang.en {
     display: inline-block;
 }
-
-.lang_jp .lang.jp {
+.lang_jp span.lang.jp {
     display: inline-block;
+}
+.lang_en div.lang.en {
+    display: block;
+}
+.lang_jp div.lang.jp {
+    display: block;
 }
 
 .lang.stack {

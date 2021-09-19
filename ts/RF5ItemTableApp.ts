@@ -12,6 +12,7 @@ declare var window: RF5Window;
 window.RF5ItemTable = new RF5ItemTable();
 // window.RF5ItemTable.IsBusy(true);
 window.ko = ko; // having multiple ko instances will break things. Expose it this way.
+ko.options.deferUpdates = true;
 window.addEventListener('DOMContentLoaded', function(event) {
     window.setTimeout(function() {
         ko.applyBindings(window.RF5ItemTable);
@@ -19,7 +20,10 @@ window.addEventListener('DOMContentLoaded', function(event) {
         window.$('#upgrade-table').bootstrapTable();
         window.RF5ItemTable.EndInitialLoad();
         window.RF5ItemTable.DisplayFirstCharacterSheet();
-        ko.applyBindings(window.RF5ItemTable, $('.filter-header')[0]);
+        let elems = $('.filter-header');
+        for(let i=0; i<elems.length; i++) {
+            ko.applyBindings(window.RF5ItemTable, elems[i]);
+        }
         console.log('Ready.');
     }, 100);
 });

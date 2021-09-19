@@ -1,17 +1,19 @@
-# Rune Factory 5 / 4SP / 4 Gear Calculator
+# Rune Factory 5 / 4SP / 4 Equipment Calculator
 
 <img alt="Like this?" src="./charasprites/rf4/21_SYELZA_body_02_SP2.png" height="600px" align="right">
 
-This is a comprehensive tool for calculating stats across multiple pieces / combinations of equipment. It comes with built-in data tables to filter and sort out the best potential upgrades. Multi-language support is built-in; currently it is bilingual (English, Japanese).
+This is a comprehensive tool for calculating character stats across multiple pieces / combinations of equipment, useful for planning an optimal fusion pathway when forging equipment.
 
-It is hosted as a Github Project ||| here TODO |||
+It is hosted live as a Github Project ||| here TODO |||.
 
 Supports:
 * Rune Factory 5 (Switch) 2020
 * Rune Factory 4 Special (Switch, Steam TBA) 2020
 * Rune Factory 4 (3DS) 2014
 
-The forging system in Rune Factory is quite intricate, and different pieces of equipment have different upgrade rules. None of the games explain the system in detail, however, so it's best to fully understand the forging rules first, otherwise the information in the calculator could be overwhelming.
+It comes with built-in data tables to filter and sort out the best potential upgrades. Multi-language support is baked in. Currently it is bilingual (English, Japanese).
+
+The forging system in Rune Factory is quite intricate, and different pieces of equipment have different upgrade rules. However, none of the games explain the system in detail, so it's best to fully understand the forging rules first, otherwise the information in the calculator could be overwhelming, especially if you're new to the series.
 
 Quick basics check: if you are unfamiliar with rarity bonus tiers / rarity bonus types, how inheritance/overrides work, magic inheritance etc, it's probably best to read up.
 
@@ -44,7 +46,7 @@ This project makes use of game assets, included under terms of fair use. Fair us
    5. Batch image rotation, crop, padding: [Python](https://www.python.org/), [OpenCV](https://opencv.org/), [Pillow](https://pillow.readthedocs.io/en/stable/).
 
 ## Libraries (top-level dependencies)
-* Deployment: [Knockout](https://knockoutjs.com/), [Bootstrap](https://getbootstrap.com/), [jQueryUI](https://jqueryui.com/), [Knockout-jQueryUI](https://gvas.github.io/knockout-jqueryui/) (I modified this a bit).
+* Deployment: [Knockout](https://knockoutjs.com/), [Lodash](https://lodash.com/), [Bootstrap](https://getbootstrap.com/), [jQueryUI](https://jqueryui.com/), [Knockout-jQueryUI](https://gvas.github.io/knockout-jqueryui/) (I modified this a bit).
 * Development: [npm](https://www.npmjs.com/), [TypeScript (tsc)](https://www.typescriptlang.org/), [Sass](https://sass-lang.com/), [Browserify](https://browserify.org/), [tsify](https://github.com/TypeStrong/tsify), Python 3.4+ required.
 * Assets: [Bootstrap Icons](https://icons.getbootstrap.com/) (MIT), [Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif) (CC-BY-SA).
 * Formulae on this page generated using [CodeCogs](https://www.codecogs.com/latex/eqneditor.php) as I'm not using MathJax.
@@ -65,17 +67,13 @@ This project makes use of game assets, included under terms of fair use. Fair us
 1. Ensure that you have npm ([Node Package Manager](https://www.npmjs.com/)) installed. You can get it through their website or via Node.js development tools from [Visual Studio](https://visualstudio.microsoft.com/).
 2. Git clone this repo to your local directory. Navigate to it, and run `npm install` to install all dependencies, including tsc and sass (the Typescript transpiler and Sass compiler).
 3. This project uses browserify to construct a single js file for insertion into the browser. This is because the Typescript is written as modules, and module imports do not work offline without a webserver running on localhost, as browsers do not allow CORS with local files.
-4. If you are using [Visual Studio Code](https://code.visualstudio.com/), the build process has been set up via tasks.json, so just hit shift+ctrl+B to build. Otherwise, with your working directory pointed at the root of your local repo, run the following commamnds in your shell:
-```
-browserify ts/App.ts -p [ tsify --noImplicitAny ] > js/rf5planner.js
-sass css/rf5planner.scss css/rf5planner.css
-```
-5. You will have to do this every time you want the changes in Typescript or Sass to be reflected in js/css. The first build command is from [tsify](https://github.com/TypeStrong/tsify).
+4. If you are using [Visual Studio Code](https://code.visualstudio.com/), the build process has been set up via tasks.json, so just hit shift+ctrl+B to build. Otherwise, with your working directory pointed at the root of your local repo, have a look at `tasks.json` and run the shell commands there one by one (or just make a shell script to do that).
+5. You will have to do this every time you want the changes in Typescript or Sass to be reflected in js/css.
 6. Then just navigate your browser to index.html, or hit F5 from Visual Studio Code. You don't need a local webserver for this project.
 7. Python 3.4+ is required to run the script that transforms tsv data into DATA.ts.
 
 ## Dev notes
-I use knockout.js because it constructs the computation graph automatically. This project is extremely heavy on bindings (easily in the thousands), so doing this eliminates a major source of bugs.
+I used knockout.js because it constructs the computation graph automatically. This project is extremely heavy on bindings (easily in the thousands), so doing this eliminates a major source of bugs.
 
 Browserify combines javascript files, so some of the libraries have already been combined into our output. Instead of including the source files twice, which can cause issues (knockout especially), we expose the libraries via the window in App.ts, and then include their dependencies after our script.
 
@@ -88,11 +86,11 @@ Originally, I intended to implement a solver for finding an optimum combination 
 
 I'll walk through a sketch of how we can approach this kind of problem, and, in this particular case, solve it with a greedy algorithm. I'll be very verbose as the audience background is potentially quite wide, so if you're already familiar with optimization, please bear with it.
 
-Let all stats in the table be represented by a real vector:
+Let all stats (a row in the table) be represented by a real vector:
 
 <img src="https://latex.codecogs.com/svg.latex?\large&space;x&space;=&space;\[x_1,&space;x_2,&space;...,&space;x_n\]" title="\large x = \[x_1, x_2, ..., x_n\]" />
 
-Each material has their own combination of stats, so each could be represented as a linear function `f` acting on `x`. The set of materials is finite and countable, so let m enumerate the functions in this discrete function space.
+Each material has their own linear combination of stats, so each could be represented as a linear function `f` acting on `x`. The set of materials is finite and countable, so let m enumerate the functions in this discrete function space.
 
 <img src="https://latex.codecogs.com/svg.latex?f_m(x)=a\cdot&space;x=\sum_i^n{a_ix_i}=a_1x_1&plus;a_2x_2&plus;...&plus;a_nx_n" title="f_m(x)=a\cdot x=\sum_i^n{a_ix_i}=a_1x_1+a_2x_2+...+a_nx_n" />
 

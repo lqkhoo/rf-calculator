@@ -91,22 +91,49 @@ class RF5Data {
     }());
 
     // Query methods
-    public static IsEquipment(id: number): boolean {
-        return RF5Data.Is_equipment.hasOwnProperty(id);
-    }
-    public static IsWeapon(id: number): boolean {
-        return RF5Data.Is_eq_weapon.hasOwnProperty(id);
-    }
-    public static IsStaff(id: number): boolean {
-        return RF5Data.Is_eq_staff.hasOwnProperty(id);
-    }
+    public static IsEquipment(id: number): boolean { return RF5Data.Is_equipment.hasOwnProperty(id); }
+    public static IsWeapon(id: number): boolean { return RF5Data.Is_eq_weapon.hasOwnProperty(id); }
+    public static IsShield(id: number): boolean { return RF5Data.Is_eq_shield.hasOwnProperty(id); }
+    public static IsHeadgear(id: number): boolean { return RF5Data.Is_eq_headgear.hasOwnProperty(id); }
+    public static IsArmor(id: number): boolean { return RF5Data.Is_eq_armor.hasOwnProperty(id); }
+    public static IsBoots(id: number): boolean { return RF5Data.Is_eq_shoes.hasOwnProperty(id); }
+    public static IsAccessory(id: number): boolean { return RF5Data.Is_eq_accessory.hasOwnProperty(id); }
+
+    public static Is2hSword(id: number): boolean { return RF5Data.Is_eq_2hsword.hasOwnProperty(id); }
+    public static IsAxe(id: number): boolean { return RF5Data.Is_eq_axe.hasOwnProperty(id); }
+    public static IsDualblades(id: number): boolean { return RF5Data.Is_eq_dualblades.hasOwnProperty(id); }
+    public static IsFists(id: number): boolean { return RF5Data.Is_eq_fists.hasOwnProperty(id); }
+    public static IsHammer(id: number): boolean { return RF5Data.Is_eq_hammer.hasOwnProperty(id); }
+    public static IsSpear(id: number): boolean { return RF5Data.Is_eq_spear.hasOwnProperty(id); }
+    public static IsStaff(id: number): boolean { return RF5Data.Is_eq_staff.hasOwnProperty(id); }
+    public static IsSword(id: number): boolean { return RF5Data.Is_eq_sword.hasOwnProperty(id); }
+    public static IsFarmAxe(id: number): boolean { return RF5Data.Is_eq_farm_axe.hasOwnProperty(id); }
+    public static IsFarmFishingPole(id: number): boolean { return RF5Data.Is_eq_farm_fishingpole.hasOwnProperty(id); }
+    public static IsFarmHammer(id: number): boolean { return RF5Data.Is_eq_farm_hammer.hasOwnProperty(id); }
+    public static IsFarmHoe(id: number): boolean { return RF5Data.Is_eq_farm_hoe.hasOwnProperty(id); }
+    public static IsFarmSickle(id: number): boolean { return RF5Data.Is_eq_farm_sickle.hasOwnProperty(id); }
+    public static IsFarmWaterpot(id: number): boolean { return RF5Data.Is_eq_farm_waterpot.hasOwnProperty(id); }
+
+    public static IsClawsAndFangs(id: number): boolean { return RF5Data.Is_mat_clawsandfangs.hasOwnProperty(id); }
+    public static IsClothsAndSkins(id: number): boolean { return RF5Data.Is_mat_clothsandskins.hasOwnProperty(id); }
+    public static IsCrystals(id: number): boolean { return RF5Data.Is_mat_crystals.hasOwnProperty(id); }
+    public static IsFeathers(id: number): boolean { return RF5Data.Is_mat_feathers.hasOwnProperty(id); }
+    public static IsFurs(id: number): boolean { return RF5Data.Is_mat_furs.hasOwnProperty(id); }
+    public static IsJewels(id: number): boolean { return RF5Data.Is_mat_jewels.hasOwnProperty(id); }
+    public static IsLiquids(id: number): boolean { return RF5Data.Is_mat_liquids.hasOwnProperty(id); }
+    public static IsMinerals(id: number): boolean { return RF5Data.Is_mat_minerals.hasOwnProperty(id); }
+    public static IsPowdersAndSpores(id: number): boolean { return RF5Data.Is_mat_powdersandspores.hasOwnProperty(id); }
+    public static IsScales(id: number): boolean { return RF5Data.Is_mat_scales.hasOwnProperty(id); }
+    public static IsShards(id: number): boolean { return RF5Data.Is_mat_shards.hasOwnProperty(id); }
+    public static IsShellsAndBones(id: number): boolean { return RF5Data.Is_mat_shellsandbones.hasOwnProperty(id); }
+    public static IsSticksAndStems(id: number): boolean { return RF5Data.Is_mat_sticksandstems.hasOwnProperty(id); }
+    public static IsStones(id: number): boolean { return RF5Data.Is_mat_stones.hasOwnProperty(id); }
+    public static IsStrings(id: number): boolean { return RF5Data.Is_mat_strings.hasOwnProperty(id); }
+
     public static HasEffect(id: number): boolean {
         return RF5Data.Has_effect.hasOwnProperty(id);
     }
 
-    public static IsCrystal(id: number): boolean {
-        return RF5Data.Is_mat_crystals.hasOwnProperty(id);
-    }
     public static IsEleCrystal(id: number): boolean {
         return RF5Data.Is_mat_elecrystals.hasOwnProperty(id);
     }
@@ -121,9 +148,6 @@ class RF5Data {
     }
     public static IsLightOre(id: number): boolean {
         return RF5Data.Is_mat_lightore.hasOwnProperty(id);
-    }
-    public static IsScale(id: number): boolean {
-        return RF5Data.Is_mat_scales.hasOwnProperty(id);
     }
     public static IsTrueScale(id: number): boolean {
         return RF5Data.Is_mat_truescale.hasOwnProperty(id);

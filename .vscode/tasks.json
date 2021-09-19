@@ -16,14 +16,20 @@
 			"group": "build"
 		},
 		{
-			"label": "Sass compile",
+			"label": "Sass compile common",
 			"type": "shell",
 			"command": "sass css/rf5-common.scss css/rf5-common.css",
 			"group": "build"
 		},
 		{
+			"label": "Sass compile itemtable",
+			"type": "shell",
+			"command": "sass css/rf5-itemtable.scss css/rf5-itemtable.css",
+			"group": "build"
+		},
+		{
 			"label": "Build all",
-			"dependsOn": ["Browserify calculator", "Sass compile", "Browserify itemtable"],
+			"dependsOn": ["Browserify calculator", "Sass compile common", "Sass compile itemtable", "Browserify itemtable"],
 			"group": {
 				"kind": "build",
 				"isDefault": true

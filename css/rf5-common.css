@@ -10131,16 +10131,24 @@ textarea.form-control-lg {
   padding: 0;
 }
 
-span.lang {
+.lang {
   display: none;
 }
 
-.lang_en .lang.en {
+.lang_en span.lang.en {
   display: inline-block;
 }
 
-.lang_jp .lang.jp {
+.lang_jp span.lang.jp {
   display: inline-block;
+}
+
+.lang_en div.lang.en {
+  display: block;
+}
+
+.lang_jp div.lang.jp {
+  display: block;
 }
 
 .lang.stack {

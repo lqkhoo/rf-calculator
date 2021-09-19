@@ -1,0 +1,124 @@
+.bootstrap-table .fixed-table-container .table thead th .th-inner {
+    padding: 0;
+    padding-right: 0 !important;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .sortable {
+    background-position: bottom;
+    padding-bottom: 20px;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body {
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+#character-tabs li > button:last-child {
+    line-height: 20px;
+    font-size: 20px;
+}
+
+main.initial-load {
+    background-image: url(../bootstrap-icons/Ajax_loader_metal_512.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100px 100px;
+}
+
+label.icon-group {
+    cursor: default;
+}
+
+.filter-unit-org {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.filter-header label {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.filter-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.filter-header {
+    .filter-container {
+        button {
+            display: inline-block;
+            vertical-align: middle;
+            border: 1px solid #aaaaaa;
+            border-radius: 3px;
+        }
+    }
+
+    .filter-button::before {
+        content: url('../bootstrap-icons/chevron-down.svg');
+        position: relative;
+        left: -8px;
+        top: 2px;
+    }
+    .filter-button::after {
+        content: url('../bootstrap-icons/chevron-down.svg');
+        position: relative;
+        left: 8px;
+        top: 2px;
+    }
+    .filter-button.collapsed::before {
+        content: url('../bootstrap-icons/chevron-right.svg');
+    }
+    .filter-button.collapsed::after {
+        content: url('../bootstrap-icons/chevron-left.svg');
+    }
+
+
+}
+
+tr.item-table-entry {
+    display: none;
+}
+
+
+.dummy-header > img {
+    margin-top: 1px;
+    max-height: 96px;
+}
+
+main.equipment tr.equipment { display: table-row; }
+main.weapon tr.weapon { display: table-row; }
+main.shield tr.shield { display: table-row; }
+main.headgear tr.headgear { display: table-row; }
+main.armor tr.armor { display: table-row; }
+main.boots tr.boots { display: table-row; }
+main.accessory tr.accessory { display: table-row; }
+main.sword2h tr.sword2h { display: table-row; }
+main.axe tr.dualblades { display: table-row; }
+main.dualblades tr.dualblades { display: table-row; }
+main.fists tr.fists { display: table-row; }
+main.hammer tr.hammer { display: table-row; }
+main.spear tr.spear { display: table-row; }
+main.staff tr.staff { display: table-row; }
+main.sword tr.sword { display: table-row; }
+main.farmAxe tr.farmAxe { display: table-row; }
+main.farmFishingPole tr.farmFishingPole { display: table-row; }
+main.farmHammer tr.farmHammer { display: table-row; }
+main.farmHoe tr.farmHoe { display: table-row; }
+main.farmSickle tr.farmSickle { display: table-row; }
+main.farmWaterpot tr.farmWaterpot { display: table-row; }
+main.material tr.material { display: table-row; }
+main.clawsAndFangs tr.clawsAndFangs { display: table-row; }
+main.crystals tr.crystals { display: table-row; }
+main.feathers tr.feathers { display: table-row; }
+main.furs tr.furs { display: table-row; }
+main.jewels tr.jewels { display: table-row; }
+main.liquids tr.liquids { display: table-row; }
+main.minerals tr.minerals { display: table-row; }
+main.powdersAndSpores tr.powdersAndSpores { display: table-row; }
+main.scales tr.scales { display: table-row; }
+main.shards tr.shards { display: table-row; }
+main.shellsAndBones tr.shellsAndBones { display: table-row; }
+main.sticksAndStems tr.sticksAndStems { display: table-row; }
+main.stones tr.stones { display: table-row; }
+main.strings tr.strings { display: table-row; }
