@@ -37,7 +37,7 @@ This project makes use of game assets, included under terms of fair use. Fair us
   * This is from v1.0.0 of the JP release. I went through the wiki and fixed a couple of data points in the item table that have been patched (corrected). These are Platinum Shield+, Wind Mantle, Elven Mantle. If you notice anything else let me know.
 
 ## Rune Factory 4
-* Data dump from the GameFaqs [data mining thread](https://gamefaqs.gamespot.com/boards/258612-rune-factory-4-special/78486979) (Omnigamer).
+* Data dump from the GameFaqs [data mining thread](https://gamefaqs.gamespot.com/boards/258612-rune-factory-4-special/78486979) (Omnigamer). For icons, images, and Japanese strings, I had to associate them by hand.
 * Asset dump by myself. Pipeline tools:
    1. ROMFS ([Ryujinx](https://ryujinx.org/)).
    2. BNTX to DDS / ASTC: [BNTX-Extractor](https://github.com/aboood40091/BNTX-Extractor) ([AboodXD](https://github.com/aboood40091)).
@@ -51,8 +51,10 @@ This project makes use of game assets, included under terms of fair use. Fair us
 * Assets: [Bootstrap Icons](https://icons.getbootstrap.com/) (MIT), [Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif) (CC-BY-SA).
 * Formulae on this page generated using [CodeCogs](https://www.codecogs.com/latex/eqneditor.php) as I'm not using MathJax.
 
-# Potential improvements
-* I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
+# Limitations
+* For RF5, I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
+* For RF4, magic isn't mapped the same way. The data is not available from Omnigamer's data dump. I had a cursory look at the binary files in ROMFS myself and couldn't find it either.
+  * The Japanese wiki has a short list of materials with known staff upgrade effects, but this list is very likely to be incomplete. To get around all of this, I backport magic data from ingredients that are both in RF5 and RF4. In the absence of better data this is the best we can do. Note that these magic IDs do not correspond to the game's original IDs, which are useless without item-to-magic mappings anyway.
 * As of time of writing, RF5 is not available in English yet, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
 * Maybe work on serializing JSON to local storage.
 * I'm not a native Japanese speaker. I did my best with the translation, but if you can improve on it, let me know!
