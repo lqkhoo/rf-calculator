@@ -1,4 +1,4 @@
-// var $ = require('jquery');
+var $ = require('jquery');
 import ko = require('knockout');
 import RF5ItemTable = require('./model/RF5ItemTable');
 
@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', function(event) {
         window.$('#upgrade-table').bootstrapTable();
         window.RF5ItemTable.EndInitialLoad();
         window.RF5ItemTable.DisplayFirstCharacterSheet();
+        ko.applyBindings(window.RF5ItemTable, $('.filter-header')[0]);
         console.log('Ready.');
     }, 100);
 });

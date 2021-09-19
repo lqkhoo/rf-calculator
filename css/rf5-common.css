@@ -10615,4 +10615,8 @@ select.dualsmith-bonus-type-select {
   font-size: 20px;
 }
 
+th.filter-header .form-check {
+  display: inline-block;
+}
+
 /*# sourceMappingURL=rf5-common.css.map */
