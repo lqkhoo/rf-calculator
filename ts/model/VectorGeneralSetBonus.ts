@@ -1,22 +1,21 @@
 import ko = require('knockout');
-import IRF5Item = require('./IRF5Item');
-import IRF5Slot = require('./IRF5Slot');
+import IItem = require('./IItem');
+import ISlot = require('./ISlot');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Character = require('./IRF5Character');
-// Data
-import RF5Data = require('./RF5Data');
+import ICharacter = require('./ICharacter');
 
 class VectorGeneralSetBonus extends RF5StatVector {
 
-    readonly Character: ko.Observable<IRF5Character>;
+    readonly Character: ko.Observable<ICharacter>;
 
     readonly HasGeneralSetBonus: ko.PureComputed<boolean>;
 
-    constructor(character: IRF5Character) {
-        super(0, false);
+    constructor(character: ICharacter) {
+
+        super(character.Data, 0, false);
         const self = this;
 
         this.stat_ATK = ko.pureComputed(self._compute_stat_ATK).extend({ deferred: true });
@@ -50,15 +49,16 @@ class VectorGeneralSetBonus extends RF5StatVector {
     };
 
     protected _compute_hasGeneralSetBonus = (): boolean => {
+
         // General's boots / acce don't exist, so skip those.
 
-        function hasGeneralsEffect(item: IRF5Item, idMatchFunction: (id: number) => boolean): boolean {
-            let baseItem: IRF5Slot = item.BaseItem();
+        function hasGeneralsEffect(item: IItem, idMatchFunction: (id: number) => boolean): boolean {
+            let baseItem: ISlot = item.BaseItem();
             if(! baseItem.IsBeingOverridden()) {
                 return idMatchFunction(baseItem.id());
             } else {
                 for(let i=RF5AbstractSlot.RECIPE_START_IDX; i<RF5AbstractSlot.ARRANGE_START_IDX; i++) {
-                    let recipeSlot: IRF5Slot = item.GetSlotByIndex(i);
+                    let recipeSlot: ISlot = item.GetSlotByIndex(i);
                     if(! recipeSlot.IsOverriding()) { continue; }
                     else {
                         return idMatchFunction(recipeSlot.id());
@@ -81,10 +81,10 @@ class VectorGeneralSetBonus extends RF5StatVector {
         }
 
         return (
-            hasGeneralsEffect(this.Character().Weapons()[activeWeaponIdx], RF5Data.IsGeneralsHoe)
-            && hasGeneralsEffect(this.Character().Shields()[activeShieldIdx], RF5Data.IsGeneralsShield)
-            && hasGeneralsEffect(this.Character().Headgears()[activeHeadgearIdx], RF5Data.IsGeneralsHat)
-            && hasGeneralsEffect(this.Character().Armors()[activeArmorIdx], RF5Data.IsGeneralsRobe)
+            hasGeneralsEffect(this.Character().Weapons()[activeWeaponIdx], this.Data.IsGeneralsHoe)
+            && hasGeneralsEffect(this.Character().Shields()[activeShieldIdx], this.Data.IsGeneralsShield)
+            && hasGeneralsEffect(this.Character().Headgears()[activeHeadgearIdx], this.Data.IsGeneralsHat)
+            && hasGeneralsEffect(this.Character().Armors()[activeArmorIdx], this.Data.IsGeneralsRobe)
         );
     };
 

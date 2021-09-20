@@ -1,5 +1,6 @@
 import ko = require('knockout');
 import _ = require('lodash');
+import IData = require('../model/IData');
 // Super
 import VMRF5Slot = require('./VMRF5Slot');
 // Model
@@ -14,7 +15,6 @@ class VMRF5SlotRecipe extends VMRF5Slot {
 
     constructor(model: IRF5SlotRecipe) {
         super(model)
-        this.Model = model;
     }
 
     protected override CacheSearchStrings = (cacheKey: string): void => {
@@ -22,19 +22,19 @@ class VMRF5SlotRecipe extends VMRF5Slot {
 
         let items: any;
         if(cacheKey === "0") {
-            items = RF5Data.Item_ids; // All items
-        } else if (cacheKey in RF5Data.Item_ids) { // Single item
+            items = this.Data.Item_ids; // All items
+        } else if (cacheKey in this.Data.Item_ids) { // Single item
             items = {};
             items[cacheKey] = undefined;
         } else { // Category
             items = {};
-            var itemIds: number[] = (RF5Data.Categories as any)[cacheKey].item_ids;
+            var itemIds: number[] = (this.Data.Categories as any)[cacheKey].item_ids;
             for(var i=0; i<itemIds.length; i++) {
                 items[itemIds[i].toString()] = undefined;
             }
         }
 
-        let all_items: any = (RF5Data.Items as any);
+        let all_items: any = (this.Data.Items as any);
         _.forOwn(items, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = all_items[item_id].name_en;

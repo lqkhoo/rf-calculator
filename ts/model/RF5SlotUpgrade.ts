@@ -8,7 +8,7 @@ class RF5SlotUpgrade extends RF5Slot {
                 index: number,
                 item_id: number=RF5Slot.DEFAULT_ITEM_ID,
                 level: number=RF5Slot.DEFAULT_LEVEL) {
-                    
+        
         super(item, index, item_id, level);
     }
 

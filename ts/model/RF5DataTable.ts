@@ -1,12 +1,15 @@
 import _ = require('lodash');
 import ko = require('knockout');
+// Super
+import IDataTable = require('./IDataTable');
+// Children
+import VectorDataTable = require('./VectorDataTable');
 // Data
 import RF5Data = require('./RF5Data');
-import VectorDataTable = require('./VectorDataTable');
 
-class RF5DataTable {
+class RF5DataTable implements IDataTable {
 
-    readonly Data: RF5Data = RF5Data; 
+    readonly Data: RF5Data;
 
     // Model
     readonly IsEnglishSelected: ko.Observable<boolean>;
@@ -61,20 +64,22 @@ class RF5DataTable {
     constructor() {
         const self = this;
 
+        this.Data = new RF5Data();
+
         this.IsEnglishSelected = ko.observable(true);
         this.IsJapaneseSelected = ko.observable(true);
 
         let baseItems: VectorDataTable[] = [];
         let upgradeItems: VectorDataTable[] = [];
 
-        _.forOwn(RF5Data.BaseItems, function(_value: any, key: any) {
+        _.forOwn(self.Data.BaseItems, function(_value: any, key: any) {
             let id: number = parseInt(key);
-            let vector: VectorDataTable = new VectorDataTable(id, true);
+            let vector: VectorDataTable = new VectorDataTable(self.Data, id, true);
             baseItems.push(vector);
         });
-        _.forOwn(RF5Data.Items, function(_value: any, key: any) {
+        _.forOwn(self.Data.Items, function(_value: any, key: any) {
             let id: number = parseInt(key);
-            let vector: VectorDataTable = new VectorDataTable(id, false);
+            let vector: VectorDataTable = new VectorDataTable(self.Data, id, false);
             upgradeItems.push(vector);
         });
 

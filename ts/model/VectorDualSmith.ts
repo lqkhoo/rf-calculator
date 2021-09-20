@@ -2,22 +2,25 @@ import ko = require('knockout');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Item = require('./IRF5Item');
+import IItem = require('./IItem');
 // Data
-import IRF5StatVector = require('./IRF5StatVector');
+import IStatVector = require('./IStatVector');
 import RF5Item = require('./RF5Item');
 
 class VectorDualSmith extends RF5StatVector {
     
-    readonly Item: ko.Observable<IRF5Item>;
+    readonly Item: ko.Observable<IItem>;
 
     readonly DualSmithRelationLevelOptions: number[] = [0,1,2,3,4,5,6,7,8,9,10];
 
     readonly DualSmithRelationLevel: ko.Observable<number>;
     readonly DualSmithBonusType: ko.Observable<DualSmithBonusType>;
 
-    constructor(item: IRF5Item, relationLevel: number, bonusType: DualSmithBonusType) {
-        super(0, false);
+    constructor(item: IItem,
+                relationLevel: number,
+                bonusType: DualSmithBonusType) {
+
+        super(item.Data, 0, false);
         const self = this;
 
         this.Item = ko.observable(item).extend({ deferred: true });
@@ -55,8 +58,8 @@ class VectorDualSmith extends RF5StatVector {
             if(self.DualSmithBonusType() !== bonusType) { return 0; }
 
             let val: number = 0;
-            let slot: IRF5StatVector;
-            function accumulate(_slot: IRF5StatVector, skipIdZero: boolean=true) {
+            let slot: IStatVector;
+            function accumulate(_slot: IStatVector, skipIdZero: boolean=true) {
                 slot = _slot;
                 if(skipIdZero) {
                     val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);

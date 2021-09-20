@@ -1,18 +1,19 @@
 import _ = require('lodash');
 import ko = require('knockout');
+import IData = require('../model/IData');
 // Model
-import IRF5Item = require('../model/IRF5Item');
-import IRF5Character = require('../model/IRF5Character');
+import IItem = require('../model/IItem');
+import ICharacter = require('../model/ICharacter');
 // Super
-import IVMRF5Slot = require('./IVMRF5Slot');
+import IVMRF5Slot = require('./IVMSlot');
 // Data
-import Data = require('../model/RF5Data');
 import Utils = require('../Utils');
 
 
 class VMRF5Character implements IVMRF5Slot {
 
-    readonly Model: IRF5Character;
+    readonly Data: IData;
+    readonly Model: ICharacter;
     static readonly SearchStringsCache: any[] = [];
 
     readonly IsSafetyOn: ko.Observable<boolean>;
@@ -20,8 +21,10 @@ class VMRF5Character implements IVMRF5Slot {
     readonly SpriteUri: ko.Computed<string>;
     readonly SpriteAdjustment: ko.Observable<string>;
 
-    constructor(model: IRF5Character) {
+    constructor(model: ICharacter) {
         const self = this;
+
+        this.Data = model.Data;
         this.Model = model;
 
         this.IsSafetyOn = ko.observable(true).extend({ deferred: true });
@@ -36,7 +39,7 @@ class VMRF5Character implements IVMRF5Slot {
 
         this.SpriteUri = ko.computed(function() {
             let img = new Image();
-            let uri: string = (Data.Characters as any )[self.Model.id()].sprite_uri;
+            let uri: string = (self.Data.Characters as any )[self.Model.id()].sprite_uri;
             img.src = uri;
             img.onload = function(): void {
                 const BIAS = 50;
@@ -86,7 +89,7 @@ class VMRF5Character implements IVMRF5Slot {
     }
 
     public OnAddItemClickHandler = (equipmentType: EquipmentType, dataContext: any, _event: any): boolean => {
-        const character: IRF5Character = dataContext;
+        const character: ICharacter = dataContext;
         switch (equipmentType) {
             case "weapon": character.AddWeapon(); break;
             case "shield": character.AddShield(); break;
@@ -100,7 +103,7 @@ class VMRF5Character implements IVMRF5Slot {
 
     public OnEquipmentRadioClickHandler = (equipmentType: EquipmentType, equipmentIdx: number,
                                                 dataContext: any, _event: any): boolean => {
-        const rf5Item: IRF5Item = (dataContext as IRF5Item);
+        const rf5Item: IItem = (dataContext as IItem);
         if(equipmentType !== null) {
             rf5Item.Character().SetActiveEquipment(equipmentType, equipmentIdx);
         }
@@ -112,7 +115,7 @@ class VMRF5Character implements IVMRF5Slot {
     }
 
 
-    protected GetItemGroup = (equipmentType: EquipmentType): IRF5Item[] => {
+    protected GetItemGroup = (equipmentType: EquipmentType): IItem[] => {
         switch(equipmentType) {
             case "weapon": return this.Model.Weapons();
             case "shield": return this.Model.Shields();
@@ -127,8 +130,8 @@ class VMRF5Character implements IVMRF5Slot {
 
     protected CacheSearchStrings = (): void => {
         let self = this;
-        let character_ids: any = Data.Character_ids;
-        let characters: any = (Data.Characters as any);
+        let character_ids: any = this.Data.Character_ids;
+        let characters: any = (this.Data.Characters as any);
         _.forOwn(character_ids, function(value: any, key: any) {
             let item_id: string = key;
             let name_en: string = characters[item_id].name_en;

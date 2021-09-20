@@ -2,14 +2,15 @@ import ko = require('knockout');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Item = require('./IRF5Item');
+import IItem = require('./IItem');
 
 class VectorLevelBonus extends RF5StatVector {
 
-    readonly Item: ko.Observable<IRF5Item>;
+    readonly Item: ko.Observable<IItem>;
 
-    constructor(item: IRF5Item) {
-        super(0, false);
+    constructor(item: IItem) {
+
+        super(item.Data, 0, false);
         const self = this;
 
         this.Item = ko.observable(item).extend({ deferred: true });

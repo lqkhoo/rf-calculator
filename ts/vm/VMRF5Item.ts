@@ -1,18 +1,23 @@
 import ko = require('knockout');
+import IData = require('../model/IData');
 // Model
 import RF5Item = require('../model/RF5Item');
 // Super
-import IVMRF5Slot = require('./IVMRF5Slot');
+import IVMRF5Slot = require('./IVMSlot');
 
 class VMRF5Item implements IVMRF5Slot {
     
+    readonly Data: IData;
     readonly Model: RF5Item;
 
     readonly IsCollapsed: ko.Observable<boolean>;
     readonly IsSafetyOn: ko.Observable<boolean>;
 
     constructor(model: RF5Item) {
+        
+        this.Data = model.Data;
         this.Model = model;
+        
         const isCollapsed: boolean = this.Model.Character().ViewModel.IsItemGroupCollapsed[this.Model.EquipmentType]();
         // const isCollapsed = true; // Always generate as collapsed.
         this.IsCollapsed = ko.observable(isCollapsed).extend({ deferred: true });

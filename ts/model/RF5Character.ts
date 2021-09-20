@@ -1,9 +1,10 @@
 import ko = require('knockout');
-import IRF5StatVector = require('./IRF5StatVector');
-import IRF5Item = require('./IRF5Item');
-import IRF5Character = require('./IRF5Character');
+import IStatVector = require('./IStatVector');
+import IItem = require('./IItem');
+// Super
+import ICharacter = require('./ICharacter');
 // Parent
-import IRF5Calculator = require('./IRF5Calculator');
+import ICalculator = require('./ICalculator');
 // Children
 import RF5StatVector = require('./RF5StatVector');
 import RF5Accessory = require('./RF5Accessory');
@@ -12,19 +13,17 @@ import RF5Boot = require('./RF5Boot');
 import RF5Headgear = require('./RF5Headgear');
 import RF5Shield = require('./RF5Shield');
 import RF5Weapon = require('./RF5Weapon');
-// VM
-import VMRF5Character = require('../vm/VMRF5Character');
-// Data
-import RF5Data = require('./RF5Data');
 import VectorCharEquipmentStats = require('./VectorCharEquipmentStats');
 import VectorGeneralSetBonus = require('./VectorGeneralSetBonus');
 import VectorCharFinalStats = require('./VectorCharFinalStats');
+// VM
+import VMRF5Character = require('../vm/VMRF5Character');
 
-class RF5Character extends RF5StatVector implements IRF5Character {
+class RF5Character extends RF5StatVector implements ICharacter {
     
     static readonly DEFAULT_CHARACTER_ID: number = 0;
 
-    readonly Calculator:       IRF5Calculator;
+    readonly Calculator:       ICalculator;
 
     readonly Accessories:   ko.ObservableArray<RF5Accessory>;
     readonly Armors:        ko.ObservableArray<RF5Armor>;
@@ -44,19 +43,19 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     readonly HasRareCan: ko.PureComputed<boolean>;
     readonly HasGeneralSetBonus: ko.PureComputed<boolean>;
 
-    readonly EquipmentStats: ko.Observable<IRF5StatVector>;
-    readonly GeneralSetBonus: ko.Observable<IRF5StatVector>;
-    readonly FinalStats: ko.Observable<IRF5StatVector>;
+    readonly EquipmentStats: ko.Observable<IStatVector>;
+    readonly GeneralSetBonus: ko.Observable<IStatVector>;
+    readonly FinalStats: ko.Observable<IStatVector>;
 
     readonly ViewModel: VMRF5Character;
 
     override readonly Context: ko.PureComputed<any>;
 
-    constructor(calculator: IRF5Calculator,
+    constructor(calculator: ICalculator,
                 characterId: number=RF5Character.DEFAULT_CHARACTER_ID,
                 deserializedObject: any=undefined) {
 
-        super(characterId);
+        super(calculator.Data, characterId);
         const self = this;
 
         this.Calculator     = calculator;
@@ -69,7 +68,7 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         this.Weapons     = ko.observableArray([]).extend({ deferred: true });
 
         this.Context = ko.computed(function() {
-            return (RF5Data.Characters as any)[self.id()]
+            return (self.Data.Characters as any)[self.id()]
         }).extend({ deferred: true });
 
         this.FinalizeVectorOverride();
@@ -155,8 +154,8 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         }
     }
 
-    public DeleteItem = (equipmentType: EquipmentType, item: IRF5Item): void => {
-        let array: ko.ObservableArray<IRF5Item>;
+    public DeleteItem = (equipmentType: EquipmentType, item: IItem): void => {
+        let array: ko.ObservableArray<IItem>;
         switch(equipmentType) {
             case "weapon": array = this.Weapons; break;
             case "shield": array = this.Shields; break;
@@ -174,7 +173,7 @@ class RF5Character extends RF5StatVector implements IRF5Character {
     }
 
     public SetActiveEquipment = (equipmentType: EquipmentType, idx: number): void => {
-        let array: IRF5Item[];
+        let array: IItem[];
         switch(equipmentType) {
             case "weapon": array = this.Weapons(); break;
             case "shield": array = this.Shields(); break;
@@ -200,7 +199,7 @@ class RF5Character extends RF5StatVector implements IRF5Character {
         }
     }
 
-    protected _compute_activeIdx_helper = (observableArray: ko.ObservableArray<IRF5Item>) => {
+    protected _compute_activeIdx_helper = (observableArray: ko.ObservableArray<IItem>) => {
         let idx: number = -1;
         let nItems = observableArray().length;
         if (nItems !== 0) {

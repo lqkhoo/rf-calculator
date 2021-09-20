@@ -1,13 +1,13 @@
 import _ = require('lodash');
 import ko = require('knockout');
-import IRF5Item = require('./IRF5Item');
-import IRF5Slot = require('./IRF5Slot');
-import IRF5StatVector = require('./IRF5StatVector');
+import IItem = require('./IItem');
+import ISlot = require('./ISlot');
+import IStatVector = require('./IStatVector');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Character = require('./IRF5Character');
+import ICharacter = require('./ICharacter');
 // Children
 import RF5SlotBaseItem = require('./RF5SlotBaseItem');
 import RF5SlotRecipe = require('./RF5SlotRecipe');
@@ -18,11 +18,8 @@ import VectorRarityBonus = require('./VectorRarityBonus');
 import VectorCoreBonus = require('./VectorCoreBonus');
 // VM
 import VMRF5Item = require('../vm/VMRF5Item');
-// Data
-import RF5Data = require('./RF5Data');
 
-
-class RF5Item extends RF5StatVector implements IRF5Item {
+class RF5Item extends RF5StatVector implements IItem {
 
     static readonly NSLOTS_RECIPE: number = 6;
     static readonly NSLOTS_ARRANGE: number = 3;
@@ -39,7 +36,7 @@ class RF5Item extends RF5StatVector implements IRF5Item {
     readonly CoreBonus: ko.Observable<RF5StatVector>;
     readonly HasClover: ko.PureComputed<boolean>;
 
-    readonly Character: ko.Observable<IRF5Character>;
+    readonly Character: ko.Observable<ICharacter>;
 
     readonly BaseItem: ko.Observable<RF5SlotBaseItem>;
     readonly RecipeSlots: ko.ObservableArray<RF5SlotRecipe>;
@@ -48,12 +45,12 @@ class RF5Item extends RF5StatVector implements IRF5Item {
 
     readonly ViewModel: VMRF5Item;
 
-    constructor(character: IRF5Character,
+    constructor(character: ICharacter,
                 equipment_type: EquipmentType,
                 item_id: number=RF5Item.DEFAULT_ITEM_ID,
                 deserializedObject: any=undefined) {
         
-        super(item_id);
+        super(character.Data, item_id);
         const self = this;
 
         this.id = ko.pureComputed(function() {
@@ -168,12 +165,12 @@ class RF5Item extends RF5StatVector implements IRF5Item {
     public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
         const self = this;
         const baseitemId: number = baseItem.id();
-        const recipes: any = (RF5Data.Recipes as any);
+        const recipes: any = (this.Data.Recipes as any);
         const n = this.RecipeSlots().length; // should be 6;
 
         let ids: number[];
         if(recipes.hasOwnProperty(baseitemId)) {
-            ids = (RF5Data.Recipes as any)[baseitemId];
+            ids = (this.Data.Recipes as any)[baseitemId];
         } else {
             ids = [];
         }
@@ -210,7 +207,7 @@ class RF5Item extends RF5StatVector implements IRF5Item {
        // sure that the base would always go into the arrange slot, so just let it be.
    }
 
-    public GetSlotByIndex = (index: number): IRF5Slot => {
+    public GetSlotByIndex = (index: number): ISlot => {
         index = _.clamp(index, 0, 18); // Inclusive both
         if(index == 0) {
             return this.BaseItem();
@@ -257,7 +254,7 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
             let id = this.GetSlotByIndex(i).id();
             if(id === 0) { continue; }
-            if(RF5Data.IsClover(id) || RF5Data.IsGiantClover(id)) { return true; }
+            if(this.Data.IsClover(id) || this.Data.IsGiantClover(id)) { return true; }
         }
         return false;
     }
@@ -267,8 +264,8 @@ class RF5Item extends RF5StatVector implements IRF5Item {
         return function(): number {
 
             let val: number = defaultValue;
-            let slot: IRF5StatVector;
-            function accumulate(_slot: IRF5StatVector, skipIdZero: boolean=true) {
+            let slot: IStatVector;
+            function accumulate(_slot: IStatVector, skipIdZero: boolean=true) {
                 slot = _slot;
                 if(skipIdZero) {
                     val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);

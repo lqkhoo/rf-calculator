@@ -2,16 +2,16 @@ import ko = require('knockout');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Character = require('./IRF5Character');
-// Data
+import ICharacter = require('./ICharacter');
 
 class VectorCharFinalStats extends RF5StatVector {
 
-    readonly Character: ko.Observable<IRF5Character>;
+    readonly Character: ko.Observable<ICharacter>;
 
     
-    constructor(character: IRF5Character) {
-        super(0, false);
+    constructor(character: ICharacter) {
+        
+        super(character.Data, 0, false);
         const self = this;
 
         this.level     = ko.pureComputed(self._compute_rarity).extend({ deferred: true });

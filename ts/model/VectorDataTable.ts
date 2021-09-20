@@ -1,10 +1,7 @@
 import ko = require('knockout');
+import IData = require('./IData');
 // Super
 import RF5StatVector = require('./RF5StatVector');
-// Parent
-import RF5DataTable = require('./RF5DataTable');
-// Data
-import RF5Data = require('./RF5Data');
 
 class VectorDataTable extends RF5StatVector {
 
@@ -55,50 +52,53 @@ class VectorDataTable extends RF5StatVector {
     readonly IsStones: ko.Observable<boolean>;
     readonly IsStrings: ko.Observable<boolean>;
 
-    constructor(itemId: number, isBaseItem: boolean) {
-        super(itemId, isBaseItem);
+    constructor(data: IData,
+                itemId: number,
+                isBaseItem: boolean) {
+
+        super(data, itemId, isBaseItem);
         const self = this;
 
-        this.IsEquipment = ko.observable(RF5Data.IsEquipment(self.id()));
+        this.IsEquipment = ko.observable(self.Data.IsEquipment(self.id()));
 
-        this.IsWeapon = ko.observable(RF5Data.IsWeapon(self.id()));
-        this.IsShield = ko.observable(RF5Data.IsShield(self.id()));
-        this.IsHeadgear = ko.observable(RF5Data.IsHeadgear(self.id()));
-        this.IsArmor = ko.observable(RF5Data.IsArmor(self.id()));
-        this.IsBoots = ko.observable(RF5Data.IsBoots(self.id()));
-        this.IsAccessory = ko.observable(RF5Data.IsAccessory(self.id()));
+        this.IsWeapon = ko.observable(self.Data.IsWeapon(self.id()));
+        this.IsShield = ko.observable(self.Data.IsShield(self.id()));
+        this.IsHeadgear = ko.observable(self.Data.IsHeadgear(self.id()));
+        this.IsArmor = ko.observable(self.Data.IsArmor(self.id()));
+        this.IsBoots = ko.observable(self.Data.IsBoots(self.id()));
+        this.IsAccessory = ko.observable(self.Data.IsAccessory(self.id()));
 
-        this.Is2hSword = ko.observable(RF5Data.Is2hSword(self.id()));
-        this.IsAxe = ko.observable(RF5Data.IsAxe(self.id()));
-        this.IsDualblades = ko.observable(RF5Data.IsDualblades(self.id()));
-        this.IsFists = ko.observable(RF5Data.IsFists(self.id()));
-        this.IsHammer = ko.observable(RF5Data.IsHammer(self.id()));
-        this.IsSpear = ko.observable(RF5Data.IsSpear(self.id()));
-        this.IsStaff = ko.observable(RF5Data.IsStaff(self.id()));
-        this.IsSword = ko.observable(RF5Data.IsSword(self.id()));
-        this.IsFarmAxe = ko.observable(RF5Data.IsFarmAxe(self.id()));
-        this.IsFarmFishingPole = ko.observable(RF5Data.IsFarmFishingPole(self.id()));
-        this.IsFarmHammer = ko.observable(RF5Data.IsFarmHammer(self.id()));
-        this.IsFarmHoe = ko.observable(RF5Data.IsFarmHoe(self.id()));
-        this.IsFarmSickle = ko.observable(RF5Data.IsFarmSickle(self.id()));
-        this.IsFarmWaterpot = ko.observable(RF5Data.IsFarmWaterpot(self.id()));
+        this.Is2hSword = ko.observable(self.Data.Is2hSword(self.id()));
+        this.IsAxe = ko.observable(self.Data.IsAxe(self.id()));
+        this.IsDualblades = ko.observable(self.Data.IsDualblades(self.id()));
+        this.IsFists = ko.observable(self.Data.IsFists(self.id()));
+        this.IsHammer = ko.observable(self.Data.IsHammer(self.id()));
+        this.IsSpear = ko.observable(self.Data.IsSpear(self.id()));
+        this.IsStaff = ko.observable(self.Data.IsStaff(self.id()));
+        this.IsSword = ko.observable(self.Data.IsSword(self.id()));
+        this.IsFarmAxe = ko.observable(self.Data.IsFarmAxe(self.id()));
+        this.IsFarmFishingPole = ko.observable(self.Data.IsFarmFishingPole(self.id()));
+        this.IsFarmHammer = ko.observable(self.Data.IsFarmHammer(self.id()));
+        this.IsFarmHoe = ko.observable(self.Data.IsFarmHoe(self.id()));
+        this.IsFarmSickle = ko.observable(self.Data.IsFarmSickle(self.id()));
+        this.IsFarmWaterpot = ko.observable(self.Data.IsFarmWaterpot(self.id()));
 
-        this.IsMaterial = ko.observable(! RF5Data.IsEquipment(self.id()));
-        this.IsClawsAndFangs = ko.observable(RF5Data.IsClawsAndFangs(this.id()));
-        this.IsClothsAndSkins = ko.observable(RF5Data.IsClothsAndSkins(this.id()));
-        this.IsCrystals = ko.observable(RF5Data.IsCrystals(this.id()));
-        this.IsFeathers = ko.observable(RF5Data.IsFeathers(this.id()));
-        this.IsFurs = ko.observable(RF5Data.IsFurs(this.id()));
-        this.IsJewels = ko.observable(RF5Data.IsJewels(this.id()));
-        this.IsLiquids = ko.observable(RF5Data.IsLiquids(this.id()));
-        this.IsMinerals = ko.observable(RF5Data.IsMinerals(this.id()));
-        this.IsPowdersAndSpores = ko.observable(RF5Data.IsPowdersAndSpores(this.id()));
-        this.IsScales = ko.observable(RF5Data.IsScales(this.id()));
-        this.IsShards = ko.observable(RF5Data.IsShards(this.id()));
-        this.IsShellsAndBones = ko.observable(RF5Data.IsShellsAndBones(this.id()));
-        this.IsSticksAndStems = ko.observable(RF5Data.IsSticksAndStems(this.id()));
-        this.IsStones = ko.observable(RF5Data.IsStones(this.id()));
-        this.IsStrings = ko.observable(RF5Data.IsStrings(this.id()));
+        this.IsMaterial = ko.observable(! self.Data.IsEquipment(self.id()));
+        this.IsClawsAndFangs = ko.observable(self.Data.IsClawsAndFangs(this.id()));
+        this.IsClothsAndSkins = ko.observable(self.Data.IsClothsAndSkins(this.id()));
+        this.IsCrystals = ko.observable(self.Data.IsCrystals(this.id()));
+        this.IsFeathers = ko.observable(self.Data.IsFeathers(this.id()));
+        this.IsFurs = ko.observable(self.Data.IsFurs(this.id()));
+        this.IsJewels = ko.observable(self.Data.IsJewels(this.id()));
+        this.IsLiquids = ko.observable(self.Data.IsLiquids(this.id()));
+        this.IsMinerals = ko.observable(self.Data.IsMinerals(this.id()));
+        this.IsPowdersAndSpores = ko.observable(self.Data.IsPowdersAndSpores(this.id()));
+        this.IsScales = ko.observable(self.Data.IsScales(this.id()));
+        this.IsShards = ko.observable(self.Data.IsShards(this.id()));
+        this.IsShellsAndBones = ko.observable(self.Data.IsShellsAndBones(this.id()));
+        this.IsSticksAndStems = ko.observable(self.Data.IsSticksAndStems(this.id()));
+        this.IsStones = ko.observable(self.Data.IsStones(this.id()));
+        this.IsStrings = ko.observable(self.Data.IsStrings(this.id()));
 
         this.magic1 = ko.observable(self.Context().magic_charge1).extend({ deferred: true });
         this.magic2 = ko.observable(self.Context().magic_charge2).extend({ deferred: true });

@@ -1,12 +1,12 @@
 import ko = require('knockout');
-import IRF5StatVector = require('./IRF5StatVector');
+import IStatVector = require('./IStatVector');
 // Super
 import RF5Item = require('./RF5Item');
 // Parent
-import IRF5Character = require('./IRF5Character');
+import ICharacter = require('./ICharacter');
 // Children
 import RF5StatVector = require('./RF5StatVector');
-import RF5Data = require('./RF5Data');
+// Data
 import RF5AbstractSlot = require('./RF5AbstractSlot');
     
 class RF5Shield extends RF5Item {
@@ -14,7 +14,10 @@ class RF5Shield extends RF5Item {
     readonly HasTrueScale: ko.PureComputed<boolean>;
     readonly ShieldStatMultiplier: ko.PureComputed<number>;
 
-    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID, deserializedObject: any=undefined) {
+    constructor(character: ICharacter,
+                item_id: number=RF5Item.DEFAULT_ITEM_ID,
+                deserializedObject: any=undefined) {
+
         super(character, "shield", item_id, deserializedObject);
         const self = this;
 
@@ -32,7 +35,7 @@ class RF5Shield extends RF5Item {
             for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
                 let id: number = self.GetSlotByIndex(i).id();
                 if(id === 0) { continue; }
-                if(RF5Data.IsTrueScale(id)) {
+                if(self.Data.IsTrueScale(id)) {
                     hasScale = true;
                     break;
                 }
@@ -49,11 +52,11 @@ class RF5Shield extends RF5Item {
                 if(activeWeaponId === 0) {
                     return 1; // Active weapon is none. Full stats.
                 }
-                if(RF5Data.WeaponTypeMap[activeWeaponId] === "sword") {
+                if(self.Data.WeaponTypeMap[activeWeaponId] === "sword") {
                     return 1; // Sword. Full stats.
                 }
-                if(RF5Data.WeaponTypeMap[activeWeaponId] === "dualblades"
-                        || RF5Data.WeaponTypeMap[activeWeaponId] === "fists") {
+                if(self.Data.WeaponTypeMap[activeWeaponId] === "dualblades"
+                        || self.Data.WeaponTypeMap[activeWeaponId] === "fists") {
                     return self.HasTrueScale() ? 0.5 : 0;
                 }
                 return 0.5; // All other cases, half stats.
@@ -66,8 +69,8 @@ class RF5Shield extends RF5Item {
         return function(): number {
 
             let val: number = defaultValue;
-            let slot: IRF5StatVector;
-            function accumulate(_slot: IRF5StatVector, skipIdZero: boolean=true) {
+            let slot: IStatVector;
+            function accumulate(_slot: IStatVector, skipIdZero: boolean=true) {
                 slot = _slot;
                 if(skipIdZero) {
                     val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);

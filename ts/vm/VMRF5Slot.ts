@@ -1,17 +1,18 @@
 import ko = require('knockout');
 import _ = require('lodash');
+import IData = require('../model/IData');
 // Model
-import IRF5Slot = require('../model/IRF5Slot');
+import ISlot = require('../model/ISlot');
 // Super
-import IVMRF5Slot = require('./IVMRF5Slot');
+import IVMRF5Slot = require('./IVMSlot');
 // Data
-import RF5Data = require('../model/RF5Data');
 import Utils = require('../Utils');
 import RF5AbstractSlot = require('../model/RF5AbstractSlot');
 
 class VMRF5Slot implements IVMRF5Slot {
 
-    readonly Model: IRF5Slot;
+    readonly Data: IData;
+    Model: ISlot;
     readonly IsCollapsed: ko.Observable<boolean>;
     readonly AreDetailsCollapsed: ko.Observable<boolean>;
 
@@ -20,8 +21,11 @@ class VMRF5Slot implements IVMRF5Slot {
 
     static readonly SearchStringsCache: Record<string, any[]> = {};
 
-    constructor(model: IRF5Slot) {
+    constructor(model: ISlot) {
+                    
         const self = this;
+
+        this.Data = model.Data;
         this.Model = model;
 
         // const isCollapsed: boolean = this.Model.Item().ViewModel.IsCollapsed();
@@ -45,10 +49,10 @@ class VMRF5Slot implements IVMRF5Slot {
     }
 
     protected CacheSearchStrings = (cacheKey: string): void => {
+        const self = this;
 
-        let self = this;
-        let all_items: any = (RF5Data.Items as any)
-        _.forOwn(RF5Data.Item_ids, function(value: any, key: any) {
+        let all_items: any = (this.Data.Items as any)
+        _.forOwn(self.Data.Item_ids, function(_value: any, key: any) {
             let item_id: string = key;
             let name_en: string = all_items[item_id].name_en;
             let name_jp: string = all_items[item_id].name_jp;

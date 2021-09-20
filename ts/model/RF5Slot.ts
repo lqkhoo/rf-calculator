@@ -1,21 +1,20 @@
 import ko = require('knockout');
 import _ = require('lodash');
-import IRF5Slot = require('./IRF5Slot');
+import ISlot = require('./ISlot');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Item = require('./IRF5Item');
+import IItem = require('./IItem');
 // VM
 import VMRF5Slot = require('../vm/VMRF5Slot');
 // Data
-import RF5Data = require('./RF5Data');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
 
 // This is the class responsible for most of the bindings, so
 // try to make the bindings as efficient as possible.
-class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
+class RF5Slot extends RF5AbstractSlot implements ISlot {
     
-    readonly Item: ko.Observable<IRF5Item>;
+    readonly Item: ko.Observable<IItem>;
     readonly Index: number; // Note: This isn't an observable.
 
     readonly LevelOverride: ko.Observable<number>;
@@ -50,13 +49,13 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
 
     readonly ViewModel: VMRF5Slot;
 
-    constructor(item: IRF5Item,
+    constructor(item: IItem,
                 index: number,
                 item_id: number,
                 level: number=RF5Slot.DEFAULT_LEVEL,
                 useEquipmentStats: boolean=false) {
                     
-        super(item_id, useEquipmentStats);
+        super(item.Data, item_id, useEquipmentStats);
         const self = this;
 
         this.LevelOverride = ko.observable(level).extend({ deferred: true }); // Set default to 10 for convenience;
@@ -114,11 +113,11 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         }).extend({ deferred: true });
 
         this.EquipmentType = ko.pureComputed(function() {
-            return RF5Data.EquipmentTypeMap[self.id()];
+            return self.Data.EquipmentTypeMap[self.id()];
         }).extend({ deferred: true });
 
         this.WeaponType = ko.pureComputed(function() {
-            return RF5Data.WeaponTypeMap[self.id()];
+            return self.Data.WeaponTypeMap[self.id()];
         }).extend({ deferred: true });
 
         this.Element = ko.pureComputed(function() {
@@ -126,7 +125,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         }).extend({ deferred: true });
 
         this.HasEffect = ko.pureComputed(function() {
-            return RF5Data.HasEffect(self.id());
+            return self.Data.HasEffect(self.id());
         }).extend({ deferred: true });
 
         this.IsUnderObjectX         = ko.computed(self._compute_isUnderObjectX).extend({ deferred: true });
@@ -154,7 +153,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     }
 
     // Has no index guard so check beforehand.
-    public Predecessor = (): IRF5Slot => {
+    public Predecessor = (): ISlot => {
         return this.Item().GetSlotByIndex(this.Index-1);
     }
     public ChangeIdScoper = (id: number): void => {
@@ -167,29 +166,29 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
     protected _compute_isUnderObjectX = (): boolean => { // Chained
         // ObjectX doesn't work in recipe slots.
         if (this.Index < RF5Slot.ARRANGE_START_IDX) { return false; }
-        return (this.Predecessor().IsUnderObjectX() != RF5Data.IsObjectX(this.id()));
+        return (this.Predecessor().IsUnderObjectX() != this.Data.IsObjectX(this.id()));
     }
 
     protected _compute_isEffective2FoldSteel = (): boolean => {
-        if (! RF5Data.Is2foldSteel(this.id()) // Not fold steel
+        if (! this.Data.Is2foldSteel(this.id()) // Not fold steel
             || this.Index < RF5Slot.UPGRADE_START_IDX) { // Not upgrade slot
             return false;
         }
         for(var i=RF5Slot.UPGRADE_START_IDX; i<this.Index; i++) { // Check if first instance.
             let itemId = this.Item().GetSlotByIndex(i).id();
-            if (RF5Data.Is2foldSteel(itemId)) { return false; }
+            if (this.Data.Is2foldSteel(itemId)) { return false; }
         }
         return true;
     }
 
     protected _compute_isEffective10FoldSteel = (): boolean => {
-        if (! RF5Data.Is10foldSteel(this.id()) // Not fold steel
+        if (! this.Data.Is10foldSteel(this.id()) // Not fold steel
             || this.Index < RF5Slot.UPGRADE_START_IDX) { // Not upgrade slot
             return false;
         }
         for(var i=RF5Slot.UPGRADE_START_IDX; i<this.Index; i++) { // Check if first instance.
             let itemId = this.Item().GetSlotByIndex(i).id();
-            if (RF5Data.Is10foldSteel(itemId)) { return false; }
+            if (this.Data.Is10foldSteel(itemId)) { return false; }
         }
         return true;
     }
@@ -211,7 +210,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         if (this.id() === 0                             // Can't override with nothing.
             || this.Item().GetSlotByIndex(0).id() === 0 // Can't override nothing.
             || this.Index >= RF5Slot.ARRANGE_START_IDX  // Overriding only works from recipe slots.
-            || ! RF5Data.IsEquipment(this.id())            // Must be equipment to override.
+            || ! this.Data.IsEquipment(this.id())            // Must be equipment to override.
             || this.IsLocked()                          // Recipe items cannot override e.g. Platinum Shield in Platinum Shield+ recipe.
             || this.Item().EquipmentType === "boots"    // No stat override mechanics in boots / accessory
             || this.Item().EquipmentType === "accessory"
@@ -222,8 +221,8 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
        if(this.HasPrecedingOverrider()) { return false; }
 
         // Now do the real work.
-        let baseItem: IRF5Slot = this.Item().GetSlotByIndex(0);
-        if (! RF5Data.IsWeapon(this.id())) { // Case: this is a non-weapon. We've already ruled out zero.
+        let baseItem: ISlot = this.Item().GetSlotByIndex(0);
+        if (! this.Data.IsWeapon(this.id())) { // Case: this is a non-weapon. We've already ruled out zero.
             // No light-ore interaction. Sufficient to check if equipment type equals base item's.
             return (baseItem.EquipmentType() === this.EquipmentType());
         } else {
@@ -235,7 +234,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
                 // Case: Light ore
                 let hasLightOre: boolean = (this.LightOreCount() > 0);
 
-                if (hasLightOre && RF5Data.IsWeapon(baseItem.id())) {
+                if (hasLightOre && this.Data.IsWeapon(baseItem.id())) {
                     // Make sure base item is actually a weapon.
                     return true;
                 } // Otherwise return false
@@ -263,7 +262,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
             // Light ore usage is in ANY recipe slot, so we need to check all slots.
             let count = 0;
             for(var i=1; i<RF5Slot.ARRANGE_START_IDX; i++) {
-                if (RF5Data.IsLightOre(this.Item().GetSlotByIndex(i).id())) {
+                if (this.Data.IsLightOre(this.Item().GetSlotByIndex(i).id())) {
                     count += 1;
                 }
             }
@@ -296,7 +295,7 @@ class RF5Slot extends RF5AbstractSlot implements IRF5Slot {
         // Recipe slots don't apply item stats but that's not the reponsibility of this function.
         if(this.Index < RF5Slot.UPGRADE_START_IDX) {
             return 1;
-        } else if (this.id() === 0 || RF5Data.IsEquipment(this.id())) {
+        } else if (this.id() === 0 || this.Data.IsEquipment(this.id())) {
             return 1; // Equipment or empty have stats of zero when not overriding so use that to short-circuit.
         } else {
             // Case: material

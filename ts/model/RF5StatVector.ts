@@ -1,8 +1,8 @@
 import ko = require('knockout');
-import RF5Data = require('./RF5Data');
-import IRF5StatVector = require('./IRF5StatVector');
+import IData = require('./IData');
+import IStatVector = require('./IStatVector');
 
-abstract class RF5StatVector implements IRF5StatVector {
+abstract class RF5StatVector implements IStatVector {
 
     // Field names
     static readonly KEY_name_id:        StatVectorKey = "id";
@@ -53,8 +53,8 @@ abstract class RF5StatVector implements IRF5StatVector {
     static readonly KEY_stat_chargespeed: StatVectorKey = "stat_chargespeed";
     static readonly KEY_stat_attacklength: StatVectorKey = "stat_attacklength";
 
-    // Id
-    readonly id:       ko.Observable<number>|ko.PureComputed<number>;
+    readonly Data: IData;
+    readonly id: ko.Observable<number>|ko.PureComputed<number>;
 
     // Context
     UseEquipmentStats: ko.PureComputed<boolean>;
@@ -111,9 +111,14 @@ abstract class RF5StatVector implements IRF5StatVector {
     // Map
     readonly StatNameMap:       Record<string, ko.Observable|ko.Computed|ko.PureComputed> = {};
 
-    constructor(id: number, useEquipmentStats: boolean=false) {
+    constructor(data: IData,
+                id: number,
+                useEquipmentStats: boolean=false) {
 
         const self = this;
+
+        this.Data = data;
+
         // Although the context has id, we don't use it directly.
         // We derive the context from id, rather than the other way around.
         this.id = ko.observable(id)
@@ -260,9 +265,9 @@ abstract class RF5StatVector implements IRF5StatVector {
     protected _compute_context = (): any => {
         if(this.UseEquipmentStats()) {
             // Baseitem doesn't contain the empty item "0" so fallback to Data.Items
-            return (RF5Data.BaseItems as any)[this.id()] || (RF5Data.Items as any)["0"];
+            return (this.Data.BaseItems as any)[this.id()] || (this.Data.Items as any)["0"];
         } else {
-            return (RF5Data.Items as any)[this.id()] || (RF5Data.Items as any)["0"];
+            return (this.Data.Items as any)[this.id()] || (this.Data.Items as any)["0"];
         }
     }
 

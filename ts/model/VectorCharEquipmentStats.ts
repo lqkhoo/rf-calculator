@@ -1,17 +1,17 @@
 import ko = require('knockout');
-import IRF5Item = require('./IRF5Item');
+import IItem = require('./IItem');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Character = require('./IRF5Character');
-// Data
+import ICharacter = require('./ICharacter');
 
 class VectorCharEquipmentStats extends RF5StatVector {
 
-    readonly Character: ko.Observable<IRF5Character>;
+    readonly Character: ko.Observable<ICharacter>;
 
-    constructor(character: IRF5Character) {
-        super(0, false);
+    constructor(character: ICharacter) {
+        
+        super(character.Data, 0, false);
         const self = this;
 
         this.level     = ko.pureComputed(self._compute_rarity).extend({ deferred: true });
@@ -90,8 +90,8 @@ class VectorCharEquipmentStats extends RF5StatVector {
         return function(): number {
 
             let val: number = defaultValue;
-            let item: IRF5Item;
-            function accumulate(_item: IRF5Item): void {
+            let item: IItem;
+            function accumulate(_item: IItem): void {
                 item = _item;
                 // In this case we can skip if id === 0
                 val += (item.id() === 0) ? 0 : (item.GetStatByName(fieldName) as number);

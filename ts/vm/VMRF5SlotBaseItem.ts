@@ -1,4 +1,5 @@
 import _ = require('lodash');
+import IData = require('../model/IData');
 // Model
 import RF5SlotBaseItem = require('../model/RF5SlotBaseItem');
 // Super
@@ -14,22 +15,21 @@ class VMRF5SlotBaseItem extends VMRF5Slot {
 
     constructor(model: RF5SlotBaseItem) {
         super(model);
-        this.Model = model;
     }
 
     protected override CacheSearchStrings = (_cacheKey: string): void => {
 
         let self = this;
         let cacheKey: EquipmentType = (_cacheKey as EquipmentType);
-        let all_items: any = (RF5Data.Items as any);
+        let all_items: any = (this.Data.Items as any);
         let id_set: any;
         switch (cacheKey) {
-            case "weapon": id_set = RF5Data.Is_eq_weapon; break;
-            case "shield": id_set = RF5Data.Is_eq_shield; break;
-            case "headgear": id_set = RF5Data.Is_eq_headgear; break;
-            case "armor": id_set = RF5Data.Is_eq_armor; break;
-            case "boots": id_set = RF5Data.Is_eq_shoes; break;
-            case "accessory": id_set = RF5Data.Is_eq_accessory; break;
+            case "weapon": id_set = this.Data.Is_eq_weapon; break;
+            case "shield": id_set = this.Data.Is_eq_shield; break;
+            case "headgear": id_set = this.Data.Is_eq_headgear; break;
+            case "armor": id_set = this.Data.Is_eq_armor; break;
+            case "boots": id_set = this.Data.Is_eq_shoes; break;
+            case "accessory": id_set = this.Data.Is_eq_accessory; break;
         }
 
         _.forOwn(id_set, function(value: any, key: any) {

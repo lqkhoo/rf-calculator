@@ -3,22 +3,21 @@ import _ = require('lodash');
 // Super
 import RF5Slot = require('./RF5Slot');
 // Parent
-import IRF5Item = require('./IRF5Item');
+import IItem = require('./IItem');
+// Children
+import RF5StatVector = require('./RF5StatVector');
 // VM
 import VMRF5SlotRecipe = require('../vm/VMRF5SlotRecipe');
-// Data
-import RF5Data = require('./RF5Data');
-import RF5StatVector = require('./RF5StatVector');
 
 class RF5SlotRecipe extends RF5Slot {
 
     readonly Restriction: ko.Observable<number>; // item or category id
     override readonly ViewModel: VMRF5SlotRecipe;
 
-    constructor(item: IRF5Item,
-        index: number,
-        item_id: number=RF5Slot.DEFAULT_ITEM_ID,
-        level: number=RF5Slot.DEFAULT_LEVEL) {
+    constructor(item: IItem,
+                index: number,
+                item_id: number=RF5Slot.DEFAULT_ITEM_ID,
+                level: number=RF5Slot.DEFAULT_LEVEL) {
 
         super(item, index, item_id, level);
         const self = this;
@@ -28,7 +27,7 @@ class RF5SlotRecipe extends RF5Slot {
 
         this.image_uri = ko.pureComputed(function() {
             let image_uri: string = "icon/Empty.png";
-            const categories: any = RF5Data.Categories;
+            const categories: any = self.Data.Categories;
             const categoryId = self.Restriction()
             if(categories.hasOwnProperty(categoryId)) {
                 image_uri = categories[categoryId].image_uri;
@@ -87,7 +86,7 @@ class RF5SlotRecipe extends RF5Slot {
         }).extend({ deferred: true });
 
         this.IsLocked = ko.pureComputed(function() {
-            const itemIds: any = RF5Data.Item_ids;
+            const itemIds: any = self.Data.Item_ids;
             return self.IsRestricted() && itemIds.hasOwnProperty(self.Restriction());
         }).extend({ deferred: true });
 
@@ -101,12 +100,12 @@ class RF5SlotRecipe extends RF5Slot {
         if(restrictionId === 0) {
             return;
         }
-        if(!RF5Data.Category_ids.hasOwnProperty(restrictionId)) {
+        if(!this.Data.Category_ids.hasOwnProperty(restrictionId)) {
             // Means this is a nonempty itemId, not a categoryId.
             this.ChangeId(restrictionId);
         } else {
             // Category restriction. If current item not in category, set to zero.
-            const itemIds: number[] = (RF5Data.Categories as any)[restrictionId].item_ids;
+            const itemIds: number[] = (this.Data.Categories as any)[restrictionId].item_ids;
             let found: boolean = false;
             for(var i=0; i<itemIds.length; i++) {
                 if(this.id() === itemIds[i]) {

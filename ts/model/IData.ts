@@ -1,0 +1,123 @@
+interface IData {
+
+    readonly Item_ids:               object;
+    readonly Category_ids:           object;
+    readonly Character_ids:          object;
+    readonly Is_eq_2hsword:          object;
+    readonly Is_eq_accessory:        object;
+    readonly Is_eq_armor:            object;
+    readonly Is_eq_axe:              object;
+    readonly Is_eq_dualblades:       object;
+    readonly Is_eq_farm_axe:         object;
+    readonly Is_eq_farm_fishingpole: object;
+    readonly Is_eq_farm_hammer:      object;
+    readonly Is_eq_farm_hoe:         object;
+    readonly Is_eq_farm_sickle:      object;
+    readonly Is_eq_farm_waterpot:    object;
+    readonly Is_eq_fists:            object;
+    readonly Is_eq_hammer:           object;
+    readonly Is_eq_headgear:         object;
+    readonly Is_eq_shield:           object;
+    readonly Is_eq_shoes:            object;
+    readonly Is_eq_spear:            object;
+    readonly Is_eq_staff:            object;
+    readonly Is_eq_sword:            object;
+    readonly Is_eq_weapon:           object;
+    readonly Is_equipment:           object;
+    readonly Is_mat_2foldsteel:      object;
+    readonly Is_mat_10foldsteel:     object;
+    readonly Is_mat_clawsandfangs:   object;
+    readonly Is_mat_clothsandskins:  object;
+    readonly Is_mat_core:            object;
+    readonly Is_mat_crystals:        object;
+    readonly Is_mat_elecrystals:     object;
+    readonly Is_mat_feathers:        object;
+    readonly Is_mat_furs:            object;
+    readonly Is_mat_jewels:          object;
+    readonly Is_mat_lightore:        object;
+    readonly Is_mat_liquids:         object;
+    readonly Is_mat_minerals:        object;
+    readonly Is_mat_objectx:         object;
+    readonly Is_mat_powdersandspores:object;
+    readonly Is_mat_scales:          object;
+    readonly Is_mat_shards:          object;
+    readonly Is_mat_shellsandbones:  object;
+    readonly Is_mat_sticksandstems:  object;
+    readonly Is_mat_stones:          object;
+    readonly Is_mat_strings:         object;
+    readonly Is_mat_truescale:       object; // Scales that provide the shield bonus
+    readonly Has_effect:             object;
+    readonly Categories:             object;
+    readonly Items:                  object;
+    readonly BaseItems:              object;
+    readonly Characters:             object;
+    readonly Recipes:                object;
+    readonly Magics:                 object;
+    readonly Effects:                object;
+
+    readonly EquipmentTypeMap:      Record<string, EquipmentType|undefined>;
+    readonly WeaponTypeMap:         Record<string, WeaponType|undefined>;
+
+    // Query methods
+    IsEquipment(id: number): boolean;
+    IsWeapon(id: number): boolean;
+    IsShield(id: number): boolean;
+    IsHeadgear(id: number): boolean;
+    IsArmor(id: number): boolean;
+    IsBoots(id: number): boolean;
+    IsAccessory(id: number): boolean;
+
+    Is2hSword(id: number): boolean;
+    IsAxe(id: number): boolean;
+    IsDualblades(id: number): boolean;
+    IsFists(id: number): boolean;
+    IsHammer(id: number): boolean;
+    IsSpear(id: number): boolean;
+    IsStaff(id: number): boolean;
+    IsSword(id: number): boolean;
+    IsFarmAxe(id: number): boolean;
+    IsFarmFishingPole(id: number): boolean;
+    IsFarmHammer(id: number): boolean;
+    IsFarmHoe(id: number): boolean;
+    IsFarmSickle(id: number): boolean;
+    IsFarmWaterpot(id: number): boolean;
+
+    IsClawsAndFangs(id: number): boolean;
+    IsClothsAndSkins(id: number): boolean;
+    IsCrystals(id: number): boolean;
+    IsFeathers(id: number): boolean;
+    IsFurs(id: number): boolean;
+    IsJewels(id: number): boolean;
+    IsLiquids(id: number): boolean;
+    IsMinerals(id: number): boolean;
+    IsPowdersAndSpores(id: number): boolean;
+    IsScales(id: number): boolean;
+    IsShards(id: number): boolean;
+    IsShellsAndBones(id: number): boolean;
+    IsSticksAndStems(id: number): boolean;
+    IsStones(id: number): boolean;
+    IsStrings(id: number): boolean;
+
+    HasEffect(id: number): boolean;
+
+    IsEleCrystal(id: number): boolean;
+    IsObjectX(id: number): boolean;
+    Is2foldSteel(id: number): boolean;
+    Is10foldSteel(id: number): boolean;
+    IsLightOre(id: number): boolean;
+    IsTrueScale(id: number): boolean;
+    IsClover(id: number): boolean;
+    IsGiantClover(id: number): boolean;
+    IsRareCan(id: number): boolean;
+    IsScrapMetalPlus(id: number): boolean; 
+    IsShadeStone(id: number): boolean;
+    IsGreenCore(id: number): boolean;
+    IsRedCore(id: number): boolean;
+    IsYellowCore(id: number): boolean;
+    IsBlueCore(id: number): boolean;
+    IsGeneralsHoe(id: number): boolean;
+    IsGeneralsHat(id: number): boolean;
+    IsGeneralsRobe(id: number): boolean;
+    IsGeneralsShield(id: number): boolean;
+}
+export = IData;

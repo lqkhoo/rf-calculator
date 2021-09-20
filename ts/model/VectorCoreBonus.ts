@@ -2,17 +2,17 @@ import ko = require('knockout');
 // Super
 import RF5StatVector = require('./RF5StatVector');
 // Parent
-import IRF5Item = require('./IRF5Item');
+import IItem = require('./IItem');
 import RF5AbstractSlot = require('./RF5AbstractSlot');
-import RF5Data = require('./RF5Data');
 
 class VectorCoreBonus extends RF5StatVector {
 
-    readonly Item: ko.Observable<IRF5Item>;
+    readonly Item: ko.Observable<IItem>;
     readonly HasCoreBonus: ko.PureComputed<boolean>;
 
-    constructor(item: IRF5Item) {
-        super(0, false);
+    constructor(item: IItem) {
+        
+        super(item.Data, 0, false);
         const self = this;
 
         this.Item = ko.observable(item).extend({ deferred: true });
@@ -34,10 +34,10 @@ class VectorCoreBonus extends RF5StatVector {
         for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
             let id: number = this.Item().GetSlotByIndex(i).id();
             if(id === 0 ) { continue; }
-            if(RF5Data.IsGreenCore(id)) { hasGreenCore = true; continue; }
-            if(RF5Data.IsRedCore(id)) { hasRedCore = true; continue; }
-            if(RF5Data.IsYellowCore(id)) { hasYellowCore = true; continue; }
-            if(RF5Data.IsBlueCore(id)) { hasBlueCore = true; continue; }
+            if(this.Data.IsGreenCore(id)) { hasGreenCore = true; continue; }
+            if(this.Data.IsRedCore(id)) { hasRedCore = true; continue; }
+            if(this.Data.IsYellowCore(id)) { hasYellowCore = true; continue; }
+            if(this.Data.IsBlueCore(id)) { hasBlueCore = true; continue; }
         }
         return hasGreenCore && hasRedCore && hasYellowCore && hasBlueCore;
     }

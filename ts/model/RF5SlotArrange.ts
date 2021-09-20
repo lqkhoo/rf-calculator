@@ -1,11 +1,9 @@
 import ko = require('knockout');
-import IRF5Slot = require('./IRF5Slot');
+import IData = require('./IData');
 // Parent
 import RF5Item = require('./RF5Item');
 // Children
 import RF5Slot = require('./RF5Slot');
-// Data
-import RF5AbstractSlot = require('./RF5AbstractSlot');
 // VM
 import VMRF5SlotArrange = require('../vm/VMRF5SlotArrange');
 
@@ -22,7 +20,6 @@ class RF5SlotArrange extends RF5Slot {
                 level: number=RF5Slot.DEFAULT_LEVEL) {
                     
         super(item, index, item_id, level);
-        const self = this;
 
         // Arrange slots' level values don't count.
         this.level = ko.pureComputed(function() { return 0; }).extend({ deferred: true });

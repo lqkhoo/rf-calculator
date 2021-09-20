@@ -1,13 +1,15 @@
 // Super
 import RF5Item = require('./RF5Item');
 // Parent
-import IRF5Character = require('./IRF5Character');
+import ICharacter = require('./ICharacter');
     
 class RF5Armor extends RF5Item {
 
-    constructor(character: IRF5Character, item_id: number=RF5Item.DEFAULT_ITEM_ID, deserializedObject: any=undefined) {
+    constructor(character: ICharacter,
+                item_id: number=RF5Item.DEFAULT_ITEM_ID,
+                deserializedObject: any=undefined) {
+        
         super(character, "armor", item_id, deserializedObject);
     }
-
 }
 export = RF5Armor;
