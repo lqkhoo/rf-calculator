@@ -2,34 +2,41 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Browserify calculator",
+			"label": "Browserify rf4data",
+			"type": "shell",
+			"command": "browserify ts/RF4DataApp.ts -p [ tsify --noImplicitAny ] > js/rf4-data.js",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Browserify rf5calc",
 			"type": "shell",
 			"command": "browserify ts/RF5CalculatorApp.ts -p [ tsify --noImplicitAny ] > js/rf5-calculator.js",
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
-			"label": "Browserify itemtable",
+			"label": "Browserify rf5data",
 			"type": "shell",
-			"command": "browserify ts/RF5ItemTableApp.ts -p [ tsify --noImplicitAny ] > js/rf5-itemtable.js",
+			"command": "browserify ts/RF5DataApp.ts -p [ tsify --noImplicitAny ] > js/rf5-data.js",
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
-			"label": "Sass compile common",
+			"label": "Sass compile common-css",
 			"type": "shell",
 			"command": "sass css/rf5-common.scss css/rf5-common.css",
 			"group": "build"
 		},
 		{
-			"label": "Sass compile itemtable",
+			"label": "Sass compile data-css",
 			"type": "shell",
-			"command": "sass css/rf5-itemtable.scss css/rf5-itemtable.css",
+			"command": "sass css/rf5-data.scss css/rf5-data.css",
 			"group": "build"
 		},
 		{
 			"label": "Build all",
-			"dependsOn": ["Browserify calculator", "Sass compile common", "Sass compile itemtable", "Browserify itemtable"],
+			"dependsOn": ["Browserify rf4data", "Browserify rf5calc", "Browserify rf5data", "Sass compile common-css", "Sass compile data-css"],
 			"group": {
 				"kind": "build",
 				"isDefault": true

@@ -4,9 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-16"/>
         <title>Rune Factory 5 Equipment Calculator</title>
         <link rel="icon" href="icon/favicon.png" />
-        <!--
-        <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/>
-        -->
+        <!-- <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/> -->
         <link rel="stylesheet" href="css/jquery-ui.min.css"/>
         <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
         <link rel="stylesheet" href="css/rf5-common.css"/>
@@ -16,9 +14,7 @@
         <script type="text/javascript" src="js/lib/jquery-ui-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/lib/jquery-ui-autocomplete-extension.js"></script>
         <script type="text/javascript" src="js/modified-knockout-jqueryui.js"></script>
-        <!--
-        <script type="text/javascript" src="js/lib/knockout-autocomplete.js"></script>
-        -->
+        <!-- <script type="text/javascript" src="js/lib/knockout-autocomplete.js"></script> -->
         
     </head>
     <body id="body" data-bind="css: { 'lang_en': IsEnglishSelected(), 'lang_jp': IsJapaneseSelected() }">
@@ -41,7 +37,7 @@
                                                 <button class="btn" data-bind="click: $root.OnExampleClickHandler">例 Example</button>
                                                 <button class="btn" data-bs-toggle="modal" data-bs-target="#save-modal" data-bind="click: $root.OnSaveToJsonClickHandler">セーブ Save</button>
                                                 <button class="btn" data-bs-toggle="modal" data-bs-target="#load-modal">ロード Load</button>
-                                                <a href="./rf5table.html" target="_blank"><button class="btn btn-secondary">RF5 Data Table</button></a>
+                                                <a href="./rf5table.html" target="_blank"><button class="btn btn-secondary">RF5 Data</button></a>
                                                 <button class="btn btn-secondary">RF4 Calculator</button>
                                                 <button class="btn btn-secondary">RF4 Data</button>
                                                 <button class="btn btn-secondary">Github</button>
@@ -138,10 +134,10 @@
                                             <th class="wide"><span class="lang stack en jp">STR</span></th>
                                             <th class="wide"><span class="lang stack en jp">INT</span></th>
                                             <th class="wide"><span class="lang stack en jp">VIT</span></th>
-                                            <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                                            <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
                                             <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
                                             <th><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
-                                            <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                                            <th><span class="lang stack jp">硬</span><span class="lang stack en">DIZ</span></th>
                                             <th><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
                                             <th><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
                                             <th><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
@@ -158,10 +154,10 @@
                                             <th><span class="lang stack jp">闇</span><span class="lang stack en">DRK</span></th>
                                             <th><span class="lang stack jp">愛</span><span class="lang stack en">LOV</span></th>
                                             <th><span class="lang stack jp">無</span><span class="lang stack en">NUL</span></th>
-                                            <th><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                                            <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
                                             <th><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
                                             <th><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
-                                            <th><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                                            <th><span class="lang stack jp">硬</span><span class="lang stack en">DIZ</span></th>
                                             <th><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
                                             <th><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
                                             <th><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
@@ -822,10 +818,6 @@
                     <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Only items of same type can override. Overriding a weapon of different type requires Light Ore in any recipe slot.', text_jp: '効果がありません。性能継承アレンジは、ベースと同じ種類のアイテムが必要です。別のカテゴリの武器の場合なら、レシピにメッシライト鉱石も必要です。' } } --><!-- /ko -->
                 <!-- /ko -->
 
-                <!-- ko if: (Index >= 10) && $root.Data.IsEquipment(id())  -->
-                    <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'Equipment in upgrade slots only contributes to item level! (Farm equipment contributes rarity)', text_jp: '強化枠に入った装備は総Lv以外のパラメーターがカウントしません。（農用装備の素材Lvカウントします）' } } --><!-- /ko -->
-                <!-- /ko -->
-
                 <!-- ko if: (Index < 11) && ($root.Data.Is2foldSteel(id()) || $root.Data.Is10foldSteel(id()))  -->
                     <!-- ko template: { name: 'TEMPLATE-detail-warn', data: { text_en: 'No effect! Fold steel requires preceding item in upgrade slot.', text_jp: '効果がありません。倍鉄は強化枠にあるアイテム以外に対象外です。' } } --><!-- /ko -->
                 <!-- /ko -->
@@ -902,10 +894,10 @@
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_INT() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_VIT() } --><!-- /ko -->
 
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DIZ() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_STN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_CRT() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_KNO() } --><!-- /ko -->
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_STN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DIZ() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PSN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SEA() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PAR() } --><!-- /ko -->
@@ -924,10 +916,10 @@
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_LOVE() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_VOID() } --><!-- /ko -->
 
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DIZ() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_STN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_CRT() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_KNO() } --><!-- /ko -->
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_STN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DIZ() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PSN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SEA() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PAR() } --><!-- /ko -->

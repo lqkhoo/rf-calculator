@@ -13,7 +13,7 @@ Supports:
 
 It comes with built-in data tables to filter and sort out the best potential upgrades. Multi-language support is baked in. Currently it is bilingual (English, Japanese).
 
-The forging system in Rune Factory is quite intricate, and different pieces of equipment have different upgrade rules. However, none of the games explain the system in detail, so it's best to fully understand the forging rules first, otherwise the information in the calculator could be overwhelming, especially if you're new to the series.
+The forging system in Rune Factory is quite intricate, and different pieces of equipment have different upgrade rules. However, none of the games explain the system in detail, so it's best to fully understand the forging rules first, otherwise the information in the calculator could be overwhelming.
 
 Quick basics check: if you are unfamiliar with rarity bonus tiers / rarity bonus types, how inheritance/overrides work, magic inheritance etc, it's probably best to read up.
 
@@ -37,7 +37,7 @@ This project makes use of game assets, included under terms of fair use. Fair us
   * This is from v1.0.0 of the JP release. I went through the wiki and fixed a couple of data points in the item table that have been patched (corrected). These are Platinum Shield+, Wind Mantle, Elven Mantle. If you notice anything else let me know.
 
 ## Rune Factory 4
-* Data dump from the GameFaqs [data mining thread](https://gamefaqs.gamespot.com/boards/258612-rune-factory-4-special/78486979) (Omnigamer). For icons, images, and Japanese strings, I had to associate them by hand.
+* Data dump from the GameFaqs [data mining thread](https://gamefaqs.gamespot.com/boards/258612-rune-factory-4-special/78486979) (Omnigamer). For the version at time of writing, note that the columns for DIZ and STN are swapped.
 * Asset dump by myself. Pipeline tools:
    1. ROMFS ([Ryujinx](https://ryujinx.org/)).
    2. BNTX to DDS / ASTC: [BNTX-Extractor](https://github.com/aboood40091/BNTX-Extractor) ([AboodXD](https://github.com/aboood40091)).
@@ -51,17 +51,29 @@ This project makes use of game assets, included under terms of fair use. Fair us
 * Assets: [Bootstrap Icons](https://icons.getbootstrap.com/) (MIT), [Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/7/7a/Ajax_loader_metal_512.gif) (CC-BY-SA).
 * Formulae on this page generated using [CodeCogs](https://www.codecogs.com/latex/eqneditor.php) as I'm not using MathJax.
 
-# Limitations
-* For RF5, I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
-* For RF4, magic isn't mapped the same way. The data is not available from Omnigamer's data dump. I had a cursory look at the binary files in ROMFS myself and couldn't find it either.
-  * The Japanese wiki has a short list of materials with known staff upgrade effects, but this list is very likely to be incomplete. To get around all of this, I backport magic data from ingredients that are both in RF5 and RF4. In the absence of better data this is the best we can do. Note that these magic IDs do not correspond to the game's original IDs, which are useless without item-to-magic mappings anyway.
-* As of time of writing, RF5 is not available in English yet, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
+# Limitations and known edge cases
+The calculator has to draw the data from somewhere, so where there's missing data, there's little I can do. This is not the kind of data that could (nor should) be imputed.
+* RF5
+  * I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
+  * As of time of writing, RF5 is not available in English, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
+* RF4
+  * Magic isn't mapped the same way as in RF5. The data is not available from Omnigamer's data dump, and I couldn't find it in the ROMFS either. The Japanese wiki has a short list of materials with known staff upgrade effects, but this list is incomplete. To get around all of this, I backport magic data from ingredients that are both in RF5 and RF4, substituting the itemid as the magicid. Given how little the rest of the data actually changed across the games, this is the most practical option we have.
+  * Likewise, charge speed is not exposed as a parameter like the way it is in RF5. I just set the stat to zero for all items.
+* Zero columns
+  * In both RF5 and RF4, there is nothing that gives DIZ/硬値 (knockback duration) resistance. In fact, that column is not there in the data, but I included it for symmetry. It's not a mistake.
+  * Like magic, RF4's equipment charge speed is not exposed in the data tables. For lack of a better alternative I just set all of them to zero.
+  * Likewise, columns for HP and RP bonuses from equipment and upgrades are new in RF5 but they're always zero, so I exclude them.
 * Maybe work on serializing JSON to local storage.
 * I'm not a native Japanese speaker. I did my best with the translation, but if you can improve on it, let me know!
 
 ## Known differences across game versions
-* For each piece of equipment, RF5 performs a straight sum of the stats of ingredients in each slot. In RF4 (the 3DS version), the game uses the function `floor(total_stats * -1) * -1`, and it was possible to squeeze in one extra % in resistance from mealy apples / items with negative resistances, in conjunction with ObjectX.
-* The JP wiki reports that in RF5, certain scales (three of them) don't provide the shield stat bonus.
+* Stat total in equipment
+  * RF5 performs a straight sum of the stats of ingredients in each slot.
+  * In RF4 (the 3DS version), the game uses the function `floor(total_stats * -1) * -1`, and it was possible to squeeze in one extra % in resistance from mealy apples / items with negative resistances, in conjunction with ObjectX.
+* Weapon element
+  * In RF5, elemental crystals directly overwrite element. Big Crystal is the only one that can change to elementless.
+  * In RF4, using a crystal of different element first changes element to NONE, and then further use will then apply that element. Crystals of NONE type don't affect element in any way.
+* The JP wiki reports that in RF5, certain scales (three of them) don't provide the shield stat bonus. I have no idea whether this is intended or it's just an oversight, but the calculator faithfully reproduces this quirk.
 * As far as I know, there are no system (e.g. calculation) differences between Rune Factory 4, and Rune Factory 4 Special.
 
 # For developers

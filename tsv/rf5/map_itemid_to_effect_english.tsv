@@ -18,7 +18,7 @@
 1361	Reduced RP consumption for certain actions (1/16 reduction during item production)
 1308	Chance to reduce incoming damage to 1
 1340	Increased allied character ability (offense x1.5, incoming damage x0.5)
-1316	Character no longer yawns
+1316	User no longer yawns
 1313	Increased charge speed
 1360	Increased max HP (x1.5)
 1357	When attacking, always use the higher stat between ATK/MATK
@@ -27,9 +27,9 @@
 1363	Slowly regenerate HP
 1364	Slowly regenerate RP
 1346	Increased movement speed
-1345	Own DEF/MDEF becomes zero
+1345	DEF/MDEF for both self and target is zero
 1332	Equipped family members' ability increase (damage x2, incoming damage x0.5, damage to ele weakness x0.5)
-1366	Knockback recovery time is halved
+1366	Flinch recovery time is halved
 1365	Increased attack range
 1367	Incoming void (elementless) element damage is halved
 1362	Zero RP consumption for certain actions (1/8 reduction during item production)

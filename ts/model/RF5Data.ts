@@ -1,67 +1,68 @@
 import _ = require('lodash');
 import _RAWDATA = require('../rf5-rawdata');
+import RF5AbstractData = require('./RF5AbstractData');
 
 // All-static class facilitating lookups.
-class RF5Data {
+class RF5Data extends RF5AbstractData {
 
-    static readonly Item_ids:               object = RF5Data.ArrayToObject(_RAWDATA.item_ids);
-    static readonly Category_ids:           object = RF5Data.ArrayToObject(_RAWDATA.category_ids);
-    static readonly Character_ids:          object = RF5Data.ArrayToObject(_RAWDATA.character_ids);
-    static readonly Is_eq_2hsword:          object = RF5Data.ArrayToObject(_RAWDATA.is_eq_2hsword);
-    static readonly Is_eq_accessory:        object = RF5Data.ArrayToObject(_RAWDATA.is_eq_accessory);
-    static readonly Is_eq_armor:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_armor);
-    static readonly Is_eq_axe:              object = RF5Data.ArrayToObject(_RAWDATA.is_eq_axe);
-    static readonly Is_eq_dualblades:       object = RF5Data.ArrayToObject(_RAWDATA.is_eq_dualblades);
-    static readonly Is_eq_farm_axe:         object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_axe);
-    static readonly Is_eq_farm_fishingpole: object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_fishingpole);
-    static readonly Is_eq_farm_hammer:      object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_hammer);
-    static readonly Is_eq_farm_hoe:         object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_hoe);
-    static readonly Is_eq_farm_sickle:      object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_sickle);
-    static readonly Is_eq_farm_waterpot:    object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_waterpot);
-    static readonly Is_eq_fists:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_fists);
-    static readonly Is_eq_hammer:           object = RF5Data.ArrayToObject(_RAWDATA.is_eq_hammer);
-    static readonly Is_eq_headgear:         object = RF5Data.ArrayToObject(_RAWDATA.is_eq_headgear);
-    static readonly Is_eq_shield:           object = RF5Data.ArrayToObject(_RAWDATA.is_eq_shield);
-    static readonly Is_eq_shoes:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_shoes);
-    static readonly Is_eq_spear:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_spear);
-    static readonly Is_eq_staff:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_staff);
-    static readonly Is_eq_sword:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_sword);
-    static readonly Is_eq_weapon:           object = RF5Data.ArrayToObject(_RAWDATA.is_eq_weapon);
-    static readonly Is_equipment:           object = RF5Data.ArrayToObject(_RAWDATA.is_equipment);
-    static readonly Is_mat_2foldsteel:      object = RF5Data.ArrayToObject(_RAWDATA.is_mat_2foldsteel);
-    static readonly Is_mat_10foldsteel:     object = RF5Data.ArrayToObject(_RAWDATA.is_mat_10foldsteel);
-    static readonly Is_mat_clawsandfangs:   object = RF5Data.ArrayToObject(_RAWDATA.is_mat_clawsandfangs);
-    static readonly Is_mat_clothsandskins:  object = RF5Data.ArrayToObject(_RAWDATA.is_mat_clothsandskins);
-    static readonly Is_mat_core:            object = RF5Data.ArrayToObject(_RAWDATA.is_mat_core);
-    static readonly Is_mat_crystals:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_crystals);
-    static readonly Is_mat_elecrystals:     object = RF5Data.ArrayToObject(_RAWDATA.is_mat_elecrystals);
-    static readonly Is_mat_feathers:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_feathers);
-    static readonly Is_mat_furs:            object = RF5Data.ArrayToObject(_RAWDATA.is_mat_furs);
-    static readonly Is_mat_jewels:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_jewels);
-    static readonly Is_mat_lightore:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_lightore);
-    static readonly Is_mat_liquids:         object = RF5Data.ArrayToObject(_RAWDATA.is_mat_liquids);
-    static readonly Is_mat_minerals:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_minerals);
-    static readonly Is_mat_objectx:         object = RF5Data.ArrayToObject(_RAWDATA.is_mat_objectx);
-    static readonly Is_mat_powdersandspores:object = RF5Data.ArrayToObject(_RAWDATA.is_mat_powdersandspores);
-    static readonly Is_mat_scales:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_scales);
-    static readonly Is_mat_shards:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_shards);
-    static readonly Is_mat_shellsandbones:  object = RF5Data.ArrayToObject(_RAWDATA.is_mat_shellsandbones);
-    static readonly Is_mat_sticksandstems:  object = RF5Data.ArrayToObject(_RAWDATA.is_mat_sticksandstems);
-    static readonly Is_mat_stones:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_stones);
-    static readonly Is_mat_strings:         object = RF5Data.ArrayToObject(_RAWDATA.is_mat_strings);
-    static readonly Is_mat_truescale:       object = RF5Data.ArrayToObject(_RAWDATA.is_mat_truescale); // Scales that provide the shield bonus
-    static readonly Has_effect:             object = RF5Data.ArrayToObject(_RAWDATA.has_effect);
-    static readonly Categories:             object = _RAWDATA.categories;
-    static readonly Items:                  object = _RAWDATA.items;
-    static readonly BaseItems:              object = _RAWDATA.base_items;
-    static readonly Characters:             object = _RAWDATA.characters;
-    static readonly Recipes:                object = _RAWDATA.recipes;
-    static readonly Magics:                 object = _RAWDATA.magics;
-    static readonly Effects:                object = _RAWDATA.effects;
+    static override readonly Item_ids:               object = RF5Data.ArrayToObject(_RAWDATA.item_ids);
+    static override readonly Category_ids:           object = RF5Data.ArrayToObject(_RAWDATA.category_ids);
+    static override readonly Character_ids:          object = RF5Data.ArrayToObject(_RAWDATA.character_ids);
+    static override readonly Is_eq_2hsword:          object = RF5Data.ArrayToObject(_RAWDATA.is_eq_2hsword);
+    static override readonly Is_eq_accessory:        object = RF5Data.ArrayToObject(_RAWDATA.is_eq_accessory);
+    static override readonly Is_eq_armor:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_armor);
+    static override readonly Is_eq_axe:              object = RF5Data.ArrayToObject(_RAWDATA.is_eq_axe);
+    static override readonly Is_eq_dualblades:       object = RF5Data.ArrayToObject(_RAWDATA.is_eq_dualblades);
+    static override readonly Is_eq_farm_axe:         object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_axe);
+    static override readonly Is_eq_farm_fishingpole: object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_fishingpole);
+    static override readonly Is_eq_farm_hammer:      object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_hammer);
+    static override readonly Is_eq_farm_hoe:         object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_hoe);
+    static override readonly Is_eq_farm_sickle:      object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_sickle);
+    static override readonly Is_eq_farm_waterpot:    object = RF5Data.ArrayToObject(_RAWDATA.is_eq_farm_waterpot);
+    static override readonly Is_eq_fists:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_fists);
+    static override readonly Is_eq_hammer:           object = RF5Data.ArrayToObject(_RAWDATA.is_eq_hammer);
+    static override readonly Is_eq_headgear:         object = RF5Data.ArrayToObject(_RAWDATA.is_eq_headgear);
+    static override readonly Is_eq_shield:           object = RF5Data.ArrayToObject(_RAWDATA.is_eq_shield);
+    static override readonly Is_eq_shoes:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_shoes);
+    static override readonly Is_eq_spear:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_spear);
+    static override readonly Is_eq_staff:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_staff);
+    static override readonly Is_eq_sword:            object = RF5Data.ArrayToObject(_RAWDATA.is_eq_sword);
+    static override readonly Is_eq_weapon:           object = RF5Data.ArrayToObject(_RAWDATA.is_eq_weapon);
+    static override readonly Is_equipment:           object = RF5Data.ArrayToObject(_RAWDATA.is_equipment);
+    static override readonly Is_mat_2foldsteel:      object = RF5Data.ArrayToObject(_RAWDATA.is_mat_2foldsteel);
+    static override readonly Is_mat_10foldsteel:     object = RF5Data.ArrayToObject(_RAWDATA.is_mat_10foldsteel);
+    static override readonly Is_mat_clawsandfangs:   object = RF5Data.ArrayToObject(_RAWDATA.is_mat_clawsandfangs);
+    static override readonly Is_mat_clothsandskins:  object = RF5Data.ArrayToObject(_RAWDATA.is_mat_clothsandskins);
+    static override readonly Is_mat_core:            object = RF5Data.ArrayToObject(_RAWDATA.is_mat_core);
+    static override readonly Is_mat_crystals:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_crystals);
+    static override readonly Is_mat_elecrystals:     object = RF5Data.ArrayToObject(_RAWDATA.is_mat_elecrystals);
+    static override readonly Is_mat_feathers:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_feathers);
+    static override readonly Is_mat_furs:            object = RF5Data.ArrayToObject(_RAWDATA.is_mat_furs);
+    static override readonly Is_mat_jewels:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_jewels);
+    static override readonly Is_mat_lightore:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_lightore);
+    static override readonly Is_mat_liquids:         object = RF5Data.ArrayToObject(_RAWDATA.is_mat_liquids);
+    static override readonly Is_mat_minerals:        object = RF5Data.ArrayToObject(_RAWDATA.is_mat_minerals);
+    static override readonly Is_mat_objectx:         object = RF5Data.ArrayToObject(_RAWDATA.is_mat_objectx);
+    static override readonly Is_mat_powdersandspores:object = RF5Data.ArrayToObject(_RAWDATA.is_mat_powdersandspores);
+    static override readonly Is_mat_scales:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_scales);
+    static override readonly Is_mat_shards:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_shards);
+    static override readonly Is_mat_shellsandbones:  object = RF5Data.ArrayToObject(_RAWDATA.is_mat_shellsandbones);
+    static override readonly Is_mat_sticksandstems:  object = RF5Data.ArrayToObject(_RAWDATA.is_mat_sticksandstems);
+    static override readonly Is_mat_stones:          object = RF5Data.ArrayToObject(_RAWDATA.is_mat_stones);
+    static override readonly Is_mat_strings:         object = RF5Data.ArrayToObject(_RAWDATA.is_mat_strings);
+    static override readonly Is_mat_truescale:       object = RF5Data.ArrayToObject(_RAWDATA.is_mat_truescale); // Scales that provide the shield bonus
+    static override readonly Has_effect:             object = RF5Data.ArrayToObject(_RAWDATA.has_effect);
+    static override readonly Categories:             object = _RAWDATA.categories;
+    static override readonly Items:                  object = _RAWDATA.items;
+    static override readonly BaseItems:              object = _RAWDATA.base_items;
+    static override readonly Characters:             object = _RAWDATA.characters;
+    static override readonly Recipes:                object = _RAWDATA.recipes;
+    static override readonly Magics:                 object = _RAWDATA.magics;
+    static override readonly Effects:                object = _RAWDATA.effects;
 
 
     // Construct reverse type maps
-    static readonly EquipmentTypeMap:       Record<string, EquipmentType|undefined> = (function() {
+    static override readonly EquipmentTypeMap:       Record<string, EquipmentType|undefined> = (function() {
         var map: Record<string, EquipmentType> = {};
         _.forOwn(RF5Data.Is_eq_weapon,     (_value: any, key: any) => { map[key] = "weapon" });
         _.forOwn(RF5Data.Is_eq_shield,     (_value: any, key: any) => { map[key] = "shield" });
@@ -72,7 +73,7 @@ class RF5Data {
         return map;
     }());
 
-    static readonly WeaponTypeMap:         Record<string, WeaponType|undefined> = (function() {
+    static override readonly WeaponTypeMap:         Record<string, WeaponType|undefined> = (function() {
         var map: Record<string, WeaponType> = {};
         _.forOwn(RF5Data.Is_eq_2hsword,        (_value: any, key: any) => { map[key] = "2hsword" });
         _.forOwn(RF5Data.Is_eq_axe,            (_value: any, key: any) => { map[key] = "axe" });
@@ -91,110 +92,108 @@ class RF5Data {
     }());
 
     // Query methods
-    public static IsEquipment(id: number): boolean { return RF5Data.Is_equipment.hasOwnProperty(id); }
-    public static IsWeapon(id: number): boolean { return RF5Data.Is_eq_weapon.hasOwnProperty(id); }
-    public static IsShield(id: number): boolean { return RF5Data.Is_eq_shield.hasOwnProperty(id); }
-    public static IsHeadgear(id: number): boolean { return RF5Data.Is_eq_headgear.hasOwnProperty(id); }
-    public static IsArmor(id: number): boolean { return RF5Data.Is_eq_armor.hasOwnProperty(id); }
-    public static IsBoots(id: number): boolean { return RF5Data.Is_eq_shoes.hasOwnProperty(id); }
-    public static IsAccessory(id: number): boolean { return RF5Data.Is_eq_accessory.hasOwnProperty(id); }
+    public static override IsEquipment(id: number): boolean { return RF5Data.Is_equipment.hasOwnProperty(id); }
+    public static override IsWeapon(id: number): boolean { return RF5Data.Is_eq_weapon.hasOwnProperty(id); }
+    public static override IsShield(id: number): boolean { return RF5Data.Is_eq_shield.hasOwnProperty(id); }
+    public static override IsHeadgear(id: number): boolean { return RF5Data.Is_eq_headgear.hasOwnProperty(id); }
+    public static override IsArmor(id: number): boolean { return RF5Data.Is_eq_armor.hasOwnProperty(id); }
+    public static override IsBoots(id: number): boolean { return RF5Data.Is_eq_shoes.hasOwnProperty(id); }
+    public static override IsAccessory(id: number): boolean { return RF5Data.Is_eq_accessory.hasOwnProperty(id); }
 
-    public static Is2hSword(id: number): boolean { return RF5Data.Is_eq_2hsword.hasOwnProperty(id); }
-    public static IsAxe(id: number): boolean { return RF5Data.Is_eq_axe.hasOwnProperty(id); }
-    public static IsDualblades(id: number): boolean { return RF5Data.Is_eq_dualblades.hasOwnProperty(id); }
-    public static IsFists(id: number): boolean { return RF5Data.Is_eq_fists.hasOwnProperty(id); }
-    public static IsHammer(id: number): boolean { return RF5Data.Is_eq_hammer.hasOwnProperty(id); }
-    public static IsSpear(id: number): boolean { return RF5Data.Is_eq_spear.hasOwnProperty(id); }
-    public static IsStaff(id: number): boolean { return RF5Data.Is_eq_staff.hasOwnProperty(id); }
-    public static IsSword(id: number): boolean { return RF5Data.Is_eq_sword.hasOwnProperty(id); }
-    public static IsFarmAxe(id: number): boolean { return RF5Data.Is_eq_farm_axe.hasOwnProperty(id); }
-    public static IsFarmFishingPole(id: number): boolean { return RF5Data.Is_eq_farm_fishingpole.hasOwnProperty(id); }
-    public static IsFarmHammer(id: number): boolean { return RF5Data.Is_eq_farm_hammer.hasOwnProperty(id); }
-    public static IsFarmHoe(id: number): boolean { return RF5Data.Is_eq_farm_hoe.hasOwnProperty(id); }
-    public static IsFarmSickle(id: number): boolean { return RF5Data.Is_eq_farm_sickle.hasOwnProperty(id); }
-    public static IsFarmWaterpot(id: number): boolean { return RF5Data.Is_eq_farm_waterpot.hasOwnProperty(id); }
+    public static override Is2hSword(id: number): boolean { return RF5Data.Is_eq_2hsword.hasOwnProperty(id); }
+    public static override IsAxe(id: number): boolean { return RF5Data.Is_eq_axe.hasOwnProperty(id); }
+    public static override IsDualblades(id: number): boolean { return RF5Data.Is_eq_dualblades.hasOwnProperty(id); }
+    public static override IsFists(id: number): boolean { return RF5Data.Is_eq_fists.hasOwnProperty(id); }
+    public static override IsHammer(id: number): boolean { return RF5Data.Is_eq_hammer.hasOwnProperty(id); }
+    public static override IsSpear(id: number): boolean { return RF5Data.Is_eq_spear.hasOwnProperty(id); }
+    public static override IsStaff(id: number): boolean { return RF5Data.Is_eq_staff.hasOwnProperty(id); }
+    public static override IsSword(id: number): boolean { return RF5Data.Is_eq_sword.hasOwnProperty(id); }
+    public static override IsFarmAxe(id: number): boolean { return RF5Data.Is_eq_farm_axe.hasOwnProperty(id); }
+    public static override IsFarmFishingPole(id: number): boolean { return RF5Data.Is_eq_farm_fishingpole.hasOwnProperty(id); }
+    public static override IsFarmHammer(id: number): boolean { return RF5Data.Is_eq_farm_hammer.hasOwnProperty(id); }
+    public static override IsFarmHoe(id: number): boolean { return RF5Data.Is_eq_farm_hoe.hasOwnProperty(id); }
+    public static override IsFarmSickle(id: number): boolean { return RF5Data.Is_eq_farm_sickle.hasOwnProperty(id); }
+    public static override IsFarmWaterpot(id: number): boolean { return RF5Data.Is_eq_farm_waterpot.hasOwnProperty(id); }
 
-    public static IsClawsAndFangs(id: number): boolean { return RF5Data.Is_mat_clawsandfangs.hasOwnProperty(id); }
-    public static IsClothsAndSkins(id: number): boolean { return RF5Data.Is_mat_clothsandskins.hasOwnProperty(id); }
-    public static IsCrystals(id: number): boolean { return RF5Data.Is_mat_crystals.hasOwnProperty(id); }
-    public static IsFeathers(id: number): boolean { return RF5Data.Is_mat_feathers.hasOwnProperty(id); }
-    public static IsFurs(id: number): boolean { return RF5Data.Is_mat_furs.hasOwnProperty(id); }
-    public static IsJewels(id: number): boolean { return RF5Data.Is_mat_jewels.hasOwnProperty(id); }
-    public static IsLiquids(id: number): boolean { return RF5Data.Is_mat_liquids.hasOwnProperty(id); }
-    public static IsMinerals(id: number): boolean { return RF5Data.Is_mat_minerals.hasOwnProperty(id); }
-    public static IsPowdersAndSpores(id: number): boolean { return RF5Data.Is_mat_powdersandspores.hasOwnProperty(id); }
-    public static IsScales(id: number): boolean { return RF5Data.Is_mat_scales.hasOwnProperty(id); }
-    public static IsShards(id: number): boolean { return RF5Data.Is_mat_shards.hasOwnProperty(id); }
-    public static IsShellsAndBones(id: number): boolean { return RF5Data.Is_mat_shellsandbones.hasOwnProperty(id); }
-    public static IsSticksAndStems(id: number): boolean { return RF5Data.Is_mat_sticksandstems.hasOwnProperty(id); }
-    public static IsStones(id: number): boolean { return RF5Data.Is_mat_stones.hasOwnProperty(id); }
-    public static IsStrings(id: number): boolean { return RF5Data.Is_mat_strings.hasOwnProperty(id); }
+    public static override IsClawsAndFangs(id: number): boolean { return RF5Data.Is_mat_clawsandfangs.hasOwnProperty(id); }
+    public static override IsClothsAndSkins(id: number): boolean { return RF5Data.Is_mat_clothsandskins.hasOwnProperty(id); }
+    public static override IsCrystals(id: number): boolean { return RF5Data.Is_mat_crystals.hasOwnProperty(id); }
+    public static override IsFeathers(id: number): boolean { return RF5Data.Is_mat_feathers.hasOwnProperty(id); }
+    public static override IsFurs(id: number): boolean { return RF5Data.Is_mat_furs.hasOwnProperty(id); }
+    public static override IsJewels(id: number): boolean { return RF5Data.Is_mat_jewels.hasOwnProperty(id); }
+    public static override IsLiquids(id: number): boolean { return RF5Data.Is_mat_liquids.hasOwnProperty(id); }
+    public static override IsMinerals(id: number): boolean { return RF5Data.Is_mat_minerals.hasOwnProperty(id); }
+    public static override IsPowdersAndSpores(id: number): boolean { return RF5Data.Is_mat_powdersandspores.hasOwnProperty(id); }
+    public static override IsScales(id: number): boolean { return RF5Data.Is_mat_scales.hasOwnProperty(id); }
+    public static override IsShards(id: number): boolean { return RF5Data.Is_mat_shards.hasOwnProperty(id); }
+    public static override IsShellsAndBones(id: number): boolean { return RF5Data.Is_mat_shellsandbones.hasOwnProperty(id); }
+    public static override IsSticksAndStems(id: number): boolean { return RF5Data.Is_mat_sticksandstems.hasOwnProperty(id); }
+    public static override IsStones(id: number): boolean { return RF5Data.Is_mat_stones.hasOwnProperty(id); }
+    public static override IsStrings(id: number): boolean { return RF5Data.Is_mat_strings.hasOwnProperty(id); }
 
-    public static HasEffect(id: number): boolean {
+    public static override HasEffect(id: number): boolean {
         return RF5Data.Has_effect.hasOwnProperty(id);
     }
 
-    public static IsEleCrystal(id: number): boolean {
+    public static override IsEleCrystal(id: number): boolean {
         return RF5Data.Is_mat_elecrystals.hasOwnProperty(id);
     }
-    public static IsObjectX(id: number): boolean {
+    public static override IsObjectX(id: number): boolean {
         return RF5Data.Is_mat_objectx.hasOwnProperty(id);
     }
-    public static Is2foldSteel(id: number): boolean {
+    public static override Is2foldSteel(id: number): boolean {
         return RF5Data.Is_mat_2foldsteel.hasOwnProperty(id);
     }
-    public static Is10foldSteel(id: number): boolean {
+    public static override Is10foldSteel(id: number): boolean {
         return RF5Data.Is_mat_10foldsteel.hasOwnProperty(id);
     }
-    public static IsLightOre(id: number): boolean {
+    public static override IsLightOre(id: number): boolean {
         return RF5Data.Is_mat_lightore.hasOwnProperty(id);
     }
-    public static IsTrueScale(id: number): boolean {
+    public static override IsTrueScale(id: number): boolean {
         return RF5Data.Is_mat_truescale.hasOwnProperty(id);
     }
-    public static IsClover(id: number): boolean {
+    public static override IsClover(id: number): boolean {
         return (id === 168);
     }
-    public static IsGiantClover(id: number): boolean {
+    public static override IsGiantClover(id: number): boolean {
         return (id === 169);
     }
-    public static IsRareCan(id: number): boolean {
+    public static override IsRareCan(id: number): boolean {
         return (id === 1902);
     }
-    public static IsScrapMetalPlus(id: number): boolean {
+    public static override IsScrapMetalPlus(id: number): boolean {
         return (id === 2153);
     }
-    public static IsShadeStone(id: number): boolean {
+    public static override IsShadeStone(id: number): boolean {
         return (id === 2177);
     }
-    public static IsGreenCore(id: number): boolean {
+    public static override IsGreenCore(id: number): boolean {
         return (id === 2166);
     }
-    public static IsRedCore(id: number): boolean {
+    public static override IsRedCore(id: number): boolean {
         return (id === 2167);
     }
-    public static IsYellowCore(id: number): boolean {
+    public static override IsYellowCore(id: number): boolean {
         return (id === 2168);
     }
-    public static IsBlueCore(id: number): boolean {
+    public static override IsBlueCore(id: number): boolean {
         return (id === 2169);
     }
-    public static IsGeneralsHoe(id: number): boolean {
+    public static override IsGeneralsHoe(id: number): boolean {
         return (id === 905);
     }
-    public static IsGeneralsHat(id: number): boolean {
+    public static override IsGeneralsHat(id: number): boolean {
         return (id === 1130);
     }
-    public static IsGeneralsRobe(id: number): boolean {
+    public static override IsGeneralsRobe(id: number): boolean {
         return (id === 1219);
     }
-    public static IsGeneralsShield(id: number): boolean {
+    public static override IsGeneralsShield(id: number): boolean {
         return (id === 1018);
     }
 
-
-
-    protected static ArrayToObject(arr: number[]): object {
+    protected static override ArrayToObject(arr: number[]): object {
         var obj: any = {};
         for (const val of arr) {
             obj[val.toString()] = undefined;
@@ -202,7 +201,7 @@ class RF5Data {
         return obj;
     }
 
-    protected static ObjectToObject(sourceObj: any): object {
+    protected static override ObjectToObject(sourceObj: any): object {
         var obj: any = {};
         for (var prop in sourceObj) {
             if(sourceObj.hasOwnProperty(prop)) {

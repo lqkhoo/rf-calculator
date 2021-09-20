@@ -4,23 +4,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-16"/>
         <title>Rune Factory 5 Equipment Calculator</title>
         <link rel="icon" href="icon/favicon.png" />
-        <!--
-        <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/>
-        -->
+        <!-- <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/> -->
         <link rel="stylesheet" href="css/jquery-ui.min.css"/>
         <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
         <link rel="stylesheet" href="css/bootstrap-table-1.18.3.min.css"/>
         <link rel="stylesheet" href="css/rf5-common.css"/>
-        <link rel="stylesheet" href="css/rf5-itemtable.css"/>
+        <link rel="stylesheet" href="css/rf5-data.css"/>
         <!-- <script type="text/javascript" src="js/lib/requirejs-2.3.6-min.js"></script> -->
         <script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
-        <script type="text/javascript" src="js/rf5-itemtable.js"></script>
+        <script type="text/javascript" src="js/rf5-data.js"></script>
         <script type="text/javascript" src="js/lib/jquery-ui-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/lib/jquery-ui-autocomplete-extension.js"></script>
         <script type="text/javascript" src="js/modified-knockout-jqueryui.js"></script>
-        <!--
-        <script type="text/javascript" src="js/lib/knockout-autocomplete.js"></script>
-        -->
+        <!-- <script type="text/javascript" src="js/lib/knockout-autocomplete.js"></script> -->
         
     </head>
     <body id="body" data-bind="css: { 'lang_en': IsEnglishSelected(), 'lang_jp': IsJapaneseSelected() }">
@@ -114,6 +110,7 @@
                 farmWaterpot: $root.DisplayFarmWaterpot(),
                 material: $root.DisplayMaterial(),
                 clawsAndFangs: $root.DisplayClawsAndFangs(),
+                clothsAndSkins: $root.DisplayClothsAndSkins(),
                 crystals: $root.DisplayCrystals(),
                 feathers: $root.DisplayFeathers(),
                 furs: $root.DisplayFurs(),
@@ -152,7 +149,7 @@
         <div class="row">
             <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block">
                 <div class="sprite-container">
-                    <img data-bind="attr: { src: $root.SpriteChara.ViewModel.SpriteUri() }, style: { left: $root.SpriteChara.ViewModel.SpriteAdjustment() } " />
+                    <img src="charasprites/rf5/BU_Riv_101.png" style="left: 35px;" />
                 </div>
             </div>
             <div class="col">
@@ -164,45 +161,45 @@
                                     <button class="btn filter-button" data-bind="click: $root.OnCollapseFilterClickHandler, css: { collapsed: $root.IsFiltersCollapsed } ">Filter</button>
                                 </div>
                                 <div class="filter-container" data-bind="css: { displayNone: $root.IsFiltersCollapsed }">
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayEquipment,   onClick: $root.OnDisplayEquipmentClickHandler,  text_jp: '装備', text_en: 'Equipment' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayWeapon,      onClick: $root.OnDisplayWeaponClickHandler,     text_jp: '武器', text_en: 'Weapons' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayShield,      onClick: $root.OnDisplayShieldClickHandler,     text_jp: '盾', text_en: 'Shields' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayHeadgear,    onClick: $root.OnDisplayHeadgearClickHandler,   text_jp: '頭装備', text_en: 'Headgears' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayArmor,       onClick: $root.OnDisplayArmorClickHandler,      text_jp: '体装備', text_en: 'Armors' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayBoots,       onClick: $root.OnDisplayBootsClickHandler,      text_jp: '足装備', text_en: 'Boots' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayAccessory,   onClick: $root.OnDisplayAccessoryClickHandler,  text_jp: 'アクセサリー', text_en: 'Accessories' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplaySword,       onClick: $root.OnDisplaySwordClickHandler,      text_jp: '片手剣', text_en: 'Sword' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.Display2hSword,     onClick: $root.OnDisplay2hSwordClickHandler,    text_jp: '両手剣', text_en: '2hSword' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplaySpear,       onClick: $root.OnDisplaySpearClickHandler,      text_jp: '槍', text_en: 'Spear' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayAxe,         onClick: $root.OnDisplayAxeClickHandler,        text_jp: 'オノ', text_en: 'Axe' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayHammer,      onClick: $root.OnDisplayHammerClickHandler,     text_jp: 'ハンマー', text_en: 'Hammer' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayDualblades,  onClick: $root.OnDisplayDualbladesClickHandler, text_jp: '双剣', text_en: 'DualBlades' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFists,       onClick: $root.OnDisplayFistsClickHandler,      text_jp: '拳', text_en: 'Fists' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayStaff,       onClick: $root.OnDisplayStaffClickHandler,      text_jp: '杖', text_en: 'Staves' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmHoe,     onClick: $root.OnDisplayFarmHoeClickHandler,    text_jp: '鍬', text_en: 'Hoes' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmWaterpot,onClick: $root.OnDisplayFarmWaterpotClickHandler, text_jp: 'じょうろ', text_en: 'Waterpots' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmSickle,  onClick: $root.OnDisplayFarmSickleClickHandler, text_jp: '鎌', text_en: 'Sickles' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmAxe,     onClick: $root.OnDisplayFarmAxeClickHandler,    text_jp: 'オノ', text_en: 'F.Axes' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmHammer,  onClick: $root.OnDisplayFarmHammerClickHandler, text_jp: 'ハンマー', text_en: 'F.Hammers' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmFishingPole, onClick: $root.OnDisplayFarmFishingPoleClickHandler, text_jp: '釣竿', text_en: 'Fishpoles' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayEquipment,   text_jp: '装備', text_en: 'Equipment' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayWeapon,      text_jp: '武器', text_en: 'Weapons' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayShield,      text_jp: '盾', text_en: 'Shields' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayHeadgear,    text_jp: '頭装備', text_en: 'Headgears' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayArmor,       text_jp: '体装備', text_en: 'Armors' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayBoots,       text_jp: '足装備', text_en: 'Boots' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayAccessory,   text_jp: 'アクセサリー', text_en: 'Accessories' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplaySword,       text_jp: '片手剣', text_en: 'Sword' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.Display2hSword,     text_jp: '両手剣', text_en: '2hSword' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplaySpear,       text_jp: '槍', text_en: 'Spear' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayAxe,         text_jp: 'オノ', text_en: 'Axe' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayHammer,      text_jp: 'ハンマー', text_en: 'Hammer' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayDualblades,  text_jp: '双剣', text_en: 'DualBlades' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFists,       text_jp: '拳', text_en: 'Fists' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayStaff,       text_jp: '杖', text_en: 'Staves' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmHoe,     text_jp: '鍬', text_en: 'Hoes' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmWaterpot,text_jp: 'じょうろ', text_en: 'Waterpots' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmSickle,  text_jp: '鎌', text_en: 'Sickles' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmAxe,     text_jp: 'オノ', text_en: 'F.Axes' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmHammer,  text_jp: 'ハンマー', text_en: 'F.Hammers' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFarmFishingPole, text_jp: '釣竿', text_en: 'Fishpoles' } } --><!-- /ko -->
                                 </div>
                                 <div class="filter-container" data-bind="css: { displayNone: $root.IsFiltersCollapsed }">
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayMaterial,        onClick: $root.OnDisplayMaterialClickHandler,       text_jp: '原材料', text_en: 'Material' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayClawsAndFangs,   onClick: $root.OnDisplayClawsAndFangsClickHandler,  text_jp: 'ツメ、牙類', text_en: 'Claws&Fangs' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayClothsAndSkins,  onClick: $root.OnDisplayClothsAndSkinsClickHandler, text_jp: '布、皮類', text_en: 'Cloths&Skins' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayCrystals,        onClick: $root.OnDisplayCrystalsClickHandler,       text_jp: '結晶類', text_en: 'Crystals' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFeathers,        onClick: $root.OnDisplayFeathersClickHandler,       text_jp: '羽類', text_en: 'Feathers' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFurs,            onClick: $root.OnDisplayFursClickHandler,           text_jp: '毛皮類', text_en: 'Furs' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayJewels,          onClick: $root.OnDisplayJewelsClickHandler,         text_jp: '宝石類', text_en: 'Jewels' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayLiquids,         onClick: $root.OnDisplayLiquidsClickHandler,        text_jp: '液体類', text_en: 'Liquids' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayMinerals,        onClick: $root.OnDisplayMineralsClickHandler,       text_jp: '鉱石類', text_en: 'Minerals' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayPowdersAndSpores,onClick: $root.OnDisplayPowdersAndSporesClickHandler,text_jp: '粉・秘薬類', text_en: 'Powders&Spores' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayScales,          onClick: $root.OnDisplayScalesClickHandler,         text_jp: 'うろこ類', text_en: 'Scales' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayShards,          onClick: $root.OnDisplayShardsClickHandler,         text_jp: '破片類', text_en: 'Shards' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayShellsAndBones,  onClick: $root.OnDisplayShellsAndBonesClickHandler, text_jp: '甲羅、骨類', text_en: 'Shells&Bones' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplaySticksAndStems,  onClick: $root.OnDisplaySticksAndStemsClickHandler, text_jp: '棒、茎類', text_en: 'Sticks&Stems' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayStones,          onClick: $root.OnDisplayStonesClickHandler,         text_jp: '石類', text_en: 'Stones' } } --><!-- /ko -->
-                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayStrings,         onClick: $root.OnDisplayStringsClickHandler,        text_jp: '糸、紐類', text_en: 'Strings' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayMaterial,        text_jp: '原材料', text_en: 'Material' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayClawsAndFangs,   text_jp: 'ツメ、牙類', text_en: 'Claws&Fangs' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayClothsAndSkins,  text_jp: '布、皮類', text_en: 'Cloths&Skins' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayCrystals,        text_jp: '結晶類', text_en: 'Crystals' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFeathers,        text_jp: '羽類', text_en: 'Feathers' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayFurs,            text_jp: '毛皮類', text_en: 'Furs' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayJewels,          text_jp: '宝石類', text_en: 'Jewels' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayLiquids,         text_jp: '液体類', text_en: 'Liquids' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayMinerals,        text_jp: '鉱石類', text_en: 'Minerals' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayPowdersAndSpores,text_jp: '粉・秘薬類', text_en: 'Powders&Spores' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayScales,          text_jp: 'うろこ類', text_en: 'Scales' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayShards,          text_jp: '破片類', text_en: 'Shards' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayShellsAndBones,  text_jp: '甲羅、骨類', text_en: 'Shells&Bones' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplaySticksAndStems,  text_jp: '棒、茎類', text_en: 'Sticks&Stems' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayStones,          text_jp: '石類', text_en: 'Stones' } } --><!-- /ko -->
+                                    <!-- ko template: { name: 'TEMPLATE-filter-unit', data: { filter: $root.DisplayStrings,         text_jp: '糸、紐類', text_en: 'Strings' } } --><!-- /ko -->
                                     <button data-bind="click: $root.OnSelectAllClickHandler"><div class="lang jp">全てを選択</div><div class="lang en">Select all</div></button>
                                     <button data-bind="click: $root.OnDeselectAllClickHandler"><div class="lang jp">全てを解除</div><div class="lang en">Deselect all</div></button>
                                 </div>
@@ -239,10 +236,10 @@
                             <th data-sortable="true" class="wide"><span class="lang stack en jp">STR</span></th>
                             <th data-sortable="true" class="wide"><span class="lang stack en jp">INT</span></th>
                             <th data-sortable="true" class="wide"><span class="lang stack en jp">VIT</span></th>
-                            <th data-sortable="true"><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
                             <th data-sortable="true"><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
                             <th data-sortable="true"><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
-                            <th data-sortable="true"><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">硬</span><span class="lang stack en">DIZ</span></th>
                             <th data-sortable="true"><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
                             <th data-sortable="true"><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
                             <th data-sortable="true"><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
@@ -259,10 +256,10 @@
                             <th data-sortable="true"><span class="lang stack jp">闇</span><span class="lang stack en">DRK</span></th>
                             <th data-sortable="true"><span class="lang stack jp">愛</span><span class="lang stack en">LOV</span></th>
                             <th data-sortable="true"><span class="lang stack jp">無</span><span class="lang stack en">NUL</span></th>
-                            <th data-sortable="true"><span class="lang stack jp">DIZ</span><span class="lang stack en">DIZ</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
                             <th data-sortable="true"><span class="lang stack jp">CRT</span><span class="lang stack en">CRT</span></th>
                             <th data-sortable="true"><span class="lang stack jp">飛</span><span class="lang stack en">KNO</span></th>
-                            <th data-sortable="true"><span class="lang stack jp">ス</span><span class="lang stack en">STN</span></th>
+                            <th data-sortable="true"><span class="lang stack jp">硬</span><span class="lang stack en">DIZ</span></th>
                             <th data-sortable="true"><span class="lang stack jp">毒</span><span class="lang stack en">PSN</span></th>
                             <th data-sortable="true"><span class="lang stack jp">封</span><span class="lang stack en">SEA</span></th>
                             <th data-sortable="true"><span class="lang stack jp">麻</span><span class="lang stack en">PAR</span></th>
@@ -336,6 +333,7 @@
         farmWaterpot: IsFarmWaterpot(),
         material: IsMaterial(),
         clawsAndFangs: IsClawsAndFangs(),
+        clothsAndSkins: IsClothsAndSkins(),
         crystals: IsCrystals(),
         feathers: IsFeathers(),
         furs: IsFurs(),
@@ -368,10 +366,10 @@
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_INT() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_VIT() } --><!-- /ko -->
 
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DIZ() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_STN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_CRT() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_KNO() } --><!-- /ko -->
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_STN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_DIZ() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PSN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_SEA() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_atk_PAR() } --><!-- /ko -->
@@ -390,10 +388,10 @@
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_LOVE() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_ele_VOID() } --><!-- /ko -->
 
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DIZ() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_STN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_CRT() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_KNO() } --><!-- /ko -->
-    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_STN() } --><!-- /ko -->
+    <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_DIZ() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PSN() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_SEA() } --><!-- /ko -->
     <!-- ko template: { name: 'TEMPLATE-cell', data: stat_def_PAR() } --><!-- /ko -->
@@ -420,9 +418,9 @@
     <!-- /ko -->
 </script>
 
-<!-- Context { filter: ko.Observable<boolean>, onClick: function, text_jp: string, text_en: string } -->
+<!-- Context { filter: ko.Observable<boolean>, text_jp: string, text_en: string } -->
 <script type="text/html" id="TEMPLATE-filter-unit">
-    <label class="form-check-label" data-bind="click: onClick">
+    <label class="form-check-label">
         <div class="filter-unit-org">
             <input class="form-check-input" type="checkbox" data-bind="checked: filter"/>
         </div>
