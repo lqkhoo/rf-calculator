@@ -166,7 +166,7 @@ class Slot extends AbstractSlot implements ISlot {
     protected _compute_isUnderObjectX = (): boolean => { // Chained
         // ObjectX doesn't work in recipe slots.
         if (this.Index < Slot.ARRANGE_START_IDX) { return false; }
-        return (this.Predecessor().IsUnderObjectX() != this.Data.IsObjectX(this.id()));
+        return (this.Predecessor().IsUnderObjectX() !== this.Data.IsObjectX(this.id()));
     }
 
     protected _compute_isEffective2FoldSteel = (): boolean => {
