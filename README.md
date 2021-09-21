@@ -4,7 +4,7 @@
 
 This is a comprehensive tool for calculating character stats across multiple pieces / combinations of equipment, useful for planning an optimal fusion pathway when forging equipment.
 
-It is hosted live as a Github Project ||| here TODO |||.
+For the hosted version see: [Github Project site](https://lqkhoo.github.io/rf-calculator/).
 
 Supports:
 * Rune Factory 5 (Switch) 2020
