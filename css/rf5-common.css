@@ -10172,9 +10172,11 @@ body {
 
 .nav-table button {
   width: auto;
-  border: 1px solid #aaaaaa;
   padding: 3px 10px;
-  box-shadow: 0 1px 1px #ffffff inset;
+}
+
+.nav-table button:disabled {
+  box-shadow: 0 5px 5px #aaaaff;
 }
 
 .nav-table .form-switch {
@@ -10227,7 +10229,16 @@ h4.title, .title.h4 {
 }
 
 .btn:hover, label.icon-group:hover {
-  background: rgba(13, 110, 253, 0.25);
+  background: rgba(13, 110, 253, 0.5);
+}
+
+.btn-secondary {
+  background-color: #4444aa;
+}
+
+.btn-menu {
+  border: 1px solid #aaaaaa;
+  border-radius: 2px;
 }
 
 .stats-table {

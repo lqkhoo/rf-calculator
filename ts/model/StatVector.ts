@@ -109,7 +109,7 @@ abstract class StatVector implements IStatVector {
     stat_attacklength: ko.PureComputed<number>;
 
     // Map
-    readonly StatNameMap:       Record<string, ko.Observable|ko.Computed|ko.PureComputed> = {};
+    readonly StatNameMap: Record<string, ko.Observable|ko.Computed|ko.PureComputed> = {};
 
     constructor(data: IData,
                 id: number,
@@ -121,15 +121,10 @@ abstract class StatVector implements IStatVector {
 
         // Although the context has id, we don't use it directly.
         // We derive the context from id, rather than the other way around.
-        this.id = ko.observable(id)
-                    .extend({ deferred: true });
+        this.id = ko.observable(id).extend({ deferred: true });
 
-        this.UseEquipmentStats = ko.pureComputed(function() {
-            return useEquipmentStats;
-        }).extend({ deferred: true });
-
-        this.Context = ko.pureComputed(self._compute_context)
-                            .extend({ deferred: true });
+        this.UseEquipmentStats = ko.pureComputed(function() { return useEquipmentStats; }).extend({ deferred: true });
+        this.Context = ko.pureComputed(self._compute_context).extend({ deferred: true });
 
         // Override these as necessary. These are default / unmodified / last-resort values.
         this.name_en = ko.pureComputed(self._compute_name_en).extend({ deferred: true });
@@ -187,7 +182,7 @@ abstract class StatVector implements IStatVector {
     }
 
     // Only call this method after overwriting all necessary ko.Computed observables
-    // in order to get the correct reference.
+    // in order to get the correct reference when calling GetStatByName.
     public FinalizeVectorOverride = (): void => {
         this.StatNameMap[StatVector.KEY_name_id] = this.id;
         this.StatNameMap[StatVector.KEY_name_en] = this.name_en;

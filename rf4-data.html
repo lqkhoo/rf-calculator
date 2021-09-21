@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-16"/>
-        <title>Rune Factory 4 Equipment Calculator</title>
+        <title>Rune Factory 4 Equipment Calculator (Data)</title>
         <link rel="icon" href="icon/favicon.png" />
         <!-- <link rel="stylesheet" href="css/bootstrap-5.1.0.min.css"/> -->
         <link rel="stylesheet" href="css/jquery-ui.min.css"/>
@@ -26,7 +26,7 @@
                     <div class="col-2 d-xs-none d-sm-none d-md-none d-lg-none d-xl-block"></div>
                     <div class="col">
                         <div class="row">
-                            <h4 class="title">Rune Factory 4 Equipment Calculator (Data Table)</h4>
+                            <h4 class="title">Rune Factory 4 Equipment Calculator (Data)</h4>
                             <div class="fullscreen-alert d-xs-block d-sm-block d-md-block d-lg-none d-xl-none alert alert-primary d-flex align-items-center">
                                 <small>フルスクリーン推奨&nbsp;&nbsp;Best viewed in fullscreen</small>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -36,10 +36,13 @@
                                     <tbody>
                                         <tr>
                                             <td rowspan="2">
-                                                <button class="btn btn-secondary">RF4 Calculator</button>
-                                                <a href="./index.html" target="_blank"><button class="btn btn-secondary">RF5 Calculator</button></a>
-                                                <button class="btn btn-secondary">RF5 Data</button>
-                                                <button class="btn btn-secondary">Github</button>
+                                                <a target="_self" href="./index.html" target="_blank"><button class="btn btn-secondary">Index</button></a>
+                                                <a target="_self" href="./rf5-calc.html" target="_blank"><button class="btn btn-secondary">RF5 Calculator</button></a>
+                                                <a target="_self" href="./rf5-data.html" target="_blank"><button class="btn btn-secondary">RF5 Data</button></a>
+                                                <a target="_self" href="./rf4-calc.html" target="_blank"><button class="btn btn-secondary">RF4 Calculator</button></a>
+                                                <button disabled class="btn btn-secondary">RF4 Data</button>
+                                                <!-- todo -->
+                                                <a href="./rf5table.html" target="_blank"><button class="btn btn-secondary">Github</button></a>
                                             </td>
                                             <td>
                                                 <div class="form-check form-switch">
@@ -133,9 +136,7 @@
                 <!-- ko template: { name: 'TEMPLATE-table-tab', data: { model: $data.UpgradeItems(), bsTarget: 'upgrade-table-tab', tableId: 'upgrade-table' } } --><!-- /ko -->
             </div>
         </main>
-        <!--
-        <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.js"></script>
-        -->
+        <!-- <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.js"></script> -->
         <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.min.js"></script>
         <script type="text/javascript" src="js/lib/bootstrap-table-1.18.3.min.js"></script>
     </body>

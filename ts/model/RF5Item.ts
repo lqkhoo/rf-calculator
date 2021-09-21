@@ -9,22 +9,18 @@ import StatVector = require('./StatVector');
 // Parent
 import ICharacter = require('./ICharacter');
 // Children
-import RF5SlotBaseItem = require('./RF5SlotBaseItem');
-import RF5SlotRecipe = require('./RF5SlotRecipe');
-import RF5SlotArrange = require('./RF5SlotArrange');
-import RF5SlotUpgrade = require('./RF5SlotUpgrade');
+import SlotBaseItem = require('./SlotBaseItem');
+import SlotRecipe = require('./SlotRecipe');
+import SlotArrange = require('./SlotArrange');
+import SlotUpgrade = require('./SlotUpgrade');
 import VectorLevelBonus = require('./VectorLevelBonus');
 import VectorRarityBonus = require('./VectorRarityBonus');
 import VectorCoreBonus = require('./VectorCoreBonus');
 // VM
 import VMItem = require('../vm/VMItem');
+import AbstractItem = require('./AbstractItem');
 
-class RF5Item extends StatVector implements IItem {
-
-    static readonly NSLOTS_RECIPE: number = 6;
-    static readonly NSLOTS_ARRANGE: number = 3;
-    static readonly NSLOTS_UPGRADE: number = 9;
-    static readonly DEFAULT_ITEM_ID: number = 0;
+class RF5Item extends AbstractItem implements IItem {
 
     override id: ko.PureComputed<number>;
 
@@ -38,10 +34,10 @@ class RF5Item extends StatVector implements IItem {
 
     readonly Character: ko.Observable<ICharacter>;
 
-    readonly BaseItem: ko.Observable<RF5SlotBaseItem>;
-    readonly RecipeSlots: ko.ObservableArray<RF5SlotRecipe>;
-    readonly ArrangeSlots: ko.ObservableArray<RF5SlotArrange>;
-    readonly UpgradeSlots: ko.ObservableArray<RF5SlotUpgrade>;
+    readonly BaseItem: ko.Observable<SlotBaseItem>;
+    readonly RecipeSlots: ko.ObservableArray<SlotRecipe>;
+    readonly ArrangeSlots: ko.ObservableArray<SlotArrange>;
+    readonly UpgradeSlots: ko.ObservableArray<SlotUpgrade>;
 
     readonly ViewModel: VMItem;
 
@@ -129,28 +125,28 @@ class RF5Item extends StatVector implements IItem {
             ids = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
             levels = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10];
         }
-        this.BaseItem = ko.observable(new RF5SlotBaseItem(this, i, ids[i], levels[i]))
+        this.BaseItem = ko.observable(new SlotBaseItem(this, i, ids[i], levels[i]))
                             .extend({ deferred: true });
         i++;
 
         this.RecipeSlots = ko.observableArray([])
                                 .extend({ deferred: true });
         for(let j=0; j<RF5Item.NSLOTS_RECIPE; j++) {
-            this.RecipeSlots.push(new RF5SlotRecipe(this, i, ids[i], levels[i]));
+            this.RecipeSlots.push(new SlotRecipe(this, i, ids[i], levels[i]));
             i++;
         }
 
         this.ArrangeSlots = ko.observableArray([])
                                 .extend({ deferred: true });
         for(let j=0; j<RF5Item.NSLOTS_ARRANGE; j++) {
-            this.ArrangeSlots.push(new RF5SlotArrange(this, i, ids[i], levels[i]));
+            this.ArrangeSlots.push(new SlotArrange(this, i, ids[i], levels[i]));
             i++
         }
 
         this.UpgradeSlots = ko.observableArray([])
                                 .extend({ deferred: true });
         for(let j=0; j<RF5Item.NSLOTS_UPGRADE; j++) {
-            this.UpgradeSlots.push(new RF5SlotUpgrade(this, i, ids[i], levels[i]));
+            this.UpgradeSlots.push(new SlotUpgrade(this, i, ids[i], levels[i]));
             i++;
         }
         
@@ -162,7 +158,7 @@ class RF5Item extends StatVector implements IItem {
     }
 
 
-    public ApplyRecipeRestrictions = (baseItem: RF5SlotBaseItem): void => {
+    public ApplyRecipeRestrictions = (baseItem: SlotBaseItem): void => {
         const self = this;
         const baseitemId: number = baseItem.id();
         const recipes: any = (this.Data.Recipes as any);
@@ -179,33 +175,6 @@ class RF5Item extends StatVector implements IItem {
             this.RecipeSlots()[i].ApplyRestriction(id);
         }
     }
-
-    /*
-    public ApplyArrangeRestrictions = (): void => {
-        if(this.EquipmentType === "boots" || this.EquipmentType === "accessory") {
-            if(! this.BaseItem().IsBeingOverridden()) {
-                this.ArrangeSlots()[0].ApplyRestriction(0); // Clear restrictions.
-            }
-            // Find overriding item
-            for(let i=0; i<RF5AbstractSlot.ARRANGE_START_IDX; i++) {
-                let slot: IRF5Slot = this.GetSlotByIndex(i);
-                if(slot.IsOverriding()) {
-                    this.ArrangeSlots()[0].ApplyRestriction(slot.id());
-                    break;
-                }
-            }
-        }
-        // Else do nothing.
-    }
-    */
-   public ApplyArrangeRestrictions = (): void => {
-       // Do nothing.
-       // The original plan was that inheriting from boots / accessories would also
-       // mean that it takes up one arrange slot as well. The thing is not all boots
-       // or accessories have inheritable special effects. And if they do, if the piece
-       // already has 4 or more effects, then the inheritance is random (?). I'm not entirely
-       // sure that the base would always go into the arrange slot, so just let it be.
-   }
 
     public GetSlotByIndex = (index: number): ISlot => {
         index = _.clamp(index, 0, 18); // Inclusive both
@@ -259,10 +228,8 @@ class RF5Item extends StatVector implements IItem {
         return false;
     }
 
-    protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number) => {
-        const self = this;
+    public _compute_number_helper_scoper(fieldName: StatVectorKey, defaultValue: number): (() => number) {
         return function(): number {
-
             let val: number = defaultValue;
             let slot: IStatVector;
             function accumulate(_slot: IStatVector, skipIdZero: boolean=true) {
@@ -274,21 +241,25 @@ class RF5Item extends StatVector implements IItem {
                 }
             };
 
-            accumulate(self.BaseItem());
+            accumulate(this.BaseItem());
             for(let i=0; i<RF5Item.NSLOTS_RECIPE; i++) {
-                accumulate(self.RecipeSlots()[i]);
+                accumulate(this.RecipeSlots()[i]);
             }
             for(let i=0; i<RF5Item.NSLOTS_ARRANGE; i++) {
-                accumulate(self.ArrangeSlots()[i]);
+                accumulate(this.ArrangeSlots()[i]);
             }
             for(let i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
-                accumulate(self.UpgradeSlots()[i]);
+                accumulate(this.UpgradeSlots()[i]);
             }
-            accumulate(self.LevelBonus(), false);
-            accumulate(self.RarityBonus(), false);
-            accumulate(self.CoreBonus(), false);
+            accumulate(this.LevelBonus(), false);
+            accumulate(this.RarityBonus(), false);
+            accumulate(this.CoreBonus(), false);
             return val;
-        };
+        }.bind(this);
+    }
+
+    protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number) => {
+        return this._compute_number_helper_scoper(fieldName, defaultValue);
     }
 
     protected override _compute_level = this._compute_number_helper(StatVector.KEY_level, 0);

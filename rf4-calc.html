@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="css/jquery-ui.min.css"/>
         <link rel="stylesheet" href="css/knockout-autocomplete.css"/>
         <link rel="stylesheet" href="css/rf5-common.css"/>
+        <style>
+            nav .icon { width: 55px; height: 55px; }
+        </style>
         <!-- <script type="text/javascript" src="js/lib/requirejs-2.3.6-min.js"></script> -->
         <script type="text/javascript" src="js/lib/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="js/rf4-calculator.js"></script>
@@ -34,13 +37,16 @@
                                     <tbody>
                                         <tr>
                                             <td rowspan="2">
-                                                <button class="btn" data-bind="click: $root.OnExampleClickHandler">例 Example</button>
-                                                <button class="btn" data-bs-toggle="modal" data-bs-target="#save-modal" data-bind="click: $root.OnSaveToJsonClickHandler">セーブ Save</button>
-                                                <button class="btn" data-bs-toggle="modal" data-bs-target="#load-modal">ロード Load</button>
-                                                <a href="./rf5table.html" target="_blank"><button class="btn btn-secondary">RF5 Data</button></a>
-                                                <button class="btn btn-secondary">RF4 Calculator</button>
-                                                <button class="btn btn-secondary">RF4 Data</button>
-                                                <button class="btn btn-secondary">Github</button>
+                                                <button class="btn btn-menu" data-bind="click: $root.OnExampleClickHandler">例 Example</button>
+                                                <button class="btn btn-menu" data-bs-toggle="modal" data-bs-target="#save-modal" data-bind="click: $root.OnSaveToJsonClickHandler">セーブ Save</button>
+                                                <button class="btn btn-menu" data-bs-toggle="modal" data-bs-target="#load-modal">ロード Load</button>
+                                                <a target="_self" href="./index.html" target="_blank"><button class="btn btn-secondary">Index</button></a>
+                                                <a target="_self" href="./rf5-calc.html" target="_blank"><button class="btn btn-secondary">RF5 Calculator</button></a>
+                                                <a target="_self" href="./rf5-data.html" target="_blank"><button class="btn btn-secondary">RF5 Data</button></a>
+                                                <button disabled class="btn btn-secondary">RF4 Calculator</button>
+                                                <a target="_self" href="./rf4-data.html" target="_blank"><button class="btn btn-secondary">RF4 Data</button></a>
+                                                <!-- todo -->
+                                                <a href="./rf5table.html" target="_blank"><button class="btn btn-secondary">Github</button></a>
                                             </td>
                                             <td>
                                                 <div class="form-check form-switch">
@@ -230,9 +236,7 @@
                 <!-- /ko -->
             </div>
         </main>
-        <!--
-        <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.js"></script>
-        -->
+        <!-- <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.js"></script> -->
         <script type="text/javascript" src="js/lib/bootstrap-5.1.0.bundle.min.js"></script>
     </body>
 </html>
@@ -399,9 +403,8 @@
     <!-- /ko -->
     <!-- ko template: 'TEMPLATE-clover-slot' --><!-- /ko -->
     <!-- ko template: 'TEMPLATE-rarecan-slot' --><!-- /ko -->
-    <!-- ko tempalte: 'TEMPLATE-shadestone-slot' --><!-- /ko -->
+    <!-- ko template: 'TEMPLATE-shadestone-slot' --><!-- /ko -->
     <!-- ko template: 'TEMPLATE-scrapmetalplus-slot' --><!-- /ko -->
-    <!-- ko template: 'TEMPLATE-dualsmith-slot' --><!-- /ko -->
     <!-- ko template: 'TEMPLATE-equipment-slots' --><!-- /ko -->
 </script>
 
@@ -555,38 +558,6 @@
             <span class="badge" data-bind="text: $data.HasShadeStone()"></span>
         </td>
         <!-- ko template: 'TEMPLATE-stats-empty-43' --><!-- /ko -->
-    </tr>
-</script>
-
-<script type="text/html" id="TEMPLATE-dualsmith-slot">
-    <tr class="collapse subslot" data-bind="css: { show: ! BaseItem().ViewModel.IsCollapsed() }">
-        <td>
-            <span class="lang jp">一緒鍛冶</span>
-            &nbsp;<span class="lang en">Dual Smith</span>
-            <div>
-                <select class="dualsmith-relation-level-select" data-bind="value: DualSmith().DualSmithRelationLevel, options: DualSmith().DualSmithRelationLevelOptions, optionsText: function(item) { return item.toString()+' \u2764' } ">
-                </select>
-                <select class="dualsmith-bonus-type-select" data-bind="value: DualSmith().DualSmithBonusType">
-                    <option value="NONE">NONE</option>
-                    <option value="ATK">ATK</option>
-                    <option value="DEF">DEF</option>
-                    <option value="MAT">MAT</option>
-                    <option value="MDF">MDF</option>
-                    <option value="STR">STR</option>
-                    <option value="INT">INT</option>
-                    <option value="VIT">VIT</option>
-                    <option value="CRT">CRT</option>
-                    <option value="STN">ス STN</option>
-                    <option value="DEF_FIR">火防 Fire def</option>
-                    <option value="DEF_WTR">水防 Water def</option>
-                    <option value="DEF_EAR">地防 Earth def</option>
-                    <option value="DEF_WND">風防 Wind def</option>
-                    <option value="DEF_LGT">風防 Light def</option>
-                    <option value="DEF_DRK">光防 Dark def</option>
-                </select>
-            </div>
-        </td>
-        <!-- ko template: { name: 'TEMPLATE-stats', data: DualSmith() } --><!-- /ko -->
     </tr>
 </script>
 

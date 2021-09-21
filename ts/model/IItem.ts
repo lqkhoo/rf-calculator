@@ -1,4 +1,5 @@
 import IModel = require("./IModel");
+import ISerializable = require("./ISerializable");
 import ICharacter = require("./ICharacter");
 import ISlot = require("./ISlot");
 import IStatVector = require("./IStatVector");
@@ -25,8 +26,8 @@ interface IItem extends IStatVector, IModel {
     readonly ViewModel: VMItem;
 
     ApplyRecipeRestrictions(baseItem: ISlot): void;
-    ApplyArrangeRestrictions(): void;
     GetSlotByIndex(index: number): ISlot;
+    toJSON(): any;
 
 }
 export = IItem;
