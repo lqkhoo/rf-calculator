@@ -61,7 +61,6 @@ Where there's missing data, there's little I can do. This is not the kind of dat
   * Likewise, charge speed is not exposed as a parameter like the way it is in RF5. I just set the stat to zero for all items.
 * Zero columns
   * In both RF5 and RF4, there is nothing that gives DIZ/硬値 (knockback duration) resistance. In fact, that column is not there in the data, but I included it for symmetry. It's not a mistake.
-  * Like magic, RF4's equipment charge speed is not exposed in the data tables. For lack of a better alternative I just set all of them to zero.
   * Likewise, columns for HP and RP bonuses from equipment and upgrades are new in RF5 but they're always zero, so I exclude them.
 * Maybe work on serializing JSON to local storage.
 * I'm not a native Japanese speaker. I did my best with the translation, but if you can improve on it, let me know!
@@ -84,12 +83,12 @@ Where there's missing data, there's little I can do. This is not the kind of dat
 4. If you are using [Visual Studio Code](https://code.visualstudio.com/), the build process has been set up via tasks.json, so just hit shift+ctrl+B to build. Otherwise, with your working directory pointed at the root of your local repo, have a look at `tasks.json` and run the shell commands there one by one (or just make a shell script to do that).
 5. You will have to do this every time you want the changes in Typescript or Sass to be reflected in js/css.
 6. Then just navigate your browser to index.html, or hit F5 from Visual Studio Code. You don't need a local webserver for this project.
-7. Python 3.4+ is required to run the script that transforms tsv data into DATA.ts.
+7. Python 3.4+ is required to run the script that transforms tsv data into `rf5-rawdata.ts` and `rf4-rawdata.ts`.
 
 ## Dev notes
 * TSVs mapping weapon element, crystal element, rarity stat type are CASE SENSITIVE. TSVs containing Japanese strings are Shift-JIS-encoded.
 * I use knockout.js because it constructs the computation graph automatically. This project is extremely heavy on bindings (easily in the thousands), so doing this eliminates a major source of bugs.
-* Browserify combines javascript files, so some of the libraries have already been combined into our output. Instead of including the source files twice, which can cause issues (knockout especially), we expose the libraries via the window in App.ts, and then include their dependencies after our script. Likewise, our sass file imports Bootstrap's sass file to modify their parameters, so we don't need to include Bootstrap's css in the html head.
+* Browserify combines javascript files, so some of the libraries have already been combined into our output. Instead of including the source files twice, which can cause issues (knockout especially), we expose the libraries via the window in the top-level source files `*App.ts`, and then include their dependencies after our script. Likewise, our sass file imports Bootstrap's sass file to modify their parameters, so we don't need to include Bootstrap's css in the html head.
 
 # Solver (omitted)
 This section is mathematical. It has less to do with the gear calculator than an analysis of Rune Factory's item system, which has remained mostly unchanged over the years.
