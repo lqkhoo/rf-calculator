@@ -6,10 +6,10 @@ import ICharacter = require('./ICharacter');
 // Parent
 import ICalculator = require('./ICalculator');
 // Children
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 import RF5Accessory = require('./RF5Accessory');
 import RF5Armor = require('./RF5Armor');
-import RF5Boot = require('./RF5Boot');
+import RF5Boots = require('./RF5Boots');
 import RF5Headgear = require('./RF5Headgear');
 import RF5Shield = require('./RF5Shield');
 import RF5Weapon = require('./RF5Weapon');
@@ -17,20 +17,22 @@ import VectorCharEquipmentStats = require('./VectorCharEquipmentStats');
 import VectorGeneralSetBonus = require('./VectorGeneralSetBonus');
 import VectorCharFinalStats = require('./VectorCharFinalStats');
 // VM
-import VMRF5Character = require('../vm/VMRF5Character');
+import VMCharacter = require('../vm/VMCharacter');
+import IShield = require('./IShield');
+import IWeapon = require('./IWeapon');
 
-class RF5Character extends RF5StatVector implements ICharacter {
+class RF5Character extends StatVector implements ICharacter {
     
     static readonly DEFAULT_CHARACTER_ID: number = 0;
 
     readonly Calculator:       ICalculator;
 
-    readonly Accessories:   ko.ObservableArray<RF5Accessory>;
-    readonly Armors:        ko.ObservableArray<RF5Armor>;
-    readonly Boots:         ko.ObservableArray<RF5Boot>;
-    readonly Headgears:     ko.ObservableArray<RF5Headgear>;
-    readonly Shields:       ko.ObservableArray<RF5Shield>;
-    readonly Weapons:       ko.ObservableArray<RF5Weapon>;
+    readonly Accessories:   ko.ObservableArray<IItem>;
+    readonly Armors:        ko.ObservableArray<IItem>;
+    readonly Boots:         ko.ObservableArray<IItem>;
+    readonly Headgears:     ko.ObservableArray<IItem>;
+    readonly Shields:       ko.ObservableArray<IShield>;
+    readonly Weapons:       ko.ObservableArray<IWeapon>;
 
     readonly ActiveAccessoryIdx:    ko.PureComputed<number>;
     readonly ActiveArmorIdx:        ko.PureComputed<number>;
@@ -47,7 +49,7 @@ class RF5Character extends RF5StatVector implements ICharacter {
     readonly GeneralSetBonus: ko.Observable<IStatVector>;
     readonly FinalStats: ko.Observable<IStatVector>;
 
-    readonly ViewModel: VMRF5Character;
+    readonly ViewModel: VMCharacter;
 
     override readonly Context: ko.PureComputed<any>;
 
@@ -86,7 +88,7 @@ class RF5Character extends RF5StatVector implements ICharacter {
         this.GeneralSetBonus    = ko.observable(new VectorGeneralSetBonus(this)).extend({ deferred: true });
         this.FinalStats         = ko.observable(new VectorCharFinalStats(this)).extend({ deferred: true });
 
-        this.ViewModel = new VMRF5Character(this);
+        this.ViewModel = new VMCharacter(this);
 
         if(deserializedObject === undefined) {
             this.AddWeapon();
@@ -130,7 +132,7 @@ class RF5Character extends RF5StatVector implements ICharacter {
         }
     }
     public AddBoots = (deserializedObject: any=undefined): void => {
-        this.Boots.push(new RF5Boot(this, 0, deserializedObject));
+        this.Boots.push(new RF5Boots(this, 0, deserializedObject));
         if(this.Boots().length === 1 && deserializedObject === undefined) {
             this.Boots()[0].IsActive(true);
         }

@@ -2495,7 +2495,7 @@ const _RAWDATA = {
   "40": {
     "element": "NONE",
     "id": 40,
-    "image_uri": "icon/rf4/I_Crop19_big.png",
+    "image_uri": "icon/rf4/I_Crop20.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -2549,7 +2549,7 @@ const _RAWDATA = {
   "41": {
     "element": "NONE",
     "id": 41,
-    "image_uri": "icon/rf4/I_Crop20.png",
+    "image_uri": "icon/rf4/I_Crop20_big.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -2603,7 +2603,7 @@ const _RAWDATA = {
   "42": {
     "element": "NONE",
     "id": 42,
-    "image_uri": "icon/rf4/I_Crop20_big.png",
+    "image_uri": "icon/rf4/I_Crop21.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -2657,7 +2657,7 @@ const _RAWDATA = {
   "43": {
     "element": "NONE",
     "id": 43,
-    "image_uri": "icon/rf4/I_Crop21.png",
+    "image_uri": "icon/rf4/I_Crop21_big.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -2711,7 +2711,7 @@ const _RAWDATA = {
   "44": {
     "element": "NONE",
     "id": 44,
-    "image_uri": "icon/rf4/I_Crop21_big.png",
+    "image_uri": "icon/rf4/I_Crop22.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -2765,7 +2765,7 @@ const _RAWDATA = {
   "45": {
     "element": "NONE",
     "id": 45,
-    "image_uri": "icon/rf4/I_Crop22.png",
+    "image_uri": "icon/rf4/I_Crop22_big.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -2819,7 +2819,7 @@ const _RAWDATA = {
   "46": {
     "element": "NONE",
     "id": 46,
-    "image_uri": "icon/rf4/I_Crop22_big.png",
+    "image_uri": "icon/rf4/I_Crop23.png",
     "level": 10,
     "magic_charge1": 46,
     "magic_charge2": 46,
@@ -2873,7 +2873,7 @@ const _RAWDATA = {
   "47": {
     "element": "NONE",
     "id": 47,
-    "image_uri": "icon/rf4/I_Crop23.png",
+    "image_uri": "icon/rf4/I_Crop23_big.png",
     "level": 10,
     "magic_charge1": 47,
     "magic_charge2": 47,
@@ -7355,7 +7355,7 @@ const _RAWDATA = {
   "130": {
     "element": "NONE",
     "id": 130,
-    "image_uri": "icon/rf4/I_Drug19.png",
+    "image_uri": "icon/rf4/I_Present50.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -52607,7 +52607,7 @@ const _RAWDATA = {
   "969": {
     "element": "NONE",
     "id": 969,
-    "image_uri": "icon/rf4/I_Item157.png",
+    "image_uri": "icon/rf4/I_Item158.png",
     "level": 10,
     "magic_charge1": 969,
     "magic_charge2": 969,
@@ -52661,7 +52661,7 @@ const _RAWDATA = {
   "970": {
     "element": "NONE",
     "id": 970,
-    "image_uri": "icon/rf4/I_Item158.png",
+    "image_uri": "icon/rf4/I_Item159.png",
     "level": 10,
     "magic_charge1": 970,
     "magic_charge2": 970,
@@ -52715,7 +52715,7 @@ const _RAWDATA = {
   "971": {
     "element": "NONE",
     "id": 971,
-    "image_uri": "icon/rf4/I_Item159.png",
+    "image_uri": "icon/rf4/I_Item160.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -52769,7 +52769,7 @@ const _RAWDATA = {
   "972": {
     "element": "NONE",
     "id": 972,
-    "image_uri": "icon/rf4/I_Item160.png",
+    "image_uri": "icon/rf4/I_Item161.png",
     "level": 10,
     "magic_charge1": 0,
     "magic_charge2": 0,
@@ -52823,7 +52823,7 @@ const _RAWDATA = {
   "973": {
     "element": "NONE",
     "id": 973,
-    "image_uri": "icon/rf4/I_Item161.png",
+    "image_uri": "icon/rf4/I_Item162.png",
     "level": 10,
     "magic_charge1": 973,
     "magic_charge2": 0,
@@ -81771,7 +81771,7 @@ const _RAWDATA = {
     "image_uri": "icon/rf4/face_NPC06.png",
     "name_en": "Bado",
     "name_jp": "\u30d0\u30c9",
-    "sprite_uri": "charasprites/rf4/06_BADO_body_00_face_003_SMILE",
+    "sprite_uri": "charasprites/rf4/06_BADO_body_00_face_003_SMILE.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 0,
@@ -82505,7 +82505,7 @@ const _RAWDATA = {
   "22": {
     "id": 22,
     "image_uri": "icon/rf4/face_NPC22.png",
-    "name_en": "Son",
+    "name_en": "Son (Noel)",
     "name_jp": "\u606f\u5b50\uff08\u30ce\u30a8\u30eb\uff09",
     "sprite_uri": "charasprites/rf4/22_CHILD_M_body_00_face_003_SMILE.png",
     "stat_ATK": 0,
@@ -82551,7 +82551,7 @@ const _RAWDATA = {
   "23": {
     "id": 23,
     "image_uri": "icon/rf4/face_NPC23.png",
-    "name_en": "Daughter",
+    "name_en": "Daughter (Luna)",
     "name_jp": "\u5a18\uff08\u30eb\u30fc\u30ca\uff09",
     "sprite_uri": "charasprites/rf4/23_CHILD_W_body_00_face_003_SMILE.png",
     "stat_ATK": 0,
@@ -82691,7 +82691,7 @@ const _RAWDATA = {
     "image_uri": "icon/rf4/face_s_TRAVELER.png",
     "name_en": "Mistress Trupin",
     "name_jp": "\u5e7b\u60f3\u306e\u30ad\u30ea\u30ab",
-    "sprite_uri": "charasprites/rf4/None.png",
+    "sprite_uri": "charasprites/rf4/Empty.png",
     "stat_ATK": 0,
     "stat_DEF": 0,
     "stat_INT": 250,

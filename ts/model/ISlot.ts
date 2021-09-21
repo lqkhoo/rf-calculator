@@ -1,4 +1,4 @@
-import IVMRF5Slot = require("../vm/IVMSlot");
+import IVMSlot = require("../vm/IVMSlot");
 import IModel = require("./IModel");
 import IItem = require("./IItem");
 import IStatVector = require("./IStatVector");
@@ -36,7 +36,7 @@ interface ISlot extends IStatVector, IModel {
     readonly IsApplyingStatsMultiplier: ko.PureComputed<number>;
     readonly DiminishingMultiplier: ko.PureComputed<number>;
 
-    readonly ViewModel: IVMRF5Slot;
+    readonly ViewModel: IVMSlot;
 
     //ELEMENT
 

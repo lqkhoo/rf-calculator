@@ -4,12 +4,12 @@ import IItem = require('./IItem');
 // Super
 import RF5Slot = require('./RF5Slot');
 // VM
-import VMRF5SlotBaseItem = require('../vm/VMRF5SlotBaseItem');
+import VMSlotBaseItem = require('../vm/VMSlotBaseItem');
 
 
 class RF5SlotBaseItem extends RF5Slot {
 
-    override readonly ViewModel: VMRF5SlotBaseItem;
+    override readonly ViewModel: VMSlotBaseItem;
 
     constructor(item: IItem,
                 index: number,
@@ -23,7 +23,7 @@ class RF5SlotBaseItem extends RF5Slot {
         this.level = ko.pureComputed(function() { return 0; }).extend({ deferred: true });
         this.FinalizeVectorOverride();
 
-        this.ViewModel = new VMRF5SlotBaseItem(this);
+        this.ViewModel = new VMSlotBaseItem(this);
     }
 
     public override ChangeId = (id: number): void => {

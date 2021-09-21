@@ -6,7 +6,7 @@ import ICalculator = require("./ICalculator");
 // Children
 import IItem = require("./IItem");
 // VM
-import VMRF5Character = require("../vm/VMRF5Character");
+import VMCharacter = require("../vm/VMCharacter");
 
 
 interface ICharacter extends IStatVector, IModel {
@@ -35,7 +35,7 @@ interface ICharacter extends IStatVector, IModel {
     readonly GeneralSetBonus: ko.Observable<IStatVector>;
     readonly FinalStats: ko.Observable<IStatVector>;
 
-    readonly ViewModel: VMRF5Character;
+    readonly ViewModel: VMCharacter;
 
     AddAccessory(): void;
     AddArmor(): void;

@@ -3,9 +3,9 @@ import ko = require('knockout');
 import IItem = require('./IItem');
 import ISlot = require('./ISlot');
 import IStatVector = require('./IStatVector');
-import RF5AbstractSlot = require('./RF5AbstractSlot');
+import AbstractSlot = require('./AbstractSlot');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 // Parent
 import ICharacter = require('./ICharacter');
 // Children
@@ -17,23 +17,23 @@ import VectorLevelBonus = require('./VectorLevelBonus');
 import VectorRarityBonus = require('./VectorRarityBonus');
 import VectorCoreBonus = require('./VectorCoreBonus');
 // VM
-import VMRF5Item = require('../vm/VMRF5Item');
+import VMItem = require('../vm/VMItem');
 
-class RF5Item extends RF5StatVector implements IItem {
+class RF5Item extends StatVector implements IItem {
 
     static readonly NSLOTS_RECIPE: number = 6;
     static readonly NSLOTS_ARRANGE: number = 3;
     static readonly NSLOTS_UPGRADE: number = 9;
     static readonly DEFAULT_ITEM_ID: number = 0;
 
-    override readonly id: ko.PureComputed<number>;
+    override id: ko.PureComputed<number>;
 
     readonly EquipmentType: EquipmentType;
     readonly IsActive: ko.Observable<boolean>;
 
-    readonly LevelBonus: ko.Observable<RF5StatVector>;
-    readonly RarityBonus: ko.Observable<RF5StatVector>;
-    readonly CoreBonus: ko.Observable<RF5StatVector>;
+    readonly LevelBonus: ko.Observable<StatVector>;
+    readonly RarityBonus: ko.Observable<StatVector>;
+    readonly CoreBonus: ko.Observable<StatVector>;
     readonly HasClover: ko.PureComputed<boolean>;
 
     readonly Character: ko.Observable<ICharacter>;
@@ -43,7 +43,7 @@ class RF5Item extends RF5StatVector implements IItem {
     readonly ArrangeSlots: ko.ObservableArray<RF5SlotArrange>;
     readonly UpgradeSlots: ko.ObservableArray<RF5SlotUpgrade>;
 
-    readonly ViewModel: VMRF5Item;
+    readonly ViewModel: VMItem;
 
     constructor(character: ICharacter,
                 equipment_type: EquipmentType,
@@ -116,7 +116,7 @@ class RF5Item extends RF5StatVector implements IItem {
         this.EquipmentType = equipment_type;
         this.IsActive = ko.observable(false).extend({ deferred: true });
 
-        this.ViewModel = new VMRF5Item(this); // Needs to be before slots
+        this.ViewModel = new VMItem(this); // Needs to be before slots
 
         let i = 0;
         let ids: number[];
@@ -211,12 +211,12 @@ class RF5Item extends RF5StatVector implements IItem {
         index = _.clamp(index, 0, 18); // Inclusive both
         if(index == 0) {
             return this.BaseItem();
-        } else if (index < RF5AbstractSlot.ARRANGE_START_IDX) {
+        } else if (index < AbstractSlot.ARRANGE_START_IDX) {
             return this.RecipeSlots()[index - 1];
-        } else if (index < RF5AbstractSlot.UPGRADE_START_IDX) {
-            return this.ArrangeSlots()[index - RF5AbstractSlot.ARRANGE_START_IDX];
+        } else if (index < AbstractSlot.UPGRADE_START_IDX) {
+            return this.ArrangeSlots()[index - AbstractSlot.ARRANGE_START_IDX];
         } else {
-            return this.UpgradeSlots()[index - RF5AbstractSlot.UPGRADE_START_IDX];
+            return this.UpgradeSlots()[index - AbstractSlot.UPGRADE_START_IDX];
         }
     }
     
@@ -251,7 +251,7 @@ class RF5Item extends RF5StatVector implements IItem {
     }
 
     protected _compute_hasClover = (): boolean => {
-        for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
+        for(let i=AbstractSlot.ARRANGE_START_IDX; i<AbstractSlot.SLOT_END_IDX; i++) {
             let id = this.GetSlotByIndex(i).id();
             if(id === 0) { continue; }
             if(this.Data.IsClover(id) || this.Data.IsGiantClover(id)) { return true; }
@@ -291,47 +291,47 @@ class RF5Item extends RF5StatVector implements IItem {
         };
     }
 
-    protected override _compute_level = this._compute_number_helper(RF5StatVector.KEY_level, 0);
-    protected override _compute_rarity = this._compute_number_helper(RF5StatVector.KEY_rarity, 0);
-    protected override _compute_stat_ATK = this._compute_number_helper(RF5StatVector.KEY_stat_ATK, 0);
-    protected override _compute_stat_DEF = this._compute_number_helper(RF5StatVector.KEY_stat_DEF, 0);
-    protected override _compute_stat_MAT = this._compute_number_helper(RF5StatVector.KEY_stat_MAT, 0);
-    protected override _compute_stat_MDF = this._compute_number_helper(RF5StatVector.KEY_stat_MDF, 0);
-    protected override _compute_stat_STR = this._compute_number_helper(RF5StatVector.KEY_stat_STR, 0);
-    protected override _compute_stat_INT = this._compute_number_helper(RF5StatVector.KEY_stat_INT, 0);
-    protected override _compute_stat_VIT = this._compute_number_helper(RF5StatVector.KEY_stat_VIT, 0);
-    protected override _compute_stat_atk_CRT = this._compute_number_helper(RF5StatVector.KEY_stat_atk_CRT, 0);
-    protected override _compute_stat_atk_KNO = this._compute_number_helper(RF5StatVector.KEY_stat_atk_KNO, 0);
-    protected override _compute_stat_atk_STN = this._compute_number_helper(RF5StatVector.KEY_stat_atk_STN, 0);
-    protected override _compute_stat_atk_DIZ = this._compute_number_helper(RF5StatVector.KEY_stat_atk_DIZ, 0);
-    protected override _compute_stat_atk_PSN = this._compute_number_helper(RF5StatVector.KEY_stat_atk_PSN, 0);
-    protected override _compute_stat_atk_SEA = this._compute_number_helper(RF5StatVector.KEY_stat_atk_SEA, 0);
-    protected override _compute_stat_atk_PAR = this._compute_number_helper(RF5StatVector.KEY_stat_atk_PAR, 0);
-    protected override _compute_stat_atk_SLP = this._compute_number_helper(RF5StatVector.KEY_stat_atk_SLP, 0);
-    protected override _compute_stat_atk_FTG = this._compute_number_helper(RF5StatVector.KEY_stat_atk_FTG, 0);
-    protected override _compute_stat_atk_SCK = this._compute_number_helper(RF5StatVector.KEY_stat_atk_SCK, 0);
-    protected override _compute_stat_atk_FNT = this._compute_number_helper(RF5StatVector.KEY_stat_atk_FNT, 0);
-    protected override _compute_stat_atk_DRN = this._compute_number_helper(RF5StatVector.KEY_stat_atk_DRN, 0);
-    protected override _compute_def_ele_FIRE = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_FIRE, 0);
-    protected override _compute_def_ele_WATER = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_WATER, 0);
-    protected override _compute_def_ele_EARTH = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_EARTH, 0);
-    protected override _compute_def_ele_WIND = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_WIND, 0);
-    protected override _compute_def_ele_LIGHT = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_LIGHT, 0);
-    protected override _compute_def_ele_DARK = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_DARK, 0);
-    protected override _compute_def_ele_LOVE = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_LOVE, 0);
-    protected override _compute_def_ele_VOID = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_VOID, 0);
-    protected override _compute_def_CRT = this._compute_number_helper(RF5StatVector.KEY_stat_def_CRT, 0);
-    protected override _compute_def_KNO = this._compute_number_helper(RF5StatVector.KEY_stat_def_KNO, 0);
-    protected override _compute_def_STN = this._compute_number_helper(RF5StatVector.KEY_stat_def_STN, 0);
-    protected override _compute_def_DIZ = this._compute_number_helper(RF5StatVector.KEY_stat_def_DIZ, 0);
-    protected override _compute_def_PSN = this._compute_number_helper(RF5StatVector.KEY_stat_def_PSN, 0);
-    protected override _compute_def_SEA = this._compute_number_helper(RF5StatVector.KEY_stat_def_SEA, 0);
-    protected override _compute_def_PAR = this._compute_number_helper(RF5StatVector.KEY_stat_def_PAR, 0);
-    protected override _compute_def_SLP = this._compute_number_helper(RF5StatVector.KEY_stat_def_SLP, 0);
-    protected override _compute_def_FTG = this._compute_number_helper(RF5StatVector.KEY_stat_def_FTG, 0);
-    protected override _compute_def_SCK = this._compute_number_helper(RF5StatVector.KEY_stat_def_SCK, 0);
-    protected override _compute_def_FNT = this._compute_number_helper(RF5StatVector.KEY_stat_def_FNT, 0);
-    protected override _compute_def_DRN = this._compute_number_helper(RF5StatVector.KEY_stat_def_DRN, 0);
+    protected override _compute_level = this._compute_number_helper(StatVector.KEY_level, 0);
+    protected override _compute_rarity = this._compute_number_helper(StatVector.KEY_rarity, 0);
+    protected override _compute_stat_ATK = this._compute_number_helper(StatVector.KEY_stat_ATK, 0);
+    protected override _compute_stat_DEF = this._compute_number_helper(StatVector.KEY_stat_DEF, 0);
+    protected override _compute_stat_MAT = this._compute_number_helper(StatVector.KEY_stat_MAT, 0);
+    protected override _compute_stat_MDF = this._compute_number_helper(StatVector.KEY_stat_MDF, 0);
+    protected override _compute_stat_STR = this._compute_number_helper(StatVector.KEY_stat_STR, 0);
+    protected override _compute_stat_INT = this._compute_number_helper(StatVector.KEY_stat_INT, 0);
+    protected override _compute_stat_VIT = this._compute_number_helper(StatVector.KEY_stat_VIT, 0);
+    protected override _compute_stat_atk_CRT = this._compute_number_helper(StatVector.KEY_stat_atk_CRT, 0);
+    protected override _compute_stat_atk_KNO = this._compute_number_helper(StatVector.KEY_stat_atk_KNO, 0);
+    protected override _compute_stat_atk_STN = this._compute_number_helper(StatVector.KEY_stat_atk_STN, 0);
+    protected override _compute_stat_atk_DIZ = this._compute_number_helper(StatVector.KEY_stat_atk_DIZ, 0);
+    protected override _compute_stat_atk_PSN = this._compute_number_helper(StatVector.KEY_stat_atk_PSN, 0);
+    protected override _compute_stat_atk_SEA = this._compute_number_helper(StatVector.KEY_stat_atk_SEA, 0);
+    protected override _compute_stat_atk_PAR = this._compute_number_helper(StatVector.KEY_stat_atk_PAR, 0);
+    protected override _compute_stat_atk_SLP = this._compute_number_helper(StatVector.KEY_stat_atk_SLP, 0);
+    protected override _compute_stat_atk_FTG = this._compute_number_helper(StatVector.KEY_stat_atk_FTG, 0);
+    protected override _compute_stat_atk_SCK = this._compute_number_helper(StatVector.KEY_stat_atk_SCK, 0);
+    protected override _compute_stat_atk_FNT = this._compute_number_helper(StatVector.KEY_stat_atk_FNT, 0);
+    protected override _compute_stat_atk_DRN = this._compute_number_helper(StatVector.KEY_stat_atk_DRN, 0);
+    protected override _compute_def_ele_FIRE = this._compute_number_helper(StatVector.KEY_stat_def_ele_FIRE, 0);
+    protected override _compute_def_ele_WATER = this._compute_number_helper(StatVector.KEY_stat_def_ele_WATER, 0);
+    protected override _compute_def_ele_EARTH = this._compute_number_helper(StatVector.KEY_stat_def_ele_EARTH, 0);
+    protected override _compute_def_ele_WIND = this._compute_number_helper(StatVector.KEY_stat_def_ele_WIND, 0);
+    protected override _compute_def_ele_LIGHT = this._compute_number_helper(StatVector.KEY_stat_def_ele_LIGHT, 0);
+    protected override _compute_def_ele_DARK = this._compute_number_helper(StatVector.KEY_stat_def_ele_DARK, 0);
+    protected override _compute_def_ele_LOVE = this._compute_number_helper(StatVector.KEY_stat_def_ele_LOVE, 0);
+    protected override _compute_def_ele_VOID = this._compute_number_helper(StatVector.KEY_stat_def_ele_VOID, 0);
+    protected override _compute_def_CRT = this._compute_number_helper(StatVector.KEY_stat_def_CRT, 0);
+    protected override _compute_def_KNO = this._compute_number_helper(StatVector.KEY_stat_def_KNO, 0);
+    protected override _compute_def_STN = this._compute_number_helper(StatVector.KEY_stat_def_STN, 0);
+    protected override _compute_def_DIZ = this._compute_number_helper(StatVector.KEY_stat_def_DIZ, 0);
+    protected override _compute_def_PSN = this._compute_number_helper(StatVector.KEY_stat_def_PSN, 0);
+    protected override _compute_def_SEA = this._compute_number_helper(StatVector.KEY_stat_def_SEA, 0);
+    protected override _compute_def_PAR = this._compute_number_helper(StatVector.KEY_stat_def_PAR, 0);
+    protected override _compute_def_SLP = this._compute_number_helper(StatVector.KEY_stat_def_SLP, 0);
+    protected override _compute_def_FTG = this._compute_number_helper(StatVector.KEY_stat_def_FTG, 0);
+    protected override _compute_def_SCK = this._compute_number_helper(StatVector.KEY_stat_def_SCK, 0);
+    protected override _compute_def_FNT = this._compute_number_helper(StatVector.KEY_stat_def_FNT, 0);
+    protected override _compute_def_DRN = this._compute_number_helper(StatVector.KEY_stat_def_DRN, 0);
 
 }
 export = RF5Item;

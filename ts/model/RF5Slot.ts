@@ -2,17 +2,17 @@ import ko = require('knockout');
 import _ = require('lodash');
 import ISlot = require('./ISlot');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 // Parent
 import IItem = require('./IItem');
 // VM
-import VMRF5Slot = require('../vm/VMRF5Slot');
+import VMSlot = require('../vm/VMSlot');
 // Data
-import RF5AbstractSlot = require('./RF5AbstractSlot');
+import AbstractSlot = require('./AbstractSlot');
 
 // This is the class responsible for most of the bindings, so
 // try to make the bindings as efficient as possible.
-class RF5Slot extends RF5AbstractSlot implements ISlot {
+class RF5Slot extends AbstractSlot implements ISlot {
     
     readonly Item: ko.Observable<IItem>;
     readonly Index: number; // Note: This isn't an observable.
@@ -47,7 +47,7 @@ class RF5Slot extends RF5AbstractSlot implements ISlot {
 
     readonly Multiplier: ko.PureComputed<number>;
 
-    readonly ViewModel: VMRF5Slot;
+    readonly ViewModel: VMSlot;
 
     constructor(item: IItem,
                 index: number,
@@ -148,7 +148,7 @@ class RF5Slot extends RF5AbstractSlot implements ISlot {
 
         this.Multiplier = ko.pureComputed(self._compute_multiplier).extend({ deferred: true });
 
-        this.ViewModel = new VMRF5Slot(this);
+        this.ViewModel = new VMSlot(this);
 
     }
 
@@ -197,7 +197,7 @@ class RF5Slot extends RF5AbstractSlot implements ISlot {
     
     protected _compute_hasPrecedingOverrider = (): boolean => {
         if(this.Index === 0) { return false; } // Terminating condition.
-        if(this.Index >= RF5AbstractSlot.ARRANGE_START_IDX) { return false; }
+        if(this.Index >= AbstractSlot.ARRANGE_START_IDX) { return false; }
         let predecessor = this.Predecessor();
         // Order of evaluation of the OR is important.
         return predecessor.HasPrecedingOverrider() || predecessor.IsOverriding();
@@ -351,56 +351,56 @@ class RF5Slot extends RF5AbstractSlot implements ISlot {
         return this.LevelOverride();
     }
 
-    protected override _compute_stat_ATK = this._compute_number_helper(RF5StatVector.KEY_stat_ATK, 0);
-    protected override _compute_stat_DEF = this._compute_number_helper(RF5StatVector.KEY_stat_DEF, 0);
-    protected override _compute_stat_MAT = this._compute_number_helper(RF5StatVector.KEY_stat_MAT, 0);
-    protected override _compute_stat_MDF = this._compute_number_helper(RF5StatVector.KEY_stat_MDF, 0);
-    protected override _compute_stat_STR = this._compute_number_helper(RF5StatVector.KEY_stat_STR, 0);
-    protected override _compute_stat_INT = this._compute_number_helper(RF5StatVector.KEY_stat_INT, 0);
-    protected override _compute_stat_VIT = this._compute_number_helper(RF5StatVector.KEY_stat_VIT, 0);
-    protected override _compute_stat_atk_CRT = this._compute_number_helper(RF5StatVector.KEY_stat_atk_CRT, 0, true);
-    protected override _compute_stat_atk_KNO = this._compute_number_helper(RF5StatVector.KEY_stat_atk_KNO, 0, true);
-    protected override _compute_stat_atk_STN = this._compute_number_helper(RF5StatVector.KEY_stat_atk_STN, 0, true);
-    protected override _compute_stat_atk_DIZ = this._compute_number_helper(RF5StatVector.KEY_stat_atk_DIZ, 0, true);
-    protected override _compute_stat_atk_PSN = this._compute_number_helper(RF5StatVector.KEY_stat_atk_PSN, 0, true);
-    protected override _compute_stat_atk_SEA = this._compute_number_helper(RF5StatVector.KEY_stat_atk_SEA, 0, true);
-    protected override _compute_stat_atk_PAR = this._compute_number_helper(RF5StatVector.KEY_stat_atk_PAR, 0, true);
-    protected override _compute_stat_atk_SLP = this._compute_number_helper(RF5StatVector.KEY_stat_atk_SLP, 0, true);
-    protected override _compute_stat_atk_FTG = this._compute_number_helper(RF5StatVector.KEY_stat_atk_FTG, 0, true);
-    protected override _compute_stat_atk_SCK = this._compute_number_helper(RF5StatVector.KEY_stat_atk_SCK, 0, true);
-    protected override _compute_stat_atk_FNT = this._compute_number_helper(RF5StatVector.KEY_stat_atk_FNT, 0, true);
-    protected override _compute_stat_atk_DRN = this._compute_number_helper(RF5StatVector.KEY_stat_atk_DRN, 0, true);
-    protected override _compute_def_ele_FIRE = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_FIRE, 0, true);
-    protected override _compute_def_ele_WATER = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_WATER, 0, true);
-    protected override _compute_def_ele_EARTH = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_EARTH, 0, true);
-    protected override _compute_def_ele_WIND = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_WIND, 0, true);
-    protected override _compute_def_ele_LIGHT = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_LIGHT, 0, true);
-    protected override _compute_def_ele_DARK = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_DARK, 0, true);
-    protected override _compute_def_ele_LOVE = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_LOVE, 0, true);
-    protected override _compute_def_ele_VOID = this._compute_number_helper(RF5StatVector.KEY_stat_def_ele_VOID, 0, true);
-    protected override _compute_def_CRT = this._compute_number_helper(RF5StatVector.KEY_stat_def_CRT, 0, true);
-    protected override _compute_def_KNO = this._compute_number_helper(RF5StatVector.KEY_stat_def_KNO, 0, true);
-    protected override _compute_def_STN = this._compute_number_helper(RF5StatVector.KEY_stat_def_STN, 0, true);
-    protected override _compute_def_DIZ = this._compute_number_helper(RF5StatVector.KEY_stat_def_DIZ, 0, true);
-    protected override _compute_def_PSN = this._compute_number_helper(RF5StatVector.KEY_stat_def_PSN, 0, true);
-    protected override _compute_def_SEA = this._compute_number_helper(RF5StatVector.KEY_stat_def_SEA, 0, true);
-    protected override _compute_def_PAR = this._compute_number_helper(RF5StatVector.KEY_stat_def_PAR, 0, true);
-    protected override _compute_def_SLP = this._compute_number_helper(RF5StatVector.KEY_stat_def_SLP, 0, true);
-    protected override _compute_def_FTG = this._compute_number_helper(RF5StatVector.KEY_stat_def_FTG, 0, true);
-    protected override _compute_def_SCK = this._compute_number_helper(RF5StatVector.KEY_stat_def_SCK, 0, true);
-    protected override _compute_def_FNT = this._compute_number_helper(RF5StatVector.KEY_stat_def_FNT, 0, true);
-    protected override _compute_def_DRN = this._compute_number_helper(RF5StatVector.KEY_stat_def_DRN, 0, true);
+    protected override _compute_stat_ATK = this._compute_number_helper(StatVector.KEY_stat_ATK, 0);
+    protected override _compute_stat_DEF = this._compute_number_helper(StatVector.KEY_stat_DEF, 0);
+    protected override _compute_stat_MAT = this._compute_number_helper(StatVector.KEY_stat_MAT, 0);
+    protected override _compute_stat_MDF = this._compute_number_helper(StatVector.KEY_stat_MDF, 0);
+    protected override _compute_stat_STR = this._compute_number_helper(StatVector.KEY_stat_STR, 0);
+    protected override _compute_stat_INT = this._compute_number_helper(StatVector.KEY_stat_INT, 0);
+    protected override _compute_stat_VIT = this._compute_number_helper(StatVector.KEY_stat_VIT, 0);
+    protected override _compute_stat_atk_CRT = this._compute_number_helper(StatVector.KEY_stat_atk_CRT, 0, true);
+    protected override _compute_stat_atk_KNO = this._compute_number_helper(StatVector.KEY_stat_atk_KNO, 0, true);
+    protected override _compute_stat_atk_STN = this._compute_number_helper(StatVector.KEY_stat_atk_STN, 0, true);
+    protected override _compute_stat_atk_DIZ = this._compute_number_helper(StatVector.KEY_stat_atk_DIZ, 0, true);
+    protected override _compute_stat_atk_PSN = this._compute_number_helper(StatVector.KEY_stat_atk_PSN, 0, true);
+    protected override _compute_stat_atk_SEA = this._compute_number_helper(StatVector.KEY_stat_atk_SEA, 0, true);
+    protected override _compute_stat_atk_PAR = this._compute_number_helper(StatVector.KEY_stat_atk_PAR, 0, true);
+    protected override _compute_stat_atk_SLP = this._compute_number_helper(StatVector.KEY_stat_atk_SLP, 0, true);
+    protected override _compute_stat_atk_FTG = this._compute_number_helper(StatVector.KEY_stat_atk_FTG, 0, true);
+    protected override _compute_stat_atk_SCK = this._compute_number_helper(StatVector.KEY_stat_atk_SCK, 0, true);
+    protected override _compute_stat_atk_FNT = this._compute_number_helper(StatVector.KEY_stat_atk_FNT, 0, true);
+    protected override _compute_stat_atk_DRN = this._compute_number_helper(StatVector.KEY_stat_atk_DRN, 0, true);
+    protected override _compute_def_ele_FIRE = this._compute_number_helper(StatVector.KEY_stat_def_ele_FIRE, 0, true);
+    protected override _compute_def_ele_WATER = this._compute_number_helper(StatVector.KEY_stat_def_ele_WATER, 0, true);
+    protected override _compute_def_ele_EARTH = this._compute_number_helper(StatVector.KEY_stat_def_ele_EARTH, 0, true);
+    protected override _compute_def_ele_WIND = this._compute_number_helper(StatVector.KEY_stat_def_ele_WIND, 0, true);
+    protected override _compute_def_ele_LIGHT = this._compute_number_helper(StatVector.KEY_stat_def_ele_LIGHT, 0, true);
+    protected override _compute_def_ele_DARK = this._compute_number_helper(StatVector.KEY_stat_def_ele_DARK, 0, true);
+    protected override _compute_def_ele_LOVE = this._compute_number_helper(StatVector.KEY_stat_def_ele_LOVE, 0, true);
+    protected override _compute_def_ele_VOID = this._compute_number_helper(StatVector.KEY_stat_def_ele_VOID, 0, true);
+    protected override _compute_def_CRT = this._compute_number_helper(StatVector.KEY_stat_def_CRT, 0, true);
+    protected override _compute_def_KNO = this._compute_number_helper(StatVector.KEY_stat_def_KNO, 0, true);
+    protected override _compute_def_STN = this._compute_number_helper(StatVector.KEY_stat_def_STN, 0, true);
+    protected override _compute_def_DIZ = this._compute_number_helper(StatVector.KEY_stat_def_DIZ, 0, true);
+    protected override _compute_def_PSN = this._compute_number_helper(StatVector.KEY_stat_def_PSN, 0, true);
+    protected override _compute_def_SEA = this._compute_number_helper(StatVector.KEY_stat_def_SEA, 0, true);
+    protected override _compute_def_PAR = this._compute_number_helper(StatVector.KEY_stat_def_PAR, 0, true);
+    protected override _compute_def_SLP = this._compute_number_helper(StatVector.KEY_stat_def_SLP, 0, true);
+    protected override _compute_def_FTG = this._compute_number_helper(StatVector.KEY_stat_def_FTG, 0, true);
+    protected override _compute_def_SCK = this._compute_number_helper(StatVector.KEY_stat_def_SCK, 0, true);
+    protected override _compute_def_FNT = this._compute_number_helper(StatVector.KEY_stat_def_FNT, 0, true);
+    protected override _compute_def_DRN = this._compute_number_helper(StatVector.KEY_stat_def_DRN, 0, true);
     // Chargespeed not affected by multiplier nor predecessor context.
     protected override _compute_stat_chargespeed = ():number => {
         let val: number = 0;
         let ctx: any = this.Context();
-        if (ctx[RF5StatVector.KEY_stat_chargespeed] !== undefined) {
-            val = ctx[RF5StatVector.KEY_stat_chargespeed];
+        if (ctx[StatVector.KEY_stat_chargespeed] !== undefined) {
+            val = ctx[StatVector.KEY_stat_chargespeed];
         }
         return val;
     }
     // protected override _compute_stat_chargespeed = this._compute_number_helper(RF5StatVector.KEY_stat_chargespeed, 0);
-    protected override _compute_stat_attacklength = this._compute_number_helper(RF5StatVector.KEY_stat_attacklength, 0);
+    protected override _compute_stat_attacklength = this._compute_number_helper(StatVector.KEY_stat_attacklength, 0);
 
 }
 export = RF5Slot;

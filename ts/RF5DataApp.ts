@@ -1,5 +1,6 @@
 var $ = require('jquery');
 import ko = require('knockout');
+import RF5Data = require('./model/RF5Data');
 import RF5DataTable = require('./model/RF5DataTable');
 
 interface RF5Window extends Window {
@@ -9,7 +10,7 @@ interface RF5Window extends Window {
 }
 declare var window: RF5Window;
 
-window.RF5DataTable = new RF5DataTable();
+window.RF5DataTable = new RF5DataTable(new RF5Data());
 // window.RF5DataTable.IsBusy(true);
 window.ko = ko; // having multiple ko instances will break things. Expose it this way.
 ko.options.deferUpdates = true;

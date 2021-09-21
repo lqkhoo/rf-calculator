@@ -1,10 +1,10 @@
 import ko = require('knockout');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 // Parent
 import IItem = require('./IItem');
 
-class VectorLevelBonus extends RF5StatVector {
+class VectorLevelBonus extends StatVector {
 
     readonly Item: ko.Observable<IItem>;
 

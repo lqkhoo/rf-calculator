@@ -1,13 +1,13 @@
 import ko = require('knockout');
 import ISlot = require('./ISlot');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 // Parent
 import IItem = require('./IItem');
 // Data
-import RF5AbstractSlot = require('./RF5AbstractSlot');
+import AbstractSlot = require('./AbstractSlot');
 
-class VectorRarityBonus extends RF5StatVector {
+class VectorRarityBonus extends StatVector {
 
     readonly Item: ko.Observable<IItem>;
     readonly RarityStatType: ko.PureComputed<string>;
@@ -36,7 +36,7 @@ class VectorRarityBonus extends RF5StatVector {
         if(! slot.IsBeingOverridden()) {
             contextItemId = slot.id();
         } else {
-            for(var i=1; i<RF5AbstractSlot.ARRANGE_START_IDX; i++) {
+            for(var i=1; i<AbstractSlot.ARRANGE_START_IDX; i++) {
                 slot = this.Item().GetSlotByIndex(i);
                 if(slot.IsOverriding()) {
                     contextItemId = slot.id();

@@ -1,15 +1,14 @@
 import _ = require('lodash');
 import ko = require('knockout');
+import IData = require('./IData');
 // Super
 import IDataTable = require('./IDataTable');
 // Children
 import VectorDataTable = require('./VectorDataTable');
-// Data
-import RF5Data = require('./RF5Data');
 
 class RF5DataTable implements IDataTable {
 
-    readonly Data: RF5Data;
+    readonly Data: IData;
 
     // Model
     readonly IsEnglishSelected: ko.Observable<boolean>;
@@ -61,10 +60,10 @@ class RF5DataTable implements IDataTable {
     readonly DisplayStones: ko.Observable<boolean>;
     readonly DisplayStrings: ko.Observable<boolean>;
 
-    constructor() {
+    constructor(data: IData) {
         const self = this;
 
-        this.Data = new RF5Data();
+        this.Data = data;
 
         this.IsEnglishSelected = ko.observable(true);
         this.IsJapaneseSelected = ko.observable(true);

@@ -1,11 +1,11 @@
 import ko = require('knockout');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 // Parent
 import IItem = require('./IItem');
-import RF5AbstractSlot = require('./RF5AbstractSlot');
+import AbstractSlot = require('./AbstractSlot');
 
-class VectorCoreBonus extends RF5StatVector {
+class VectorCoreBonus extends StatVector {
 
     readonly Item: ko.Observable<IItem>;
     readonly HasCoreBonus: ko.PureComputed<boolean>;
@@ -31,7 +31,7 @@ class VectorCoreBonus extends RF5StatVector {
         let hasRedCore: boolean = false;
         let hasYellowCore: boolean = false;
         let hasBlueCore: boolean = false;
-        for(let i=RF5AbstractSlot.ARRANGE_START_IDX; i<RF5AbstractSlot.SLOT_END_IDX; i++) {
+        for(let i=AbstractSlot.ARRANGE_START_IDX; i<AbstractSlot.SLOT_END_IDX; i++) {
             let id: number = this.Item().GetSlotByIndex(i).id();
             if(id === 0 ) { continue; }
             if(this.Data.IsGreenCore(id)) { hasGreenCore = true; continue; }

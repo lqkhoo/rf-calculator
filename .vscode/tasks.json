@@ -2,13 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Browserify rf4data",
-			"type": "shell",
-			"command": "browserify ts/RF4DataApp.ts -p [ tsify --noImplicitAny ] > js/rf4-data.js",
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
 			"label": "Browserify rf5calc",
 			"type": "shell",
 			"command": "browserify ts/RF5CalculatorApp.ts -p [ tsify --noImplicitAny ] > js/rf5-calculator.js",
@@ -19,6 +12,20 @@
 			"label": "Browserify rf5data",
 			"type": "shell",
 			"command": "browserify ts/RF5DataApp.ts -p [ tsify --noImplicitAny ] > js/rf5-data.js",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Browserify rf4calc",
+			"type": "shell",
+			"command": "browserify ts/RF4CalculatorApp.ts -p [ tsify --noImplicitAny ] > js/rf4-calculator.js",
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Browserify rf4data",
+			"type": "shell",
+			"command": "browserify ts/RF4DataApp.ts -p [ tsify --noImplicitAny ] > js/rf4-data.js",
 			"problemMatcher": [],
 			"group": "build"
 		},
@@ -36,7 +43,14 @@
 		},
 		{
 			"label": "Build all",
-			"dependsOn": ["Browserify rf4data", "Browserify rf5calc", "Browserify rf5data", "Sass compile common-css", "Sass compile data-css"],
+			"dependsOn": [
+				"Browserify rf5calc",
+				"Browserify rf5data",
+				"Browserify rf4calc",
+				"Browserify rf4data",
+				"Sass compile common-css",
+				"Sass compile data-css"
+			],
 			"group": {
 				"kind": "build",
 				"isDefault": true

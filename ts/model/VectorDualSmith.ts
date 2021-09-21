@@ -1,13 +1,13 @@
 import ko = require('knockout');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 // Parent
 import IItem = require('./IItem');
 // Data
 import IStatVector = require('./IStatVector');
 import RF5Item = require('./RF5Item');
 
-class VectorDualSmith extends RF5StatVector {
+class VectorDualSmith extends StatVector {
     
     readonly Item: ko.Observable<IItem>;
 
@@ -85,18 +85,18 @@ class VectorDualSmith extends RF5StatVector {
         };
     }
 
-    protected override _compute_stat_ATK = this._compute_scaledstat_helper(RF5StatVector.KEY_stat_ATK, "ATK", 0.02);
-    protected override _compute_stat_MAT = this._compute_scaledstat_helper(RF5StatVector.KEY_stat_MAT, "MAT", 0.02);
-    protected override _compute_stat_STR = this._compute_scaledstat_helper(RF5StatVector.KEY_stat_STR, "STR", 0.03);
-    protected override _compute_stat_INT = this._compute_scaledstat_helper(RF5StatVector.KEY_stat_INT, "INT", 0.03);
-    protected override _compute_stat_VIT = this._compute_scaledstat_helper(RF5StatVector.KEY_stat_VIT, "VIT", 0.03);
-    protected override _compute_stat_atk_CRT = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_atk_CRT, "CRT", 1);
-    protected override _compute_stat_atk_STN = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_atk_STN, "STN", 2);
-    protected override _compute_def_ele_FIRE = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_def_ele_FIRE, "DEF_FIR", 5);
-    protected override _compute_def_ele_WATER = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_def_ele_WATER, "DEF_WTR", 5);
-    protected override _compute_def_ele_EARTH = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_def_ele_EARTH, "DEF_EAR", 5);
-    protected override _compute_def_ele_WIND = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_def_ele_WIND, "DEF_WND", 5);
-    protected override _compute_def_ele_LIGHT = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_def_ele_LIGHT, "DEF_LGT", 5);
-    protected override _compute_def_ele_DARK = this._compute_fixedstat_helper(RF5StatVector.KEY_stat_def_ele_DARK, "DEF_DRK", 5);
+    protected override _compute_stat_ATK = this._compute_scaledstat_helper(StatVector.KEY_stat_ATK, "ATK", 0.02);
+    protected override _compute_stat_MAT = this._compute_scaledstat_helper(StatVector.KEY_stat_MAT, "MAT", 0.02);
+    protected override _compute_stat_STR = this._compute_scaledstat_helper(StatVector.KEY_stat_STR, "STR", 0.03);
+    protected override _compute_stat_INT = this._compute_scaledstat_helper(StatVector.KEY_stat_INT, "INT", 0.03);
+    protected override _compute_stat_VIT = this._compute_scaledstat_helper(StatVector.KEY_stat_VIT, "VIT", 0.03);
+    protected override _compute_stat_atk_CRT = this._compute_fixedstat_helper(StatVector.KEY_stat_atk_CRT, "CRT", 1);
+    protected override _compute_stat_atk_STN = this._compute_fixedstat_helper(StatVector.KEY_stat_atk_STN, "STN", 2);
+    protected override _compute_def_ele_FIRE = this._compute_fixedstat_helper(StatVector.KEY_stat_def_ele_FIRE, "DEF_FIR", 5);
+    protected override _compute_def_ele_WATER = this._compute_fixedstat_helper(StatVector.KEY_stat_def_ele_WATER, "DEF_WTR", 5);
+    protected override _compute_def_ele_EARTH = this._compute_fixedstat_helper(StatVector.KEY_stat_def_ele_EARTH, "DEF_EAR", 5);
+    protected override _compute_def_ele_WIND = this._compute_fixedstat_helper(StatVector.KEY_stat_def_ele_WIND, "DEF_WND", 5);
+    protected override _compute_def_ele_LIGHT = this._compute_fixedstat_helper(StatVector.KEY_stat_def_ele_LIGHT, "DEF_LGT", 5);
+    protected override _compute_def_ele_DARK = this._compute_fixedstat_helper(StatVector.KEY_stat_def_ele_DARK, "DEF_DRK", 5);
 }
 export = VectorDualSmith;

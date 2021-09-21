@@ -5,14 +5,14 @@ import RF5Item = require('./RF5Item');
 // Children
 import RF5Slot = require('./RF5Slot');
 // VM
-import VMRF5SlotArrange = require('../vm/VMRF5SlotArrange');
+import VMSlotArrange = require('../vm/VMSlotArrange');
 
 class RF5SlotArrange extends RF5Slot {
 
     override readonly level: ko.PureComputed<number>;
     
     readonly Restriction: ko.Observable<number>; // Only for boots / accessories. First arrange slot is tied to overriding item.
-    override readonly ViewModel: VMRF5SlotArrange;
+    override readonly ViewModel: VMSlotArrange;
 
     constructor(item: RF5Item,
                 index: number,
@@ -26,7 +26,7 @@ class RF5SlotArrange extends RF5Slot {
         this.FinalizeVectorOverride();
         
         this.Restriction = ko.observable(0).extend({ deferred: true });
-        this.ViewModel = new VMRF5SlotArrange(this);
+        this.ViewModel = new VMSlotArrange(this);
     }
 
     public ApplyRestriction = (id: number): void => {

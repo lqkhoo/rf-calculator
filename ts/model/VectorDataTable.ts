@@ -1,9 +1,9 @@
 import ko = require('knockout');
 import IData = require('./IData');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 
-class VectorDataTable extends RF5StatVector {
+class VectorDataTable extends StatVector {
 
     readonly magic1: ko.Observable<number>;
     readonly magic2: ko.Observable<number>;
@@ -57,52 +57,51 @@ class VectorDataTable extends RF5StatVector {
                 isBaseItem: boolean) {
 
         super(data, itemId, isBaseItem);
-        const self = this;
 
-        this.IsEquipment = ko.observable(self.Data.IsEquipment(self.id()));
+        this.IsEquipment = ko.observable(this.Data.IsEquipment(this.id()));
 
-        this.IsWeapon = ko.observable(self.Data.IsWeapon(self.id()));
-        this.IsShield = ko.observable(self.Data.IsShield(self.id()));
-        this.IsHeadgear = ko.observable(self.Data.IsHeadgear(self.id()));
-        this.IsArmor = ko.observable(self.Data.IsArmor(self.id()));
-        this.IsBoots = ko.observable(self.Data.IsBoots(self.id()));
-        this.IsAccessory = ko.observable(self.Data.IsAccessory(self.id()));
+        this.IsWeapon = ko.observable(this.Data.IsWeapon(this.id()));
+        this.IsShield = ko.observable(this.Data.IsShield(this.id()));
+        this.IsHeadgear = ko.observable(this.Data.IsHeadgear(this.id()));
+        this.IsArmor = ko.observable(this.Data.IsArmor(this.id()));
+        this.IsBoots = ko.observable(this.Data.IsBoots(this.id()));
+        this.IsAccessory = ko.observable(this.Data.IsAccessory(this.id()));
 
-        this.Is2hSword = ko.observable(self.Data.Is2hSword(self.id()));
-        this.IsAxe = ko.observable(self.Data.IsAxe(self.id()));
-        this.IsDualblades = ko.observable(self.Data.IsDualblades(self.id()));
-        this.IsFists = ko.observable(self.Data.IsFists(self.id()));
-        this.IsHammer = ko.observable(self.Data.IsHammer(self.id()));
-        this.IsSpear = ko.observable(self.Data.IsSpear(self.id()));
-        this.IsStaff = ko.observable(self.Data.IsStaff(self.id()));
-        this.IsSword = ko.observable(self.Data.IsSword(self.id()));
-        this.IsFarmAxe = ko.observable(self.Data.IsFarmAxe(self.id()));
-        this.IsFarmFishingPole = ko.observable(self.Data.IsFarmFishingPole(self.id()));
-        this.IsFarmHammer = ko.observable(self.Data.IsFarmHammer(self.id()));
-        this.IsFarmHoe = ko.observable(self.Data.IsFarmHoe(self.id()));
-        this.IsFarmSickle = ko.observable(self.Data.IsFarmSickle(self.id()));
-        this.IsFarmWaterpot = ko.observable(self.Data.IsFarmWaterpot(self.id()));
+        this.Is2hSword = ko.observable(this.Data.Is2hSword(this.id()));
+        this.IsAxe = ko.observable(this.Data.IsAxe(this.id()));
+        this.IsDualblades = ko.observable(this.Data.IsDualblades(this.id()));
+        this.IsFists = ko.observable(this.Data.IsFists(this.id()));
+        this.IsHammer = ko.observable(this.Data.IsHammer(this.id()));
+        this.IsSpear = ko.observable(this.Data.IsSpear(this.id()));
+        this.IsStaff = ko.observable(this.Data.IsStaff(this.id()));
+        this.IsSword = ko.observable(this.Data.IsSword(this.id()));
+        this.IsFarmAxe = ko.observable(this.Data.IsFarmAxe(this.id()));
+        this.IsFarmFishingPole = ko.observable(this.Data.IsFarmFishingPole(this.id()));
+        this.IsFarmHammer = ko.observable(this.Data.IsFarmHammer(this.id()));
+        this.IsFarmHoe = ko.observable(this.Data.IsFarmHoe(this.id()));
+        this.IsFarmSickle = ko.observable(this.Data.IsFarmSickle(this.id()));
+        this.IsFarmWaterpot = ko.observable(this.Data.IsFarmWaterpot(this.id()));
 
-        this.IsMaterial = ko.observable(! self.Data.IsEquipment(self.id()));
-        this.IsClawsAndFangs = ko.observable(self.Data.IsClawsAndFangs(this.id()));
-        this.IsClothsAndSkins = ko.observable(self.Data.IsClothsAndSkins(this.id()));
-        this.IsCrystals = ko.observable(self.Data.IsCrystals(this.id()));
-        this.IsFeathers = ko.observable(self.Data.IsFeathers(this.id()));
-        this.IsFurs = ko.observable(self.Data.IsFurs(this.id()));
-        this.IsJewels = ko.observable(self.Data.IsJewels(this.id()));
-        this.IsLiquids = ko.observable(self.Data.IsLiquids(this.id()));
-        this.IsMinerals = ko.observable(self.Data.IsMinerals(this.id()));
-        this.IsPowdersAndSpores = ko.observable(self.Data.IsPowdersAndSpores(this.id()));
-        this.IsScales = ko.observable(self.Data.IsScales(this.id()));
-        this.IsShards = ko.observable(self.Data.IsShards(this.id()));
-        this.IsShellsAndBones = ko.observable(self.Data.IsShellsAndBones(this.id()));
-        this.IsSticksAndStems = ko.observable(self.Data.IsSticksAndStems(this.id()));
-        this.IsStones = ko.observable(self.Data.IsStones(this.id()));
-        this.IsStrings = ko.observable(self.Data.IsStrings(this.id()));
+        this.IsMaterial = ko.observable(! this.Data.IsEquipment(this.id()));
+        this.IsClawsAndFangs = ko.observable(this.Data.IsClawsAndFangs(this.id()));
+        this.IsClothsAndSkins = ko.observable(this.Data.IsClothsAndSkins(this.id()));
+        this.IsCrystals = ko.observable(this.Data.IsCrystals(this.id()));
+        this.IsFeathers = ko.observable(this.Data.IsFeathers(this.id()));
+        this.IsFurs = ko.observable(this.Data.IsFurs(this.id()));
+        this.IsJewels = ko.observable(this.Data.IsJewels(this.id()));
+        this.IsLiquids = ko.observable(this.Data.IsLiquids(this.id()));
+        this.IsMinerals = ko.observable(this.Data.IsMinerals(this.id()));
+        this.IsPowdersAndSpores = ko.observable(this.Data.IsPowdersAndSpores(this.id()));
+        this.IsScales = ko.observable(this.Data.IsScales(this.id()));
+        this.IsShards = ko.observable(this.Data.IsShards(this.id()));
+        this.IsShellsAndBones = ko.observable(this.Data.IsShellsAndBones(this.id()));
+        this.IsSticksAndStems = ko.observable(this.Data.IsSticksAndStems(this.id()));
+        this.IsStones = ko.observable(this.Data.IsStones(this.id()));
+        this.IsStrings = ko.observable(this.Data.IsStrings(this.id()));
 
-        this.magic1 = ko.observable(self.Context().magic_charge1).extend({ deferred: true });
-        this.magic2 = ko.observable(self.Context().magic_charge2).extend({ deferred: true });
-        this.magic3 = ko.observable(self.Context().magic_charge3).extend({ deferred: true });
+        this.magic1 = ko.observable(this.Context().magic_charge1).extend({ deferred: true });
+        this.magic2 = ko.observable(this.Context().magic_charge2).extend({ deferred: true });
+        this.magic3 = ko.observable(this.Context().magic_charge3).extend({ deferred: true });
     }
 
 }

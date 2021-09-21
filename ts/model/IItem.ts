@@ -3,7 +3,7 @@ import ICharacter = require("./ICharacter");
 import ISlot = require("./ISlot");
 import IStatVector = require("./IStatVector");
 // VM
-import VMRF5Item = require("../vm/VMRF5Item");
+import VMItem = require("../vm/VMItem");
 
 interface IItem extends IStatVector, IModel {
 
@@ -22,7 +22,7 @@ interface IItem extends IStatVector, IModel {
     readonly ArrangeSlots: ko.ObservableArray<ISlot>;
     readonly UpgradeSlots: ko.ObservableArray<ISlot>;
 
-    readonly ViewModel: VMRF5Item;
+    readonly ViewModel: VMItem;
 
     ApplyRecipeRestrictions(baseItem: ISlot): void;
     ApplyArrangeRestrictions(): void;

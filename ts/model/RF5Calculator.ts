@@ -1,17 +1,16 @@
 import ko = require('knockout');
 import ISerializable = require('./ISerializable');
+import IData = require('./IData');
 import ICharacter = require('./ICharacter');
 // Parent
 import ICalculator = require('./ICalculator');
 // Children
 import RF5Character = require('./RF5Character');
-// Data
-import RF5Data = require('./RF5Data');
 
 class RF5Planner implements ICalculator, ISerializable {
 
     // Uncomment this to inspect Data from the console. Otherwise not used.
-    readonly Data: RF5Data; 
+    readonly Data: IData; 
 
     // Model
     readonly IsEnglishSelected: ko.Observable<boolean>;
@@ -20,8 +19,8 @@ class RF5Planner implements ICalculator, ISerializable {
 
     readonly elem: HTMLElement;
 
-    constructor() {
-        this.Data = new RF5Data();
+    constructor(data: IData) {
+        this.Data = data;
         // Can't defer these, otherwise the UI won't show properly
         this.CharacterList = ko.observableArray([]);
         this.IsEnglishSelected = ko.observable(true);

@@ -1,13 +1,13 @@
 import ko = require('knockout');
 import IItem = require('./IItem');
 import ISlot = require('./ISlot');
-import RF5AbstractSlot = require('./RF5AbstractSlot');
+import AbstractSlot = require('./AbstractSlot');
 // Super
-import RF5StatVector = require('./RF5StatVector');
+import StatVector = require('./StatVector');
 // Parent
 import ICharacter = require('./ICharacter');
 
-class VectorGeneralSetBonus extends RF5StatVector {
+class VectorGeneralSetBonus extends StatVector {
 
     readonly Character: ko.Observable<ICharacter>;
 
@@ -57,7 +57,7 @@ class VectorGeneralSetBonus extends RF5StatVector {
             if(! baseItem.IsBeingOverridden()) {
                 return idMatchFunction(baseItem.id());
             } else {
-                for(let i=RF5AbstractSlot.RECIPE_START_IDX; i<RF5AbstractSlot.ARRANGE_START_IDX; i++) {
+                for(let i=AbstractSlot.RECIPE_START_IDX; i<AbstractSlot.ARRANGE_START_IDX; i++) {
                     let recipeSlot: ISlot = item.GetSlotByIndex(i);
                     if(! recipeSlot.IsOverriding()) { continue; }
                     else {
