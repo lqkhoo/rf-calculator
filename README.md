@@ -52,12 +52,12 @@ This project makes use of game assets, included under terms of fair use. Fair us
 * Formulae on this page generated using [CodeCogs](https://www.codecogs.com/latex/eqneditor.php) as I'm not using MathJax.
 
 # Limitations and known edge cases
-The calculator has to draw the data from somewhere, so where there's missing data, there's little I can do. This is not the kind of data that could (nor should) be imputed.
+Where there's missing data, there's little I can do. This is not the kind of data that could (nor should) be imputed.
 * RF5
-  * I don't have data tying staff magic to magic IDs, so the planner just refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
-  * As of time of writing, RF5 is not available in English, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
+  * Data tying staff magic to magic IDs is missing, so the planner refers to the original magic that comes with the staff as 'original1', 'original2', etc. Magic from materials is fully modeled.
+  * At time of writing, RF5 is not available in English, so some English names are in brackets. These are taken as-is from Kuroba's data dump.
 * RF4
-  * Magic isn't mapped the same way as in RF5. The data is not available from Omnigamer's data dump, and I couldn't find it in the ROMFS either. The Japanese wiki has a short list of materials with known staff upgrade effects, but this list is incomplete. To get around all of this, I backport magic data from ingredients that are both in RF5 and RF4, substituting the itemid as the magicid. Given how little the rest of the data actually changed across the games, this is the most practical option we have.
+  * Magic isn't mapped the same way as in RF5. The data is not available from Omnigamer's data dump, and I couldn't find it in the ROMFS. The Japanese wiki has a short list of materials with known staff upgrade effects, but this list is incomplete. To get around all of this, I backport magic data from ingredients that are both in RF5 and RF4, substituting the itemid as the magicid. Given how little the rest of the data actually changed across the games, this is the most practical option we have.
   * Likewise, charge speed is not exposed as a parameter like the way it is in RF5. I just set the stat to zero for all items.
 * Zero columns
   * In both RF5 and RF4, there is nothing that gives DIZ/硬値 (knockback duration) resistance. In fact, that column is not there in the data, but I included it for symmetry. It's not a mistake.
@@ -87,11 +87,9 @@ The calculator has to draw the data from somewhere, so where there's missing dat
 7. Python 3.4+ is required to run the script that transforms tsv data into DATA.ts.
 
 ## Dev notes
-I used knockout.js because it constructs the computation graph automatically. This project is extremely heavy on bindings (easily in the thousands), so doing this eliminates a major source of bugs.
-
-Browserify combines javascript files, so some of the libraries have already been combined into our output. Instead of including the source files twice, which can cause issues (knockout especially), we expose the libraries via the window in App.ts, and then include their dependencies after our script.
-
-Likewise, our sass file imports Bootstrap's sass file to modify their parameters, so we don't need to include Bootstrap's css in the html head.
+* TSVs mapping weapon element, crystal element, rarity stat type are CASE SENSITIVE. TSVs containing Japanese strings are Shift-JIS-encoded.
+* I use knockout.js because it constructs the computation graph automatically. This project is extremely heavy on bindings (easily in the thousands), so doing this eliminates a major source of bugs.
+* Browserify combines javascript files, so some of the libraries have already been combined into our output. Instead of including the source files twice, which can cause issues (knockout especially), we expose the libraries via the window in App.ts, and then include their dependencies after our script. Likewise, our sass file imports Bootstrap's sass file to modify their parameters, so we don't need to include Bootstrap's css in the html head.
 
 # Solver (omitted)
 This section is mathematical. It has less to do with the gear calculator than an analysis of Rune Factory's item system, which has remained mostly unchanged over the years.
@@ -169,19 +167,3 @@ where `m*` is the choice that maximizes `g` in the same time step. In other word
 You might be wondering how we could optimize the entire character, since we've only been talking about a single piece of gear. This is easily done by tracking the states of all 6 pieces of equipment at once, i.e. instead of building one piece after the other, we consider the first slots of all the pieces, then all the second slots, and so on. Strictly speaking, we consider actions across all 6 pieces. Most actions correspond to filling one slot, but some others, e.g. fold steel, fill multiple slots at once. Of course the value of such an action is normalized across the number of slots it's taking.
 
 Obviously there are going to be complications such as ObjectX. Suppose we are optimizing for elemental resistance, what a naive algorithm is going to start off by putting ObjectX in every single item, followed by a mealy apple. In practice, we can head off the algorithm by starting off 3 pieces with ObjectX -> 4x mealy applie -> ObjectX, which is what the optimum is anyway. If we want to do this completely programmatically, the straightforward thing to do is to expand our action space, for example, one ObjectX + any one item. ObjectX + two of the same items, and so on, and evaluate the value function over those slots together and normalize by number of slots. This is doing lookahead for objectX. The algorithm would arrive at the same conclusion.
-
-## Doing it by hand
-If you're early in the game, check that you can actually make something that contributes significantly more than the full lvl bonus from your available materials. Simply forging a full set of equipment from all +10 ingredients (e.g. turnip seeds) is enough to get you through 95% of the game. The rest is only necessary for the last 5% of post-game, when we can assume that we have all materials to work with.
-1. Decide the following from the start, for each piece of gear.
-   * If you want to use mealy apples for elemental resistance, immediately use objectX -> 4 mealy apples -> objectX starting from arrange slots.
-   * If you want to use cores for nul-elemental resistance, just reserve 4 slots in your head for the cores. If at any point later down, a core is the optimal ingredient to use, use it. Otherwise fill all the last slots with remaining cores.
-   * Otherwise go to step 2.
-2. Compose your objective function. This means which stat you care about, e.g. STR. It's easiest to do this in a spreadsheet. You can use [kuroba's spreadsheet from GameFaqs](https://gamefaqs.gamespot.com/boards/258613-rune-factory-5/79520681) (Note that the column headers for DIZ/KNO/STN could be different). If this is a single stat, just sort by that column in the data table. Otherwise apply your function over the relevant columns and sort over your function's column instead.
-3. If you're not at max level, filter the spreadsheet's ingredient / gear level to your smithing level, to restrict the set to what you can use.
-4. Now find the ingredient that's right at the top of your spreadsheet. That's the best one according to your criteria. If you have any arrange slots left, fill them all up and put one more into an upgrade slot. We do this because arrange slots don't care about diminishing returns and you've already identified the best material according to your objective function. If you don't have that particular ingredient then just use the next-best one.
-5. Now you have to account for diminishing returns. Either keep track of this in your head or just create a multiplier column that you can change. Now the ingredient you've just used is worth less, so it'll appear lower down when sorted.
-6. Now sort your spreadsheet again and upgrade with whatever that's newest at the top, rinse and repeat, until your equipment is full.
-7. In any situation where you can use 10-fold or double steel (i.e. you have at least 2 free slots), if it's not used yet, use it immediately.
-8. If there's an ingredient you want to flip with ObjectX, generally we put the ObjectX in the second-last slot, so you can make full use of its effects without having to reverse it. If there's more than one ingredient you want to flip, then push the ObjectX up and put all of those ingredients at the end. The mealy apple case is special, because we won't hit the stat cap AND mealy apples' total stats are high enough to warrant reversing with a second ObjectX AND mealy apples' stats are so good that wasting an arrange slot for the ObjectX is still optimal.
-
-Note that this procedure tells you what you can make, not how you can make it. You still need to know the smithing rules in the game to get there. If you know how gear inheritance works, you're all set. Otherwise the [Japanese wiki](https://wikiwiki.jp/rf5/) is the best resource, or you could try the RF4 boards on GameFaqs.

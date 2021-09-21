@@ -18,24 +18,24 @@ class RF5Weapon extends RF5Item implements IWeapon {
     static readonly DEFAULT_DUALSMITH_RELATION_LEVEL: number = 0;
     static readonly DEFAULT_DUALSMITH_BONUS_TYPE: DualSmithBonusType = "NONE";
 
-    readonly HasRareCan: ko.PureComputed<boolean>;
-    readonly HasScrapMetalPlus: ko.PureComputed<boolean>;
-    readonly HasShadeStone: ko.PureComputed<boolean>;
-    readonly Element: ko.PureComputed<ElementType>;
+    HasRareCan: ko.PureComputed<boolean>;
+    HasScrapMetalPlus: ko.PureComputed<boolean>;
+    HasShadeStone: ko.PureComputed<boolean>;
+    Element: ko.PureComputed<ElementType>;
 
-    readonly MagicIdCharge1: ko.PureComputed<number>;
-    readonly MagicIdCharge2: ko.PureComputed<number>;
-    readonly MagicIdCharge3: ko.PureComputed<number>;
+    MagicIdCharge1: ko.PureComputed<number>;
+    MagicIdCharge2: ko.PureComputed<number>;
+    MagicIdCharge3: ko.PureComputed<number>;
 
-    readonly MagicIdCharge1Name: ko.PureComputed<string>;
-    readonly MagicIdCharge2Name: ko.PureComputed<string>;
-    readonly MagicIdCharge3Name: ko.PureComputed<string>;
+    MagicIdCharge1Name: ko.PureComputed<string>;
+    MagicIdCharge2Name: ko.PureComputed<string>;
+    MagicIdCharge3Name: ko.PureComputed<string>;
 
-    readonly DualSmith: ko.Observable<VectorDualSmith>;
+    DualSmith: ko.Observable<VectorDualSmith>;
 
     constructor(character: ICharacter,
-                item_id: number=RF5Item.DEFAULT_ITEM_ID,
-                deserializedObject: any=undefined) {
+                item_id: number=RF5Weapon.DEFAULT_ITEM_ID,
+                deserializedObject: any=RF5Weapon.DEFAULT_DESERIALIZED_OBJECT) {
 
         super(character, "weapon", item_id, deserializedObject);
         const self = this;
@@ -103,6 +103,11 @@ class RF5Weapon extends RF5Item implements IWeapon {
         )).extend({ deferred: true });
     }
 
+    public _toJSON_RF5Item = (): any => {
+        // Preserve super call for RF4 extension
+        return super.toJSON();
+    }
+
     public override toJSON = (): any => {
         let obj: any = super.toJSON();
         obj.dualLevel = this.DualSmith().DualSmithRelationLevel();
@@ -140,7 +145,7 @@ class RF5Weapon extends RF5Item implements IWeapon {
     protected _crossElement = (originalElement: ElementType, newElement: ElementType): ElementType => {
         // Elemental crystals directly overwrite if elements are different.
         // Big crystal makes element disappear.
-        // May be different from RF4. IIRC in RF4, different element makes it become none first before overwriting.
+        // This is different from RF4.
         if(originalElement === "FIREWATER") {
             if(newElement === "FIRE") { return "FIRE"; }
             if(newElement === "WATER") { return "WATER"; }
@@ -300,7 +305,6 @@ class RF5Weapon extends RF5Item implements IWeapon {
             return magicId;
         };
     }
-
 
     protected _compute_magicIdCharge1 = this._compute_magicCharge_helper(1);
     protected _compute_magicIdCharge2 = this._compute_magicCharge_helper(2);

@@ -1,8 +1,7 @@
 import ko = require('knockout');
-import IStatVector = require('./IStatVector');
 // Super
-import RF5Item = require('./RF5Item');
 import StatVector = require('./StatVector');
+import RF5Item = require('./RF5Item');
 // Parent
 import ICharacter = require('./ICharacter');
 
@@ -10,8 +9,8 @@ class RF4Item extends RF5Item {
 
     constructor(character: ICharacter,
                 equipment_type: EquipmentType,
-                item_id: number=RF5Item.DEFAULT_ITEM_ID,
-                deserializedObject: any=undefined) {
+                item_id: number=RF4Item.DEFAULT_ITEM_ID,
+                deserializedObject: any=RF4Item.DEFAULT_DESERIALIZED_OBJECT) {
 
         super(character, equipment_type, item_id, deserializedObject);
         const self = this;
@@ -56,39 +55,15 @@ class RF4Item extends RF5Item {
         this.stat_def_FTG = ko.pureComputed(self._compute_def_FTG).extend({ deferred: true });
         this.stat_def_SCK = ko.pureComputed(self._compute_def_SCK).extend({ deferred: true });
         this.stat_def_FNT = ko.pureComputed(self._compute_def_FNT).extend({ deferred: true });
-        this.stat_def_DRN = ko.pureComputed(self._compute_def_DRN).extend({ deferred: true });    
+        this.stat_def_DRN = ko.pureComputed(self._compute_def_DRN).extend({ deferred: true });
         this.FinalizeVectorOverride();
     }
 
     protected override _compute_number_helper = (fieldName: StatVectorKey, defaultValue: number) => {
         const self = this;
+        
         return function(): number {
-
-            let val: number = defaultValue;
-            let slot: IStatVector;
-            function accumulate(_slot: IStatVector, skipIdZero: boolean=true) {
-                slot = _slot;
-                if(skipIdZero) {
-                    val += (slot.id() === 0) ? 0 : (slot.GetStatByName(fieldName) as number);
-                } else {
-                    val += (slot.GetStatByName(fieldName) as number);
-                }
-            };
-
-            accumulate(self.BaseItem());
-            for(let i=0; i<RF5Item.NSLOTS_RECIPE; i++) {
-                accumulate(self.RecipeSlots()[i]);
-            }
-            for(let i=0; i<RF5Item.NSLOTS_ARRANGE; i++) {
-                accumulate(self.ArrangeSlots()[i]);
-            }
-            for(let i=0; i<RF5Item.NSLOTS_UPGRADE; i++) {
-                accumulate(self.UpgradeSlots()[i]);
-            }
-            accumulate(self.LevelBonus(), false);
-            accumulate(self.RarityBonus(), false);
-            accumulate(self.CoreBonus(), false);
-
+            let val: number = self._compute_number_helper_scoper.call(self, fieldName, defaultValue)();
             val = Math.floor(val*-1)*-1; // <-- only difference
             return val;
         };

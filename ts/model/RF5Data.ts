@@ -138,6 +138,7 @@ class RF5Data implements IData {
             _.forOwn(self.Is_eq_2hsword,        (_value: any, key: any) => { map[key] = "2hsword" });
             _.forOwn(self.Is_eq_axe,            (_value: any, key: any) => { map[key] = "axe" });
             _.forOwn(self.Is_eq_dualblades,     (_value: any, key: any) => { map[key] = "dualblades" });
+            _.forOwn(self.Is_eq_fists,          (_value: any, key: any) => { map[key] = "fists" });
             _.forOwn(self.Is_eq_hammer,         (_value: any, key: any) => { map[key] = "hammer" });
             _.forOwn(self.Is_eq_spear,          (_value: any, key: any) => { map[key] = "spear" });
             _.forOwn(self.Is_eq_staff,          (_value: any, key: any) => { map[key] = "staff" });
