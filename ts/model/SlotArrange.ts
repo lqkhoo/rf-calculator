@@ -3,13 +3,15 @@ import IData = require('./IData');
 // Parent
 import RF5Item = require('./RF5Item');
 // Children
+// Super
+import ISlotArrange = require('./ISlotArrange');
 import Slot = require('./Slot');
 // Parent
 import IItem = require('./IItem');
 // VM
 import VMSlotArrange = require('../vm/VMSlotArrange');
 
-class SlotArrange extends Slot {
+class SlotArrange extends Slot implements ISlotArrange {
 
     override readonly level: ko.PureComputed<number>;
     

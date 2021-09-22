@@ -1,16 +1,16 @@
 import ko = require('knockout');
 import _ = require('lodash');
-import IRF5SlotArrange = require('../model/IRF5SlotArrange');
+import ISlotArrange = require('../model/ISlotArrange');
 // Super
 import VMSlot = require('./VMSlot');
 // Model
-import IRF5SlotRecipe = require('../model/IRF5SlotRecipe');
+import ISlotRecipe = require('../model/ISlotRecipe');
 // Data
 
 
 class VMSlotArrange extends VMSlot {
 
-    override readonly Model: IRF5SlotRecipe;
+    override readonly Model: ISlotRecipe;
     /*
     override readonly IsRestricted: ko.PureComputed<boolean>;
     override readonly IsLocked: ko.PureComputed<boolean>

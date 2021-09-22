@@ -1,6 +1,6 @@
 import ISlot = require("./ISlot");
 
-interface IRF5SlotRecipe extends ISlot {
+interface ISlotArrange extends ISlot {
     readonly Restriction: ko.Observable<number>; // item or category id
 }
-export = IRF5SlotRecipe;
+export = ISlotArrange;

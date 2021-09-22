@@ -1,5 +1,6 @@
 import ko = require('knockout');
 // Super
+import ISlotRecipe = require('./ISlotRecipe');
 import Slot = require('./Slot');
 // Parent
 import IItem = require('./IItem');
@@ -8,7 +9,7 @@ import StatVector = require('./StatVector');
 // VM
 import VMSlotRecipe = require('../vm/VMSlotRecipe');
 
-class SlotRecipe extends Slot {
+class SlotRecipe extends Slot implements ISlotRecipe {
 
     readonly Restriction: ko.Observable<number>; // item or category id
     override readonly ViewModel: VMSlotRecipe;

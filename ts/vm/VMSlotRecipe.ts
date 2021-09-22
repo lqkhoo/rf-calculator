@@ -3,15 +3,15 @@ import _ = require('lodash');
 // Super
 import VMSlot = require('./VMSlot');
 // Model
-import IRF5SlotRecipe = require('../model/IRF5SlotRecipe');
+import ISlotRecipe = require('../model/ISlotRecipe');
 // Data
 import Utils = require('../Utils');
 
 class VMSlotRecipe extends VMSlot {
 
-    override readonly Model: IRF5SlotRecipe;
+    override readonly Model: ISlotRecipe;
 
-    constructor(model: IRF5SlotRecipe) {
+    constructor(model: ISlotRecipe) {
         super(model)
     }
 
