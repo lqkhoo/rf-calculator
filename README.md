@@ -86,7 +86,7 @@ Where there's missing data, there's little I can do. This is not the kind of dat
 7. Python 3.4+ is required to run the script that transforms tsv data into `rf5-rawdata.ts` and `rf4-rawdata.ts`.
 
 ## Dev notes
-* TSVs mapping weapon element, crystal element, rarity stat type are CASE SENSITIVE. TSVs containing Japanese strings are Shift-JIS-encoded.
+* TSVs mapping weapon element, crystal element, rarity stat type are CASE SENSITIVE. TSVs containing Japanese strings are Shift-JIS-encoded. HTML files are encoded in UTF8 with BOM.
 * I use knockout.js because it constructs the computation graph automatically. This project is extremely heavy on bindings (easily in the thousands), so doing this eliminates a major source of bugs.
 * Browserify combines javascript files, so some of the libraries have already been combined into our output. Instead of including the source files twice, which can cause issues (knockout especially), we expose the libraries via the window in the top-level source files `*App.ts`, and then include their dependencies after our script. Likewise, our sass file imports Bootstrap's sass file to modify their parameters, so we don't need to include Bootstrap's css in the html head.
 

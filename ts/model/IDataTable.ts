@@ -12,8 +12,8 @@ interface IDataTable {
     readonly IsEnglishSelected: ko.Observable<boolean>;
     readonly IsJapaneseSelected: ko.Observable<boolean>;
 
-    readonly BaseItems: ko.ObservableArray<VectorDataTable>;
-    readonly UpgradeItems: ko.ObservableArray<VectorDataTable>;
+    // readonly BaseItems: ko.ObservableArray<VectorDataTable>;
+    // readonly UpgradeItems: ko.ObservableArray<VectorDataTable>;
 
     readonly IsFiltersCollapsed: ko.Observable<boolean>;
 

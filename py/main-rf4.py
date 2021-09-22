@@ -1,489 +1,11 @@
-# Text-replace rf5 --> rf4
-# Also check category ids. Search for "# Link material groups"
-
 from __future__ import annotations
 from typing import List, Set
-import csv
 from dataclasses import dataclass
+import math
 import json
 from pprint import pprint
 
-
-class RF5Category(object):
-    def __init__(self, _id):
-        id: int = _id
-        name_en: str = ''
-        name_jp: str = ''
-        image_uri: str = ''
-        item_ids: List[int] = []
-
-@dataclass
-class RF5Effect(object):
-    id: int
-    desc_en: str = ''
-    desc_jp: str = ''
-
-
-@dataclass
-class RF5Character(object):
-    id: int
-    name_en: str = ''
-    name_jp: str = ''
-    image_uri: str = ''
-    sprite_uri: str = ''
-
-    stat_ATK: int = 0
-    stat_DEF: int = 0
-    stat_MAT: int = 0
-    stat_MDF: int = 0
-    stat_STR: int = 0
-    stat_INT: int = 0
-    stat_VIT: int = 0
-    stat_def_ele_FIRE: float = 0
-    stat_def_ele_WATER: float = 0
-    stat_def_ele_EARTH: float = 0
-    stat_def_ele_WIND: float = 0
-    stat_def_ele_LIGHT: float = 0
-    stat_def_ele_DARK: float = 0
-    stat_def_ele_LOVE: float = 0
-    stat_def_ele_VOID: float = 0
-    stat_atk_CRT: float = 0
-    stat_atk_KNO: float = 0
-    stat_atk_DIZ: float = 0
-    stat_atk_STN: float = 0
-    stat_atk_PSN: float = 0
-    stat_atk_SEA: float = 0
-    stat_atk_PAR: float = 0
-    stat_atk_SLP: float = 0
-    stat_atk_FTG: float = 0
-    stat_atk_SCK: float = 0
-    stat_atk_FNT: float = 0
-    stat_atk_DRN: float = 0
-    stat_def_ele_FIRE: float = 0
-    stat_def_ele_WATER: float = 0
-    stat_def_ele_EARTH: float = 0
-    stat_def_ele_WIND: float = 0
-    stat_def_ele_LIGHT: float = 0
-    stat_def_ele_DARK: float = 0
-    stat_def_ele_LOVE: float = 0
-    stat_def_ele_VOID: float = 0 # elementless
-    stat_def_CRT: float = 0   # ----
-    stat_def_STN: float = 0   # In RF5/RF4 data these two rows are always swapped
-    stat_def_KNO: float = 0
-    stat_def_DIZ: float = 0
-    stat_def_PSN: float = 0
-    stat_def_SEA: float = 0
-    stat_def_PAR: float = 0
-    stat_def_SLP: float = 0
-    stat_def_FTG: float = 0
-    stat_def_SCK: float = 0
-    stat_def_FNT: float = 0
-    stat_def_DRN: float = 0
-
-
-@dataclass
-class RF5Item(object):
-    """This is a 'row' in an item. Think of it as an upgrade ingredient."""
-    id: int
-    name_en: str = ''
-    name_jp: str = ''
-    image_uri: str = ''
-
-    rarity: int = 0
-    level: int = 10 # Default to max
-    rarity_stat_type: str = 'NONE' # stat upgrade from rarity bonus.
-
-    element: str = 'NONE' # weapon element
-
-    # Equipment stats.
-    stat_ATK: int = 0
-    stat_DEF: int = 0
-    stat_MAT: int = 0
-    stat_MDF: int = 0
-    stat_STR: int = 0
-    stat_INT: int = 0
-    stat_VIT: int = 0
-    stat_def_ele_FIRE: float = 0
-    stat_def_ele_WATER: float = 0
-    stat_def_ele_EARTH: float = 0
-    stat_def_ele_WIND: float = 0
-    stat_def_ele_LIGHT: float = 0
-    stat_def_ele_DARK: float = 0
-    stat_def_ele_LOVE: float = 0
-    stat_def_ele_VOID: float = 0
-    stat_atk_CRT: float = 0
-    stat_atk_KNO: float = 0
-    stat_atk_DIZ: float = 0
-    stat_atk_STN: float = 0
-    stat_atk_PSN: float = 0
-    stat_atk_SEA: float = 0
-    stat_atk_PAR: float = 0
-    stat_atk_SLP: float = 0
-    stat_atk_FTG: float = 0
-    stat_atk_SCK: float = 0
-    stat_atk_FNT: float = 0
-    stat_atk_DRN: float = 0
-    stat_def_ele_FIRE: float = 0
-    stat_def_ele_WATER: float = 0
-    stat_def_ele_EARTH: float = 0
-    stat_def_ele_WIND: float = 0
-    stat_def_ele_LIGHT: float = 0
-    stat_def_ele_DARK: float = 0
-    stat_def_ele_LOVE: float = 0
-    stat_def_ele_VOID: float = 0 # elementless
-    stat_def_CRT: float = 0   # ----
-    stat_def_STN: float = 0   # In RF5/RF4 data these two rows are always swapped
-    stat_def_KNO: float = 0
-    stat_def_DIZ: float = 0
-    stat_def_PSN: float = 0
-    stat_def_SEA: float = 0
-    stat_def_PAR: float = 0
-    stat_def_SLP: float = 0
-    stat_def_FTG: float = 0
-    stat_def_SCK: float = 0
-    stat_def_FNT: float = 0
-    stat_def_DRN: float = 0
-    stat_chargespeed: float = 0
-    stat_attacklength: float = 0
-
-    magic_charge1: int = 0
-    magic_charge2: int = 0
-    magic_charge3: int = 0
-
-
-class TsvReader(object):
-
-    @staticmethod
-    def read_set_tsv(filepath: str) -> set[int]:
-        ids: set = set()
-        with open(filepath) as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                ids.add(int(row[0]))
-        return ids
-
-
-    @staticmethod
-    def parse_name_tsv_row(row: List[str]) -> List[object]:
-        ls: List[object] = [int(row[0]), row[1]]
-        return ls
-
-
-    @staticmethod
-    def read_category_names(category_ids: set[int], categories: dict[int, RF5Category]):
-
-        with open('../tsv/rf4/map_categoryid_to_english_name.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, name_en) = TsvReader.parse_name_tsv_row(row)
-                if id not in categories.keys():
-                    categories[id] = RF5Category(_id=id)
-                category = categories[id]
-                category.name_en = name_en
-        
-        with open('../tsv/rf4/map_categoryid_to_japanese_name_shiftjis.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, name_jp) = TsvReader.parse_name_tsv_row(row)
-                if id not in categories.keys():
-                    raise KeyError(id) # This should not happen.
-                category = categories[id]
-                category.name_jp = name_jp
-
-        for id in category_ids:
-            assert(id in categories)
-        
-        return categories
-
-
-    @staticmethod
-    def read_item_names(item_ids: set[int], items: dict[int, RF5Item]):
-
-        with open('../tsv/rf4/map_itemid_to_english_name.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, name_en) = TsvReader.parse_name_tsv_row(row)
-                if id not in items.keys():
-                    items[id] = RF5Item(id=id)
-                item = items[id]
-                item.name_en = name_en
-        
-        with open('../tsv/rf4/map_itemid_to_japanese_name_shiftjis.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, name_jp) = TsvReader.parse_name_tsv_row(row)
-                if id not in items.keys():
-                    raise KeyError(id) # This should not happen.
-                item = items[id]
-                item.name_jp = name_jp
-
-        for id in item_ids:
-            assert(id in items)
-
-        return items
-
-
-    @staticmethod
-    def read_character_names(character_ids: set[int], characters: dict[int, RF5Character]):
-
-        with open('../tsv/rf4/map_characterid_to_english_name.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, name_en) = TsvReader.parse_name_tsv_row(row)
-                if id not in characters.keys():
-                    characters[id] = RF5Character(id=id)
-                item = characters[id]
-                item.name_en = name_en
-        
-        with open('../tsv/rf4/map_characterid_to_japanese_name_shiftjis.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, name_jp) = TsvReader.parse_name_tsv_row(row)
-                if id not in characters.keys():
-                    raise KeyError(id) # This should not happen.
-                item = characters[id]
-                item.name_jp = name_jp
-
-        for id in character_ids:
-            assert(id in characters)
-
-        return characters
-
-
-    @staticmethod
-    def read_category_images(category_ids: set[int], categories: dict[int, RF5Category]):
-        
-        with open('../tsv/rf4/map_categoryid_to_image.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, image_uri) = TsvReader.parse_name_tsv_row(row)
-                if id not in categories.keys():
-                    raise KeyError(id) # This should not happen.
-                category = categories[id]
-                category.image_uri = image_uri
-
-    @staticmethod
-    def read_item_images(item_ids: set[int], items: dict[int, RF5Item]):
-        
-        with open('../tsv/rf4/map_itemid_to_image.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, image_uri) = TsvReader.parse_name_tsv_row(row)
-                if id not in items.keys():
-                    raise KeyError(id) # This should not happen.
-                item = items[id]
-                item.image_uri = image_uri
-
-    @staticmethod
-    def read_character_images(character_ids: set[int], characters: dict[int, RF5Character]):
-        
-        with open('../tsv/rf4/map_characterid_to_icon.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                (id, image_uri) = TsvReader.parse_name_tsv_row(row)
-                if id not in characters.keys():
-                    raise KeyError(id) # This should not happen.
-                character = characters[id]
-                character.image_uri = image_uri
-
-        with open('../tsv/rf4/map_characterid_to_sprites.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                character = characters[id]
-                character.sprite_uri = row[1]
-
-
-    @staticmethod
-    def read_character_stats(filepath: str, characters: dict[int,RF5Character]):
-        with open(filepath) as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id: int = int(row[0])
-                character: RF5Character = characters[id]
-
-                character.stat_ATK = int(row[1])
-                character.stat_DEF = int(row[2])
-                character.stat_MAT = int(row[3])
-                character.stat_MDF = int(row[4])
-                character.stat_STR = int(row[5])
-                character.stat_INT = int(row[6])
-                character.stat_VIT = int(row[7])
-                character.stat_atk_CRT = float(row[8])
-                character.stat_atk_KNO = float(row[9])
-                character.stat_atk_DIZ = float(row[10]) # labeled as knockback time in data dump
-                character.stat_atk_STN = float(row[11]) # labered as stun in data dump
-                character.stat_atk_PSN = float(row[12])
-                character.stat_atk_SEA = float(row[13])
-                character.stat_atk_PAR = float(row[14])
-                character.stat_atk_SLP = float(row[15])
-                character.stat_atk_FTG = float(row[16])
-                character.stat_atk_SCK = float(row[17])
-                character.stat_atk_FNT = float(row[18])
-                character.stat_atk_DRN = float(row[19])
-                character.stat_def_ele_FIRE = float(row[20])
-                character.stat_def_ele_WATER = float(row[21])
-                character.stat_def_ele_EARTH = float(row[22])
-                character.stat_def_ele_WIND = float(row[23])
-                character.stat_def_ele_LIGHT = float(row[24])
-                character.stat_def_ele_DARK = float(row[25])
-                character.stat_def_ele_LOVE = float(row[26])
-                character.stat_def_ele_VOID = float(row[27])
-                character.stat_def_STN = float(row[28])
-                character.stat_def_CRT = float(row[29])
-                character.stat_def_KNO = float(row[30])
-                character.stat_def_DIZ = float(row[31]) # labeled as knockback time in data dump
-                character.stat_def_PSN = float(row[32])
-                character.stat_def_SEA = float(row[33])
-                character.stat_def_PAR = float(row[34])
-                character.stat_def_SLP = float(row[35])
-                character.stat_def_FTG = float(row[36])
-                character.stat_def_SCK = float(row[37])
-                character.stat_def_FNT = float(row[38])
-                character.stat_def_DRN = float(row[39])
-
-
-    @staticmethod
-    def read_item_stats(filepath: str, items: dict[int, RF5Item]) -> Set[int]:
-
-        read_ids: Set[int] = set()
-
-        with open(filepath) as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id: int = int(row[0])
-
-                read_ids.add(id)
-
-                # For the confusing STN/DIZ/KNO/knockback time,
-                # align data between games using e.g. "Bat", "Blessed Hoe"
-
-                item: RF5Item = items[id]
-                item.stat_ATK = int(row[1])
-                item.stat_DEF = int(row[2])
-                item.stat_MAT = int(row[3])
-                item.stat_MDF = int(row[4])
-                item.stat_STR = int(row[5])
-                item.stat_INT = int(row[6])
-                item.stat_VIT = int(row[7])
-                item.stat_atk_CRT = float(row[8])
-                item.stat_atk_KNO = float(row[9])
-                item.stat_atk_DIZ = float(row[10]) # labeled as knockback time in data dump
-                item.stat_atk_STN = float(row[11])
-                item.stat_atk_PSN = float(row[12])
-                item.stat_atk_SEA = float(row[13])
-                item.stat_atk_PAR = float(row[14])
-                item.stat_atk_SLP = float(row[15])
-                item.stat_atk_FTG = float(row[16])
-                item.stat_atk_SCK = float(row[17])
-                item.stat_atk_FNT = float(row[18])
-                item.stat_atk_DRN = float(row[19])
-                item.stat_def_ele_FIRE = float(row[20])
-                item.stat_def_ele_WATER = float(row[21])
-                item.stat_def_ele_EARTH = float(row[22])
-                item.stat_def_ele_WIND = float(row[23])
-                item.stat_def_ele_LIGHT = float(row[24])
-                item.stat_def_ele_DARK = float(row[25])
-                item.stat_def_ele_LOVE = float(row[26])
-                item.stat_def_ele_VOID = float(row[27])
-                item.stat_def_STN = float(row[28]) # labeled as stun in data dump
-                item.stat_def_CRT = float(row[29])
-                item.stat_def_KNO = float(row[30])
-                item.stat_def_DIZ = float(row[31]) # labeled as knockback time in data dump
-                item.stat_def_PSN = float(row[32])
-                item.stat_def_SEA = float(row[33])
-                item.stat_def_PAR = float(row[34])
-                item.stat_def_SLP = float(row[35])
-                item.stat_def_FTG = float(row[36])
-                item.stat_def_SCK = float(row[37])
-                item.stat_def_FNT = float(row[38])
-                item.stat_def_DRN = float(row[39])
-                item.stat_chargespeed = float(row[40])
-                item.stat_attacklength = float(row[41])
-        return read_ids
-        
-    @staticmethod
-    def read_item_rarity(items: dict[int, RF5Item]):
-        with open('../tsv/rf4/map_itemid_to_rarity.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                item = items[id]
-                item.rarity = int(row[1])
-
-    @staticmethod
-    def read_item_rarity_stat_type(items: dict[int, RF5Item]):
-        with open('../tsv/rf4/map_itemid_to_rarity_stat_type.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                item = items[id]
-                item.rarity_stat_type = row[1] # str
-
-    @staticmethod
-    def read_item_weapon_element(items: dict[int, RF5Item]):
-        with open('../tsv/rf4/map_itemid_to_weapon_element.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                item = items[id]
-                item.element = row[1]
-
-    @staticmethod
-    def read_item_crystal_element(items: dict[int, RF5Item]):
-        with open('../tsv/rf4/map_itemid_to_crystal_element.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                item = items[id]
-                item.element = row[1]
-
-    @staticmethod
-    def read_item_magic(items: dict[int, RF5Item]):
-        with open('../tsv/rf4/map_itemid_to_magicid.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                item = items[id]
-                item.magic_charge1 = int(row[1])
-                item.magic_charge2 = int(row[2])
-                item.magic_charge3 = int(row[3])
-
-    @staticmethod
-    def read_recipes(recipes: dict[int, List[int]]):
-        with open('../tsv/rf4/map_itemid_to_recipe.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                ls = [int(x) for x in row[1:]]
-                recipes[id] = ls
-
-    @staticmethod
-    def read_magics(magics: dict[int, str]):
-        with open('../tsv/rf4/map_magicid_to_name_shiftjis.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                name = row[2]
-                magics[id] = name
-
-    @staticmethod
-    def read_effects(effects: dict[int, RF5Effect]):
-        with open('../tsv/rf4/map_itemid_to_effect_japanese_shiftjis.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                desc_jp = row[1]
-                effects[id] = RF5Effect(id=id, desc_jp=desc_jp)
-
-        with open('../tsv/rf4/map_itemid_to_effect_english.tsv') as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                id = int(row[0])
-                desc_en = row[1]
-                effects[id].desc_en = desc_en
-
-
+from common import (RF5Category, RF5Effect, RF5Character, RF5Item, TsvReader)
 
 if __name__ == '__main__':
     
@@ -523,7 +45,7 @@ if __name__ == '__main__':
     is_mat_clothsandskins:  set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_clothsandskins.tsv')
     is_mat_core:            set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_core.tsv')
     is_mat_crystals:        set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_crystals.tsv')
-    is_mat_elecrystals:      set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_elecrystals.tsv')
+    is_mat_elecrystals:     set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_elecrystals.tsv')
     is_mat_feathers:        set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_feathers.tsv')
     is_mat_furs:            set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_furs.tsv')
     is_mat_jewels:          set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_jewels.tsv')
@@ -531,7 +53,7 @@ if __name__ == '__main__':
     is_mat_liquids:         set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_liquids.tsv')
     is_mat_minerals:        set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_minerals.tsv')
     is_mat_objectx:         set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_objectx.tsv')
-    is_mat_powdersandspores: set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_powdersandspores.tsv')
+    is_mat_powdersandspores:set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_powdersandspores.tsv')
     is_mat_scales:          set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_scales.tsv')
     is_mat_shards:          set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_shards.tsv')
     is_mat_shellsandbones:  set[int] = TsvReader.read_set_tsv('../tsv/rf4/set_is_mat_shellsandbones.tsv')
@@ -553,43 +75,41 @@ if __name__ == '__main__':
     effects:      dict[int, RF5Effect] = {}
 
 
-    # All names and images
-    TsvReader.read_category_names(category_ids, categories)
-    TsvReader.read_item_names(item_ids, items)
-    TsvReader.read_character_names(character_ids, characters)
-
-    TsvReader.read_category_images(category_ids, categories)
-    TsvReader.read_item_images(item_ids, items)
-    TsvReader.read_character_images(character_ids, characters)
-
-    # Raw stats
+    TsvReader.read_item_names(item_ids, items, '../tsv/rf4/map_itemid_to_english_name.tsv', '../tsv/rf4/map_itemid_to_japanese_name_shiftjis.tsv')
+    TsvReader.read_item_images(item_ids, items, '../tsv/rf4/map_itemid_to_image.tsv')
     TsvReader.read_item_stats('../tsv/rf4/map_itemid_to_strengthening_data.tsv', items)
-    TsvReader.read_character_stats('../tsv/rf4/map_characterid_to_stats.tsv', characters)
 
     # Handle base item subset
-    TsvReader.read_item_names(item_ids, base_items)
-    TsvReader.read_item_images(item_ids, base_items)
+    TsvReader.read_item_names(item_ids, base_items, '../tsv/rf4/map_itemid_to_english_name.tsv', '../tsv/rf4/map_itemid_to_japanese_name_shiftjis.tsv')
+    TsvReader.read_item_images(item_ids, base_items, '../tsv/rf4/map_itemid_to_image.tsv')
     base_item_ids = TsvReader.read_item_stats('../tsv/rf4/map_itemid_to_baseitem_stats_data.tsv', base_items)
     
     for key in list(base_items.keys()):
         if not key in base_item_ids:
-            base_items.pop(key, None)    
+            base_items.pop(key, None)   
 
-    # Item stats
-    TsvReader.read_item_rarity(items)
-    TsvReader.read_item_rarity_stat_type(items)
-    TsvReader.read_item_weapon_element(items)
-    TsvReader.read_item_crystal_element(items)
-    TsvReader.read_item_magic(items)
+    TsvReader.read_category_names(category_ids, categories, '../tsv/rf4/map_categoryid_to_english_name.tsv', '../tsv/rf4/map_categoryid_to_japanese_name_shiftjis.tsv')
+    TsvReader.read_category_images(category_ids, categories, '../tsv/rf4/map_categoryid_to_image.tsv')
+
+    TsvReader.read_character_names(character_ids, characters, '../tsv/rf4/map_characterid_to_english_name.tsv', '../tsv/rf4/map_characterid_to_japanese_name_shiftjis.tsv')
+    TsvReader.read_character_images(character_ids, characters, '../tsv/rf4/map_characterid_to_icon.tsv', '../tsv/rf4/map_characterid_to_sprites.tsv')
+    TsvReader.read_character_stats('../tsv/rf4/map_characterid_to_stats.tsv', characters)
+
+    # Full item stats
+    TsvReader.read_item_rarity(items, '../tsv/rf4/map_itemid_to_rarity.tsv')
+    TsvReader.read_item_rarity_stat_type(items, '../tsv/rf4/map_itemid_to_rarity_stat_type.tsv')
+    TsvReader.read_item_weapon_element(items, '../tsv/rf4/map_itemid_to_weapon_element.tsv')
+    TsvReader.read_item_crystal_element(items, '../tsv/rf4/map_itemid_to_crystal_element.tsv')
+    TsvReader.read_item_magic(items, '../tsv/rf4/map_itemid_to_magicid.tsv')
 
     # Recipes
-    TsvReader.read_recipes(recipes)
+    TsvReader.read_recipes(recipes, '../tsv/rf4/map_itemid_to_recipe.tsv')
 
     # Magics
-    TsvReader.read_magics(magics)
+    TsvReader.read_magics(magics, '../tsv/rf4/map_magicid_to_name_shiftjis.tsv')
 
     # Special effects (boots + acce)
-    TsvReader.read_effects(effects)
+    TsvReader.read_effects(effects, '../tsv/rf4/map_itemid_to_effect_japanese_shiftjis.tsv', '../tsv/rf4/map_itemid_to_effect_english.tsv')
 
     # Link material groups
     categories[1083].item_ids = list(is_mat_minerals)
@@ -621,69 +141,222 @@ if __name__ == '__main__':
     def json_dump_object(obj: object) -> str:
         return json.dumps(obj, default=lambda o: o.__dict__, sort_keys=True, indent=2)
 
-    filename: str = '../ts/rf4-rawdata.ts'
-    variablename: str = '_RAWDATA'
+    def write_rawdata(path_output: str, variablename: str):
+        with open(path_output, 'w+') as f:
+            f.write('// File generated by Python script.\n')
+            f.write('const ' +variablename+' = {\n')
+            write_json(f, 'item_ids', json.dumps(sorted(list(item_ids))))
+            write_json(f, 'category_ids', json.dumps(sorted(list(category_ids))))
+            write_json(f, 'character_ids', json.dumps(sorted(list(character_ids))))
+            write_json(f, 'is_eq_2hsword', json.dumps(sorted(list(is_eq_2hsword))))
+            write_json(f, 'is_eq_accessory', json.dumps(sorted(list(is_eq_accessory))))
+            write_json(f, 'is_eq_armor', json.dumps(sorted(list(is_eq_armor))))
+            write_json(f, 'is_eq_axe', json.dumps(sorted(list(is_eq_axe))))
+            write_json(f, 'is_eq_dualblades', json.dumps(sorted(list(is_eq_dualblades))))
+            write_json(f, 'is_eq_farm_axe', json.dumps(sorted(list(is_eq_farm_axe))))
+            write_json(f, 'is_eq_farm_fishingpole', json.dumps(sorted(list(is_eq_farm_fishingpole))))
+            write_json(f, 'is_eq_farm_hammer', json.dumps(sorted(list(is_eq_farm_hammer))))
+            write_json(f, 'is_eq_farm_hoe', json.dumps(sorted(list(is_eq_farm_hoe))))
+            write_json(f, 'is_eq_farm_sickle', json.dumps(sorted(list(is_eq_farm_sickle))))
+            write_json(f, 'is_eq_farm_waterpot', json.dumps(sorted(list(is_eq_farm_waterpot))))
+            write_json(f, 'is_eq_fists', json.dumps(sorted(list(is_eq_fists))))
+            write_json(f, 'is_eq_hammer', json.dumps(sorted(list(is_eq_hammer))))
+            write_json(f, 'is_eq_headgear', json.dumps(sorted(list(is_eq_headgear))))
+            write_json(f, 'is_eq_shield', json.dumps(sorted(list(is_eq_shield))))
+            write_json(f, 'is_eq_shoes', json.dumps(sorted(list(is_eq_shoes))))
+            write_json(f, 'is_eq_spear', json.dumps(sorted(list(is_eq_spear))))
+            write_json(f, 'is_eq_staff', json.dumps(sorted(list(is_eq_staff))))
+            write_json(f, 'is_eq_sword', json.dumps(sorted(list(is_eq_sword))))
+            write_json(f, 'is_eq_weapon', json.dumps(sorted(list(is_eq_weapon))))
+            write_json(f, 'is_equipment', json.dumps(sorted(list(is_equipment))))
 
-    with open(filename, 'w+') as f:
-        f.write('// File generated by Python script.\n')
-        f.write('const ' +variablename+' = {\n')
-        write_json(f, 'item_ids', json.dumps(sorted(list(item_ids))))
-        write_json(f, 'category_ids', json.dumps(sorted(list(category_ids))))
-        write_json(f, 'character_ids', json.dumps(sorted(list(character_ids))))
-        write_json(f, 'is_eq_2hsword', json.dumps(sorted(list(is_eq_2hsword))))
-        write_json(f, 'is_eq_accessory', json.dumps(sorted(list(is_eq_accessory))))
-        write_json(f, 'is_eq_armor', json.dumps(sorted(list(is_eq_armor))))
-        write_json(f, 'is_eq_axe', json.dumps(sorted(list(is_eq_axe))))
-        write_json(f, 'is_eq_dualblades', json.dumps(sorted(list(is_eq_dualblades))))
-        write_json(f, 'is_eq_farm_axe', json.dumps(sorted(list(is_eq_farm_axe))))
-        write_json(f, 'is_eq_farm_fishingpole', json.dumps(sorted(list(is_eq_farm_fishingpole))))
-        write_json(f, 'is_eq_farm_hammer', json.dumps(sorted(list(is_eq_farm_hammer))))
-        write_json(f, 'is_eq_farm_hoe', json.dumps(sorted(list(is_eq_farm_hoe))))
-        write_json(f, 'is_eq_farm_sickle', json.dumps(sorted(list(is_eq_farm_sickle))))
-        write_json(f, 'is_eq_farm_waterpot', json.dumps(sorted(list(is_eq_farm_waterpot))))
-        write_json(f, 'is_eq_fists', json.dumps(sorted(list(is_eq_fists))))
-        write_json(f, 'is_eq_hammer', json.dumps(sorted(list(is_eq_hammer))))
-        write_json(f, 'is_eq_headgear', json.dumps(sorted(list(is_eq_headgear))))
-        write_json(f, 'is_eq_shield', json.dumps(sorted(list(is_eq_shield))))
-        write_json(f, 'is_eq_shoes', json.dumps(sorted(list(is_eq_shoes))))
-        write_json(f, 'is_eq_spear', json.dumps(sorted(list(is_eq_spear))))
-        write_json(f, 'is_eq_staff', json.dumps(sorted(list(is_eq_staff))))
-        write_json(f, 'is_eq_sword', json.dumps(sorted(list(is_eq_sword))))
-        write_json(f, 'is_eq_weapon', json.dumps(sorted(list(is_eq_weapon))))
-        write_json(f, 'is_equipment', json.dumps(sorted(list(is_equipment))))
+            write_json(f, 'is_mat_2foldsteel', json.dumps(sorted(list(is_mat_2foldsteel))))
+            write_json(f, 'is_mat_10foldsteel', json.dumps(sorted(list(is_mat_10foldsteel))))
+            write_json(f, 'is_mat_clawsandfangs', json.dumps(sorted(list(is_mat_clawsandfangs))))
+            write_json(f, 'is_mat_clothsandskins', json.dumps(sorted(list(is_mat_clothsandskins))))
+            write_json(f, 'is_mat_core', json.dumps(sorted(list(is_mat_core))))
+            write_json(f, 'is_mat_crystals', json.dumps(sorted(list(is_mat_crystals))))
+            write_json(f, 'is_mat_elecrystals', json.dumps(sorted(list(is_mat_elecrystals))))
+            write_json(f, 'is_mat_feathers', json.dumps(sorted(list(is_mat_feathers))))
+            write_json(f, 'is_mat_furs', json.dumps(sorted(list(is_mat_furs))))
+            write_json(f, 'is_mat_jewels', json.dumps(sorted(list(is_mat_jewels))))
+            write_json(f, 'is_mat_lightore', json.dumps(sorted(list(is_mat_lightore))))
+            write_json(f, 'is_mat_liquids', json.dumps(sorted(list(is_mat_liquids))))
+            write_json(f, 'is_mat_minerals', json.dumps(sorted(list(is_mat_minerals))))
+            write_json(f, 'is_mat_objectx', json.dumps(sorted(list(is_mat_objectx))))
+            write_json(f, 'is_mat_powdersandspores', json.dumps(sorted(list(is_mat_powdersandspores))))
+            write_json(f, 'is_mat_scales', json.dumps(sorted(list(is_mat_scales))))
+            write_json(f, 'is_mat_shards', json.dumps(sorted(list(is_mat_shards))))
+            write_json(f, 'is_mat_shellsandbones', json.dumps(sorted(list(is_mat_shellsandbones))))
+            write_json(f, 'is_mat_sticksandstems', json.dumps(sorted(list(is_mat_sticksandstems))))
+            write_json(f, 'is_mat_stones', json.dumps(sorted(list(is_mat_stones))))
+            write_json(f, 'is_mat_strings', json.dumps(sorted(list(is_mat_strings))))
+            write_json(f, 'is_mat_truescale', json.dumps(sorted(list(is_mat_truescale))))
 
-        write_json(f, 'is_mat_2foldsteel', json.dumps(sorted(list(is_mat_2foldsteel))))
-        write_json(f, 'is_mat_10foldsteel', json.dumps(sorted(list(is_mat_10foldsteel))))
-        write_json(f, 'is_mat_clawsandfangs', json.dumps(sorted(list(is_mat_clawsandfangs))))
-        write_json(f, 'is_mat_clothsandskins', json.dumps(sorted(list(is_mat_clothsandskins))))
-        write_json(f, 'is_mat_core', json.dumps(sorted(list(is_mat_core))))
-        write_json(f, 'is_mat_crystals', json.dumps(sorted(list(is_mat_crystals))))
-        write_json(f, 'is_mat_elecrystals', json.dumps(sorted(list(is_mat_elecrystals))))
-        write_json(f, 'is_mat_feathers', json.dumps(sorted(list(is_mat_feathers))))
-        write_json(f, 'is_mat_furs', json.dumps(sorted(list(is_mat_furs))))
-        write_json(f, 'is_mat_jewels', json.dumps(sorted(list(is_mat_jewels))))
-        write_json(f, 'is_mat_lightore', json.dumps(sorted(list(is_mat_lightore))))
-        write_json(f, 'is_mat_liquids', json.dumps(sorted(list(is_mat_liquids))))
-        write_json(f, 'is_mat_minerals', json.dumps(sorted(list(is_mat_minerals))))
-        write_json(f, 'is_mat_objectx', json.dumps(sorted(list(is_mat_objectx))))
-        write_json(f, 'is_mat_powdersandspores', json.dumps(sorted(list(is_mat_powdersandspores))))
-        write_json(f, 'is_mat_scales', json.dumps(sorted(list(is_mat_scales))))
-        write_json(f, 'is_mat_shards', json.dumps(sorted(list(is_mat_shards))))
-        write_json(f, 'is_mat_shellsandbones', json.dumps(sorted(list(is_mat_shellsandbones))))
-        write_json(f, 'is_mat_sticksandstems', json.dumps(sorted(list(is_mat_sticksandstems))))
-        write_json(f, 'is_mat_stones', json.dumps(sorted(list(is_mat_stones))))
-        write_json(f, 'is_mat_strings', json.dumps(sorted(list(is_mat_strings))))
-        write_json(f, 'is_mat_truescale', json.dumps(sorted(list(is_mat_truescale))))
+            write_json(f, 'has_effect',  json.dumps(sorted(list(has_effect))))
 
-        write_json(f, 'has_effect',  json.dumps(sorted(list(has_effect))))
+            write_json(f, 'categories', json_dump_object(categories))
+            write_json(f, 'items', json_dump_object(items))
+            write_json(f, 'base_items', json_dump_object(base_items))
+            write_json(f, 'characters', json_dump_object(characters))
+            write_json(f, 'recipes', json_dump_object(recipes))
+            write_json(f, 'magics', json_dump_object(magics))
+            write_json(f, 'effects', json_dump_object(effects))
 
-        write_json(f, 'categories', json_dump_object(categories))
-        write_json(f, 'items', json_dump_object(items))
-        write_json(f, 'base_items', json_dump_object(base_items))
-        write_json(f, 'characters', json_dump_object(characters))
-        write_json(f, 'recipes', json_dump_object(recipes))
-        write_json(f, 'magics', json_dump_object(magics))
-        write_json(f, 'effects', json_dump_object(effects))
+            f.write('};\n')
+            f.write('export = '+variablename+';')
 
-        f.write('};\n')
-        f.write('export = '+variablename+';')
+
+    def html_row_template(item: RF5Item):
+
+        def get_row_class(itemid: int):
+            ls = []
+            if(itemid in is_equipment): ls.append("equipment")
+            if(itemid in is_eq_weapon): ls.append("weapon")
+            if(itemid in is_eq_shield): ls.append("shield")
+            if(itemid in is_eq_headgear): ls.append("headgear")
+            if(itemid in is_eq_armor): ls.append("armor")
+            if(itemid in is_eq_shoes): ls.append("boots")
+            if(itemid in is_eq_accessory): ls.append("accessory")
+            if(itemid in is_eq_2hsword): ls.append("sword2h")
+            if(itemid in is_eq_axe): ls.append("axe")
+            if(itemid in is_eq_dualblades): ls.append("dualblades")
+            if(itemid in is_eq_fists): ls.append("fists")
+            if(itemid in is_eq_hammer): ls.append("hammer")
+            if(itemid in is_eq_spear): ls.append("spear")
+            if(itemid in is_eq_staff): ls.append("staff")
+            if(itemid in is_eq_sword): ls.append("sword")
+            if(itemid in is_eq_farm_axe): ls.append("farmAxe")
+            if(itemid in is_eq_farm_fishingpole): ls.append("farmFishingPole")
+            if(itemid in is_eq_farm_hammer): ls.append("farmHammer")
+            if(itemid in is_eq_farm_hoe): ls.append("farmHoe")
+            if(itemid in is_eq_farm_sickle): ls.append("farmSickle")
+            if(itemid in is_eq_farm_waterpot): ls.append("farmWaterpot")
+            if(itemid not in is_equipment): ls.append("material")
+            if(itemid in is_mat_clawsandfangs): ls.append("clawsAndFangs")
+            if(itemid in is_mat_clothsandskins): ls.append("clothsAndSkins")
+            if(itemid in is_mat_crystals): ls.append("crystals")
+            if(itemid in is_mat_feathers): ls.append("feathers")
+            if(itemid in is_mat_furs): ls.append("furs")
+            if(itemid in is_mat_jewels): ls.append("jewels")
+            if(itemid in is_mat_liquids): ls.append("liquids")
+            if(itemid in is_mat_minerals): ls.append("minerals")
+            if(itemid in is_mat_powdersandspores): ls.append("powdersAndSpores")
+            if(itemid in is_mat_scales): ls.append("scales")
+            if(itemid in is_mat_shards): ls.append("shards")
+            if(itemid in is_mat_shellsandbones): ls.append("shellsAndBones")
+            if(itemid in is_mat_sticksandstems): ls.append("sticksAndStems")
+            if(itemid in is_mat_stones): ls.append("stones")
+            if(itemid in is_mat_strings): ls.append("strings")
+            cls = ""
+            for i in range(len(ls)):
+                cls += ls[i]
+                if(i != len(ls)-1):
+                    cls += " "
+            return cls
+        
+        def get_cell(value, isPercent: bool=True, isWide: bool=False):
+            value = float(value)
+            if value == 0:
+                val = ""
+                cls = 'class="wide"' if isWide else ""
+            elif value > 0:
+                val = value*100 if isPercent else value
+                cls = 'class="wide"' if isWide else ""
+            else:
+                val = value*100 if isPercent else value
+                cls = 'class="wide negative"' if isWide else 'class="negative"'
+            if(type(val) != str):
+                valInt = math.floor(val)
+                if(val == valInt):
+                    val = str(valInt)
+                else:
+                    val = "{0:.2f}".format(val)
+
+            return """<td {}>{}</td>""".format(cls, val)
+
+        return """                <tr class="item-table-entry {}">
+                    <td>
+                        <label class="icon-group small">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td class="icon-td"><img class="icon small" src="{}" /></td>
+                                        <td><span class="lang jp">{}</span><span class="lang en">{}</span></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </label>
+                    </td>
+                    {}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}
+                </tr>\n""".format(
+                    get_row_class(item.id),
+                    item.image_uri,
+                    item.name_jp,
+                    item.name_en,
+                    get_cell(item.id, isPercent=False, isWide=True),
+                    get_cell(item.rarity, isPercent=False),
+                    get_cell(item.stat_ATK, isPercent=False, isWide=True),
+                    get_cell(item.stat_DEF, isPercent=False, isWide=True),
+                    get_cell(item.stat_MAT, isPercent=False, isWide=True),
+                    get_cell(item.stat_MDF, isPercent=False, isWide=True),
+                    get_cell(item.stat_STR, isPercent=False, isWide=True),
+                    get_cell(item.stat_INT, isPercent=False, isWide=True),
+                    get_cell(item.stat_VIT, isPercent=False, isWide=True),
+                    get_cell(item.stat_atk_STN),
+                    get_cell(item.stat_atk_CRT),
+                    get_cell(item.stat_atk_KNO),
+                    get_cell(item.stat_atk_DIZ),
+                    get_cell(item.stat_atk_PSN),
+                    get_cell(item.stat_atk_SEA),
+                    get_cell(item.stat_atk_PAR),
+                    get_cell(item.stat_atk_SLP),
+                    get_cell(item.stat_atk_FTG),
+                    get_cell(item.stat_atk_SCK),
+                    get_cell(item.stat_atk_FNT),
+                    get_cell(item.stat_atk_DRN),
+                    get_cell(item.stat_def_ele_FIRE),
+                    get_cell(item.stat_def_ele_WATER),
+                    get_cell(item.stat_def_ele_EARTH),
+                    get_cell(item.stat_def_ele_WIND),
+                    get_cell(item.stat_def_ele_LIGHT),
+                    get_cell(item.stat_def_ele_DARK),
+                    get_cell(item.stat_def_ele_LOVE),
+                    get_cell(item.stat_def_ele_VOID),
+                    get_cell(item.stat_def_STN),
+                    get_cell(item.stat_def_CRT),
+                    get_cell(item.stat_def_KNO),
+                    get_cell(item.stat_def_DIZ),
+                    get_cell(item.stat_def_PSN),
+                    get_cell(item.stat_def_SEA),
+                    get_cell(item.stat_def_PAR),
+                    get_cell(item.stat_def_SLP),
+                    get_cell(item.stat_def_FTG),
+                    get_cell(item.stat_def_SCK),
+                    get_cell(item.stat_def_FNT),
+                    get_cell(item.stat_def_DRN),
+                    get_cell(item.stat_chargespeed, isPercent=False),
+                    get_cell(item.stat_attacklength, isPercent=False),
+                    get_cell(item.magic_charge1, isPercent=False),
+                    get_cell(item.magic_charge2, isPercent=False),
+                    get_cell(item.magic_charge3, isPercent=False),
+                )
+
+    def write_data_html(path_input: str, path_output: str):
+        with open(path_input, 'r', encoding='utf-8') as f_in, open(path_output, 'w+', encoding='utf-8') as f_out:
+            for line in f_in:
+                f_out.write(line)
+                if('PYTHON-SCRIPT-INSERTION-POINT-BASEITEM-TABLE' in line):
+                    for itemid in base_items.keys():
+                        f_out.write(html_row_template(base_items[itemid]))
+                elif ('PYTHON-SCRIPT-INSERTION-POINT-UPGRADE-TABLE' in line):
+                    for itemid in item_ids:
+                        f_out.write(html_row_template(items[itemid]))
+
+
+    write_rawdata(path_output='../ts/rf4-rawdata.ts', variablename='_RAWDATA')
+    write_data_html(path_input='../rf4-data-base.html', path_output='../rf4-data.html')
+
+

@@ -14,8 +14,8 @@ class RF5DataTable implements IDataTable {
     readonly IsEnglishSelected: ko.Observable<boolean>;
     readonly IsJapaneseSelected: ko.Observable<boolean>;
 
-    readonly BaseItems: ko.ObservableArray<VectorDataTable>;
-    readonly UpgradeItems: ko.ObservableArray<VectorDataTable>;
+    // readonly BaseItems: ko.ObservableArray<VectorDataTable>;
+    // readonly UpgradeItems: ko.ObservableArray<VectorDataTable>;
 
     readonly IsFiltersCollapsed: ko.Observable<boolean>;
 
@@ -68,6 +68,7 @@ class RF5DataTable implements IDataTable {
         this.IsEnglishSelected = ko.observable(true);
         this.IsJapaneseSelected = ko.observable(true);
 
+        /*
         let baseItems: VectorDataTable[] = [];
         let upgradeItems: VectorDataTable[] = [];
 
@@ -82,8 +83,10 @@ class RF5DataTable implements IDataTable {
             upgradeItems.push(vector);
         });
 
+
         this.BaseItems = ko.observableArray(baseItems);
         this.UpgradeItems = ko.observableArray(upgradeItems);
+        */
 
         this.IsFiltersCollapsed = ko.observable(true).extend({ deferred: true });
 
